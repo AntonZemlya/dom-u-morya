@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Sora:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (max-width:1100px){ .hero-bg{background-position:32% center !important} }
+  .hero-photo{background-image:url('assets/hero-desktop.webp')}
+  @media (max-width:1100px){ .hero-photo{background-image:url('assets/hero-tablet.webp')} }
+  @media (max-width:700px){ .hero-photo{background-image:url('assets/hero-mobile.webp')} }
+  @media (max-width:860px){
+    .stats-grid{grid-template-columns:repeat(2,1fr) !important;row-gap:clamp(20px,4vw,28px) !important}
+    .stats-grid > div{border-left:none !important;padding-left:0 !important;border-top:none !important;padding-top:0 !important}
+  }
+  @media (max-width:700px){ .loc-photo{order:-1} }
+  @media (max-height:640px){ .hero-bg{justify-content:center !important;padding-top:88px !important;height:auto !important;min-height:100svh !important;overflow:visible !important} }
+  .hero-mobile-overlay{display:none}
+  @media (max-width:1100px){ .hero-mobile-overlay{display:block !important} }
+  body{margin:0;background:#F8F6F2;font-family:Sora,sans-serif;color:#25282D;overflow-x:hidden}
+  a{color:#C8A96A;text-decoration:none}
+  a:hover{color:#B4915A}
+  input[type=range]{accent-color:#C8A96A}
+  ::selection{background:#EFE2C4}
+  @keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .hero-content > *{animation:heroIn .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero-content > *:nth-child(2){animation-delay:.08s}
+  .hero-content > *:nth-child(3){animation-delay:.16s}
+  .hero-content > *:nth-child(4){animation-delay:.24s}
+  .hero-content > *:nth-child(5){animation-delay:.32s}
+  @keyframes lightSweep{0%{transform:translate(-25%,-15%) rotate(12deg)}100%{transform:translate(25%,15%) rotate(12deg)}}
+  .arch-light{position:absolute;top:-40%;left:-20%;width:60%;height:180%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.10) 50%,rgba(255,255,255,0) 100%);animation:lightSweep 14s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes locZoom{0%{transform:scale(1)}100%{transform:scale(1.03)}}
+  .loc-zoom{animation:locZoom 22s ease-in-out infinite alternate}
+  @keyframes cloudDrift{0%{background-position:center center}100%{background-position:54% 46%}}
+  .cta-drift{animation:cloudDrift 26s ease-in-out infinite alternate}
+  @keyframes snapIn{0%{opacity:0;transform:translateY(-8px);box-shadow:0 0 0 0 rgba(200,169,106,.45)}60%{opacity:1;transform:translateY(0);box-shadow:0 0 0 8px rgba(200,169,106,.12)}100%{opacity:1;transform:translateY(0);box-shadow:0 0 0 0 rgba(200,169,106,0)}}
+  .snap-card{animation:snapIn 1.1s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes fieldIn{0%{opacity:0;transform:translateY(-6px)}100%{opacity:1;transform:translateY(0)}}
+  .field-in{animation:fieldIn .45s cubic-bezier(.2,.7,.2,1) both}
+
+</style>
+</helmet>
+
+<div style="position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.02;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:180px 180px"></div>
+<div style="position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,rgba(18,18,16,0) 55%,rgba(18,18,16,.05) 100%)"></div>
+
+<div id="site-header" style="{{ headerWrapStyle }}">
+  <div style="{{ headerBarStyle }}">
+    <a href="#top" onClick="{{ scrollToTop }}" style="display:flex;align-items:center;color:inherit">
+      <img src="assets/logo-cropped.webp" alt="Дом у моря" style="{{ logoStyle }}">
+    </a>
+    <nav class="nav-links" style="{{ navLinksStyle }}">
+      <a href="#about" style="color:inherit">О комплексе</a>
+      <a href="#plans" style="color:inherit">Планировки</a>
+      <a href="#location" style="color:inherit">Локация</a>
+      <a href="#pricing" style="color:inherit">Цены</a>
+      <a href="#calculator" style="color:inherit">Калькулятор</a>
+      <a href="#gallery" style="color:inherit">Галерея</a>
+      <a href="#contact" style="color:inherit">Контакты</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="#contact" style="{{ headerCtaStyle }}" style-hover="{{ headerCtaHover }}">Оставить заявку</a>
+      <button class="nav-toggle" onClick="{{ toggleMenu }}" aria-label="Меню" style="{{ navToggleStyle }}">
+        <span style="{{ navLineOuterStyle }}"></span>
+        <span style="{{ navLineMiddleStyle }}"></span>
+        <span style="{{ navLineOuterStyle }}"></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" style="{{ mobileMenuStyle }}">
+    <div style="max-width:1320px;margin:8px auto 0;padding:8px clamp(20px,4vw,32px) 20px;display:flex;flex-direction:column;background:#FBFAF7;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.08)">
+      <a onClick="{{ closeMenu }}" href="#about" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">О комплексе</a>
+      <a onClick="{{ closeMenu }}" href="#plans" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Планировки</a>
+      <a onClick="{{ closeMenu }}" href="#location" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Локация</a>
+      <a onClick="{{ closeMenu }}" href="#pricing" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Цены</a>
+      <a onClick="{{ closeMenu }}" href="#calculator" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Калькулятор</a>
+      <a onClick="{{ closeMenu }}" href="#gallery" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Галерея</a>
+      <a onClick="{{ closeMenu }}" href="#contact" style="padding:14px 0;border-top:1px solid rgba(37,40,45,.08);border-bottom:1px solid rgba(37,40,45,.08);color:#25282D;font:500 14px Sora">Контакты</a>
+    </div>
+  </div>
+</div>
+
+<div id="hero-section" style="position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div class="hero-photo" style="position:absolute;inset:-10px 0;background-size:cover;background-position:left center;transform:translateY({{ heroParallaxY }}px);will-change:transform;z-index:0"></div>
+  <div style="position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:88px;height:100svh" class="hero-bg">
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,22,28,.55) 0%,rgba(18,22,28,.30) 32%,rgba(18,22,28,.10) 58%,rgba(18,22,28,0) 78%)"></div>
+  <div class="hero-mobile-overlay" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,22,28,.3) 0%,rgba(18,22,28,.72) 100%)"></div>
+  <div class="hero-content" style="position:relative;z-index:1;max-width:1320px;margin:0 auto;width:100%;padding:0 clamp(28px,7vw,40px) clamp(28px,6vw,64px) clamp(20px,5vw,40px)">
+    <div style="font:500 clamp(12px,2vw,11.5px) Sora;letter-spacing:.08em;text-transform:uppercase;color:#E8D2A0;margin-bottom:clamp(10px,2vw,22px)">ЖК «Дом у моря» — старт продаж 2-й очереди</div>
+    <h1 style="font:500 clamp(36px,6.2vw,72px)/1.1 Newsreader,serif;margin:0 0 clamp(14px,3vw,28px);color:#F6F3ED;max-width:11ch;overflow-wrap:break-word">Квартиры, обращённые <i>к горизонту</i></h1>
+    <p style="font:400 clamp(15.5px,2.6vw,18px)/1.7 Sora;color:rgba(246,243,237,.85);max-width:42ch;margin:0 0 clamp(18px,3vw,36px)">Малоэтажный комплекс в пяти минутах ходьбы от набережной. Панорамные окна и вид на воду из каждой квартиры верхних этажей.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,4vw,44px)">
+      <a href="#plans" style="padding:clamp(14px,2vw,16px) 32px;background:#F4EFE7;color:#2E3135;font:600 13.5px Sora;border-radius:16px;border:1px solid rgba(255,255,255,.4);transition:background .3s ease" style-hover="background:#FFFFFF">Смотреть планировки</a>
+      <a href="#contact" style="display:flex;align-items:center;gap:8px;padding:clamp(14px,2vw,16px) 4px;color:rgba(246,243,237,.85);font:600 13.5px Sora;transition:color .3s ease" style-hover="color:#F6F3ED">Записаться на просмотр →</a>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div style="max-width:1320px;margin:0 auto;padding:clamp(28px,5vw,44px) clamp(20px,5vw,40px) clamp(4px,1vw,8px)">
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,3vw,32px) clamp(16px,3vw,32px);padding-bottom:clamp(24px,4vw,36px);border-bottom:1px solid rgba(37,40,45,.10)">
+    <div><div style="font:400 clamp(24px,5vw,34px) Newsreader,serif;color:#25282D">6</div><div style="font:400 13px Sora;color:#5A6068">домов, 4–5 этажей</div></div>
+    <div style="padding-left:clamp(16px,3vw,32px);border-left:1px solid rgba(37,40,45,.10)"><div style="font:400 clamp(24px,5vw,34px) Newsreader,serif;color:#25282D">7 мин</div><div style="font:400 13px Sora;color:#5A6068">пешком до пляжа</div></div>
+    <div style="padding-left:clamp(16px,3vw,32px);border-left:1px solid rgba(37,40,45,.10)"><div style="font:400 clamp(24px,5vw,34px) Newsreader,serif;color:#25282D">32–104</div><div style="font:400 13px Sora;color:#5A6068">м², студии — трёхкомнатные</div></div>
+    <div style="padding-left:clamp(16px,3vw,32px);border-left:1px solid rgba(37,40,45,.10)"><div style="font:400 clamp(24px,5vw,34px) Newsreader,serif;color:#25282D">IV кв. 2027</div><div style="font:400 13px Sora;color:#5A6068">срок сдачи очереди</div></div>
+  </div>
+</div>
+
+<div id="about" data-reveal-key="about" style="max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ aboutReveal }};position:relative;overflow:hidden">
+  <div style="position:absolute;top:24px;right:-100px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(200,169,106,.16) 0%,rgba(200,169,106,0) 70%);filter:blur(10px);pointer-events:none;z-index:0"></div>
+  <div style="position:relative;z-index:1">
+  <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">О комплексе</div>
+  <div style="position:relative;border-radius:24px;overflow:hidden;height:clamp(220px,32vw,420px);margin-bottom:48px;background-image:url('assets/architecture.webp');background-size:cover;background-position:center center">
+    <div class="arch-light"></div>
+    <div style="position:absolute;inset:0;background:rgba(18,22,28,.18)"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px">
+    <div>
+      <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 24px">Архитектура, повёрнутая к воде</h2>
+      <p style="font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 16px;max-width:42ch">Шесть малоэтажных корпусов на закрытой озеленённой территории, в трёх минутах от старого маяка. Мы намеренно ограничили высотность — чтобы квартиры верхних этажей смотрели на залив, а не на соседний дом.</p>
+      <p style="font:400 16px/1.75 Sora;color:#5A6068;max-width:42ch">Фасады — светлый известняк и тонированное дерево. Во дворе только пешеходные дорожки: парковки вынесены за периметр, а внутри — терраса с шезлонгами, детская зона и амфитеатр для соседских вечеров.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px 32px;align-content:start">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="width:34px;height:1px;background:#C8A96A"></div>
+        <svg width="34" height="34" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="1" stroke="#25282D" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M3 17Q7.5 13 14 17Q20.5 21 25 17" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"></path><circle cx="19" cy="11" r="1.6" fill="#C8A96A"></circle></svg>
+        <div style="font:500 15px Sora">Вид на воду</div><div style="font:400 13.5px/1.6 Sora;color:#5A6068">72% квартир — с видом на залив или парк, без исключения на первой линии.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="width:34px;height:1px;background:#C8A96A"></div>
+        <svg width="34" height="34" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="#25282D" stroke-width="1.3"></circle><path d="M9 20L14 9L19 20" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11 15H17" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        <div style="font:500 15px Sora">Закрытый двор</div><div style="font:400 13.5px/1.6 Sora;color:#5A6068">Без машин и сквозного прохода — только резиденты и гости по коду.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="width:34px;height:1px;background:#C8A96A"></div>
+        <svg width="34" height="34" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="2" stroke="#25282D" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M4 18H24" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"></path><path d="M11 18V24M17 18V24" stroke="#25282D" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        <div style="font:500 15px Sora">Чистовая отделка</div><div style="font:400 13.5px/1.6 Sora;color:#5A6068">White box или полная отделка на выбор — заезжайте с мебелью.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="width:34px;height:1px;background:#C8A96A"></div>
+        <svg width="34" height="34" viewBox="0 0 28 28" fill="none"><path d="M2 20Q7 15 14 20Q21 25 26 20" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"></path><path d="M2 24Q7 19 14 24Q21 29 26 24" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"></path><circle cx="14" cy="8" r="5" stroke="#25282D" stroke-width="1.3"></circle></svg>
+        <div style="font:500 15px Sora">Своя набережная</div><div style="font:400 13.5px/1.6 Sora;color:#5A6068">400 м благоустроенного променада от территории до пляжа.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="plans" style="background:#F2EEE7;position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;height:280px;background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%);pointer-events:none;z-index:0"></div>
+  <div data-reveal-key="plans" style="position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ plansReveal }}">
+    <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">Планировки</div>
+    <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 12px">От студии до трёхкомнатной с террасой</h2>
+    <p style="font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 36px;max-width:640px">Все планировки оптимизированы под естественный свет: окна на две стороны там, где это возможно.</p>
+    <div style="display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap">
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="4">
+        <div onClick="{{ tab.select }}" style="{{ tab.style }}">{{ tab.label }}</div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <sc-for list="{{ filteredPlans }}" as="plan" hint-placeholder-count="3">
+        <div style="background:#FBFAF7;padding:28px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.05);transition:box-shadow .3s ease" style-hover="box-shadow:0 24px 70px rgba(0,0,0,.08)">
+          <div onClick="{{ plan.openImage }}" style="cursor:zoom-in;background:linear-gradient(135deg,#F2EEE7 0%,#EFEAE0 100%);border-radius:16px;height:160px;margin-bottom:20px;position:relative;display:flex;align-items:center;justify-content:center">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" style="opacity:.35"><rect x="3" y="3" width="24" height="24" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><path d="M3 21L10 14L15 18L25 8" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span style="position:absolute;bottom:10px;left:10px;font:11px ui-monospace,monospace;color:#5A6068;background:rgba(251,250,247,.85);padding:3px 7px;border-radius:6px">схема планировки — открыть</span>
+          </div>
+          <div style="font:500 18px Sora;margin-bottom:8px">{{ plan.title }}</div>
+          <div style="font:400 13.5px Sora;color:#5A6068;margin-bottom:18px">{{ plan.meta }}</div>
+          <div style="font:400 20px Newsreader,serif;margin-bottom:18px">{{ plan.formattedPrice }}</div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding-top:14px;border-top:1px solid rgba(37,40,45,.08)">
+            <a href="#contact" onClick="{{ plan.askPlan }}" style="font:600 13px Sora;display:inline-block;padding:8px 0">Запросить планировку →</a>
+            <a href="#calculator" onClick="{{ plan.calcHere }}" style="font:600 13px Sora;display:inline-flex;align-items:center;gap:7px;padding:8px 0;color:#5A6068;transition:color .3s ease" style-hover="color:#C8A96A"><span style="width:6px;height:6px;border-radius:50%;background:#C8A96A;flex:none"></span>Рассчитать ипотеку →</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<div id="location" data-reveal-key="location" style="max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ locationReveal }};position:relative;overflow:hidden">
+  <div style="position:absolute;top:10%;left:-110px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(90,96,104,.09) 0%,rgba(90,96,104,0) 70%);filter:blur(10px);pointer-events:none;z-index:0"></div>
+  <div style="position:relative;z-index:1;font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">Локация</div>
+  <div style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px">
+    <div class="loc-text">
+      <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 18px">Пять минут — и вы на воде</h2>
+      <p style="font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 32px">Комплекс стоит на тихой улице в старой части города, в шаговой доступности от набережной и в стороне от туристического потока.</p>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Пляж и набережная</span><span style="color:#5A6068">7 мин пешком</span></div>
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Школа №4</span><span style="color:#5A6068">10 мин пешком</span></div>
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Супермаркет</span><span style="color:#5A6068">4 мин пешком</span></div>
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Старый маяк и променад</span><span style="color:#5A6068">12 мин пешком</span></div>
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Центр города</span><span style="color:#5A6068">15 мин на авто</span></div>
+        <div style="display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(37,40,45,.08);border-bottom:1px solid rgba(37,40,45,.08);font:400 14px Sora"><span>Аэропорт</span><span style="color:#5A6068">40 мин на авто</span></div>
+      </div>
+    </div>
+    <div class="loc-zoom loc-photo" style="position:relative;border-radius:24px;overflow:hidden;min-height:clamp(240px,35vw,420px);background-image:url('assets/location.webp');background-size:cover;background-position:center center">
+      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(18,22,28,.22) 0%,rgba(18,22,28,0) 55%,rgba(18,22,28,.16) 100%)"></div>
+    </div>
+  </div>
+</div>
+
+<div id="pricing" style="background:#F2EEE7;position:relative;overflow:hidden">
+  <div style="position:absolute;bottom:-140px;left:-80px;width:380px;height:380px;border-radius:44% 56% 60% 40% / 50% 45% 55% 50%;background:radial-gradient(circle,rgba(90,96,104,.08) 0%,rgba(90,96,104,0) 72%);filter:blur(14px);pointer-events:none;z-index:0"></div>
+  <div data-reveal-key="pricing" style="position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ pricingReveal }}">
+    <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">Цены и условия</div>
+    <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 12px">Три способа стать владельцем</h2>
+    <p style="font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 40px;max-width:640px">Работаем с банками-партнёрами напрямую — предварительное одобрение ипотеки за один день.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <div style="background:#FBFAF7;padding:32px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.05);transition:box-shadow .3s ease" style-hover="box-shadow:0 24px 70px rgba(0,0,0,.08)">
+        <div style="font:500 19px Sora;margin-bottom:6px">Ипотека</div>
+        <div style="font:400 13.5px Sora;color:#5A6068;margin-bottom:22px">Ставка от 6,5% на первые 3 года по программе застройщика</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font:400 13.5px Sora;color:#5A6068;margin-bottom:24px">
+          <div>Первый взнос от 15%</div><div>Одобрение за 1 день</div><div>Без комиссий за выдачу</div><div>5 банков-партнёров</div>
+        </div>
+        <a href="#calculator" style="font:600 13px Sora;display:inline-block;padding:10px 0">Рассчитать платёж →</a>
+      </div>
+      <div style="background:#FBFAF7;padding:32px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.05);transition:box-shadow .3s ease" style-hover="box-shadow:0 24px 70px rgba(0,0,0,.08)">
+        <div style="font:500 19px Sora;margin-bottom:6px">Рассрочка от застройщика</div>
+        <div style="font:400 13.5px Sora;color:#5A6068;margin-bottom:22px">Без банка и переплат — до конца строительства</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font:400 13.5px Sora;color:#5A6068;margin-bottom:24px">
+          <div>Первый взнос от 30%</div><div>0% на весь срок рассрочки</div><div>Гибкий график платежей</div><div>Фиксация цены на дату брони</div>
+        </div>
+        <a href="#contact" onClick="{{ askInstallment }}" style="font:600 13px Sora;display:inline-block;padding:10px 0">Узнать график →</a>
+      </div>
+      <div style="background:#FBFAF7;padding:32px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.05);transition:box-shadow .3s ease" style-hover="box-shadow:0 24px 70px rgba(0,0,0,.08)">
+        <div style="font:500 19px Sora;margin-bottom:6px">100% оплата</div>
+        <div style="font:400 13.5px Sora;color:#5A6068;margin-bottom:22px">Максимальная скидка при полной оплате</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font:400 13.5px Sora;color:#5A6068;margin-bottom:24px">
+          <div>Скидка 5% от прайса</div><div>Приоритет в выборе этажа</div><div>Фиксированная цена в договоре</div><div>Сделка за 3–5 дней</div>
+        </div>
+        <a href="#contact" onClick="{{ askFullPay }}" style="font:600 13px Sora;display:inline-block;padding:10px 0">Получить прайс →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="calculator" data-reveal-key="calculator" style="max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ calculatorReveal }};position:relative;overflow:hidden">
+  <div style="position:absolute;top:-60px;right:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(200,169,106,.13) 0%,rgba(200,169,106,0) 70%);filter:blur(10px);pointer-events:none;z-index:0"></div>
+  <div style="position:relative;z-index:1;font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">Ипотечный калькулятор</div>
+  <h2 style="position:relative;z-index:1;font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 12px">Посчитайте платёж и нужный доход</h2>
+  <p style="position:relative;z-index:1;font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 44px;max-width:640px">Ориентировочный расчёт по программе застройщика. Точную ставку и одобрение банк даёт индивидуально.</p>
+  <div style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div>
+        <div style="display:flex;justify-content:space-between;font:400 14px Sora;margin-bottom:10px"><span>Стоимость квартиры</span><span style="font:500 14px Sora">{{ priceLabel }}</span></div>
+        <input type="range" min="3500000" max="14000000" step="50000" value="{{ price }}" onChange="{{ setPrice }}" style="width:100%">
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font:400 14px Sora;margin-bottom:10px"><span>Первоначальный взнос</span><span style="font:500 14px Sora">{{ downPaymentLabel }}</span></div>
+        <input type="range" min="10" max="70" step="1" value="{{ downPct }}" onChange="{{ setDownPct }}" style="width:100%">
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font:400 14px Sora;margin-bottom:10px"><span>Срок кредита</span><span style="font:500 14px Sora">{{ termLabel }}</span></div>
+        <input type="range" min="3" max="30" step="1" value="{{ term }}" onChange="{{ setTerm }}" style="width:100%">
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font:400 14px Sora;margin-bottom:10px"><span>Ставка</span><span style="font:500 14px Sora">{{ rateLabel }}</span></div>
+        <input type="range" min="4" max="14" step="0.1" value="{{ rate }}" onChange="{{ setRate }}" style="width:100%">
+      </div>
+    </div>
+    <div style="background:#F2EEE7;padding:36px;border-radius:20px;display:flex;flex-direction:column;gap:26px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+      <div style="display:flex;gap:16px;align-items:center;padding:16px;background:#FBFAF7;border-radius:16px;border:1px solid rgba(37,40,45,.07)">
+        <div style="{{ calcThumbStyle }}">
+          <svg width="22" height="22" viewBox="0 0 30 30" fill="none" style="opacity:.4"><rect x="3" y="3" width="24" height="24" rx="2" stroke="#5A6068" stroke-width="1.8"></rect><path d="M3 21L10 14L15 18L25 8" stroke="#5A6068" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <div style="min-width:0;flex:1">
+          <div style="font:500 11px Sora;letter-spacing:.08em;text-transform:uppercase;color:#C8A96A;margin-bottom:6px">{{ calcPlanKicker }}</div>
+          <div style="font:500 15px/1.35 Sora;margin-bottom:4px">{{ calcPlanTitle }}</div>
+          <sc-if value="{{ hasCalcPlan }}" hint-placeholder-val="{{ false }}">
+            <div style="font:400 12.5px/1.5 Sora;color:#5A6068">{{ calcPlanMeta }}</div>
+          </sc-if>
+          <sc-if value="{{ noCalcPlan }}" hint-placeholder-val="{{ true }}">
+            <div style="font:400 12.5px/1.5 Sora;color:#5A6068">Выберите планировку в разделе <a href="#plans" onClick="{{ goToPlans }}" style="font:500 12.5px Sora;border-bottom:1px solid rgba(200,169,106,.5)">«Планировки»</a> — цена подставится сюда</div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ hasCalcPlan }}" hint-placeholder-val="{{ false }}">
+          <a href="#plans" onClick="{{ clearCalcPlan }}" style="font:500 12px Sora;color:#5A6068;flex:none;align-self:flex-start;transition:color .3s ease" style-hover="color:#C8A96A">сменить</a>
+        </sc-if>
+      </div>
+      <div>
+        <div style="font:400 13px Sora;color:#5A6068;margin-bottom:6px">Ежемесячный платёж</div>
+        <div style="font:400 36px Newsreader,serif">{{ paymentLabel }}</div>
+      </div>
+      <div>
+        <div style="font:400 13px Sora;color:#5A6068;margin-bottom:6px">Необходимый доход в месяц</div>
+        <div style="font:400 24px Newsreader,serif">{{ incomeLabel }}</div>
+      </div>
+      <div>
+        <div style="font:400 13px Sora;color:#5A6068;margin-bottom:6px">Сумма кредита</div>
+        <div style="font:400 24px Newsreader,serif">{{ loanLabel }}</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:22px;border-top:1px solid rgba(37,40,45,.10)">
+        <a href="#contact" onClick="{{ sendToForm }}" style="padding:14px 24px;background:#25282D;color:#F6F3ED;font:600 13px Sora;border-radius:16px;transition:background .3s ease" style-hover="background:#3A3F46">Отправить расчёт в заявку →</a>
+        <button onClick="{{ downloadCalc }}" style="{{ pdfBtnStyle }}" style-hover="background:#FFFFFF"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V9M3.5 6L7 9.5L10.5 6M1.5 12.5H12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ pdfLabel }}</button>
+      </div>
+      <p style="font:400 12.5px/1.6 Sora;color:#5A6068;margin:0">Доход рассчитан из расчёта, что платёж по ипотеке не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении.</p>
+    </div>
+  </div>
+</div>
+
+<div id="gallery" style="background:#F2EEE7;position:relative;overflow:hidden">
+  <div style="position:absolute;bottom:-100px;right:-90px;width:360px;height:360px;border-radius:48% 52% 55% 45% / 50% 45% 55% 50%;background:radial-gradient(circle,rgba(90,96,104,.08) 0%,rgba(90,96,104,0) 72%);filter:blur(12px);pointer-events:none;z-index:0"></div>
+  <div data-reveal-key="gallery" style="position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ galleryReveal }}">
+    <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:18px">Галерея</div>
+    <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 12px">Как это будет выглядеть</h2>
+    <p style="font:400 16px/1.75 Sora;color:#5A6068;margin:0 0 40px;max-width:640px">Визуализации фасадов и двора — по состоянию проекта на текущую стадию строительства.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <sc-for list="{{ galleryItems }}" as="item" hint-placeholder-count="6">
+        <div onClick="{{ item.openImage }}" style="cursor:zoom-in;background:linear-gradient(135deg,#F2EEE7 0%,#EFEAE0 100%);border-radius:24px;position:relative;height:220px;box-shadow:0 20px 60px rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" style="opacity:.3"><rect x="4" y="7" width="26" height="20" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><circle cx="12" cy="14" r="2.5" stroke="#5A6068" stroke-width="1.6"></circle><path d="M4 24L12 17L18 21L30 11" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="position:absolute;bottom:12px;left:12px;font:11px ui-monospace,monospace;color:#5A6068;background:rgba(251,250,247,.85);padding:3px 7px;border-radius:6px">{{ item.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<div id="contact" data-reveal-key="contact" style="max-width:1320px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,40px);{{ contactReveal }};position:relative;overflow:hidden">
+  <div style="position:absolute;top:10%;right:-120px;width:360px;height:360px;border-radius:58% 42% 48% 52% / 55% 50% 50% 45%;background:radial-gradient(circle,rgba(232,210,160,.18) 0%,rgba(232,210,160,0) 70%);filter:blur(12px);pointer-events:none;z-index:0"></div>
+  <div class="cta-drift" style="position:relative;border-radius:24px;overflow:hidden;min-height:clamp(320px,42vw,520px);margin-bottom:56px;background-image:url('assets/cta.webp');background-size:cover;background-position:center 30%;display:flex;align-items:flex-end;padding:clamp(28px,5vw,56px)">
+    <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,18,22,.55) 0%,rgba(16,18,22,.05) 55%,rgba(16,18,22,0) 100%)"></div>
+    <div style="position:relative;z-index:1">
+      <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#E8D2A0;margin-bottom:14px">Контакты</div>
+      <h2 style="font:500 clamp(28px,4vw,44px)/1.15 Newsreader,serif;margin:0 0 12px;color:#F6F3ED">Оставьте заявку на просмотр</h2>
+      <p style="font:400 16px/1.7 Sora;color:rgba(246,243,237,.85);margin:0;max-width:42ch">Ответим в течение 20 минут в рабочее время и подберём подходящую планировку.</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;position:relative;z-index:1">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div><div style="font:400 12.5px Sora;color:#5A6068;margin-bottom:6px">Телефон отдела продаж</div><a href="tel:+79001234567" style="font:400 18px Newsreader,serif;color:#25282D;border-bottom:1px solid rgba(200,169,106,.45)" style-hover="color:#C8A96A">+7 (900) 123-45-67</a></div>
+      <div><div style="font:400 12.5px Sora;color:#5A6068;margin-bottom:6px">Почта</div><a href="mailto:sales@dom-u-morya.ru" style="font:400 18px Newsreader,serif;color:#25282D;border-bottom:1px solid rgba(200,169,106,.45);overflow-wrap:anywhere" style-hover="color:#C8A96A">sales@dom-u-morya.ru</a></div>
+      <div><div style="font:400 12.5px Sora;color:#5A6068;margin-bottom:6px">Офис продаж</div><div style="font:400 18px Newsreader,serif">Набережная ул., 14, шоурум ЖК</div></div>
+      <div><div style="font:400 12.5px Sora;color:#5A6068;margin-bottom:6px">Часы работы</div><div style="font:400 18px Newsreader,serif">Ежедневно, 9:00–20:00</div></div>
+    </div>
+    <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <form id="request-form" onSubmit="{{ submitForm }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px;background:#F2EEE7;padding:clamp(24px,4vw,36px);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+        <div>
+          <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:10px">Заявка</div>
+          <div style="font:500 clamp(20px,2.6vw,24px)/1.25 Newsreader,serif">{{ formTitle }}</div>
+          <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:8px">{{ formSub }}</div>
+        </div>
+        <sc-if value="{{ hasSnapshot }}" hint-placeholder-val="{{ false }}">
+          <div class="snap-card" style="background:#FBFAF7;border:1px solid rgba(200,169,106,.45);border-radius:16px;padding:22px 22px 18px">
+            <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:16px">
+              <div style="width:56px;height:56px;flex:none;border-radius:12px;background:linear-gradient(135deg,#F2EEE7 0%,#EFEAE0 100%);border:1px solid rgba(200,169,106,.45);display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="{{ requestIconPath }}" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font:500 11px Sora;letter-spacing:.08em;text-transform:uppercase;color:#C8A96A;margin-bottom:7px">{{ requestKicker }}</div>
+                <div style="font:400 18px/1.3 Newsreader,serif">{{ snapObject }}</div>
+                <div style="font:400 12.5px/1.5 Sora;color:#5A6068;margin-top:4px">{{ snapObjectMeta }}</div>
+              </div>
+              <button type="button" onClick="{{ removeSnapshot }}" aria-label="Убрать запрос" style="background:transparent;border:1px solid rgba(37,40,45,.12);border-radius:10px;color:#5A6068;font:500 12px Sora;cursor:pointer;padding:8px 12px;flex:none;transition:color .3s ease,border-color .3s ease" style-hover="color:#25282D;border-color:rgba(37,40,45,.3)">убрать</button>
+            </div>
+            <sc-if value="{{ hasRequestRows }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px 20px;padding-top:16px;border-top:1px solid rgba(37,40,45,.10)">
+                <sc-for list="{{ requestRows }}" as="row" hint-placeholder-count="4">
+                  <div><div style="font:400 11.5px Sora;color:#5A6068;margin-bottom:3px">{{ row.k }}</div><div style="font:500 13.5px Sora">{{ row.v }}</div></div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+        <label style="display:flex;flex-direction:column;gap:7px">
+          <span style="font:400 13px Sora;color:#5A6068">Имя <span style="color:#C8A96A">*</span></span>
+          <input placeholder="Как к вам обращаться" value="{{ name }}" onChange="{{ setName }}" onBlur="{{ blurName }}" autoComplete="name" name="name" style="{{ nameFieldStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+          <sc-if value="{{ nameError }}" hint-placeholder-val="{{ false }}">
+            <div style="font:400 13px/1.5 Sora;color:#A2543C">Укажите, как к вам обращаться</div>
+          </sc-if>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px">
+          <span style="font:400 13px Sora;color:#5A6068">Телефон <span style="color:#C8A96A">*</span></span>
+          <input placeholder="+7 (___) ___-__-__" value="{{ phone }}" onChange="{{ setPhone }}" onBlur="{{ blurPhone }}" type="tel" inputMode="tel" autoComplete="tel" name="phone" style="{{ phoneFieldStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+          <sc-if value="{{ phoneError }}" hint-placeholder-val="{{ false }}">
+            <div style="font:400 13px/1.5 Sora;color:#A2543C">Номер введён не полностью — 10 цифр после +7</div>
+          </sc-if>
+        </label>
+        <sc-if value="{{ planLocked }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:400 13px Sora;color:#5A6068">Интересующая планировка <span style="color:#C8A96A">*</span></span>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border:1px solid rgba(37,40,45,.10);background:#F6F2EA;border-radius:12px">
+              <span style="font:400 14px Sora;color:#25282D">{{ planLockedLabel }}</span>
+              <span style="font:400 12px Sora;color:#8A9099;flex:none">{{ planLockedNote }}</span>
+            </div>
+          </div>
+        </sc-if>
+        <sc-for list="{{ openedFields }}" as="f" hint-placeholder-count="0">
+          <div class="field-in" style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+              <span style="font:400 13px Sora;color:#5A6068">{{ f.label }}</span>
+              <button type="button" onClick="{{ f.close }}" style="{{ dropFieldStyle }}" style-hover="color:#25282D">не указывать</button>
+            </div>
+            <sc-if value="{{ f.isPlan }}" hint-placeholder-val="{{ false }}">
+              <select value="{{ planChoice }}" onChange="{{ setPlanChoice }}" name="plan" style="{{ planSelectStyle }}">
+                <option value="" disabled="{{ true }}">Выберите тип квартиры</option>
+                <option value="studio">Студия</option>
+                <option value="1k">1-комнатная</option>
+                <option value="2k">2-комнатная</option>
+                <option value="3k">3-комнатная / пентхаус</option>
+                <option value="unsure">Пока не определился(-лась)</option>
+              </select>
+            </sc-if>
+            <sc-if value="{{ f.isEmail }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ email }}" onChange="{{ setEmail }}" onBlur="{{ blurEmail }}" type="email" autoComplete="email" name="email" placeholder="пришлём подборку и прайс" style="{{ emailFieldStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </sc-if>
+            <sc-if value="{{ f.isChannel }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ channelChips }}" as="ch" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ ch.select }}" style="{{ ch.style }}">{{ ch.label }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.isTime }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ timeChips }}" as="t" hint-placeholder-count="5">
+                  <button type="button" onClick="{{ t.select }}" style="{{ t.style }}">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.error }}" hint-placeholder-val="{{ false }}">
+              <div style="font:400 13px/1.5 Sora;color:#A2543C">Проверьте адрес — похоже, в нём опечатка</div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ hasMoreFields }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font:400 13px/1.9 Sora;color:#5A6068;padding:2px 0">
+            <span>{{ moreFieldsLabel }}</span>
+            <sc-for list="{{ moreFields }}" as="m" hint-placeholder-count="4">
+              <button type="button" onClick="{{ m.add }}" style="background:none;border:none;padding:0;font:400 13px/1.9 Sora;color:#5A6068;border-bottom:1px dashed rgba(200,169,106,.7);cursor:pointer;transition:color .25s ease" style-hover="color:#25282D">{{ m.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <label style="display:flex;align-items:flex-start;gap:12px;font:400 13px/1.55 Sora;color:#5A6068;cursor:pointer;padding:2px 0">
+          <input type="checkbox" checked="{{ consent }}" onChange="{{ toggleConsent }}" style="margin-top:1px;width:18px;height:18px;flex-shrink:0;accent-color:#C8A96A;cursor:pointer">
+          <span>Даю согласие на обработку персональных данных и принимаю <a href="#contact" style="border-bottom:1px solid rgba(200,169,106,.5)">политику конфиденциальности</a> <span style="color:#C8A96A">*</span></span>
+        </label>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:-4px">
+          <div style="font:400 12px Sora;color:#8A9099"><span style="color:#C8A96A">*</span> — обязательные поля</div>
+          <sc-if value="{{ showFormHint }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:8px;font:400 12px Sora;color:#5A6068">
+              <span style="width:5px;height:5px;border-radius:50%;background:#C8A96A;flex:none"></span>{{ formHint }}
+            </div>
+          </sc-if>
+        </div>
+        <button type="submit" disabled="{{ submitDisabled }}" style="{{ submitBtnStyle }}">Отправить заявку</button>
+        <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:-4px">Ответим за 20 минут в рабочее время. Данные не передаём третьим лицам.</div>
+      </form>
+    </sc-if>
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#F2EEE7;padding:clamp(24px,4vw,36px);border-radius:20px;display:flex;flex-direction:column;gap:24px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+        <div>
+          <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:12px">Готово</div>
+          <div style="font:500 clamp(20px,2.6vw,24px)/1.25 Newsreader,serif">Заявка принята</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid rgba(37,40,45,.10)">
+          <sc-for list="{{ nextSteps }}" as="st" hint-placeholder-count="3">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span style="width:24px;height:24px;flex:none;border-radius:50%;border:1px solid rgba(200,169,106,.6);color:#C8A96A;font:500 12px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+              <span style="font:400 13px/1.6 Sora;color:#5A6068">{{ st.t }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <button onClick="{{ resetForm }}" style="align-self:flex-start;padding:14px 28px;background:#F4EFE7;color:#25282D;font:600 13px Sora;border:1px solid rgba(37,40,45,.10);border-radius:16px;cursor:pointer;transition:background .3s ease" style-hover="background:#FFFFFF">Отправить ещё одну</button>
+      </div>
+    </sc-if>
+  </div>
+</div>
+
+<div style="border-top:1px solid rgba(37,40,45,.08)">
+  <div style="max-width:1320px;margin:0 auto;padding:32px clamp(20px,5vw,40px);font:400 12.5px/1.6 Sora;color:#5A6068">
+    © 2026 ЖК «Дом у моря». Проектная декларация — на сайте наш.дом.рф. Материалы носят информационный характер и не являются офертой.
+  </div>
+</div>
+
+<sc-if value="{{ lightboxPlan }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeImage }}" onTouchStart="{{ onTouchStart }}" onTouchMove="{{ onTouchMove }}" onTouchEnd="{{ onTouchEnd }}" style="{{ lightboxBackdropStyle }}">
+    <div onClick="{{ stopClick }}" style="width:100%">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;max-width:1400px;margin-left:auto;margin-right:auto;padding:0 20px">
+        <div style="font:500 15px Sora;color:#fff">{{ lightboxTitle }} <span style="color:oklch(75% 0.01 60);font:400 13px Sora">· {{ lightboxPosition }}</span></div>
+        <button onClick="{{ closeImage }}" style="background:transparent;border:1px solid oklch(80% 0.01 80);color:#fff;font:500 13px Sora;padding:8px 14px;border-radius:2px;cursor:pointer">Закрыть</button>
+      </div>
+      <div style="position:relative;max-width:1400px;margin:0 auto;padding:0 20px;touch-action:none">
+        <div style="{{ dragImageStyle }}"></div>
+        <button onClick="{{ prevImage }}" aria-label="Предыдущая" style="{{ navArrowStyleLeft }}"><svg width="20" height="32" viewBox="0 0 20 32" fill="none"><path d="M16 3L4 16L16 29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <button onClick="{{ nextImage }}" aria-label="Следующая" style="{{ navArrowStyleRight }}"><svg width="20" height="32" viewBox="0 0 20 32" fill="none"><path d="M4 3L16 16L4 29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showCookieBanner }}" hint-placeholder-val="{{ true }}">
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;justify-content:center;padding:0 clamp(16px,4vw,32px) clamp(16px,4vw,28px)">
+    <div style="width:100%;max-width:760px;background:#25282D;color:oklch(94% 0.01 80);border-radius:6px;padding:22px 26px;display:flex;gap:24px;align-items:center;flex-wrap:wrap;box-shadow:0 12px 32px oklch(0% 0 0 / .25)">
+      <p style="flex:1;min-width:220px;margin:0;font:400 13.5px/1.6 Sora">Мы используем файлы cookie для работы сайта и аналитики. Продолжая, вы соглашаетесь с их использованием.</p>
+      <div style="display:flex;gap:12px;flex:none">
+        <button onClick="{{ declineCookies }}" style="padding:11px 20px;background:transparent;color:oklch(94% 0.01 80);border:1px solid #5A6068;font:600 12.5px Sora;border-radius:2px;cursor:pointer">Отклонить</button>
+        <button onClick="{{ acceptCookies }}" style="padding:11px 20px;background:oklch(94% 0.01 80);color:#25282D;border:none;font:600 12.5px Sora;border-radius:2px;cursor:pointer">Принять</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showScrollTop }}" hint-placeholder-val="{{ false }}">
+  <button onClick="{{ scrollToTop }}" aria-label="Наверх" style="{{ scrollTopStyle }}">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 7L8 2L13 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </button>
+</sc-if>
+
+<sc-if value="{{ galleryLightboxOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeGalleryImage }}" onTouchStart="{{ onTouchStart }}" onTouchMove="{{ onTouchMove }}" onTouchEnd="{{ onTouchEnd }}" style="{{ lightboxBackdropStyle }}">
+    <div onClick="{{ stopClick }}" style="width:100%">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;max-width:1400px;margin-left:auto;margin-right:auto;padding:0 20px">
+        <div style="font:500 15px Sora;color:#fff">{{ galleryLightboxTitle }} <span style="color:oklch(75% 0.01 60);font:400 13px Sora">· {{ galleryLightboxPosition }}</span></div>
+        <button onClick="{{ closeGalleryImage }}" style="background:transparent;border:1px solid oklch(80% 0.01 80);color:#fff;font:500 13px Sora;padding:8px 14px;border-radius:2px;cursor:pointer">Закрыть</button>
+      </div>
+      <div style="position:relative;max-width:1400px;margin:0 auto;padding:0 20px;touch-action:none">
+        <div style="{{ dragImageStyle }}"></div>
+        <button onClick="{{ prevGalleryImage }}" aria-label="Предыдущая" style="{{ navArrowStyleLeft }}"><svg width="20" height="32" viewBox="0 0 20 32" fill="none"><path d="M16 3L4 16L16 29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <button onClick="{{ nextGalleryImage }}" aria-label="Следующая" style="{{ navArrowStyleRight }}"><svg width="20" height="32" viewBox="0 0 20 32" fill="none"><path d="M4 3L16 16L4 29" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PLANS = [
+  {id:'s1',category:'studio',title:'Студия А',meta:'32 м² · окна на юг',price:3900000},
+  {id:'s2',category:'studio',title:'Студия B',meta:'36 м² · угловые окна',price:4250000},
+  {id:'s3',category:'studio',title:'Студия C',meta:'29 м² · компактная',price:3550000},
+  {id:'o1',category:'1k',title:'1-комнатная А',meta:'44 м² · спальня + гостиная-кухня',price:5400000},
+  {id:'o2',category:'1k',title:'1-комнатная B',meta:'48 м² · с балконом вдоль фасада',price:5800000},
+  {id:'o3',category:'1k',title:'1-комнатная C',meta:'41 м² · евроформат',price:5050000},
+  {id:'t1',category:'2k',title:'2-комнатная А',meta:'62 м² · окна на две стороны',price:7300000},
+  {id:'t2',category:'2k',title:'2-комнатная B',meta:'68 м² · с угловой террасой',price:7950000},
+  {id:'t3',category:'2k',title:'2-комнатная C',meta:'58 м² · компактная семейная',price:6900000},
+  {id:'r1',category:'3k',title:'3-комнатная А',meta:'86 м² · с гардеробной',price:10400000},
+  {id:'r2',category:'3k',title:'3-комнатная B — пентхаус',meta:'104 м² · терраса 22 м², верхний этаж',price:13900000},
+  {id:'r3',category:'3k',title:'3-комнатная C',meta:'79 м² · семейная, вид на двор',price:9700000},
+];
+const TABS = [
+  {key:'studio',label:'Студии'},
+  {key:'1k',label:'1-комнатные'},
+  {key:'2k',label:'2-комнатные'},
+  {key:'3k',label:'3-комнатные'},
+];
+const ICONS = {
+  calc: 'M7.5 3h9a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1M9.5 7.5h5M9.5 12h1.5M9.5 16h1.5M14 12v4.5',
+  plan: 'M4 4h16v16H4zM4 14h8M12 4v16',
+  installment: 'M4 6.5h16v13.5H4zM4 10.5h16M8.5 3.5v4M15.5 3.5v4',
+  full: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18M8.5 12l2.5 2.5 4.5-5',
+};
+const CAT_LABEL = {studio:'Студия','1k':'1-комнатная','2k':'2-комнатная','3k':'3-комнатная / пентхаус'};
+const GALLERY = [
+  'фасад — вид с набережной','фасад — вид со двора','двор — терраса и амфитеатр',
+  'холл первого этажа','детская зона','вид из окна на залив'
+];
+function rub(n){ return Math.round(n).toLocaleString('ru-RU') + ' \u20BD'; }
+const S_OPEN = '<' + 'script>', S_CLOSE = '<' + '/script>';
+function calcDocHtml(d, logo){
+  const row = (k, v) => `<tr><td class="k">${k}</td><td class="v">${v}</td></tr>`;
+  return `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Расчёт ипотеки — ЖК «Дом у моря»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+body{margin:0;background:#F8F6F2;font-family:Sora,sans-serif;color:#25282D;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet{width:210mm;min-height:297mm;margin:0 auto;background:#FBFAF7;padding:22mm 20mm 18mm;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:14px;border-bottom:1px solid rgba(37,40,45,.14)}
+.top img{height:46px;width:auto;display:block}
+.date{font:400 11px Sora;color:#5A6068;text-align:right;line-height:1.6}
+h1{font:500 30px/1.2 Newsreader,serif;margin:26px 0 6px}
+.sub{font:400 12.5px/1.6 Sora;color:#5A6068;margin:0 0 26px;max-width:60ch}
+.kick{font:500 10px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:9px}
+.obj{background:#F2EEE7;border-radius:14px;padding:20px 22px;margin-bottom:26px}
+.obj .t{font:500 17px Sora;margin-bottom:5px}
+.obj .m{font:400 12.5px Sora;color:#5A6068}
+table{width:100%;border-collapse:collapse}
+td{padding:12px 0;border-bottom:1px solid rgba(37,40,45,.10);vertical-align:baseline}
+.k{font:400 12.5px Sora;color:#5A6068}
+.v{font:500 13.5px Sora;text-align:right}
+.hl{background:#F2EEE7;border-radius:14px;padding:18px 22px;margin-top:24px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.hl .l{font:400 12.5px Sora;color:#5A6068}
+.hl .r{font:400 26px Newsreader,serif}
+.foot{margin-top:auto;padding-top:22px;border-top:1px solid rgba(37,40,45,.14);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.foot div{font:400 11.5px/1.8 Sora;color:#5A6068}
+.foot b{display:block;font:500 12.5px Sora;color:#25282D;margin-bottom:4px}
+.note{font:400 10.5px/1.6 Sora;color:#5A6068;margin-top:14px}
+@media print{body{background:#FBFAF7}.sheet{margin:0}}
+</style></head><body><div class="sheet">
+<div class="top"><img src="${logo}" alt="Дом у моря"><div class="date">Расчёт от ${d.date}<br>Ориентировочный</div></div>
+<h1>Расчёт ипотеки</h1>
+<p class="sub">Расчёт по программе застройщика ЖК «Дом у моря». Точную ставку и решение банк выдаёт индивидуально.</p>
+<div class="kick">${d.custom ? 'Произвольный расчёт' : 'Выбранная планировка'}</div>
+<div class="obj"><div class="t">${d.objectTitle}</div><div class="m">${d.objectMeta}</div></div>
+<div class="kick">Параметры</div>
+<table>
+${row('Стоимость квартиры', d.price)}
+${row('Первоначальный взнос', d.down)}
+${row('Сумма кредита', d.loan)}
+${row('Срок кредита', d.term)}
+${row('Ставка', d.rate)}
+${row('Необходимый доход', d.income)}
+</table>
+<div class="hl"><span class="l">Ежемесячный платёж</span><span class="r">${d.payment}</span></div>
+<p class="note">Доход рассчитан из условия, что платёж не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении. Материалы носят информационный характер и не являются офертой.</p>
+<div class="foot">
+<div><b>Отдел продаж</b>+7 (900) 123-45-67<br>sales@dom-u-morya.ru</div>
+<div><b>Офис продаж</b>Набережная ул., 14, шоурум ЖК<br>Ежедневно, 9:00–20:00</div>
+<div><b>ЖК «Дом у моря»</b>Проектная декларация — наш.дом.рф<br>© 2026</div>
+</div>
+</div>
+</body></html>`;
+}
+function loadScriptOnce(src){
+  if (!window.__scriptCache) window.__scriptCache = {};
+  if (window.__scriptCache[src]) return window.__scriptCache[src];
+  window.__scriptCache[src] = new Promise((res, rej) => {
+    const el = document.createElement('script');
+    el.src = src; el.onload = res; el.onerror = rej;
+    document.head.appendChild(el);
+  });
+  return window.__scriptCache[src];
+}
+async function makeCalcPdf(html, filename){
+  await Promise.all([
+    loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+    loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'),
+  ]);
+  const frame = document.createElement('iframe');
+  frame.setAttribute('aria-hidden', 'true');
+  frame.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;opacity:0;pointer-events:none';
+  document.body.appendChild(frame);
+  try {
+    await new Promise(res => { frame.onload = res; frame.srcdoc = html; });
+    const doc = frame.contentDocument;
+    if (doc.fonts && doc.fonts.ready) { try { await doc.fonts.ready; } catch (e) {} }
+    await Promise.all(Array.from(doc.images).map(img => img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; })));
+    await new Promise(r => setTimeout(r, 120));
+    const sheet = doc.querySelector('.sheet');
+    const canvas = await window.html2canvas(sheet, { scale: 2, backgroundColor: '#FBFAF7', useCORS: true, windowWidth: 794, width: sheet.offsetWidth, height: sheet.offsetHeight });
+    const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    const w = pdf.internal.pageSize.getWidth();
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, w, w * canvas.height / canvas.width, undefined, 'FAST');
+    const blob = pdf.output('blob');
+    const url = URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+    const tab = window.open(url, '_blank');
+    if (!tab) {
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } finally {
+    frame.remove();
+  }
+}
+function formatRuPhone(raw){
+  let d = raw.replace(/\D/g, '');
+  if (!d) return '';
+  if (d.startsWith('8')) d = '7' + d.slice(1);
+  if (!d.startsWith('7')) d = '7' + d;
+  d = d.slice(0, 11);
+  const rest = d.slice(1);
+  let out = '+7';
+  if (rest.length) out += ' (' + rest.slice(0, 3);
+  if (rest.length >= 3) out += ')';
+  if (rest.length > 3) out += ' ' + rest.slice(3, 6);
+  if (rest.length > 6) out += '-' + rest.slice(6, 8);
+  if (rest.length > 8) out += '-' + rest.slice(8, 10);
+  return out;
+}
+
+class Component extends DCLogic {
+  state = { selectedPlanId: null, snapshot: null, pdfBusy: false, filter: 'studio', price: 7300000, downPct: 20, term: 20, rate: 6.5, submitted: false, email: '', channel: 'Звонок', callTime: '', opts: [], blurred: {}, name: '', phone: '', planChoice: '', consent: false, menuOpen: false, isMobile: false, lightboxIndex: null, galleryLightboxIndex: null, dragX: 0, dragY: 0, dragging: false, cookieChoice: null, scrolled: false, revealed: {} };
+
+  componentDidMount() {
+    this.checkWidth = () => this.setState({ isMobile: window.innerWidth <= 1140 });
+    this.checkWidth();
+    window.addEventListener('resize', this.checkWidth);
+    this._lastScrollY = window.scrollY;
+    this.onScroll = () => {
+      const y = window.scrollY;
+      const hero = document.getElementById('hero-section');
+      const crossed = hero ? hero.getBoundingClientRect().bottom <= 0 : y > window.innerHeight;
+      const dy = y - this._lastScrollY;
+      this.setState(st => ({
+        scrolled: crossed,
+        scrollY: y,
+        menuOpen: st.menuOpen ? false : st.menuOpen,
+        headerHidden: y < 80 ? false : dy > 4 ? true : dy < -4 ? false : st.headerHidden,
+      }));
+      this._lastScrollY = y;
+    };
+    this.onScroll();
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onDocClick = (e) => {
+      if (this.state.menuOpen && !e.target.closest('#site-header')) this.setState({ menuOpen: false });
+    };
+    window.addEventListener('click', this.onDocClick);
+    this._revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const key = entry.target.getAttribute('data-reveal-key');
+          this.setState(st => ({ revealed: { ...st.revealed, [key]: true } }));
+          this._revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+    this._revealAll = () => {
+      document.querySelectorAll('[data-reveal-key]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          const key = el.getAttribute('data-reveal-key');
+          this.setState(st => st.revealed[key] ? null : { revealed: { ...st.revealed, [key]: true } });
+        } else {
+          this._revealObserver.observe(el);
+        }
+      });
+    };
+    this._revealAll();
+    window.addEventListener('hashchange', this._revealAll);
+    try {
+      const saved = localStorage.getItem('domUMorya_cookieChoice');
+      if (saved) this.setState({ cookieChoice: saved });
+    } catch (e) {}
+    this.onKeyDown = (e) => {
+      const plan = this.state.lightboxIndex !== null, gallery = this.state.galleryLightboxIndex !== null;
+      if (!plan && !gallery) return;
+      if (e.key === 'Escape') { this.setState({ lightboxIndex: null, galleryLightboxIndex: null }); return; }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const dir = e.key === 'ArrowLeft' ? -1 : 1;
+        if (plan) {
+          const count = PLANS.filter(p => p.category === this.state.filter).length;
+          this.setState(st => ({ lightboxIndex: ((st.lightboxIndex + dir) % count + count) % count }));
+        } else {
+          const len = GALLERY.length;
+          this.setState(st => ({ galleryLightboxIndex: ((st.galleryLightboxIndex + dir) % len + len) % len }));
+        }
+      }
+    };
+    window.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('resize', this.checkWidth);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('click', this.onDocClick);
+    window.removeEventListener('hashchange', this._revealAll);
+    if (this._revealObserver) this._revealObserver.disconnect();
+  }
+
+  scrollToForm() {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('request-form') || document.getElementById('contact');
+      if (!el) return;
+      const gap = window.innerWidth < 700 ? 84 : 108;
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - gap, behavior: 'smooth' });
+    });
+  }
+
+  openRequest(req) {
+    this.setState(st => ({ snapshot: req, planChoice: req.planChoice || st.planChoice }));
+    this.scrollToForm();
+  }
+
+  onTouchStart = (e) => {
+    const t = e.touches[0];
+    this._touchX = t.clientX; this._touchY = t.clientY; this._axis = null;
+  };
+  onTouchMove = (e) => {
+    if (this._touchX == null) return;
+    const t = e.touches[0];
+    const dx = t.clientX - this._touchX, dy = t.clientY - this._touchY;
+    if (!this._axis && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) this._axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    if (this._axis === 'x') this.setState({ dragX: dx, dragY: 0, dragging: true });
+    else if (this._axis === 'y') this.setState({ dragX: 0, dragY: dy, dragging: true });
+  };
+  onTouchEnd = () => {
+    const { dragX, dragY } = this.state;
+    const axis = this._axis;
+    this._touchX = null; this._axis = null;
+    if (axis === 'x' && Math.abs(dragX) > 60) {
+      if (this.state.lightboxIndex !== null) {
+        const count = PLANS.filter(p => p.category === this.state.filter).length;
+        this.setState(st => ({ lightboxIndex: ((st.lightboxIndex + (dragX < 0 ? 1 : -1)) % count + count) % count, dragX: 0, dragY: 0, dragging: false }));
+        return;
+      }
+      if (this.state.galleryLightboxIndex !== null) {
+        const len = GALLERY.length;
+        this.setState(st => ({ galleryLightboxIndex: ((st.galleryLightboxIndex + (dragX < 0 ? 1 : -1)) % len + len) % len, dragX: 0, dragY: 0, dragging: false }));
+        return;
+      }
+    }
+    if (axis === 'y' && Math.abs(dragY) > 90) {
+      this.setState({ lightboxIndex: null, galleryLightboxIndex: null, dragX: 0, dragY: 0, dragging: false });
+      return;
+    }
+    this.setState({ dragX: 0, dragY: 0, dragging: false });
+  };
+  renderVals() {
+    const s = this.state;
+    const reveal = key => s.revealed[key] ? 'opacity:1;transform:none;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)' : 'opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)';
+    const navColor = s.scrolled ? '#5A6068' : '#F6F3ED';
+    const heroParallaxY = Math.min(6, (s.scrollY || 0) * 0.05).toFixed(1);
+    const headerBarStyle = (s.scrolled
+      ? 'background:#FBFAF7;backdrop-filter:blur(6px);border:1px solid rgba(37,40,45,.08);box-shadow:0 8px 24px rgba(0,0,0,.06)'
+      : 'background:rgba(18,22,28,.42);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14)')
+      + ';border-radius:18px;max-width:1320px;margin:0 auto;padding:12px clamp(20px,4vw,32px);display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px;transition:background .3s ease,border-color .3s ease,box-shadow .3s ease';
+    const logoStyle = 'height:clamp(24px,6.5vw,52px);width:auto;display:block;flex-shrink:0;filter:' + (s.scrolled ? 'none' : 'brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.35))') + ';transition:filter .3s ease';
+    const tabs = TABS.map(t => ({
+      key: t.key, label: t.label,
+      select: () => this.setState({ filter: t.key }),
+      style: `padding:11px 20px;border-radius:99px;font:500 13px Sora;cursor:pointer;transition:background .3s ease,color .3s ease,border-color .3s ease;` +
+        (s.filter === t.key
+          ? 'background:#F4EFE7;color:#2E3135;border:1px solid rgba(37,40,45,.10)'
+          : 'background:#FBFAF7;color:#5A6068;border:1px solid rgba(37,40,45,.08)')
+    }));
+    const filteredPlansRaw = PLANS.filter(p => p.category === s.filter);
+    const filteredPlans = filteredPlansRaw.map((p, i) => ({
+      ...p, formattedPrice: 'от ' + rub(p.price),
+      openImage: () => this.setState({ lightboxIndex: i }),
+      askPlan: (e) => {
+        if (e) e.preventDefault();
+        this.openRequest({
+          kind: 'plan', kicker: 'Ваш запрос', planChoice: p.category,
+          objectTitle: p.title, objectMeta: p.meta + ' · от ' + rub(p.price),
+          rows: [{ k: 'Тип', v: CAT_LABEL[p.category] }, { k: 'Стоимость', v: 'от ' + rub(p.price) }],
+        });
+      },
+      calcHere: (e) => {
+        if (e) e.preventDefault();
+        this.setState({ selectedPlanId: p.id, price: p.price });
+        const el = document.getElementById('calculator');
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      },
+    }));
+    const selectedPlan = s.selectedPlanId ? PLANS.find(p => p.id === s.selectedPlanId) : null;
+    const hasLightbox = s.lightboxIndex !== null && filteredPlansRaw[s.lightboxIndex];
+    const lightboxPlanObj = hasLightbox ? filteredPlansRaw[s.lightboxIndex] : null;
+    const count = filteredPlansRaw.length;
+
+    const downPayment = s.price * s.downPct / 100;
+    const loanAmount = s.price - downPayment;
+    const monthlyRate = s.rate / 100 / 12;
+    const n = s.term * 12;
+    const payment = monthlyRate === 0 ? loanAmount / n : loanAmount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -n));
+    const income = payment / 0.4;
+
+    const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(s.phone);
+    const emailBad = !!s.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email);
+    const formMissing = [];
+    if (!s.name.trim()) formMissing.push('имя');
+    if (!phoneOk) formMissing.push(s.phone ? 'телефон полностью' : 'телефон');
+    if (!s.consent) formMissing.push('согласие на обработку данных');
+    if (emailBad) formMissing.push('корректный e-mail');
+    const formTouched = !!(s.name || s.phone || s.consent || s.email);
+    const formReady = !!(s.name.trim() && phoneOk && s.consent && !emailBad);
+
+    const opts = Array.isArray(s.opts) ? s.opts : [];
+    const blurred = s.blurred || {};
+    const snapKind = s.snapshot ? s.snapshot.kind : null;
+    const snapPlanTitle = s.snapshot ? (s.snapshot.planTitle || (snapKind === 'plan' ? s.snapshot.objectTitle : '')) : '';
+    const planLocked = !!snapPlanTitle;
+    const FIELD_LABELS = {
+      plan: ['Интересующая планировка', 'интересующую планировку'],
+      email: ['E-mail', 'e-mail для подборки'],
+      channel: ['Как удобнее связаться', 'способ связи'],
+      time: ['Удобное время звонка', 'удобное время звонка'],
+    };
+    const FIELD_RESETS = { plan: { planChoice: '' }, email: { email: '' }, channel: { channel: 'Звонок' }, time: { callTime: '' } };
+    const openField = key => this.setState(st => ({ opts: (Array.isArray(st.opts) ? st.opts : []).concat([key]) }));
+    const closeField = key => () => this.setState(st => Object.assign({ opts: (Array.isArray(st.opts) ? st.opts : []).filter(k => k !== key) }, FIELD_RESETS[key]));
+    const chipStyle = on => 'padding:11px 20px;border-radius:99px;font:' + (on ? 600 : 500) + ' 13px Sora;-webkit-font-smoothing:antialiased;white-space:nowrap;cursor:pointer;transition:background .3s ease,color .3s ease,border-color .3s ease;' +
+      (on ? 'background:#FBFAF7;color:#25282D;border:1px solid rgba(37,40,45,.10)' : 'background:transparent;color:#5A6068;border:1px solid rgba(37,40,45,.08)');
+    const fieldStyle = bad => 'width:100%;padding:15px 16px;border:1px solid ' + (bad ? '#A2543C' : 'rgba(37,40,45,.14)') + ';background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease';
+    const CHANNELS = ['Звонок', 'MAX', 'Telegram'];
+    const CALL_TIMES = [['', 'Любое время'], ['9-12', '9:00–12:00'], ['12-15', '12:00–15:00'], ['15-18', '15:00–18:00'], ['18-20', '18:00–20:00']];
+
+    return {
+      heroParallaxY,
+      showCookieBanner: !s.cookieChoice,
+      showScrollTop: s.scrolled,
+      scrollToTop: (e) => { if (e) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      scrollTopStyle: 'position:fixed;right:clamp(16px,4vw,32px);bottom:' + (s.cookieChoice ? 'clamp(16px,4vw,32px)' : 'clamp(96px,18vw,120px)') + ';z-index:45;width:46px;height:46px;border-radius:50%;background:#FBFAF7;border:1px solid rgba(37,40,45,.12);box-shadow:0 12px 32px rgba(0,0,0,.12);color:#5A6068;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s ease,bottom .3s ease',
+      acceptCookies: () => { try { localStorage.setItem('domUMorya_cookieChoice', 'accepted'); } catch (e) {} this.setState({ cookieChoice: 'accepted' }); },
+      declineCookies: () => { try { localStorage.setItem('domUMorya_cookieChoice', 'declined'); } catch (e) {} this.setState({ cookieChoice: 'declined' }); },
+      toggleMenu: () => this.setState(st => ({ menuOpen: !st.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      headerWrapStyle: 'position:fixed;top:0;left:0;right:0;z-index:20;padding:clamp(10px,2vw,16px) clamp(12px,3vw,24px);transform:translateY(' + (s.headerHidden ? '-120%' : '0') + ');transition:transform .35s cubic-bezier(.2,.7,.2,1)',
+      headerBarStyle, logoStyle,
+      headerCtaStyle: 'padding:clamp(11px,2.6vw,14px) clamp(10px,3.2vw,22px);font:600 clamp(11px,2.6vw,13px) Sora;border-radius:16px;white-space:nowrap;flex-shrink:0;transition:background .35s ease,color .35s ease,border-color .35s ease;' + (s.scrolled
+        ? 'background:#25282D;color:#F6F3ED;border:1px solid #25282D'
+        : 'background:#F4EFE7;color:#2E3135;border:1px solid rgba(37,40,45,.10)'),
+      headerCtaHover: s.scrolled ? 'background:#3A3F46' : 'background:#FFFFFF',
+      navLinksStyle: s.isMobile ? 'display:none' : 'display:flex;flex-wrap:wrap;gap:16px 26px;font:500 13px Sora;color:' + navColor + ';transition:color .3s ease',
+      navToggleStyle: (s.isMobile ? 'display:flex' : 'display:none') + ';flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:1px solid ' + (s.scrolled ? 'rgba(37,40,45,.14)' : 'rgba(255,255,255,.4)') + ';border-radius:12px;cursor:pointer;padding:0;flex:none',
+      navLineOuterStyle: 'display:' + (s.menuOpen ? 'none' : 'block') + ';height:2px;background:' + navColor + ';margin:0 9px;border-radius:2px;transition:background .3s ease',
+      navLineMiddleStyle: 'display:block;height:2px;background:' + navColor + ';margin:0 9px;border-radius:2px;transition:background .3s ease',
+      aboutReveal: reveal('about'), plansReveal: reveal('plans'), locationReveal: reveal('location'), pricingReveal: reveal('pricing'), calculatorReveal: reveal('calculator'), galleryReveal: reveal('gallery'), contactReveal: reveal('contact'),
+      mobileMenuStyle: (s.isMobile && s.menuOpen) ? 'display:block' : 'display:none',
+      lightboxPlan: hasLightbox, lightboxTitle: lightboxPlanObj ? lightboxPlanObj.title : '',
+      lightboxPosition: hasLightbox ? (s.lightboxIndex + 1) + ' из ' + count : '',
+      closeImage: () => this.setState({ lightboxIndex: null }),
+      onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove, onTouchEnd: this.onTouchEnd,
+      lightboxBackdropStyle: 'position:fixed;inset:0;background:oklch(15% 0.01 80 / ' + Math.max(0.25, 0.85 - Math.abs(s.dragY) / 350) + ');z-index:50;display:flex;align-items:center;justify-content:center;padding:clamp(14px,5vw,40px);touch-action:none',
+      dragImageStyle: 'background-image:repeating-linear-gradient(45deg,#5A6068 0 16px,oklch(35% 0.01 80) 16px 32px);border-radius:2px;height:min(75vh,640px);position:relative;transform:translate(' + s.dragX + 'px,' + s.dragY + 'px);transition:' + (s.dragging ? 'none' : 'transform 0.25s ease') + ';touch-action:none',
+      lightboxDots: [],
+      navArrowStyleLeft: (s.isMobile ? 'display:none;' : 'display:flex;') + 'align-items:center;justify-content:center;position:fixed;left:max(16px,calc((100vw - 1400px)/4));top:50%;transform:translateY(-50%);width:44px;height:44px;background:transparent;border:none;color:oklch(94% 0.01 80 / .8);cursor:pointer;transition:color 0.2s,opacity 0.2s;z-index:51',
+      navArrowStyleRight: (s.isMobile ? 'display:none;' : 'display:flex;') + 'align-items:center;justify-content:center;position:fixed;right:max(16px,calc((100vw - 1400px)/4));top:50%;transform:translateY(-50%);width:44px;height:44px;background:transparent;border:none;color:oklch(94% 0.01 80 / .8);cursor:pointer;transition:color 0.2s,opacity 0.2s;z-index:51',
+      prevImage: () => this.setState(st => ({ lightboxIndex: (st.lightboxIndex - 1 + count) % count })),
+      nextImage: () => this.setState(st => ({ lightboxIndex: (st.lightboxIndex + 1) % count })),
+      stopClick: e => e.stopPropagation(),
+      tabs, filteredPlans,
+      galleryItems: GALLERY.map((label, i) => ({ label, openImage: () => this.setState({ galleryLightboxIndex: i }) })),
+      galleryLightboxOpen: s.galleryLightboxIndex !== null,
+      galleryLightboxTitle: s.galleryLightboxIndex !== null ? GALLERY[s.galleryLightboxIndex] : '',
+      galleryLightboxPosition: s.galleryLightboxIndex !== null ? (s.galleryLightboxIndex + 1) + ' из ' + GALLERY.length : '',
+      galleryLightboxDots: [],
+      closeGalleryImage: () => this.setState({ galleryLightboxIndex: null }),
+      prevGalleryImage: () => this.setState(st => ({ galleryLightboxIndex: (st.galleryLightboxIndex - 1 + GALLERY.length) % GALLERY.length })),
+      nextGalleryImage: () => this.setState(st => ({ galleryLightboxIndex: (st.galleryLightboxIndex + 1) % GALLERY.length })),
+      priceLabel: rub(s.price),
+      downPaymentLabel: s.downPct + '% · ' + rub(downPayment),
+      termLabel: s.term + ' лет',
+      rateLabel: s.rate.toFixed(1) + '%',
+      price: s.price, downPct: s.downPct, term: s.term, rate: s.rate,
+      setPrice: e => this.setState({ price: Number(e.target.value), selectedPlanId: null }),
+      setDownPct: e => this.setState({ downPct: Number(e.target.value) }),
+      setTerm: e => this.setState({ term: Number(e.target.value) }),
+      setRate: e => this.setState({ rate: Number(e.target.value) }),
+      paymentLabel: rub(payment) + ' / мес',
+      incomeLabel: rub(income) + ' / мес',
+      loanLabel: rub(loanAmount),
+      hasCalcPlan: !!selectedPlan,
+      noCalcPlan: !selectedPlan,
+      goToPlans: (e) => {
+        if (e) e.preventDefault();
+        const el = document.getElementById('plans');
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      },
+      calcPlanKicker: selectedPlan ? 'Расчёт для объекта' : 'Произвольный расчёт',
+      calcPlanTitle: selectedPlan ? selectedPlan.title : 'Планировка не выбрана',
+      calcPlanMeta: selectedPlan ? selectedPlan.meta + ' · от ' + rub(selectedPlan.price) : 'Выберите планировку в разделе «Планировки» — цена подставится сюда',
+      calcThumbStyle: 'width:66px;height:66px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;' + (selectedPlan
+        ? 'background:linear-gradient(135deg,#F2EEE7 0%,#EFEAE0 100%);border:1px solid rgba(200,169,106,.5)'
+        : 'background:linear-gradient(135deg,#F4F2EE 0%,#EFEDE8 100%);border:1px dashed rgba(37,40,45,.18)'),
+      clearCalcPlan: (e) => {
+        if (e) e.preventDefault();
+        this.setState({ selectedPlanId: null });
+        const el = document.getElementById('plans');
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      },
+      sendToForm: (e) => {
+        if (e) e.preventDefault();
+        this.setState({
+          planChoice: selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure'),
+          snapshot: {
+            kind: 'calc', kicker: 'Ваш расчёт',
+            planTitle: selectedPlan ? selectedPlan.title : '',
+            objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
+            objectMeta: selectedPlan ? selectedPlan.meta : 'Планировка не выбрана — расчёт по указанной стоимости',
+            rows: [
+              { k: 'Стоимость', v: rub(s.price) },
+              { k: 'Первый взнос', v: s.downPct + '% · ' + rub(downPayment) },
+              { k: 'Срок / ставка', v: s.term + ' лет · ' + s.rate.toFixed(1) + '%' },
+              { k: 'Платёж', v: rub(payment) + ' / мес' },
+            ],
+          },
+        });
+        requestAnimationFrame(() => {
+          const form = document.getElementById('request-form');
+          const el = form || document.getElementById('contact');
+          if (!el) return;
+          const gap = window.innerWidth < 700 ? 84 : 108;
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - gap, behavior: 'smooth' });
+        });
+      },
+      downloadCalc: () => {
+        const d = {
+          date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
+          custom: !selectedPlan,
+          objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
+          objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + CAT_LABEL[selectedPlan.category] : 'Планировка не выбрана — расчёт по указанной стоимости',
+          price: rub(s.price), down: s.downPct + '% · ' + rub(downPayment), loan: rub(loanAmount),
+          term: s.term + ' лет', rate: s.rate.toFixed(1) + '%',
+          income: rub(income) + ' / мес', payment: rub(payment) + ' / мес',
+        };
+        const logo = new URL('assets/logo-cropped.webp', document.baseURI).href;
+        if (s.pdfBusy) return;
+        this.setState({ pdfBusy: true });
+        makeCalcPdf(calcDocHtml(d, logo), 'Расчёт ипотеки — Дом у моря.pdf')
+          .catch(() => {})
+          .then(() => this.setState({ pdfBusy: false }));
+      },
+      pdfLabel: s.pdfBusy ? 'Готовим PDF…' : 'Скачать расчёт',
+      pdfBtnStyle: 'padding:14px 24px;background:#F4EFE7;color:#2E3135;font:600 13px Sora;border:1px solid rgba(37,40,45,.10);border-radius:16px;display:inline-flex;align-items:center;gap:9px;transition:background .3s ease,opacity .3s ease;' + (s.pdfBusy ? 'opacity:.6;cursor:progress' : 'cursor:pointer'),
+      hasSnapshot: !!s.snapshot,
+      snapObject: s.snapshot ? s.snapshot.objectTitle : '',
+      snapObjectMeta: s.snapshot ? s.snapshot.objectMeta : '',
+      requestKicker: s.snapshot ? s.snapshot.kicker : '',
+      requestIconPath: ICONS[s.snapshot ? s.snapshot.kind : 'calc'],
+      requestRows: s.snapshot && s.snapshot.rows ? s.snapshot.rows : [],
+      hasRequestRows: !!(s.snapshot && s.snapshot.rows && s.snapshot.rows.length),
+      removeSnapshot: () => this.setState({ snapshot: null }),
+      askInstallment: (e) => { if (e) e.preventDefault(); this.openRequest({ kind: 'installment', kicker: 'Ваш запрос', objectTitle: 'Рассрочка от застройщика', objectMeta: 'Запрос графика платежей · первый взнос от 30%, 0% на весь срок' }); },
+      askFullPay: (e) => { if (e) e.preventDefault(); this.openRequest({ kind: 'full', kicker: 'Ваш запрос', objectTitle: '100% оплата', objectMeta: 'Запрос прайса со скидкой 5% и приоритетом в выборе этажа' }); },
+      submitted: s.submitted, notSubmitted: !s.submitted, name: s.name, phone: s.phone, planChoice: s.planChoice,
+      setName: e => this.setState({ name: e.target.value }),
+      setPhone: e => {
+        const el = e.target;
+        const caret = el.selectionStart == null ? el.value.length : el.selectionStart;
+        let head = el.value.slice(0, caret).replace(/\D/g, '');
+        if (head.startsWith('8')) head = '7' + head.slice(1);
+        else if (!head.startsWith('7')) head = '7' + head;
+        const digitsBefore = head.length;
+        const formatted = formatRuPhone(el.value);
+        let seen = 0, pos = formatted.length;
+        for (let i = 0; i < formatted.length; i++) {
+          if (/\d/.test(formatted[i])) seen++;
+          if (seen === digitsBefore) { pos = i + 1; break; }
+        }
+        if (!formatted) pos = 0;
+        try { el.value = formatted; el.setSelectionRange(pos, pos); } catch (err) {}
+        this.setState({ phone: formatted }, () => {
+          if (!el.isConnected || document.activeElement !== el) return;
+          if (el.selectionStart !== pos) { try { el.setSelectionRange(pos, pos); } catch (err) {} }
+        });
+      },
+      setPlanChoice: e => this.setState({ planChoice: e.target.value }),
+      email: s.email,
+      setEmail: e => this.setState({ email: e.target.value }),
+      blurName: () => this.setState(st => ({ blurred: Object.assign({}, st.blurred, { name: true }) })),
+      blurPhone: () => this.setState(st => ({ blurred: Object.assign({}, st.blurred, { phone: true }) })),
+      blurEmail: () => this.setState(st => ({ blurred: Object.assign({}, st.blurred, { email: true }) })),
+      nameError: !!blurred.name && !s.name.trim(),
+      phoneError: !!blurred.phone && !!s.phone && !phoneOk,
+      nameFieldStyle: fieldStyle(!!blurred.name && !s.name.trim()),
+      phoneFieldStyle: fieldStyle(!!blurred.phone && !!s.phone && !phoneOk),
+      emailFieldStyle: fieldStyle(emailBad && !!blurred.email),
+      planLocked: planLocked,
+      planLockedLabel: snapPlanTitle,
+      planLockedNote: snapKind === 'calc' ? 'из вашего расчёта' : 'из вашего запроса',
+      formTitle: snapKind === 'calc' ? 'Обсудим ваш расчёт' : (s.snapshot ? 'Обсудим ваш запрос' : 'Оставьте заявку на подбор'),
+      formSub: snapKind === 'calc'
+        ? 'Проверим условия расчёта, зафиксируем платёж и покажем планировку — на объекте или онлайн.'
+        : (snapKind === 'plan'
+          ? 'Покажем эту планировку на объекте или онлайн, пришлём подборку похожих и актуальный прайс.'
+          : (s.snapshot
+            ? 'Уточним условия оплаты, пришлём документы и ответим на вопросы по вашему запросу.'
+            : 'Перезвоним в течение 20 минут в рабочее время и подберём планировку под ваш запрос.')),
+      dropFieldStyle: 'background:none;border:none;padding:0;font:400 13px Sora;color:#8A9099;cursor:pointer;transition:color .25s ease;flex:none',
+      openedFields: opts.filter(k => !(k === 'plan' && planLocked)).map(k => ({
+        key: k, label: FIELD_LABELS[k][0],
+        isPlan: k === 'plan', isEmail: k === 'email', isChannel: k === 'channel', isTime: k === 'time',
+        error: k === 'email' && emailBad && !!blurred.email,
+        close: closeField(k),
+      })),
+      moreFields: ['plan', 'email', 'channel', 'time']
+        .filter(k => opts.indexOf(k) === -1 && !(k === 'plan' && planLocked))
+        .map((k, i, arr) => ({ label: FIELD_LABELS[k][1] + (i < arr.length - 1 ? ',' : ''), add: () => openField(k) })),
+      hasMoreFields: ['plan', 'email', 'channel', 'time'].filter(k => opts.indexOf(k) === -1 && !(k === 'plan' && planLocked)).length > 0,
+      moreFieldsLabel: opts.length === 0 ? 'Можно сразу указать' : 'Ещё можно указать',
+      channelChips: CHANNELS.map(label => ({ label, style: chipStyle(s.channel === label), select: () => this.setState({ channel: label }) })),
+      timeChips: CALL_TIMES.map(t => ({ label: t[1], style: chipStyle(s.callTime === t[0]), select: () => this.setState({ callTime: t[0] }) })),
+      nextSteps: [
+        { n: '1', t: 'Менеджер звонит в течение 20 минут и уточняет запрос' },
+        { n: '2', t: 'Присылаем подборку планировок и актуальный прайс' },
+        { n: '3', t: 'Показ на объекте или онлайн — в удобное вам время' },
+      ],
+      planSelectStyle: 'padding:15px 44px 15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7 url(\'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%229%22 viewBox=%220 0 14 9%22 fill=%22none%22%3E%3Cpath d=%22M1 1L7 7L13 1%22 stroke=%22%23808080%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E\') no-repeat right 16px center;appearance:none;-webkit-appearance:none;color:' + (s.planChoice ? '#25282D' : '#5A6068') + ';font:400 14px Sora;border-radius:12px;outline:none',
+      consent: s.consent,
+      toggleConsent: e => this.setState({ consent: e.target.checked }),
+      showFormHint: !!(formMissing.length && formTouched),
+      formHint: formMissing.length ? 'Осталось: ' + formMissing.join(', ') : '',
+      submitDisabled: !formReady,
+      resetForm: () => this.setState({ submitted: false, name: '', phone: '', planChoice: '', consent: false, snapshot: null, email: '', channel: 'Звонок', callTime: '', opts: [], blurred: {} }),
+      submitBtnStyle: 'padding:16px;border-radius:16px;font:600 14px Sora;transition:background .3s ease,color .3s ease,border-color .3s ease;' + (formReady ? 'background:#25282D;color:#F6F3ED;cursor:pointer;border:1px solid #25282D' : 'background:rgba(37,40,45,.12);color:#5A6068;cursor:not-allowed;border:none'),
+      submitForm: e => {
+        e.preventDefault();
+        if (!formReady) {
+          this.setState({ blurred: { name: true, phone: true, email: true } });
+          return;
+        }
+        this.setState({ submitted: true });
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

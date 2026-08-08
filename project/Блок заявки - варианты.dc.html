@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F8F6F2;font-family:Sora,sans-serif;color:#25282D}
+  a{color:#C8A96A;text-decoration:none}
+  a:hover{color:#B4915A}
+  ::selection{background:#EFE2C4}
+  input,select,button,textarea{font-family:Sora,sans-serif}
+  @keyframes snapIn{0%{opacity:0;transform:translateY(-8px)}100%{opacity:1;transform:translateY(0)}}
+  .snap{animation:snapIn .5s cubic-bezier(.2,.7,.2,1) both}
+  [id="1c"] input::placeholder{color:rgba(246,243,237,.68);opacity:1}
+  [id="1c"] input:-webkit-autofill{-webkit-text-fill-color:#F6F3ED;transition:background-color 9999s}
+</style>
+</helmet>
+
+<section style="padding:48px clamp(20px,4vw,56px) 96px;max-width:2400px;margin:0 auto">
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:40px;max-width:70ch">
+    <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A">Ход 1 · блок отправки заявки</div>
+    <h1 style="font:500 clamp(28px,3.4vw,40px)/1.15 Newsreader,serif;margin:0">Три версии блока заявки</h1>
+    <p style="font:400 15px/1.7 Sora;color:#5A6068;margin:0">Во всех: заголовок и подзаголовок меняются по контексту — расчёт из калькулятора или просто заявка на подбор; выбранный вариант выделяется бежевым, а не чёрным; обязательны только имя, телефон и согласие. Формы рабочие — заполните и отправьте.</p>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+    <div id="1a" style="width:560px;flex:none;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <span style="font:600 11px Sora;letter-spacing:.08em;background:#25282D;color:#F6F3ED;padding:6px 10px;border-radius:8px">1a</span>
+        <span style="font:500 15px Sora">Полировка текущей формы</span>
+        <span style="font:400 13px Sora;color:#5A6068">одна колонка, всё на виду</span>
+      </div>
+      <sc-if value="{{ a.done }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#F2EEE7;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:24px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div>
+            <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:12px">Готово</div>
+            <div style="font:500 24px/1.25 Newsreader,serif">Заявка принята</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid rgba(37,40,45,.10)">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <span style="width:24px;height:24px;flex:none;border-radius:50%;border:1px solid rgba(200,169,106,.6);color:#C8A96A;font:500 12px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <span style="font:400 13px/1.6 Sora;color:#5A6068">{{ st.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ a.reset }}" style="align-self:flex-start;padding:14px 28px;background:#F4EFE7;color:#25282D;font:600 13px Sora;border:1px solid rgba(37,40,45,.10);border-radius:14px;cursor:pointer">Отправить ещё одну</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ a.notDone }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ a.submit }}" noValidate="{{ true }}" style="background:#F2EEE7;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div>
+            <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:10px">Заявка</div>
+            <div style="font:500 clamp(20px,2.4vw,24px)/1.25 Newsreader,serif">{{ a.title }}</div>
+            <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:8px">{{ a.sub }}</div>
+          </div>
+          <sc-if value="{{ a.hasSnap }}" hint-placeholder-val="{{ true }}">
+            <div class="snap" style="background:#FBFAF7;border:1px solid rgba(200,169,106,.45);border-radius:16px;padding:20px">
+              <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
+                <div style="flex:1;min-width:0">
+                  <div style="font:500 12px Sora;letter-spacing:.08em;text-transform:uppercase;color:#C8A96A;margin-bottom:7px">{{ snap.kicker }}</div>
+                  <div style="font:400 18px/1.3 Newsreader,serif">{{ snap.title }}</div>
+                  <div style="font:400 13px/1.5 Sora;color:#5A6068;margin-top:4px">{{ snap.meta }}</div>
+                </div>
+                <button type="button" onClick="{{ a.removeSnap }}" style="flex:none;background:transparent;border:1px solid rgba(37,40,45,.12);border-radius:10px;color:#5A6068;font:500 13px Sora;padding:8px 12px;cursor:pointer">убрать</button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px 20px;padding-top:14px;border-top:1px solid rgba(37,40,45,.10)">
+                <sc-for list="{{ snap.rows }}" as="row" hint-placeholder-count="4">
+                  <div><div style="font:400 13px Sora;color:#5A6068;margin-bottom:3px">{{ row.k }}</div><div style="font:500 14px Sora">{{ row.v }}</div></div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <label style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:400 13px Sora;color:#5A6068">Имя <span style="color:#C8A96A">*</span></span>
+            <input value="{{ a.name }}" onChange="{{ a.setName }}" onBlur="{{ a.blurName }}" autoComplete="name" placeholder="Как к вам обращаться" style="{{ a.nameStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            <sc-if value="{{ a.nameError }}" hint-placeholder-val="{{ false }}">
+              <div style="font:400 13px/1.5 Sora;color:#A2543C">Укажите, как к вам обращаться</div>
+            </sc-if>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:400 13px Sora;color:#5A6068">Телефон <span style="color:#C8A96A">*</span></span>
+            <input value="{{ a.phone }}" onChange="{{ a.setPhone }}" onBlur="{{ a.blurPhone }}" type="tel" inputMode="tel" autoComplete="tel" placeholder="+7 (___) ___-__-__" style="{{ a.phoneStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            <sc-if value="{{ a.phoneError }}" hint-placeholder-val="{{ false }}">
+              <div style="font:400 13px/1.5 Sora;color:#A2543C">Номер введён не полностью — 10 цифр после +7</div>
+            </sc-if>
+          </label>
+          <sc-if value="{{ a.planLocked }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Интересующая планировка <span style="color:#C8A96A">*</span></span>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border:1px solid rgba(37,40,45,.10);background:#F6F2EA;border-radius:12px">
+                <span style="font:400 14px Sora;color:#25282D">{{ a.planLockedLabel }}</span>
+                <span style="font:400 12px Sora;color:#8A9099;flex:none">из вашего расчёта</span>
+              </div>
+            </div>
+          </sc-if>
+          <sc-for list="{{ a.opened }}" as="f" hint-placeholder-count="0">
+            <div class="snap" style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                <span style="font:400 13px Sora;color:#5A6068">{{ f.label }}</span>
+                <button type="button" onClick="{{ f.close }}" style="{{ dropStyle }}" style-hover="color:#25282D">не указывать</button>
+              </div>
+              <sc-if value="{{ f.isPlan }}" hint-placeholder-val="{{ false }}">
+                <select value="{{ a.plan }}" onChange="{{ a.setPlan }}" style="{{ a.planStyle }}">
+                  <sc-for list="{{ planOptions }}" as="o" hint-placeholder-count="6">
+                    <option value="{{ o.v }}" disabled="{{ o.dis }}">{{ o.l }}</option>
+                  </sc-for>
+                </select>
+              </sc-if>
+              <sc-if value="{{ f.isEmail }}" hint-placeholder-val="{{ false }}">
+                <input value="{{ a.email }}" onChange="{{ a.setEmail }}" onBlur="{{ a.blurEmail }}" type="email" autoComplete="email" placeholder="пришлём подборку и прайс" style="{{ a.emailStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+              </sc-if>
+              <sc-if value="{{ f.isChannel }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ a.channels }}" as="ch" hint-placeholder-count="3">
+                    <button type="button" onClick="{{ ch.select }}" style="{{ ch.style }}">{{ ch.label }}</button>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ f.isTime }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ a.times }}" as="t" hint-placeholder-count="5">
+                    <button type="button" onClick="{{ t.select }}" style="{{ t.style }}">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ f.error }}" hint-placeholder-val="{{ false }}">
+                <div style="font:400 13px/1.5 Sora;color:#A2543C">{{ f.errorText }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{ a.hasMore }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;font:400 13px/1.9 Sora;color:#5A6068;padding:2px 0">
+              <span>{{ a.moreLabel }}</span>
+              <sc-for list="{{ a.more }}" as="m" hint-placeholder-count="4">
+                <button type="button" onClick="{{ m.add }}" style="background:none;border:none;padding:0;font:400 13px/1.9 Sora;color:#5A6068;border-bottom:1px dashed rgba(200,169,106,.7);cursor:pointer;transition:color .25s ease" style-hover="color:#25282D">{{ m.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <label style="display:flex;align-items:flex-start;gap:12px;font:400 13px/1.55 Sora;color:#5A6068;cursor:pointer;padding:2px 0">
+            <input type="checkbox" checked="{{ a.consent }}" onChange="{{ a.setConsent }}" style="margin-top:1px;width:18px;height:18px;flex:none;accent-color:#C8A96A;cursor:pointer">
+            <span>Даю согласие на обработку персональных данных и принимаю <a href="#1a" style="border-bottom:1px solid rgba(200,169,106,.5)">политику конфиденциальности</a> <span style="color:#C8A96A">*</span></span>
+          </label>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:-4px">
+            <div style="font:400 12px Sora;color:#8A9099"><span style="color:#C8A96A">*</span> — обязательные поля</div>
+            <sc-if value="{{ a.showHint }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:8px;font:400 12px Sora;color:#5A6068"><span style="width:5px;height:5px;border-radius:50%;background:#C8A96A;flex:none"></span>{{ a.hint }}</div>
+            </sc-if>
+          </div>
+          <button type="submit" disabled="{{ a.disabled }}" style="{{ a.btnStyle }}">Отправить заявку</button>
+          <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:-4px">Ответим за 20 минут в рабочее время. Данные не передаём третьим лицам.</div>
+        </form>
+      </sc-if>
+    </div>
+
+    <div id="1b-removed" style="display:none">
+      <sc-if value="{{ false }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#F2EEE7;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:24px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div>
+            <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:12px">Заявка принята</div>
+            <div style="font:500 24px/1.25 Newsreader,serif">Спасибо, {{ b.name }}</div>
+            <div style="font:400 14px/1.65 Sora;color:#5A6068;margin-top:10px">Номер заявки <b style="font:600 14px Sora;color:#25282D">{{ b.order }}</b> — менеджер назовёт его при звонке.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid rgba(37,40,45,.10)">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <span style="width:24px;height:24px;flex:none;border-radius:50%;border:1px solid rgba(200,169,106,.6);color:#C8A96A;font:500 12px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <span style="font:400 13px/1.6 Sora;color:#5A6068">{{ st.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ b.reset }}" style="align-self:flex-start;padding:14px 28px;background:#F4EFE7;color:#25282D;font:600 13px Sora;border:1px solid rgba(37,40,45,.10);border-radius:14px;cursor:pointer">Отправить ещё одну</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ false }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ b.submit }}" style="background:#F2EEE7;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="{{ b.bar1 }}"></div>
+            <div style="{{ b.bar2 }}"></div>
+            <span style="font:500 11.5px Sora;color:#5A6068;white-space:nowrap;margin-left:6px">{{ b.stepLabel }}</span>
+          </div>
+          <div>
+            <div style="font:500 clamp(20px,2.4vw,24px)/1.25 Newsreader,serif">{{ b.title }}</div>
+            <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:8px">{{ b.sub }}</div>
+          </div>
+          <sc-if value="{{ b.hasSnap }}" hint-placeholder-val="{{ true }}">
+            <div class="snap" style="background:#FBFAF7;border:1px solid rgba(200,169,106,.45);border-radius:16px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start">
+              <div style="flex:1;min-width:0">
+                <div style="font:500 12px Sora;letter-spacing:.08em;text-transform:uppercase;color:#C8A96A;margin-bottom:6px">{{ snap.kicker }}</div>
+                <div style="font:400 17px/1.3 Newsreader,serif">{{ snap.title }}</div>
+                <div style="font:400 13px/1.5 Sora;color:#5A6068;margin-top:4px">{{ snap.short }}</div>
+              </div>
+              <button type="button" onClick="{{ b.removeSnap }}" style="flex:none;background:transparent;border:1px solid rgba(37,40,45,.12);border-radius:10px;color:#5A6068;font:500 13px Sora;padding:8px 12px;cursor:pointer">убрать</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ b.step1 }}" hint-placeholder-val="{{ true }}">
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Имя <span style="color:#C8A96A">*</span></span>
+              <input value="{{ b.name }}" onChange="{{ b.setName }}" autoComplete="name" placeholder="Как к вам обращаться" style="width:100%;padding:15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Телефон <span style="color:#C8A96A">*</span></span>
+              <input value="{{ b.phone }}" onChange="{{ b.setPhone }}" type="tel" inputMode="tel" autoComplete="tel" placeholder="+7 (___) ___-__-__" style="width:100%;padding:15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:12px;font:400 13px/1.55 Sora;color:#5A6068;cursor:pointer;padding:2px 0">
+              <input type="checkbox" checked="{{ b.consent }}" onChange="{{ b.setConsent }}" style="margin-top:1px;width:18px;height:18px;flex:none;accent-color:#C8A96A;cursor:pointer">
+              <span>Даю согласие на обработку персональных данных <span style="color:#C8A96A">*</span></span>
+            </label>
+            <button type="button" onClick="{{ b.next }}" disabled="{{ b.nextDisabled }}" style="{{ b.nextBtnStyle }}">Продолжить →</button>
+            <sc-if value="{{ b.showHint }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:8px;margin-top:-8px;font:400 13px Sora;color:#5A6068"><span style="width:5px;height:5px;border-radius:50%;background:#C8A96A;flex:none"></span>{{ b.hint }}</div>
+            </sc-if>
+            <div style="font:400 12px/1.6 Sora;color:#8A9099">Двух полей достаточно — остальное уточним на втором шаге или по телефону.</div>
+          </sc-if>
+          <sc-if value="{{ b.step2 }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Интересующая планировка</span>
+              <select value="{{ b.plan }}" onChange="{{ b.setPlan }}" style="{{ selectStyle }}">
+                <sc-for list="{{ planOptions }}" as="o" hint-placeholder-count="6">
+                  <option value="{{ o.v }}">{{ o.l }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">E-mail<span style="color:#8A9099"> · необязательно</span></span>
+              <input value="{{ b.email }}" onChange="{{ b.setEmail }}" type="email" autoComplete="email" placeholder="пришлём подборку и прайс" style="width:100%;padding:15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </label>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font:400 13px Sora;color:#5A6068">Как удобнее связаться<span style="color:#8A9099"> · необязательно</span></span>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ b.channels }}" as="ch" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ ch.select }}" style="{{ ch.style }}">{{ ch.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Удобное время звонка<span style="color:#8A9099"> · необязательно</span></span>
+              <select value="{{ b.time }}" onChange="{{ b.setTime }}" style="{{ selectStyle }}">
+                <sc-for list="{{ timeOptions }}" as="o" hint-placeholder-count="5">
+                  <option value="{{ o.v }}">{{ o.l }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button type="submit" style="flex:1;min-width:200px;padding:16px;border-radius:14px;font:600 14px Sora;background:#25282D;color:#F6F3ED;border:1px solid #25282D;cursor:pointer">Отправить заявку</button>
+              <button type="button" onClick="{{ b.back }}" style="padding:16px 22px;border-radius:14px;font:600 13px Sora;background:transparent;color:#5A6068;border:1px solid rgba(37,40,45,.14);cursor:pointer">Назад</button>
+            </div>
+            <div style="font:400 12px/1.6 Sora;color:#8A9099">Не передаём данные третьим лицам.</div>
+          </sc-if>
+        </form>
+      </sc-if>
+    </div>
+
+    <div id="1c" style="width:720px;flex:none;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <span style="font:600 11px Sora;letter-spacing:.08em;background:#25282D;color:#F6F3ED;padding:6px 10px;border-radius:8px">1c</span>
+        <span style="font:500 15px Sora">Форма поверх фото</span>
+        <span style="font:400 13px Sora;color:#5A6068">эмоция и заявка в одном экране</span>
+      </div>
+      <div style="position:relative;border-radius:24px;overflow:hidden;background-image:url('assets/cta.webp');background-size:cover;background-position:center 35%;padding:clamp(28px,4vw,48px);display:flex;gap:36px;align-items:center;flex-wrap:wrap">
+        <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(16,18,22,.72) 0%,rgba(16,18,22,.42) 60%,rgba(16,18,22,.18) 100%)"></div>
+        <div style="position:relative;z-index:1;flex:1;min-width:230px;display:flex;flex-direction:column;gap:18px">
+          <div>
+            <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#E8D2A0;margin-bottom:14px">Контакты</div>
+            <h2 style="font:500 clamp(26px,3vw,36px)/1.15 Newsreader,serif;margin:0;color:#F6F3ED">{{ c.title }}</h2>
+            <p style="font:400 14.5px/1.7 Sora;color:rgba(246,243,237,.82);margin:12px 0 0;max-width:34ch">{{ c.sub }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span style="width:22px;height:22px;flex:none;border-radius:50%;border:1px solid rgba(232,210,160,.6);color:#E8D2A0;font:600 11px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <span style="font:400 12.5px/1.55 Sora;color:rgba(246,243,237,.78)">{{ st.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:relative;z-index:1;width:340px;flex:none">
+          <sc-if value="{{ c.done }}" hint-placeholder-val="{{ false }}">
+            <div style="background:rgba(251,250,247,.10);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:18px">
+              <div>
+                <div style="font:500 12px Sora;letter-spacing:.08em;text-transform:uppercase;color:#E8D2A0;margin-bottom:10px">Готово</div>
+                <div style="font:500 22px/1.25 Newsreader,serif;color:#F6F3ED">Заявка принята</div>
+                <div style="font:400 13px/1.6 Sora;color:rgba(246,243,237,.78);margin-top:10px">Что будет дальше — слева.</div>
+              </div>
+              <button onClick="{{ c.reset }}" style="align-self:flex-start;padding:12px 22px;background:rgba(246,243,237,.92);color:#25282D;font:600 12.5px Sora;border:none;border-radius:14px;cursor:pointer">Окей</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ c.notDone }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ c.submit }}" noValidate="{{ true }}" style="background:rgba(251,250,247,.10);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:14px">
+              <sc-if value="{{ c.hasSnap }}" hint-placeholder-val="{{ true }}">
+                <div class="snap" style="border:1px solid rgba(232,210,160,.5);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+                  <div style="flex:1;min-width:0">
+                    <div style="font:500 10.5px Sora;letter-spacing:.08em;text-transform:uppercase;color:#E8D2A0;margin-bottom:6px">{{ snap.kicker }}</div>
+                    <div style="font:400 15px/1.3 Newsreader,serif;color:#F6F3ED">{{ snap.title }}</div>
+                    <div style="font:400 11.5px/1.5 Sora;color:rgba(246,243,237,.72);margin-top:3px">{{ snap.short }}</div>
+                  </div>
+                  <button type="button" onClick="{{ c.removeSnap }}" style="flex:none;background:transparent;border:1px solid rgba(255,255,255,.28);border-radius:9px;color:rgba(246,243,237,.8);font:500 11px Sora;padding:7px 10px;cursor:pointer">убрать</button>
+                </div>
+              </sc-if>
+              <input value="{{ c.name }}" onChange="{{ c.setName }}" autoComplete="name" placeholder="Имя *" style="width:100%;padding:14px 16px;border:1px solid rgba(255,255,255,.26);background:rgba(255,255,255,.10);color:#F6F3ED;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,background .25s ease" style-focus="border-color:#E8D2A0;background:rgba(255,255,255,.16)">
+              <input value="{{ c.phone }}" onChange="{{ c.setPhone }}" type="tel" inputMode="tel" autoComplete="tel" placeholder="+7 (___) ___-__-__ *" style="width:100%;padding:14px 16px;border:1px solid rgba(255,255,255,.26);background:rgba(255,255,255,.10);color:#F6F3ED;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,background .25s ease" style-focus="border-color:#E8D2A0;background:rgba(255,255,255,.16)">
+              <input value="{{ c.email }}" onChange="{{ c.setEmail }}" onBlur="{{ c.blurEmail }}" type="email" autoComplete="email" placeholder="E-mail — необязательно" style="{{ c.emailStyleDark }}" style-focus="border-color:#E8D2A0;background:rgba(255,255,255,.16)">
+              <sc-if value="{{ c.emailError }}" hint-placeholder-val="{{ false }}">
+                <div style="font:400 12px/1.5 Sora;color:#F0B49A;margin-top:-6px">Проверьте адрес — похоже, в нём опечатка</div>
+              </sc-if>
+              <select value="{{ c.plan }}" onChange="{{ c.setPlan }}" style="{{ c.planStyleDark }}">
+                <sc-for list="{{ planOptions }}" as="o" hint-placeholder-count="6">
+                  <option value="{{ o.v }}" disabled="{{ o.dis }}" style="color:#25282D">{{ o.l }}</option>
+                </sc-for>
+              </select>
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ c.channels }}" as="ch" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ ch.select }}" style="{{ ch.style }}">{{ ch.label }}</button>
+                </sc-for>
+              </div>
+              <label style="display:flex;align-items:flex-start;gap:11px;font:400 12px/1.5 Sora;color:rgba(246,243,237,.75);cursor:pointer">
+                <input type="checkbox" checked="{{ c.consent }}" onChange="{{ c.setConsent }}" style="margin-top:1px;width:17px;height:17px;flex:none;accent-color:#E8D2A0;cursor:pointer">
+                <span>Согласие на обработку персональных данных *</span>
+              </label>
+              <button type="submit" disabled="{{ c.disabled }}" style="{{ c.btnStyle }}">Отправить заявку</button>
+              <sc-if value="{{ c.showHint }}" hint-placeholder-val="{{ false }}">
+                <div style="font:400 12px Sora;color:rgba(246,243,237,.7);margin-top:-6px">{{ c.hint }}</div>
+              </sc-if>
+              <div style="font:400 11.5px/1.5 Sora;color:rgba(246,243,237,.55)">Не передаём данные третьим лицам.</div>
+            </form>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div id="1d" style="width:720px;flex:none;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <span style="font:600 11px Sora;letter-spacing:.08em;background:#25282D;color:#F6F3ED;padding:6px 10px;border-radius:8px">1d</span>
+        <span style="font:500 15px Sora">Бланк подбора</span>
+        <span style="font:400 13px Sora;color:#5A6068">две колонки, время звонка чипсами</span>
+      </div>
+      <sc-if value="{{ d.done }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#F2EEE7;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:26px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div>
+            <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:12px">Готово</div>
+            <div style="font:500 30px/1.2 Newsreader,serif">Заявка принята</div>
+            <div style="font:400 14px/1.65 Sora;color:#5A6068;margin-top:12px;max-width:52ch">Менеджер перезвонит {{ d.timeLabel }}.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;padding-top:24px;border-top:1px solid rgba(37,40,45,.10)">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(200,169,106,.6);color:#C8A96A;font:500 12px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <span style="font:400 13px/1.6 Sora;color:#5A6068">{{ st.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ d.reset }}" style="align-self:flex-start;padding:14px 28px;background:#F4EFE7;color:#25282D;font:600 13px Sora;border:1px solid rgba(37,40,45,.10);border-radius:14px;cursor:pointer">Отправить ещё одну</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d.notDone }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ d.submit }}" noValidate="{{ true }}" style="background:#F2EEE7;border-radius:20px;padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:22px;box-shadow:0 20px 60px rgba(0,0,0,.05)">
+          <div style="display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start">
+            <div>
+              <div style="font:500 12px Sora;letter-spacing:.09em;text-transform:uppercase;color:#C8A96A;margin-bottom:10px">Заявка</div>
+              <div style="font:500 26px/1.2 Newsreader,serif">{{ d.title }}</div>
+              <div style="font:400 13px/1.6 Sora;color:#5A6068;margin-top:8px;max-width:46ch">{{ d.sub }}</div>
+            </div>
+          </div>
+          <sc-if value="{{ d.hasSnap }}" hint-placeholder-val="{{ true }}">
+            <div class="snap" style="background:#FBFAF7;border:1px solid rgba(200,169,106,.45);border-radius:16px;padding:20px">
+              <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
+                <div style="flex:1;min-width:0">
+                  <div style="font:500 12px Sora;letter-spacing:.08em;text-transform:uppercase;color:#C8A96A;margin-bottom:7px">{{ snap.kicker }}</div>
+                  <div style="font:400 18px/1.3 Newsreader,serif">{{ snap.title }}</div>
+                  <div style="font:400 13px/1.5 Sora;color:#5A6068;margin-top:4px">{{ snap.meta }}</div>
+                </div>
+                <button type="button" onClick="{{ d.removeSnap }}" style="flex:none;background:transparent;border:1px solid rgba(37,40,45,.12);border-radius:10px;color:#5A6068;font:500 13px Sora;padding:8px 12px;cursor:pointer">убрать</button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px 20px;padding-top:14px;border-top:1px solid rgba(37,40,45,.10)">
+                <sc-for list="{{ snap.rows }}" as="row" hint-placeholder-count="4">
+                  <div><div style="font:400 13px Sora;color:#5A6068;margin-bottom:3px">{{ row.k }}</div><div style="font:500 14px Sora">{{ row.v }}</div></div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px">
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Имя <span style="color:#C8A96A">*</span></span>
+              <input value="{{ d.name }}" onChange="{{ d.setName }}" autoComplete="name" placeholder="Как к вам обращаться" style="width:100%;padding:15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Телефон <span style="color:#C8A96A">*</span></span>
+              <input value="{{ d.phone }}" onChange="{{ d.setPhone }}" type="tel" inputMode="tel" autoComplete="tel" placeholder="+7 (___) ___-__-__" style="width:100%;padding:15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">E-mail<span style="color:#8A9099"> · необязательно</span></span>
+              <input value="{{ d.email }}" onChange="{{ d.setEmail }}" onBlur="{{ d.blurEmail }}" type="email" autoComplete="email" placeholder="пришлём подборку и прайс" style="{{ d.emailStyle }}" style-focus="border-color:#C8A96A;box-shadow:0 0 0 3px rgba(200,169,106,.16)">
+              <sc-if value="{{ d.emailError }}" hint-placeholder-val="{{ false }}">
+                <div style="font:400 13px/1.5 Sora;color:#A2543C">Проверьте адрес — похоже, в нём опечатка</div>
+              </sc-if>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="font:400 13px Sora;color:#5A6068">Интересующая планировка</span>
+              <select value="{{ d.plan }}" onChange="{{ d.setPlan }}" style="{{ d.planStyle }}">
+                <sc-for list="{{ planOptions }}" as="o" hint-placeholder-count="6">
+                  <option value="{{ o.v }}" disabled="{{ o.dis }}">{{ o.l }}</option>
+                </sc-for>
+              </select>
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font:400 13px Sora;color:#5A6068">Как удобнее связаться<span style="color:#8A9099"> · необязательно</span></span>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ d.channels }}" as="ch" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ ch.select }}" style="{{ ch.style }}">{{ ch.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font:400 13px Sora;color:#5A6068">Удобное время звонка<span style="color:#8A9099"> · необязательно</span></span>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ d.times }}" as="t" hint-placeholder-count="5">
+                  <button type="button" onClick="{{ t.select }}" style="{{ t.style }}">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;padding-top:22px;border-top:1px solid rgba(37,40,45,.10)">
+            <label style="display:flex;align-items:flex-start;gap:12px;font:400 13px/1.55 Sora;color:#5A6068;cursor:pointer">
+              <input type="checkbox" checked="{{ d.consent }}" onChange="{{ d.setConsent }}" style="margin-top:1px;width:18px;height:18px;flex:none;accent-color:#C8A96A;cursor:pointer">
+              <span>Даю согласие на обработку персональных данных и принимаю <a href="#1d" style="border-bottom:1px solid rgba(200,169,106,.5)">политику конфиденциальности</a> <span style="color:#C8A96A">*</span></span>
+            </label>
+            <button type="submit" disabled="{{ d.disabled }}" style="{{ d.btnStyleWide }}">Отправить заявку</button>
+            <sc-if value="{{ d.showHint }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:8px;font:400 13px Sora;color:#5A6068"><span style="width:5px;height:5px;border-radius:50%;background:#C8A96A;flex:none"></span>{{ d.hint }}</div>
+            </sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;padding-top:20px;border-top:1px solid rgba(37,40,45,.10)">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span style="width:22px;height:22px;flex:none;border-radius:50%;background:rgba(200,169,106,.16);color:#B4915A;font:600 11px Sora;display:flex;align-items:center;justify-content:center">{{ st.n }}</span>
+                <span style="font:400 13px/1.55 Sora;color:#5A6068">{{ st.t }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font:400 12px/1.6 Sora;color:#8A9099">Не передаём данные третьим лицам и не подписываем на рассылки.</div>
+        </form>
+      </sc-if>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CHANNELS = ['Звонок', 'MAX', 'Telegram'];
+const TIMES = [['', 'Любое время'], ['9-12', '9:00–12:00'], ['12-15', '12:00–15:00'], ['15-18', '15:00–18:00'], ['18-20', '18:00–20:00']];
+const PLAN_OPTIONS = [['', 'Выберите планировку'], ['studio', 'Студия'], ['1k', '1-комнатная'], ['2k', '2-комнатная'], ['3k', '3-комнатная / пентхаус'], ['unsure', 'Пока не определился(-лась)']];
+const SNAP = {
+  kicker: 'Ваш расчёт из калькулятора',
+  title: '2-комнатная B',
+  meta: '68 м² · с угловой террасой · от 7 950 000 ₽',
+  short: '68 м² · платёж 47 350 ₽ / мес',
+  rows: [
+    { k: 'Стоимость', v: '7 950 000 ₽' },
+    { k: 'Первый взнос', v: '20% · 1 590 000 ₽' },
+    { k: 'Срок / ставка', v: '20 лет · 6,5%' },
+    { k: 'Платёж', v: '47 350 ₽ / мес' },
+  ],
+};
+const STEPS = [
+  { n: '1', t: 'Менеджер звонит в течение 20 минут и уточняет запрос' },
+  { n: '2', t: 'Присылаем подборку планировок и актуальный прайс' },
+  { n: '3', t: 'Показ на объекте или онлайн — в удобное вам время' },
+];
+function formatRuPhone(raw) {
+  let d = raw.replace(/\D/g, '');
+  if (!d) return '';
+  if (d.startsWith('8')) d = '7' + d.slice(1);
+  if (!d.startsWith('7')) d = '7' + d;
+  d = d.slice(0, 11);
+  const rest = d.slice(1);
+  let out = '+7';
+  if (rest.length) out += ' (' + rest.slice(0, 3);
+  if (rest.length >= 3) out += ')';
+  if (rest.length > 3) out += ' ' + rest.slice(3, 6);
+  if (rest.length > 6) out += '-' + rest.slice(6, 8);
+  if (rest.length > 8) out += '-' + rest.slice(8, 10);
+  return out;
+}
+const PHONE_RE = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+function blank() {
+  return { name: '', phone: '', email: '', plan: '', channel: 'Звонок', time: '', consent: false, snap: true, submitted: false, order: '', step: 1, touched: false, opts: [], blurred: {} };
+}
+
+class Component extends DCLogic {
+  state = { v: { a: blank(), c: blank(), d: blank() } };
+
+  patch(id, obj, cb) {
+    this.setState(st => ({ v: { ...st.v, [id]: { ...st.v[id], ...obj } } }), cb);
+  }
+
+  selectStyle(empty) {
+    const arrow = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%229%22 viewBox=%220 0 14 9%22 fill=%22none%22%3E%3Cpath d=%22M1 1L7 7L13 1%22 stroke=%22%23808080%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
+    return 'width:100%;padding:15px 44px 15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7 ' + arrow + ' no-repeat right 16px center;appearance:none;-webkit-appearance:none;color:' + (empty ? '#8A9099' : '#25282D') + ';font:400 14px Sora;border-radius:12px;outline:none';
+  }
+
+  fieldStyle(bad) {
+    return 'width:100%;padding:15px 16px;border:1px solid ' + (bad ? '#A2543C' : 'rgba(37,40,45,.14)') + ';background:#FBFAF7;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,box-shadow .25s ease';
+  }
+
+  selectStyleDark(empty) {
+    const arrow = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%229%22 viewBox=%220 0 14 9%22 fill=%22none%22%3E%3Cpath d=%22M1 1L7 7L13 1%22 stroke=%22%23E8D2A0%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
+    return 'width:100%;padding:14px 44px 14px 16px;border:1px solid rgba(255,255,255,.26);background:rgba(255,255,255,.10) ' + arrow + ' no-repeat right 16px center;appearance:none;-webkit-appearance:none;color:' + (empty ? 'rgba(246,243,237,.6)' : '#F6F3ED') + ';font:400 14px Sora;border-radius:12px;outline:none';
+  }
+
+  build(id, dark) {
+    const v = this.state.v[id];
+    const phoneOk = PHONE_RE.test(v.phone);
+    const emailBad = !!v.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email);
+    const missing = [];
+    if (!v.name.trim()) missing.push('имя');
+    if (!phoneOk) missing.push(v.phone ? 'телефон полностью' : 'телефон');
+    if (!v.consent) missing.push('согласие на обработку данных');
+    if (emailBad) missing.push('корректный e-mail');
+    const ready = missing.length === 0;
+    const chipOn = dark
+      ? 'background:rgba(246,243,237,.16);color:#F6F3ED;border:1px solid rgba(246,243,237,.55)'
+      : 'background:#FBFAF7;color:#25282D;border:1px solid rgba(37,40,45,.10)';
+    const chipOff = dark
+      ? 'background:rgba(255,255,255,.04);color:rgba(246,243,237,.55);border:1px solid rgba(255,255,255,.16)'
+      : 'background:transparent;color:#5A6068;border:1px solid rgba(37,40,45,.08)';
+    const chip = on => 'padding:11px 20px;border-radius:99px;font:' + (on ? 600 : 500) + ' 13px Sora;-webkit-font-smoothing:antialiased;white-space:nowrap;cursor:pointer;transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease;' + (on ? chipOn : chipOff);
+    const btnBase = 'padding:16px;border-radius:14px;font:600 14px Sora;width:100%;transition:background .25s ease,color .25s ease;';
+    const btnOn = dark ? 'background:#F6F3ED;color:#25282D;border:none;cursor:pointer' : 'background:#25282D;color:#F6F3ED;border:1px solid #25282D;cursor:pointer';
+    const btnOff = dark ? 'background:rgba(255,255,255,.14);color:rgba(246,243,237,.55);border:none;cursor:not-allowed' : 'background:rgba(37,40,45,.12);color:#5A6068;border:none;cursor:not-allowed';
+    const timeLabel = (TIMES.find(t => t[0] === v.time) || TIMES[0])[1].toLowerCase();
+    const opts = Array.isArray(v.opts) ? v.opts : [];
+    const blurred = v.blurred || {};
+    const openOpt = key => this.patch(id, { opts: opts.concat([key]) });
+    const RESETS = { plan: { plan: '' }, email: { email: '' }, channel: { channel: 'Звонок' }, time: { time: '' } };
+    const closeOpt = key => () => this.patch(id, { opts: opts.filter(k => k !== key), ...RESETS[key] });
+    const planLocked = !!v.snap;
+    const LABELS = {
+      plan: ['Интересующая планировка', 'интересующую планировку'],
+      email: ['E-mail', 'e-mail для подборки'],
+      channel: ['Как удобнее связаться', 'способ связи'],
+      time: ['Удобное время звонка', 'удобное время звонка'],
+    };
+    // emailBad вычислен выше
+    const MORE = ['plan', 'email', 'channel', 'time']
+      .filter(k => opts.indexOf(k) === -1 && !(k === 'plan' && planLocked))
+      .map(k => [k, LABELS[k][1]]);
+
+    return {
+      name: v.name, phone: v.phone, email: v.email, plan: v.plan, time: v.time, consent: v.consent,
+      order: v.order,
+      timeLabel: v.time ? 'в интервале ' + timeLabel : 'в ближайшее рабочее время',
+      done: v.submitted, notDone: !v.submitted,
+      hasSnap: v.snap, removeSnap: () => this.patch(id, { snap: false }),
+      setName: e => this.patch(id, { name: e.target.value, touched: true }),
+      setPhone: e => {
+        const el = e.target;
+        const caret = el.selectionStart == null ? el.value.length : el.selectionStart;
+        let head = el.value.slice(0, caret).replace(/\D/g, '');
+        if (head.startsWith('8')) head = '7' + head.slice(1);
+        else if (!head.startsWith('7')) head = '7' + head;
+        const digitsBefore = head.length;
+        const formatted = formatRuPhone(el.value);
+        let seen = 0, pos = formatted.length;
+        for (let i = 0; i < formatted.length; i++) {
+          if (/\d/.test(formatted[i])) seen++;
+          if (seen === digitsBefore) { pos = i + 1; break; }
+        }
+        if (!formatted) pos = 0;
+        try {
+          el.value = formatted;
+          el.setSelectionRange(pos, pos);
+        } catch (err) {}
+        this.patch(id, { phone: formatted, touched: true }, () => {
+          if (!el.isConnected || document.activeElement !== el) return;
+          if (el.selectionStart !== pos) {
+            try { el.setSelectionRange(pos, pos); } catch (err) {}
+          }
+        });
+      },
+      setEmail: e => this.patch(id, { email: e.target.value }),
+      setPlan: e => this.patch(id, { plan: e.target.value }),
+      setTime: e => this.patch(id, { time: e.target.value }),
+      setConsent: e => this.patch(id, { consent: e.target.checked, touched: true }),
+      channels: CHANNELS.map(label => ({ label, style: chip(v.channel === label), select: () => this.patch(id, { channel: label }) })),
+      times: TIMES.map(t => ({ label: t[1], style: chip(v.time === t[0]), select: () => this.patch(id, { time: t[0] }) })),
+      planLocked: planLocked,
+      planLockedLabel: SNAP.title,
+      opened: opts.filter(k => !(k === 'plan' && planLocked)).map(k => ({
+        key: k, label: LABELS[k][0],
+        isPlan: k === 'plan', isEmail: k === 'email', isChannel: k === 'channel', isTime: k === 'time',
+        error: k === 'email' && emailBad && !!blurred.email,
+        errorText: 'Проверьте адрес — похоже, в нём опечатка',
+        close: closeOpt(k),
+      })),
+      blurName: () => this.patch(id, { blurred: { ...blurred, name: true } }),
+      blurPhone: () => this.patch(id, { blurred: { ...blurred, phone: true } }),
+      blurEmail: () => this.patch(id, { blurred: { ...blurred, email: true } }),
+      nameError: !!blurred.name && !v.name.trim(),
+      phoneError: !!blurred.phone && !!v.phone && !phoneOk,
+      nameStyle: this.fieldStyle(!!blurred.name && !v.name.trim()),
+      phoneStyle: this.fieldStyle(!!blurred.phone && !!v.phone && !phoneOk),
+      emailStyle: this.fieldStyle(emailBad && !!blurred.email),
+      emailError: emailBad && !!blurred.email,
+      emailStyleDark: 'width:100%;padding:14px 16px;border:1px solid ' + (emailBad && blurred.email ? '#F0B49A' : 'rgba(255,255,255,.26)') + ';background:rgba(255,255,255,.10);color:#F6F3ED;font:400 14px Sora;border-radius:12px;outline:none;transition:border-color .25s ease,background .25s ease',
+      planStyle: this.selectStyle(v.plan === ''),
+      planStyleDark: this.selectStyleDark(v.plan === ''),
+      hasMore: MORE.length > 0,
+      moreLabel: MORE.length === 4 ? 'Можно сразу указать' : 'Ещё можно указать',
+      more: MORE.map((m, i) => ({ label: m[1] + (i < MORE.length - 1 ? ',' : ''), add: () => openOpt(m[0]) })),
+      disabled: !ready || emailBad,
+      btnStyle: btnBase + (ready ? btnOn : btnOff),
+      btnStyleWide: 'padding:16px 34px;border-radius:14px;font:600 14px Sora;flex:none;transition:background .25s ease;' + (ready ? btnOn : btnOff),
+      showHint: !ready && v.touched,
+      hint: missing.length ? 'Осталось: ' + missing.join(', ') : '',
+      submit: e => {
+        e.preventDefault();
+        if (!ready || emailBad) {
+          this.patch(id, { touched: true, blurred: { name: true, phone: true, email: true } });
+          return;
+        }
+        this.patch(id, { submitted: true, order: 'ДМ-' + String(1000 + Math.floor(Math.random() * 8999)) });
+      },
+      reset: () => this.setState(st => ({ v: { ...st.v, [id]: blank() } })),
+      step1: v.step === 1, step2: v.step === 2,
+      stepLabel: v.step === 1 ? 'Шаг 1 из 2' : 'Шаг 2 из 2',
+      title: v.snap ? 'Обсудим ваш расчёт' : 'Оставьте заявку на подбор',
+      sub: v.snap
+        ? 'Проверим условия расчёта, зафиксируем платёж и покажем эту планировку — на объекте или онлайн. Ответим за 20 минут в рабочее время.'
+        : 'Перезвоним в течение 20 минут в рабочее время и подберём планировку под ваш запрос.',
+      next: () => { if (ready) this.patch(id, { step: 2 }); else this.patch(id, { touched: true }); },
+      back: () => this.patch(id, { step: 1 }),
+      nextDisabled: !ready,
+      nextBtnStyle: btnBase + (ready ? btnOn : btnOff),
+      bar1: 'height:3px;flex:1;border-radius:2px;background:' + (dark ? '#E8D2A0' : '#C8A96A'),
+      bar2: 'height:3px;flex:1;border-radius:2px;background:' + (v.step === 2 ? (dark ? '#E8D2A0' : '#C8A96A') : 'rgba(37,40,45,.14)'),
+    };
+  }
+
+  renderVals() {
+    const arrow = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%229%22 viewBox=%220 0 14 9%22 fill=%22none%22%3E%3Cpath d=%22M1 1L7 7L13 1%22 stroke=%22%23808080%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
+    const arrowLight = "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%229%22 viewBox=%220 0 14 9%22 fill=%22none%22%3E%3Cpath d=%22M1 1L7 7L13 1%22 stroke=%22%23E8D2A0%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
+    return {
+      steps: STEPS,
+      snap: SNAP,
+      planOptions: PLAN_OPTIONS.map(o => ({ v: o[0], l: o[1], dis: o[0] === '' })),
+      dropStyle: 'background:none;border:none;padding:0;font:400 13px Sora;color:#8A9099;cursor:pointer;transition:color .25s ease;flex:none',
+      timeOptions: TIMES.map(o => ({ v: o[0], l: o[1] })),
+      selectStyle: 'width:100%;padding:15px 44px 15px 16px;border:1px solid rgba(37,40,45,.14);background:#FBFAF7 ' + arrow + ' no-repeat right 16px center;appearance:none;-webkit-appearance:none;color:#25282D;font:400 14px Sora;border-radius:12px;outline:none',
+      selectStyleDark: 'width:100%;padding:14px 44px 14px 16px;border:1px solid rgba(255,255,255,.26);background:rgba(255,255,255,.10) ' + arrowLight + ' no-repeat right 16px center;appearance:none;-webkit-appearance:none;color:#F6F3ED;font:400 14px Sora;border-radius:12px;outline:none',
+      a: this.build('a', false),
+      c: this.build('c', true),
+      d: this.build('d', false),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

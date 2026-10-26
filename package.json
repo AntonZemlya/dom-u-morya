@@ -1,0 +1,16 @@
+{
+  "name": "dom-u-morya",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node tests/serve.cjs",
+    "test": "node tests/ui.cjs",
+    "test:visual": "node tests/visual.cjs",
+    "check": "node --check script.js && python3 tests/source_audit.py"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1",
+    "pdf-lib": "1.17.1",
+    "sharp": "0.34.5"
+  }
+}

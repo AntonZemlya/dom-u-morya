@@ -2,24 +2,22 @@
 
 /* ---------- static data ---------- */
 const PLANS = [
-  {id:'s1',category:'studio',title:'Студия А',meta:'32 м² · окна на юг',price:3900000},
-  {id:'s2',category:'studio',title:'Студия B',meta:'36 м² · угловые окна',price:4250000},
-  {id:'s3',category:'studio',title:'Студия C',meta:'29 м² · компактная',price:3550000},
-  {id:'o1',category:'1k',title:'1-комнатная А',meta:'44 м² · спальня + гостиная-кухня',price:5400000},
-  {id:'o2',category:'1k',title:'1-комнатная B',meta:'48 м² · с балконом вдоль фасада',price:5800000},
-  {id:'o3',category:'1k',title:'1-комнатная C',meta:'41 м² · евроформат',price:5050000},
-  {id:'t1',category:'2k',title:'2-комнатная А',meta:'62 м² · окна на две стороны',price:7300000},
-  {id:'t2',category:'2k',title:'2-комнатная B',meta:'68 м² · с угловой террасой',price:7950000},
-  {id:'t3',category:'2k',title:'2-комнатная C',meta:'58 м² · компактная семейная',price:6900000},
-  {id:'r1',category:'3k',title:'3-комнатная А',meta:'86 м² · с гардеробной',price:10400000},
-  {id:'r2',category:'3k',title:'3-комнатная B — пентхаус',meta:'104 м² · терраса 22 м², верхний этаж',price:13900000},
-  {id:'r3',category:'3k',title:'3-комнатная C',meta:'79 м² · семейная, вид на двор',price:9700000},
+  {id:'s1',category:'studio',title:'Студия № 5',meta:'29 м² · 2 этаж из 18 · чистовая отделка',price:6700000},
+  {id:'s2',category:'studio',title:'Студия № 52',meta:'28,9 м² · 5 этаж из 18 · чистовая отделка',price:6800000},
+  {id:'s3',category:'studio',title:'Студия № 102',meta:'28,9 м² · 8 этаж из 18 · чистовая отделка',price:7000000},
+  {id:'s4',category:'studio',title:'Студия № 117',meta:'28,9 м² · 9 этаж из 18 · чистовая отделка',price:7200000},
+  {id:'s5',category:'studio',title:'Студия № 124',meta:'28,9 м² · 9 этаж из 18 · чистовая отделка',price:7300000},
+  {id:'o1',category:'1k',title:'1 спальня — минимальная цена',meta:'25 квартир в продаже · подберём под запрос',price:7400000},
+  {id:'o2',category:'1k',title:'1 спальня',meta:'35,7 м² · 2 этаж · чистовая отделка',price:7885023},
+  {id:'o3',category:'1k',title:'1 спальня',meta:'33,6 м² · 15 этаж · чистовая отделка',price:8831424},
+  {id:'t1',category:'2k',title:'2 спальни',meta:'7 квартир в продаже · до 71,5 м² · подберём под запрос',price:9400000},
+  {id:'r1',category:'3k',title:'3 спальни',meta:'2 квартиры в продаже · подберём под запрос',price:14700000},
 ];
 const TABS = [
-  {key:'studio',label:'Студии'},
-  {key:'1k',label:'1-комнатные'},
-  {key:'2k',label:'2-комнатные'},
-  {key:'3k',label:'3-комнатные'},
+  {key:'studio',label:'Студии · 11'},
+  {key:'1k',label:'1 спальня · 25'},
+  {key:'2k',label:'2 спальни · 7'},
+  {key:'3k',label:'3 спальни · 2'},
 ];
 const ICONS = {
   calc: 'M7.5 3h9a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1M9.5 7.5h5M9.5 12h1.5M9.5 16h1.5M14 12v4.5',
@@ -27,10 +25,39 @@ const ICONS = {
   installment: 'M4 6.5h16v13.5H4zM4 10.5h16M8.5 3.5v4M15.5 3.5v4',
   full: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18M8.5 12l2.5 2.5 4.5-5',
 };
-const CAT_LABEL = {studio:'Студия','1k':'1-комнатная','2k':'2-комнатная','3k':'3-комнатная / пентхаус'};
+const ABOUT_THEMES = [
+  {key:'arch',label:'Архитектура и виды',photo:true,media:'визуализация фасада',
+   title:'Дом-маяк на первой береговой линии',
+   lead:'18 этажей над водой: чем выше квартира, тем шире панорама Азовского моря и городской набережной.',
+   items:[
+     {t:'Морские пейзажи за окном',d:'Первая береговая линия — вид на воду и набережную.'},
+     {t:'18 этажей, один корпус',d:'258 квартир, потолки от 2,85 до 3,3 метра.'},
+     {t:'Отделка «под ключ»',d:'Все квартиры сдаются с чистовой отделкой.'},
+     {t:'Пять минут до моря',d:'До набережной и пляжа — 5 минут пешком.'},
+   ]},
+  {key:'yard',label:'Двор и территория',photo:false,media:'фото двора — заглушка',
+   title:'Закрытая озеленённая территория',
+   lead:'Двор для жителей: игровые комплексы, спорт и зоны отдыха, машины — по периметру.',
+   items:[
+     {t:'Закрытый двор',d:'Озеленение, видеонаблюдение 24/7, доступ только для резидентов.'},
+     {t:'Детские площадки',d:'Игровые комплексы и зона отдыха с каучуковым покрытием.'},
+     {t:'Спортивная площадка',d:'Комплекс уличных тренажёров на территории.'},
+     {t:'Паркинг',d:'Наземный паркинг на 36 машино-мест и гостевые парковки.'},
+   ]},
+  {key:'service',label:'Сервис в доме',photo:false,media:'фото входной группы — заглушка',
+   title:'Всё необходимое — не выходя за периметр',
+   lead:'Первый этаж работает на жителей: магазины, сервисы, консьерж и помещения для хранения.',
+   items:[
+     {t:'Коммерческая галерея',d:'Магазины и сервисы на первом этаже дома.'},
+     {t:'Консьерж и охрана',d:'Помещения для консьержа и охранника, видеонаблюдение.'},
+     {t:'Колясочная и велосипедная',d:'Отдельные помещения, безбарьерная среда и пандусы.'},
+     {t:'Своя УК',d:'Управляющая компания застройщика с доверительным управлением.'},
+   ]},
+];
+const CAT_LABEL = {studio:'Студия','1k':'1 спальня','2k':'2 спальни','3k':'3 спальни'};
 const GALLERY = [
-  'фасад — вид с набережной','фасад — вид со двора','двор — терраса и амфитеатр',
-  'холл первого этажа','детская зона','вид из окна на залив'
+  'фасад — вид с моря','фасад — вид с проспекта Адмирала Лунина','входная группа',
+  'внутренний двор','детская площадка','вид из окна на Азовское море'
 ];
 const FIELD_LABELS = {
   plan: ['Интересующая планировка', 'интересующую планировку'],
@@ -40,7 +67,7 @@ const FIELD_LABELS = {
 };
 const FIELD_RESETS = { plan: { planChoice: '' }, email: { email: '' }, channel: { channel: 'Звонок' }, time: { callTime: '' } };
 const CHANNELS = ['Звонок', 'MAX', 'Telegram'];
-const CALL_TIMES = [['', 'Любое время'], ['9-12', '9:00–12:00'], ['12-15', '12:00–15:00'], ['15-18', '15:00–18:00'], ['18-20', '18:00–20:00']];
+const CALL_TIMES = [['', 'Любое время'], ['9-12', '9:00–12:00'], ['12-15', '12:00–15:00'], ['15-18', '15:00–18:00']];
 const FIELD_ORDER = ['plan', 'email', 'channel', 'time'];
 
 function rub(n){ return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
@@ -65,7 +92,7 @@ function formatRuPhone(raw){
 function calcDocHtml(d, logo){
   const row = (k, v) => `<tr><td class="k">${k}</td><td class="v">${v}</td></tr>`;
   return `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Расчёт ипотеки — ЖК «Дом у моря»</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${new URL('assets/fonts/fonts.css', document.baseURI).href}">
 <style>
 @page{size:A4;margin:0}
 *{box-sizing:border-box}
@@ -95,7 +122,7 @@ td{padding:12px 0;border-bottom:1px solid rgba(37,40,45,.10);vertical-align:base
 </style></head><body><div class="sheet">
 <div class="top"><img src="${logo}" alt="Дом у моря"><div class="date">Расчёт от ${d.date}<br>Ориентировочный</div></div>
 <h1>Расчёт ипотеки</h1>
-<p class="sub">Расчёт по программе застройщика ЖК «Дом у моря». Точную ставку и решение банк выдаёт индивидуально.</p>
+<p class="sub">Расчёт по ЖК «Дом у моря», г. Мариуполь, пр. Адмирала Лунина, 25. Льготная ставка 2% для новых регионов действует на сумму кредита до 6 млн ₽. Точную ставку и решение банк выдаёт индивидуально.</p>
 <div class="kick">${d.custom ? 'Произвольный расчёт' : 'Выбранная планировка'}</div>
 <div class="obj"><div class="t">${d.objectTitle}</div><div class="m">${d.objectMeta}</div></div>
 <div class="kick">Параметры</div>
@@ -110,9 +137,9 @@ ${row('Необходимый доход', d.income)}
 <div class="hl"><span class="l">Ежемесячный платёж</span><span class="r">${d.payment}</span></div>
 <p class="note">Доход рассчитан из условия, что платёж не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении. Материалы носят информационный характер и не являются офертой.</p>
 <div class="foot">
-<div><b>Отдел продаж</b>+7 (900) 123-45-67<br>sales@dom-u-morya.ru</div>
-<div><b>Офис продаж</b>Набережная ул., 14, шоурум ЖК<br>Ежедневно, 9:00–20:00</div>
-<div><b>ЖК «Дом у моря»</b>Проектная декларация — наш.дом.рф<br>© 2026</div>
+<div><b>Отдел продаж</b>+7 (800) 775-28-92<br>info@sk-gc.ru</div>
+<div><b>Офис продаж</b>Пересечение ул. Артёма и б-ра Шевченко<br>Пн–сб 9:00–18:00</div>
+<div><b>ЖК «Дом у моря»</b>Проектная декларация — наш.дом.рф, объект 69398<br>ГК «Садовое кольцо», © 2026</div>
 </div>
 </div>
 </body></html>`;
@@ -129,8 +156,8 @@ function loadScriptOnce(src){
 }
 async function makeCalcPdf(html, filename){
   await Promise.all([
-    loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
-    loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'),
+    loadScriptOnce('assets/vendor/html2canvas.min.js'),
+    loadScriptOnce('assets/vendor/jspdf.umd.min.js'),
   ]);
   const frame = document.createElement('iframe');
   frame.setAttribute('aria-hidden', 'true');
@@ -149,11 +176,9 @@ async function makeCalcPdf(html, filename){
     pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, w, w * canvas.height / canvas.width, undefined, 'FAST');
     const blob = pdf.output('blob');
     const url = URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
-    const tab = window.open(url, '_blank');
-    if (!tab) {
-      const a = document.createElement('a');
-      a.href = url; a.download = filename; a.click();
-    }
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   } finally {
     frame.remove();
@@ -163,14 +188,14 @@ async function makeCalcPdf(html, filename){
 /* ---------- app state ---------- */
 const state = {
   filter: 'studio',
-  price: 7300000, downPct: 20, term: 20, rate: 6.5,
+  price: 6700000, downPct: 10, term: 30, rate: 2,
+  plansView: 'lots', aboutTab: 'arch',
   selectedPlanId: null,
   snapshot: null,
   name: '', phone: '', email: '', planChoice: '', consent: false,
   channel: 'Звонок', callTime: '',
   opts: [],
   blurred: {},
-  submitted: false,
   pdfBusy: false,
   cookieChoice: null,
   menuOpen: false,
@@ -218,7 +243,7 @@ function onScroll(){
 
   const header = document.getElementById('site-header');
   header.classList.toggle('scrolled', state.scrolled);
-  header.classList.toggle('header-hidden', !!state.headerHidden);
+  header.classList.toggle('header-hidden', !!state.headerHidden && !header.contains(document.activeElement) && !state.menuOpen);
 
   const heroPhoto = document.getElementById('hero-photo');
   if (heroPhoto) heroPhoto.style.transform = 'translateY(' + Math.min(6, y * 0.05).toFixed(1) + 'px)';
@@ -230,6 +255,8 @@ function onScroll(){
 
 function applyMenuState(){
   document.getElementById('mobile-menu').classList.toggle('open', state.menuOpen);
+  document.getElementById('mobile-menu').inert = !state.menuOpen;
+  document.getElementById('mobile-menu').setAttribute('aria-hidden', String(!state.menuOpen));
   const toggle = document.getElementById('nav-toggle');
   toggle.classList.toggle('open', state.menuOpen);
   toggle.setAttribute('aria-expanded', String(state.menuOpen));
@@ -245,10 +272,13 @@ function wireHeaderEvents(){
   document.addEventListener('click', e => {
     if (state.menuOpen && !e.target.closest('#site-header')) { state.menuOpen = false; applyMenuState(); }
   });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && state.menuOpen) { state.menuOpen = false; applyMenuState(); document.getElementById('nav-toggle').focus(); } });
+  window.addEventListener('resize', () => { if (innerWidth > 1140) { state.menuOpen = false; applyMenuState(); } });
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 function setupRevealObserver(){
+  document.documentElement.classList.add('reveal-ready');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -272,11 +302,13 @@ function setupRevealObserver(){
 /* ================= cookie banner / scroll-top ================= */
 function applyCookieBanner(){
   document.getElementById('cookie-banner').classList.toggle('open', !state.cookieChoice);
+  document.getElementById('cookie-banner').hidden = !!state.cookieChoice;
+  document.getElementById('scroll-top-btn').classList.toggle('no-cookie-banner', !!state.cookieChoice);
 }
 function wireCookieBanner(){
   try {
     const saved = localStorage.getItem('domUMorya_cookieChoice');
-    if (saved) state.cookieChoice = saved;
+    if (['accepted', 'declined'].includes(saved)) state.cookieChoice = saved;
   } catch (e) {}
   document.getElementById('cookie-accept').addEventListener('click', () => {
     try { localStorage.setItem('domUMorya_cookieChoice', 'accepted'); } catch (e) {}
@@ -297,18 +329,20 @@ function wireScrollTopBtn(){
 function currentFilteredPlans(){ return PLANS.filter(p => p.category === state.filter); }
 
 function renderTabs(){
+  const hadFocus = document.getElementById('plan-tabs').contains(document.activeElement);
   document.getElementById('plan-tabs').innerHTML = TABS.map(t =>
-    `<div class="tab-chip${state.filter === t.key ? ' active' : ''}" data-tab="${t.key}">${t.label}</div>`
+    `<button type="button" class="tab-chip${state.filter === t.key ? ' active' : ''}" data-tab="${t.key}" aria-pressed="${state.filter === t.key}">${t.label}</button>`
   ).join('');
+  if (hadFocus) document.querySelector('[data-tab="'+state.filter+'"]').focus({preventScroll:true});
 }
 function renderPlansGrid(){
   const list = currentFilteredPlans();
   document.getElementById('plans-grid').innerHTML = list.map((p, i) => `
     <div class="card card-hover">
-      <div class="plan-thumb" data-action="open-plan-image" data-index="${i}">
+      <button type="button" class="plan-thumb" data-action="open-plan-image" data-index="${i}" aria-label="Открыть схему: ${p.title}">
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" style="opacity:.35"><rect x="3" y="3" width="24" height="24" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><path d="M3 21L10 14L15 18L25 8" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span class="plan-thumb-label">схема планировки — открыть</span>
-      </div>
+      </button>
       <div class="plan-title">${p.title}</div>
       <div class="plan-meta">${p.meta}</div>
       <div class="plan-price">от ${rub(p.price)}</div>
@@ -325,7 +359,7 @@ function askPlan(plan){
     rows: [{ k: 'Тип', v: CAT_LABEL[plan.category] }, { k: 'Стоимость', v: 'от ' + rub(plan.price) }],
   };
   state.planChoice = state.snapshot.planChoice || state.planChoice;
-  if (!state.submitted) updateForm();
+  updateForm();
   scrollToForm();
 }
 function calcHere(plan){
@@ -355,10 +389,10 @@ function wirePlansEvents(){
 /* ================= gallery ================= */
 function renderGallery(){
   document.getElementById('gallery-grid').innerHTML = GALLERY.map((label, i) => `
-    <div class="gallery-item" data-action="open-gallery-image" data-index="${i}">
+    <button type="button" class="gallery-item" data-action="open-gallery-image" data-index="${i}" aria-label="Открыть: ${label}">
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" style="opacity:.3"><rect x="4" y="7" width="26" height="20" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><circle cx="12" cy="14" r="2.5" stroke="#5A6068" stroke-width="1.6"></circle><path d="M4 24L12 17L18 21L30 11" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       <span class="gallery-item-label">${label}</span>
-    </div>`).join('');
+    </button>`).join('');
 }
 function wireGalleryEvents(){
   document.getElementById('gallery-grid').addEventListener('click', e => {
@@ -368,16 +402,27 @@ function wireGalleryEvents(){
 }
 
 /* ================= lightbox (shared: plans + gallery) ================= */
-const lb = { mode: null, index: null };
+const lb = { mode: null, index: null, opener: null };
 function lightboxCount(){ return lb.mode === 'plan' ? currentFilteredPlans().length : GALLERY.length; }
 function lightboxTitle(i){ return lb.mode === 'plan' ? currentFilteredPlans()[i].title : GALLERY[i]; }
 function openLightbox(mode, index){
+  lb.opener = document.activeElement;
   lb.mode = mode; lb.index = index;
+  document.getElementById('lightbox').hidden = false;
+  document.getElementById('main-content').inert = true;
+  document.getElementById('site-header').inert = true;
+  document.body.style.overflow = 'hidden';
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lightbox-close').focus();
 }
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox').hidden = true;
+  document.getElementById('main-content').inert = false;
+  document.getElementById('site-header').inert = false;
+  document.body.style.overflow = '';
+  if (lb.opener?.isConnected) lb.opener.focus({preventScroll:true});
   lb.mode = null; lb.index = null;
 }
 function renderLightbox(){
@@ -405,6 +450,11 @@ function wireLightboxEvents(){
   document.addEventListener('keydown', e => {
     if (lb.index == null) return;
     if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'Tab') {
+      const buttons = [...overlay.querySelectorAll('button')].filter(b => b.getClientRects().length);
+      const i = buttons.indexOf(document.activeElement);
+      e.preventDefault(); buttons[(i + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
+    }
     if (e.key === 'ArrowLeft') lightboxNav(-1);
     else if (e.key === 'ArrowRight') lightboxNav(1);
   });
@@ -468,6 +518,7 @@ function renderCalculator(){
 
   document.getElementById('pdf-label').textContent = s.pdfBusy ? 'Готовим PDF…' : 'Скачать расчёт';
   document.getElementById('download-calc').classList.toggle('busy', s.pdfBusy);
+  document.getElementById('download-calc').disabled = s.pdfBusy;
 }
 function sendToForm(){
   const s = state;
@@ -486,7 +537,7 @@ function sendToForm(){
       { k: 'Платёж', v: rub(payment) + ' / мес' },
     ],
   };
-  if (!state.submitted) updateForm();
+  updateForm();
   scrollToForm();
 }
 function downloadCalc(){
@@ -504,9 +555,10 @@ function downloadCalc(){
     income: rub(income) + ' / мес', payment: rub(payment) + ' / мес',
   };
   const logo = new URL('assets/logo-cropped.webp', document.baseURI).href;
+  document.getElementById('pdf-status').hidden = true;
   state.pdfBusy = true; renderCalculator();
   makeCalcPdf(calcDocHtml(d, logo), 'Расчёт ипотеки — Дом у моря.pdf')
-    .catch(() => {})
+    .catch(() => { const status = document.getElementById('pdf-status'); status.hidden = false; status.textContent = 'Не удалось создать PDF. Попробуйте ещё раз.'; })
     .then(() => { state.pdfBusy = false; renderCalculator(); });
 }
 function wireCalculatorEvents(){
@@ -537,78 +589,22 @@ function wirePricingCtas(){
   const installment = document.querySelector('[data-action="ask-installment"]');
   installment.addEventListener('click', e => {
     e.preventDefault();
-    openGenericRequest({ kind: 'installment', kicker: 'Ваш запрос', objectTitle: 'Рассрочка от застройщика', objectMeta: 'Запрос графика платежей · первый взнос от 30%, 0% на весь срок' });
+    openGenericRequest({ kind: 'installment', kicker: 'Ваш запрос', objectTitle: 'Семейная ипотека 6%', objectMeta: 'Запрос условий · первый взнос от 20%, сумма кредита до 12 млн ₽' });
   });
   const fullpay = document.querySelector('[data-action="ask-fullpay"]');
   fullpay.addEventListener('click', e => {
     e.preventDefault();
-    openGenericRequest({ kind: 'full', kicker: 'Ваш запрос', objectTitle: '100% оплата', objectMeta: 'Запрос прайса со скидкой 5% и приоритетом в выборе этажа' });
+    openGenericRequest({ kind: 'full', kicker: 'Ваш запрос', objectTitle: '100% оплата', objectMeta: 'Запрос актуального прайса и условий при полной оплате' });
   });
 }
 function openGenericRequest(req){
   state.snapshot = req;
   state.planChoice = req.planChoice || state.planChoice;
-  if (!state.submitted) updateForm();
+  updateForm();
   scrollToForm();
 }
 
 /* ================= contact form ================= */
-function formShellHTML(){
-  return `<form id="request-form" class="request-form" novalidate>
-    <div>
-      <div class="form-kicker">Заявка</div>
-      <div class="form-title" id="form-title"></div>
-      <div class="form-sub" id="form-sub"></div>
-    </div>
-    <div id="snapshot-slot" hidden></div>
-    <label class="field-label">
-      <span class="field-label-text">Имя <span class="req">*</span></span>
-      <input class="field-input" id="name-input" placeholder="Как к вам обращаться" autocomplete="name" name="name">
-      <div class="field-error" id="name-error" hidden>Укажите, как к вам обращаться</div>
-    </label>
-    <label class="field-label">
-      <span class="field-label-text">Телефон <span class="req">*</span></span>
-      <input class="field-input" id="phone-input" placeholder="+7 (___) ___-__-__" type="tel" inputmode="tel" autocomplete="tel" name="phone">
-      <div class="field-error" id="phone-error" hidden>Номер введён не полностью — 10 цифр после +7</div>
-    </label>
-    <div class="plan-locked-row" id="plan-locked-slot" hidden>
-      <span class="field-label-text">Интересующая планировка <span class="req">*</span></span>
-      <div class="plan-locked-box">
-        <span class="plan-locked-value" id="plan-locked-value"></span>
-        <span class="plan-locked-note" id="plan-locked-note"></span>
-      </div>
-    </div>
-    <div id="opened-fields-container"></div>
-    <div class="more-fields-row" id="more-fields-row" hidden></div>
-    <label class="consent-label">
-      <input type="checkbox" id="consent-input">
-      <span>Даю согласие на обработку персональных данных и принимаю <a href="#contact">политику конфиденциальности</a> <span class="req">*</span></span>
-    </label>
-    <div class="form-footnotes">
-      <div class="footnote-star"><span class="req">*</span> — обязательные поля</div>
-      <div class="form-hint" id="form-hint" hidden><span class="form-hint-dot"></span><span id="form-hint-text"></span></div>
-    </div>
-    <button type="submit" class="submit-btn" id="submit-btn" disabled>Отправить заявку</button>
-    <div class="submit-note">Ответим за 20 минут в рабочее время. Данные не передаём третьим лицам.</div>
-  </form>`;
-}
-function successHTML(){
-  const steps = [
-    { n: '1', t: 'Менеджер звонит в течение 20 минут и уточняет запрос' },
-    { n: '2', t: 'Присылаем подборку планировок и актуальный прайс' },
-    { n: '3', t: 'Показ на объекте или онлайн — в удобное вам время' },
-  ];
-  return `<div class="success-card">
-    <div>
-      <div class="form-kicker">Готово</div>
-      <div class="form-title">Заявка принята</div>
-    </div>
-    <div class="success-steps">
-      ${steps.map(st => `<div class="success-step"><span class="success-step-n">${st.n}</span><span class="success-step-t">${st.t}</span></div>`).join('')}
-    </div>
-    <button type="button" class="success-reset btn-hover-white" id="success-reset-btn">Отправить ещё одну</button>
-  </div>`;
-}
 function createFieldEl(key){
   const wrap = document.createElement('div');
   wrap.className = 'opened-field';
@@ -616,16 +612,16 @@ function createFieldEl(key){
   const label = FIELD_LABELS[key][0];
   let bodyHtml = '';
   if (key === 'plan') {
-    bodyHtml = `<select class="field-select" id="plan-select">
+    bodyHtml = `<select class="field-select" id="plan-select" name="plan" aria-label="Интересующая планировка">
       <option value="" disabled>Выберите тип квартиры</option>
       <option value="studio">Студия</option>
-      <option value="1k">1-комнатная</option>
-      <option value="2k">2-комнатная</option>
-      <option value="3k">3-комнатная / пентхаус</option>
+      <option value="1k">1 спальня</option>
+      <option value="2k">2 спальни</option>
+      <option value="3k">3 спальни</option>
       <option value="unsure">Пока не определился(-лась)</option>
     </select>`;
   } else if (key === 'email') {
-    bodyHtml = `<input class="field-input" id="email-input" type="email" autocomplete="email" name="email" placeholder="пришлём подборку и прайс">
+    bodyHtml = `<input class="field-input" id="email-input" aria-label="E-mail" aria-describedby="email-error" type="email" autocomplete="email" name="email" placeholder="пришлём подборку и прайс">
       <div class="field-error" id="email-error" hidden>Проверьте адрес — похоже, в нём опечатка</div>`;
   } else if (key === 'channel') {
     bodyHtml = `<div class="chip-row" id="channel-chips">${CHANNELS.map(c => `<button type="button" class="chip" data-chip-group="channel" data-chip-value="${c}">${c}</button>`).join('')}</div>`;
@@ -649,6 +645,7 @@ function syncOpenedFields(){
   const container = document.getElementById('opened-fields-container');
   const locked = planLockedActive();
   const wanted = state.opts.filter(k => !(k === 'plan' && locked));
+  container.hidden = wanted.length === 0;
   Array.from(container.children).forEach(el => {
     if (!wanted.includes(el.dataset.field)) el.remove();
   });
@@ -721,10 +718,9 @@ function renderFormTitleSub(){
       ? 'Покажем эту планировку на объекте или онлайн, пришлём подборку похожих и актуальный прайс.'
       : (snap
         ? 'Уточним условия оплаты, пришлём документы и ответим на вопросы по вашему запросу.'
-        : 'Перезвоним в течение 20 минут в рабочее время и подберём планировку под ваш запрос.'));
+        : 'Перезвоним в рабочее время (пн–сб, 9:00–18:00) и подберём планировку под ваш запрос.'));
 }
 function updateForm(){
-  if (state.submitted) return;
   const s = state;
   const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(s.phone);
   const emailBad = !!s.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email);
@@ -738,10 +734,12 @@ function updateForm(){
 
   const nameErr = !!s.blurred.name && !s.name.trim();
   document.getElementById('name-input').classList.toggle('error', nameErr);
+  document.getElementById('name-input').setAttribute('aria-invalid', String(nameErr));
   document.getElementById('name-error').hidden = !nameErr;
 
-  const phoneErr = !!s.blurred.phone && !!s.phone && !phoneOk;
+  const phoneErr = !!s.blurred.phone && !phoneOk;
   document.getElementById('phone-input').classList.toggle('error', phoneErr);
+  document.getElementById('phone-input').setAttribute('aria-invalid', String(phoneErr));
   document.getElementById('phone-error').hidden = !phoneErr;
 
   syncOpenedFields();
@@ -750,13 +748,14 @@ function updateForm(){
   if (emailInput) {
     const showErr = emailBad && !!s.blurred.email;
     emailInput.classList.toggle('error', showErr);
+    emailInput.setAttribute('aria-invalid', String(showErr));
     const err = document.getElementById('email-error');
     if (err) err.hidden = !showErr;
   }
   const planSelect = document.getElementById('plan-select');
   if (planSelect) planSelect.classList.toggle('chosen', !!s.planChoice);
-  document.querySelectorAll('#channel-chips .chip').forEach(b => b.classList.toggle('active', b.dataset.chipValue === s.channel));
-  document.querySelectorAll('#time-chips .chip').forEach(b => b.classList.toggle('active', b.dataset.chipValue === s.callTime));
+  document.querySelectorAll('#channel-chips .chip').forEach(b => { b.classList.toggle('active', b.dataset.chipValue === s.channel); b.setAttribute('aria-pressed', String(b.dataset.chipValue === s.channel)); });
+  document.querySelectorAll('#time-chips .chip').forEach(b => { b.classList.toggle('active', b.dataset.chipValue === s.callTime); b.setAttribute('aria-pressed', String(b.dataset.chipValue === s.callTime)); });
 
   renderMoreFieldsRow();
   renderPlanLocked();
@@ -790,11 +789,6 @@ function handlePhoneInput(e){
   state.phone = formatted;
   updateForm();
 }
-function resetFormState(){
-  state.submitted = false; state.name = ''; state.phone = ''; state.planChoice = '';
-  state.consent = false; state.snapshot = null; state.email = ''; state.channel = 'Звонок';
-  state.callTime = ''; state.opts = []; state.blurred = {};
-}
 function handleSubmit(){
   const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(state.phone);
   const emailBad = !!state.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.email);
@@ -804,8 +798,10 @@ function handleSubmit(){
     updateForm();
     return;
   }
-  state.submitted = true;
-  renderContactArea();
+  const status = document.getElementById('form-status');
+  status.hidden = false;
+  status.textContent = 'Отправка заявки ещё не подключена. Данные не отправлены. Свяжитесь с отделом продаж по телефону или почте, указанным рядом.';
+  status.focus();
 }
 function bindFormEvents(){
   const form = document.getElementById('request-form');
@@ -841,26 +837,19 @@ function bindFormEvents(){
   form.addEventListener('submit', e => { e.preventDefault(); handleSubmit(); });
 }
 function renderContactArea(){
-  const area = document.getElementById('contact-form-area');
-  if (state.submitted) {
-    area.innerHTML = successHTML();
-    document.getElementById('success-reset-btn').addEventListener('click', () => {
-      resetFormState(); renderContactArea();
-    });
-  } else {
-    area.innerHTML = formShellHTML();
-    bindFormEvents();
-    updateForm();
-  }
+  // Initial form is semantic HTML and remains readable without JavaScript.
+  bindFormEvents();
+  updateForm();
 }
 
 /* ================= init ================= */
 function init(){
-  renderTabs(); renderPlansGrid(); wirePlansEvents();
+  setupAbout();
+  renderTabs(); renderPlansGrid(); wirePlansEvents(); setupPlanViews(); setupMap();
   renderGallery(); wireGalleryEvents();
   wireCalculatorEvents(); renderCalculator();
   renderContactArea();
-  wireHeaderEvents();
+  wireHeaderEvents(); applyMenuState();
   wireLightboxEvents();
   wireCookieBanner(); applyCookieBanner();
   wireScrollTopBtn();
@@ -869,3 +858,85 @@ function init(){
   onScroll();
 }
 document.addEventListener('DOMContentLoaded', init);
+
+/* ================= current-design controls ================= */
+function setupAbout(){
+  const panel = document.getElementById('about-content');
+  const buttons = [...document.querySelectorAll('[data-about-tab]')];
+  const applyTheme = (root, theme) => {
+    root.querySelector('#about-theme-title').textContent = theme.title;
+    root.querySelector('#about-theme-lead').textContent = theme.lead;
+    root.querySelectorAll('.about-item-title').forEach((el, i) => el.textContent = theme.items[i].t);
+    root.querySelectorAll('.about-item-copy').forEach((el, i) => el.textContent = theme.items[i].d);
+  };
+  const select = key => {
+    state.aboutTab = key;
+    applyTheme(panel, ABOUT_THEMES.find(t => t.key === key));
+    buttons.forEach(b => { const on = b.dataset.aboutTab === key; b.classList.toggle('active', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+    panel.setAttribute('aria-labelledby', 'about-tab-' + key);
+  };
+  buttons.forEach((b, i) => {
+    b.addEventListener('click', () => select(b.dataset.aboutTab));
+    b.addEventListener('keydown', e => {
+      let next;
+      if (e.key === 'ArrowRight') next = (i + 1) % buttons.length;
+      else if (e.key === 'ArrowLeft') next = (i - 1 + buttons.length) % buttons.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = buttons.length - 1;
+      if (next !== undefined) { e.preventDefault(); buttons[next].focus(); select(buttons[next].dataset.aboutTab); }
+    });
+  });
+  // Measure all three themes at the real responsive width, without changing the visible panel.
+  const reserveHeight = () => {
+    const probe = panel.cloneNode(true);
+    probe.removeAttribute('id'); probe.removeAttribute('role'); probe.setAttribute('aria-hidden', 'true');
+    Object.assign(probe.style, {position:'absolute', left:'-10000px', top:'0', width:panel.getBoundingClientRect().width+'px', minHeight:'0', visibility:'hidden'});
+    document.body.appendChild(probe);
+    let height = 0;
+    ABOUT_THEMES.forEach(theme => { applyTheme(probe, theme); height = Math.max(height, probe.getBoundingClientRect().height); });
+    panel.style.minHeight = Math.ceil(height) + 'px';
+    probe.remove();
+  };
+  reserveHeight();
+  document.fonts.ready.then(reserveHeight);
+  let scheduled;
+  window.addEventListener('resize', () => { cancelAnimationFrame(scheduled); scheduled = requestAnimationFrame(reserveHeight); });
+}
+
+const CATEGORIES = [
+  {key:'studio', title:'Студии', count:11, price:'от 6,7 млн ₽', area:'28,9–29 м² · чистовая отделка'},
+  {key:'1k', title:'1 спальня', count:25, price:'от 7,4 млн ₽', area:'33,6–35,7 м² · чистовая отделка'},
+  {key:'2k', title:'2 спальни', count:7, price:'от 9,4 млн ₽', area:'до 71,5 м² · чистовая отделка'},
+  {key:'3k', title:'3 спальни', count:2, price:'от 14,7 млн ₽', area:'до 71,5 м² · чистовая отделка'},
+];
+function setupPlanViews(){
+  document.getElementById('category-grid').innerHTML = CATEGORIES.map(c => `<article class="category-card card-hover">
+    <div class="category-title">${c.title}</div>
+    <div class="category-note">${c.count} ${c.count < 5 ? 'квартиры' : 'квартир'} в продаже · корпус 1</div>
+    <div class="category-price">${c.price}</div><div class="category-area">${c.area}</div>
+    <div class="category-actions"><a href="#plans" data-category="${c.key}" data-category-action="lots">Смотреть квартиры →</a>
+    <a href="#contact" class="plan-link-calc" data-category="${c.key}" data-category-action="ask"><span class="dot"></span>Запросить подборку →</a></div>
+  </article>`).join('');
+  const setView = view => {
+    state.plansView = view;
+    document.getElementById('plans-grid').hidden = view !== 'lots';
+    document.getElementById('plan-tabs').hidden = view !== 'lots';
+    document.getElementById('category-grid').hidden = view !== 'cats';
+    document.querySelectorAll('[data-view]').forEach(b => { b.classList.toggle('active', b.dataset.view === view); b.setAttribute('aria-pressed', String(b.dataset.view === view)); });
+  };
+  document.getElementById('plan-views').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) setView(b.dataset.view); });
+  document.getElementById('category-grid').addEventListener('click', e => {
+    const a = e.target.closest('[data-category]'); if (!a) return; e.preventDefault();
+    const c = CATEGORIES.find(c => c.key === a.dataset.category);
+    if (a.dataset.categoryAction === 'lots') { state.filter = c.key; renderTabs(); renderPlansGrid(); setView('lots'); document.querySelector('[data-tab="'+c.key+'"]').focus({preventScroll:true}); }
+    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[{k:'Тип',v:CAT_LABEL[c.key]},{k:'В продаже',v:c.count},{k:'Цена',v:c.price}]});
+  });
+}
+function setupMap(){
+  const frame = document.getElementById('location-map');
+  const button = document.getElementById('map-unlock');
+  const lock = () => { frame.style.pointerEvents = 'none'; frame.tabIndex = -1; button.hidden = false; };
+  button.addEventListener('click', () => { frame.style.pointerEvents = 'auto'; frame.tabIndex = 0; button.hidden = true; frame.focus(); });
+  document.getElementById('map-container').addEventListener('mouseleave', lock);
+  frame.addEventListener('blur', lock);
+}

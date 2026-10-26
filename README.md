@@ -1,25 +1,65 @@
-# CODING AGENTS: READ THIS FIRST
+# ЖК «Дом у моря» — статический сайт
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+REC-001 переносит утверждённый корневой `index.dc.html` из экспорта Claude Design
+от 26.10.2026 в обычные HTML5, CSS и JavaScript. Production-исходники:
+`index.html`, `styles.css`, `script.js`, `favicon.png`, `assets/`.
+Сборка и серверный JavaScript для сайта не требуются.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+## Локальный запуск
 
-## What you should do — IMPORTANT
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1
+```
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+Откройте http://127.0.0.1:4173/. Альтернатива на Node.js 20+: `npm run dev`.
+Все изображения, шрифты и PDF-библиотеки локальные. Только интерактивная карта
+OpenStreetMap и внешние ссылки требуют интернета.
 
-**Read `project/index.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Проверки
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+Зависимости ниже нужны только для QA, на хостинг их переносить не нужно:
 
-## About the design files
+```sh
+npm ci
+npx playwright install chromium
+npm run check
+npm test
+npm run test:visual
+```
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+Используется отдельный headless Chromium Playwright, без личного профиля браузера.
+Если Chromium уже установлен отдельно, путь задаётся переменной
+`CHROMIUM_EXECUTABLE_PATH`. `npm test` сам запускает временный локальный сервер.
+`npm run test:visual` распаковывает эталон во временную папку, снимает обе версии
+на 1440×1000, 768×1000, 390×844 при DPR 1, затем удаляет временную распаковку.
+Для отрисовки исходного runtime эталона нужен доступ к unpkg.com. Production
+от него не зависит. Можно указать уже распакованный эталон через `REFERENCE_DIR`.
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+Скриншоты, сравнения и результаты: `docs/qa/`. Методика и выводы:
+[design-qa.md](design-qa.md), ограничения и приёмка:
+[docs/REC-001.md](docs/REC-001.md). CI/workflow и автодеплой не добавлены.
 
-## Bundle contents
+## Редактирование
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Анализ блока заявки` project files (HTML prototypes, assets, components)
+- Основные тексты и семантические секции — `index.html`.
+- Палитра, размеры, адаптивные правила и состояния — `styles.css`.
+- Планировки, темы вкладок, категории и интерактивность — `script.js`.
+- Начальные карточки и подписи также есть в HTML для просмотра без JavaScript;
+  при изменении данных синхронизируйте начальное HTML-состояние.
+- Изображения из эталона скопированы побайтово, без генерации и замены.
+
+## Заявки и последующее размещение
+
+Форма **не отправляет данные** и не показывает ложный успех. После локальной
+валидации она явно сообщает, что отправка ещё не подключена. Данные формы
+не записываются в localStorage и не передаются на сторонние сервисы. В localStorage
+хранится только выбор cookie; аналитические скрипты отсутствуют.
+
+Для подключения нужны параметры хостинга Бориса, серверный обработчик, получатель
+заявок, утверждённая политика/согласие и согласованный способ уведомлений.
+Подробности — в `docs/REC-001.md`. Production-хостинг, DNS и облачные проекты
+этой задачей не меняются.
+
+`project/` — сохранённая историческая версия, `reference/` — неизменяемый архив.
+Они нужны для истории и приёмки; не являются частью публикуемого сайта.
+В REC-001 старые каталоги и Git-история не удалялись.

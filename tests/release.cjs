@@ -20,6 +20,8 @@ const path = require('node:path');
     assert.equal(first.files, RELEASE_FILES.length);
     await assert.rejects(fs.access(path.join(outputRoot, '.env')));
     await assert.rejects(fs.access(path.join(outputRoot, 'docs')));
+    await assert.rejects(fs.access(path.join(outputRoot, 'review')));
+    for(const legal of ['privacy.html','consent-personal-data.html']) assert.ok(RELEASE_FILES.includes(legal));
     for (const relative of RELEASE_FILES) {
       assert.deepEqual(await fs.readFile(path.join(outputRoot, relative)), await fs.readFile(path.join(projectRoot, relative)));
     }
@@ -32,6 +34,10 @@ const path = require('node:path');
     await assert.rejects(buildRelease({sourceRoot: fixture, outputRoot}), /Unlisted local resource/);
     assert.equal((await validateRelease(outputRoot)).sha256, first.sha256, 'A failed build must preserve the previous complete release');
     await fs.writeFile(path.join(fixture, 'styles.css'), css);
+    const privacy = await fs.readFile(path.join(fixture, 'privacy.html'),'utf8');
+    await fs.writeFile(path.join(fixture, 'privacy.html'),privacy+'<a href="missing-legal.html">Broken</a>');
+    await assert.rejects(buildRelease({sourceRoot:fixture,outputRoot}),/Unlisted local resource in privacy.html/);
+    await fs.writeFile(path.join(fixture,'privacy.html'),privacy);
     await fs.unlink(path.join(fixture, 'assets/fonts/font-1.ttf'));
     await fs.symlink(path.join(projectRoot, 'assets/fonts/font-1.ttf'), path.join(fixture, 'assets/fonts/font-1.ttf'));
     await assert.rejects(buildRelease({sourceRoot: fixture, outputRoot}), /regular files/);

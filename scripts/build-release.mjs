@@ -26,8 +26,10 @@ export async function validateReferences(root) {
     const relative = decodeURIComponent(url.pathname).replace(/^\//, '');
     if (!allowed.has(relative)) throw new Error(`Unlisted local resource in ${owner}: ${reference}`);
   };
-  const html = await fs.readFile(path.join(root, 'index.html'), 'utf8');
-  for (const match of html.matchAll(/\b(?:src|href|poster)\s*=\s*(["'])(.*?)\1/gs)) check(match[2], 'index.html');
+  for (const relative of RELEASE_FILES.filter(name => name.endsWith('.html'))) {
+    const html = await fs.readFile(path.join(root, relative), 'utf8');
+    for (const match of html.matchAll(/\b(?:src|href|poster)\s*=\s*(["'])(.*?)\1/gs)) check(match[2], relative);
+  }
   for (const relative of RELEASE_FILES.filter(name => name.endsWith('.css'))) {
     const css = await fs.readFile(path.join(root, relative), 'utf8');
     for (const match of css.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/g)) check(match[1] ?? match[2] ?? match[3], relative);

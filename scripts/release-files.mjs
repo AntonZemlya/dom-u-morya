@@ -1,6 +1,6 @@
 // Publication is explicit: add resources here when changing asset filenames.
 export const RELEASE_FILES = Object.freeze([
-  'index.html', 'styles.css', 'script.js', 'favicon.png',
+  'index.html', 'privacy.html', 'consent-personal-data.html', 'styles.css', 'script.js', 'favicon.png',
   'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
   'assets/location.webp', 'assets/logo-cropped.webp',

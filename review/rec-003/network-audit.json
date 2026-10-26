@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-27",
+  "browser": "separate headless Playwright Chromium",
+  "mapStubbed": false,
+  "externalHosts": [
+    "www.openstreetmap.org",
+    "tile.openstreetmap.org"
+  ],
+  "externalRequests": [
+    {
+      "method": "GET",
+      "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "resourceType": "document"
+    },
+    {
+      "method": "GET",
+      "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "resourceType": "stylesheet"
+    },
+    {
+      "method": "GET",
+      "url": "https://www.openstreetmap.org/assets/embed-b30ac9e3a1943d30093b46d6d7a33de25477416a77853ba8ca5626f1a7e5e283.js",
+      "resourceType": "script"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9899/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9898/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9899/5757.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9898/5757.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9900/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9897/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9900/5757.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9897/5757.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9901/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9901/5757.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9896/5758.png",
+      "resourceType": "fetch"
+    },
+    {
+      "method": "GET",
+      "url": "https://tile.openstreetmap.org/14/9896/5757.png",
+      "resourceType": "fetch"
+    }
+  ],
+  "nonGetRequests": [],
+  "mapStatus": 200,
+  "failures": [],
+  "localResources": 15
+}

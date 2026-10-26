@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 
 root = Path(__file__).resolve().parent.parent
-for name in ['index.html', 'styles.css', 'script.js']:
+for name in ['index.html', 'privacy.html', 'consent-personal-data.html', 'styles.css', 'script.js']:
     text = (root / name).read_text()
     assert not re.search(r'<x-dc|<sc-(?:if|for)|support\.js|DCLogic|data-dc-|data-sc-|\{\{', text), name
     for pattern in [r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',
@@ -34,3 +34,17 @@ for name in ['assets/fonts/fonts.css', 'assets/fonts/Newsreader.OFL.txt',
     assert (root / name).is_file(), name
 
 print('PASS: current sources, SEO structure, credential patterns, resources/licenses, no historical/runtime dependencies')
+
+for name in ['privacy.html', 'consent-personal-data.html']:
+    legal = (root / name).read_text()
+    assert len(re.findall(r'<h1\b', legal)) == 1, name
+    assert '<html lang="ru">' in legal, name
+    assert re.search(r'<title>[^<]+</title>', legal), name
+    assert re.search(r'<meta name="description" content="[^"]+"', legal), name
+    assert '<script' not in legal, name
+    assert not re.search(r'черновик|проект документа|подлежит согласованию|TODO', legal, re.I), name
+    for value in ['366210396814', '318366800035941', 'tel:+79529568875', 'mailto:info@anyara.ru']:
+        assert value in legal, (name, value)
+for name in ['index.html', 'script.js', 'privacy.html', 'consent-personal-data.html']:
+    assert not re.search(r'775.?28.?92|info@sk-gc\.ru|Артёма', (root / name).read_text()), name
+print('PASS: complete static legal pages, operator identity and contact consistency')

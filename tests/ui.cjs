@@ -1,17 +1,24 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
 const {PDFDocument} = require('pdf-lib');
 const {root,server,browser,stable,maskMap} = require('./helpers.cjs');
+const args = process.argv.slice(2);
+assert.ok(args.length === 0 || (args.length === 2 && args[0] === '--root'), 'Usage: node tests/ui.cjs [--root dist]');
+const siteRoot = args.length ? path.resolve(root, args[1]) : root;
 const results=[];
 const money = s => Number(s.replace(/\D/g,''));
 const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
 (async()=>{
- const site=await server();const b=await browser();
+ const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'dom-u-morya-ui-'));
+ const site=await server(siteRoot);let b;
  try {
+  b=await browser();
+  console.log('Testing '+siteRoot);
   for(const width of [1440,768,390]){
    const context=await b.newContext({viewport:{width,height:width===390?844:1000},acceptDownloads:true});const page=await context.newPage();
-   const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('request',r=>{if(r.method()!=='GET')requests.push({method:r.method(),url:r.url()})});
+   const errors=[],requests=[];page.on('response',r=>{if(r.url().startsWith(site.url) && r.status()>=400)errors.push(r.status()+' '+r.url())});page.on('requestfailed',r=>{if(r.url().startsWith(site.url))errors.push(r.failure().errorText+' '+r.url())});page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('request',r=>{if(r.method()!=='GET')requests.push({method:r.method(),url:r.url()})});
    await maskMap(page);await page.goto(site.url,{waitUntil:'domcontentloaded'});await stable(page);
    assert.equal(await page.locator('h1').count(),1);assert.ok(await page.title());assert.equal(await page.locator('meta[name=description]').count(),1);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
@@ -43,8 +50,8 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
    assert.equal(money(await page.locator('#income-label').textContent()),Math.round(annuity(7885023,20,20,6)/.4));
    assert.equal(money(await page.locator('#loan-label').textContent()),Math.round(7885023*.8));
    await page.locator('#send-to-form').click();assert.match(await page.locator('#form-title').textContent(),/Обсудим ваш расчёт/);assert.match(await page.locator('#snapshot-slot').textContent(),/Платёж/);
-   assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#name-input').fill('Тест REC-001');await page.locator('#phone-input').fill('70000000000');assert.equal(await page.locator('#phone-input').inputValue(),'+7 (000) 000-00-00');await page.locator('#consent-input').check();
-   await page.locator('.more-field-btn[data-field="email"]').click();await page.locator('#email-input').fill('bad');await page.locator('#name-input').focus();assert.equal(await page.locator('#email-error').isVisible(),true);assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#email-input').fill('rec001@example.invalid');
+   assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#name-input').fill('Тестовая заявка');await page.locator('#phone-input').fill('70000000000');assert.equal(await page.locator('#phone-input').inputValue(),'+7 (000) 000-00-00');await page.locator('#consent-input').check();
+   await page.locator('.more-field-btn[data-field="email"]').click();await page.locator('#email-input').fill('bad');await page.locator('#name-input').focus();assert.equal(await page.locator('#email-error').isVisible(),true);assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#email-input').fill('test@example.invalid');
    for(const f of ['channel','time']){await page.locator('.more-field-btn[data-field="'+f+'"]').click();}await page.locator('[data-chip-value="Telegram"]').click();await page.locator('[data-chip-value="12-15"]').click();
    await page.locator('#submit-btn').click();assert.match(await page.locator('#form-status').textContent(),/Данные не отправлены/);assert.equal(await page.locator('text=Заявка принята').count(),0);assert.deepEqual(requests,[]);
    await page.locator('#snapshot-remove-btn').click();assert.equal(await page.locator('#snapshot-slot').isVisible(),false);
@@ -52,7 +59,7 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
    await setRange('price',20000000);await setRange('down',70);await setRange('term',3);await setRange('rate',20);assert.equal(money(await page.locator('#payment-label').textContent()),Math.round(annuity(20000000,70,3,20)));assert.match(await page.locator('#calc-plan-title').textContent(),/не выбрана/);
    await page.locator('#map-unlock').click();assert.equal(await page.locator('#location-map').getAttribute('tabindex'),'0');await page.locator('#phone-input').focus();assert.equal(await page.locator('#map-unlock').isVisible(),true);
    if(width===1440){
-    const downloadPromise=page.waitForEvent('download');await page.locator('#download-calc').click();const download=await downloadPromise;const target=path.join(root,'docs/qa/mortgage-example.pdf');await download.saveAs(target);const bytes=fs.readFileSync(target);assert.equal(bytes.subarray(0,4).toString(),'%PDF');const pdf=await PDFDocument.load(bytes);assert.equal(pdf.getPageCount(),1);assert.ok(bytes.length>20000);assert.equal(await page.locator('#pdf-status').isVisible(),false);
+    const downloadPromise=page.waitForEvent('download');await page.locator('#download-calc').click();const download=await downloadPromise;const target=path.join(temp,'mortgage-example.pdf');await download.saveAs(target);const bytes=fs.readFileSync(target);assert.equal(bytes.subarray(0,4).toString(),'%PDF');const pdf=await PDFDocument.load(bytes);assert.equal(pdf.getPageCount(),1);assert.ok(bytes.length>20000);assert.equal(await page.locator('#pdf-status').isVisible(),false);
    }
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    assert.deepEqual(errors,[]);results.push({width,status:'passed',aboutHeights:heights,localImages:images.length,consoleErrors:errors,nonGetRequests:requests.length});await context.close();console.log('PASS '+width+'px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map'+(width===1440?', PDF':''));
@@ -69,6 +76,6 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
   await motionPage.locator('.skip-link').focus();assert.equal(await motionPage.locator('.skip-link').evaluate(el=>getComputedStyle(el).clipPath),'none');await motionPage.close();
   console.log('PASS reveal animations, reduced motion and skip-link focus');
   const offline=await b.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const p=await offline.newPage();await p.goto(site.url);assert.equal(await p.locator('h1').count(),1);assert.equal(await p.locator('#request-form').count(),1);assert.equal(await p.locator('#plans-grid .card').count(),5);assert.equal(await p.locator('#gallery-grid .gallery-item').count(),6);assert.match(await p.locator('#form-title').textContent(),/Оставьте заявку/);assert.equal(await p.locator('#about').isVisible(),true);await offline.close();
-  fs.writeFileSync(path.join(root,'docs/qa/test-results.json'),JSON.stringify({date:'2026-10-26',browser:await b.version(),results,animationAndReducedMotion:'passed',noJavaScript:'passed'},null,2)+'\n');
- }finally{await b.close();await site.close();}
+  console.log('PASS '+results.length+' viewports, no-JavaScript content; temporary PDF removed after verification');
+ }finally{if(b)await b.close();await site.close();fs.rmSync(temp,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1});

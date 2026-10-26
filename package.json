@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "node tests/serve.cjs",
-    "test": "node tests/ui.cjs",
-    "test:visual": "node tests/visual.cjs",
-    "check": "node --check script.js && python3 tests/source_audit.py"
+    "check": "node --check script.js && node --check scripts/build-release.mjs && python3 tests/source_audit.py",
+    "test": "node tests/release.cjs && node tests/ui.cjs",
+    "build": "node scripts/build-release.mjs",
+    "test:dist": "node tests/ui.cjs --root dist"
   },
   "devDependencies": {
     "playwright": "1.62.1",
-    "pdf-lib": "1.17.1",
-    "sharp": "0.34.5"
+    "pdf-lib": "1.17.1"
   }
 }

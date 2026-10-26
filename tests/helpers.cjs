@@ -8,7 +8,7 @@ function server(directory = root, port = 0) {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const file = path.resolve(directory, '.' + (pathname === '/' ? '/index.html' : pathname));
     if (!file.startsWith(directory + path.sep)) { res.writeHead(403).end(); return; }
-    fs.readFile(file, (error, data) => { if(error) res.writeHead(404).end(); else {res.setHeader('Access-Control-Allow-Origin','*'); res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream'); res.end(data);} });
+    fs.readFile(file, (error, data) => { if(error) res.writeHead(404).end(); else {res.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream'); res.end(data);} });
   });
   return new Promise(resolve => instance.listen(port,'127.0.0.1', () => resolve({url:`http://127.0.0.1:${instance.address().port}`, close:()=>new Promise(r=>instance.close(r))})));
 }

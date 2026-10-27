@@ -120,9 +120,8 @@ ${row('Необходимый доход', d.income)}
 <div class="hl"><span class="l">Ежемесячный платёж</span><span class="r">${d.payment}</span></div>
 <p class="note">Доход рассчитан из условия, что платёж не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении. Материалы носят информационный характер и не являются офертой.</p>
 <div class="foot">
-<div><b>Консультации агентства</b>+7 (952) 956-88-75<br>info@anyara.ru</div>
-<div><b>Оператор сайта</b>ИП Саврасова Елена Анатольевна</div>
-<div><b>ЖК «Дом у моря»</b>Проектная декларация — наш.дом.рф, объект 69398<br>ГК «Садовое кольцо», © 2026</div>
+<div><b>Консультации агентства по ЖК «Дом у моря»</b>ИП Саврасова Елена Анатольевна<br>+7 (952) 956-88-75 · info@anyara.ru<br>ИНН 366210396814 · ОГРНИП 318366800035941</div>
+<div><b>Застройщик — ГК «Садовое кольцо»</b>Проектная декларация — наш.дом.рф, объект 69398</div>
 </div>
 </div>
 </body></html>`;
@@ -333,6 +332,11 @@ function askPlan(plan){
 }
 function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;renderCalculator();scrollToEl('calculator',80);}
 function wirePlansEvents(){
+  // These progressive-enhancement links act as buttons once the catalog is live.
+  document.getElementById('plans-grid').addEventListener('keydown',e=>{
+    const variant=e.target.closest('[data-plan-view]');
+    if(variant&&e.key===' '){e.preventDefault();variant.click();}
+  });
   document.getElementById('plan-tabs').addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;state.filter=tab.dataset.tab;state.layout='';state.limit=6;renderTabs();renderPlansGrid();});
   document.getElementById('plans-grid').addEventListener('click',e=>{
     const variant=e.target.closest('[data-plan-view]');

@@ -26,7 +26,7 @@ region('catalog',`<h2 id="plans-heading" class="plans-style-5">Квартира 
 <button type="button" id="show-more-plans" class="view-chip enhanced-only" hidden>Показать ещё</button>
 <div id="category-grid" class="plans-grid" hidden>${categories.map(M.category).join('')}</div>`);
 region('gallery',`<div id="gallery-grid" class="gallery-grid gallery-style-2">${media.gallery.map((m,i)=>M.photo(m,i,'gallery')).join('')}</div>`);
-region('construction',`<p class="construction-intro">От первых работ к будущему дому. Выберите месяц, чтобы увидеть, как меняется площадка.</p><div class="month-tabs enhanced-only" id="construction-tabs" aria-label="Месяц фотоальбома"></div><div id="construction-albums">${media.construction.map((m,i)=>`<details class="construction-album" data-album="${m.month}"${i===0?' open':''}><summary>${m.title} · ${m.images.length} фото</summary><div class="construction-grid" style="--thumbnails:${m.images.length-1}">${m.images.map((photo,j)=>M.photo(photo,j,'construction',m.month)).join('')}</div><p class="construction-credit">${m.title} · Фото: ${m.images.length} <a href="${M.esc(m.source_url)}" target="_blank" rel="noopener">Источник</a></p></details>`).join('')}</div>`);
+region('construction',`<p class="construction-intro">Фотоистория · апрель — сентябрь 2026</p><div class="month-tabs enhanced-only" id="construction-tabs" aria-label="Месяц фотоальбома"></div><div id="construction-albums">${media.construction.map((m,i)=>`<details class="construction-album" data-album="${m.month}"${i===0?' open':''}><summary>${m.title} · ${m.images.length} фото</summary><div class="construction-grid" style="--thumbnails:${m.images.length-1}">${m.images.map((photo,j)=>M.photo(photo,j,'construction',m.month)).join('')}</div><p class="construction-credit"><span>${m.title} · ${m.images.length} фото<br>Месяц альбома; точная дата съёмки не установлена.</span> <a href="${M.esc(m.source_url)}" target="_blank" rel="noopener">Источник</a></p></details>`).join('')}</div>`);
 region('payload',`<script id="site-data" type="application/json">${JSON.stringify({snapshot_date:'2026-10-27',apartments,media}).replace(/</g,'\\u003c')}</script>`);
 // All initial calculator amounts use the same canonical minimum; no selected lot until chosen.
 const down=min*.1,loan=min-down,rate=.02/12,payment=loan*rate/(1-(1+rate)**-360);
@@ -34,7 +34,7 @@ for(const [id,value] of Object.entries({'price-label':M.rub(min),'down-label':'1
  html=html.replace(new RegExp(`(<(?:span|div) id="${id}"[^>]*>)[\\s\\S]*?(</(?:span|div)>)`),(_,a,b)=>a+value+b);
 }
 html=html.replace(/<input type="range"[^>]*id="price-range"[^>]*>/,`<input type="range" min="${min}" max="20000000" step="1" value="${min}" id="price-range" aria-label="Стоимость квартиры" class="pricing-style-16">`);
-const news=read('news');html=html.replace(/(<article><time datetime="(2026-(?:05-25|07-31|10-16))">[\s\S]*?)(<\/article>)/g,(all,start,date,end)=>start.replace(/<a [\s\S]*?<\/a>$/,'')+`<a href="${news.find(n=>n.date===date).source_url}" target="_blank" rel="noopener">Источник ↗</a>`+end);
+// News dates and source URLs remain in data/news.json; no duplicate news feed.
 // Keep the approved REC-002 architectural composition; never replace it with catalog media.
 html=html.replace(/(<div class="loc-zoom about-style-4"[^>]*?) style="[^"]*"/,'$1');
 const paths=[...new Set([...apartments.flatMap(a=>a.plans.map(p=>p.local_path)),...media.gallery.flatMap(m=>m.variants.map(v=>v.src)),...media.construction.flatMap(m=>m.images.flatMap(i=>i.variants.map(v=>v.src)))])].sort();

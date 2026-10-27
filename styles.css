@@ -693,3 +693,155 @@ button{font-family:inherit}
 #plans .catalog-controls #sea-filter:checked{background:#6d755f;border-color:#6d755f}
 #plans .catalog-controls #sea-filter:checked:before{background:#fbfaf7;transform:translateX(12px)}
 @media(max-width:600px){.site-footer .footer-legal{align-items:flex-start}}
+
+/* DESIGN-002 / V2.1 — scoped finishing pass. Hero and architecture stay untouched. */
+#progress .construction-heading{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:end;margin-bottom:48px}
+#progress .construction-heading .plans-style-4{margin:0 0 22px}
+#progress .construction-heading h2{font:400 clamp(36px,4.2vw,60px)/1.06 Newsreader,Georgia,serif;letter-spacing:-.025em;margin:0}
+#progress .construction-status{max-width:460px;padding:4px 0 4px 28px;border-left:2px solid #b39a69}
+#progress .milestone-date{font:400 12px/1.6 Sora,Arial,sans-serif;color:#6e6d63;margin:0 0 16px}
+#progress .milestone-date time{display:block;color:#333c3b;font-size:14px;margin-top:5px}
+#progress .construction-status>p:not(.milestone-date){font:400 15px/1.8 Sora,Arial,sans-serif;color:#424943;margin:0 0 12px}
+#progress .milestone-source{font:400 12px/1.5 Sora,Arial,sans-serif;color:#716c60}
+#progress .construction-intro{font-size:12px;letter-spacing:.03em;margin:0 0 6px;color:#6b6b62}
+#progress .month-tabs{margin:0 0 28px;gap:28px}
+#progress .month-tabs button{min-height:48px;font-size:13px}
+#progress .construction-credit{font-size:12px;color:#68695f;align-items:flex-start}
+#progress .construction-credit a{min-height:44px;display:inline-flex;align-items:center}
+/* Information → invitation → closing signature, each with its own tonal space. */
+.content-faq{max-width:none;background:#fbfaf7;padding:100px max(40px,calc((100vw - 1240px)/2));gap:90px}
+.content-faq .content-note{font-size:12px;color:#6e7067}
+.content-faq details p{font-size:14px;color:#5b635d}
+.content-faq .faq-contact{font-size:13px;min-height:44px;display:inline-flex;align-items:center;color:#745c31}
+#contact.contact-finale{max-width:none;margin:0;padding:80px max(40px,calc((100vw - 1240px)/2));background:#eae4d8;position:relative;scroll-margin-top:110px}
+.contact-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-rows:1fr auto;gap:0 48px;align-items:stretch}
+.contact-invitation{position:relative;display:flex;align-items:flex-end;min-height:440px;padding:40px;border-radius:16px;background:linear-gradient(0deg,rgba(20,36,41,.88),rgba(20,36,41,.38) 85%),url('assets/cta.webp') center/cover;color:#fbfaf7;overflow:hidden}
+.contact-invitation .contact-style-4{font:400 12px/1.7 Sora,Arial,sans-serif;letter-spacing:.06em;margin:0 0 22px;color:#f0d7a4}
+.contact-invitation h2{font:400 clamp(36px,3.7vw,54px)/1.08 Newsreader,Georgia,serif;letter-spacing:-.02em;margin:0 0 20px;color:#fff9ed}
+.contact-invitation-copy>p:last-child{font:400 15px/1.75 Sora,Arial,sans-serif;margin:0;color:#f6f0e5}
+.contact-direct{padding:32px 4px 0;align-self:end}
+.contact-direct .contact-eyebrow{font:400 12px/1.7 Sora,Arial,sans-serif;color:#66695f;margin:0 0 12px}
+.contact-direct .contact-phone{font:400 clamp(26px,2.6vw,36px)/1.3 Newsreader,Georgia,serif;display:inline-block;color:#283c40;min-height:44px;text-decoration:none}
+.contact-direct>p:not(.contact-eyebrow){font:400 13px/1.75 Sora,Arial,sans-serif;max-width:38ch;margin:10px 0 2px;color:#59635e}
+.contact-direct .contact-email{display:inline-flex;align-items:center;min-height:44px;color:#6d552c;font:400 14px Sora,Arial,sans-serif;text-decoration:underline;text-underline-offset:5px}
+#contact #contact-form-area{grid-column:2;grid-row:1/3;min-width:0}
+#contact .request-form{height:100%;box-sizing:border-box;background:#fbfaf7;border:1px solid #dfd7c9;border-radius:16px;box-shadow:none;padding:36px;gap:22px}
+#contact .form-title{font:400 32px/1.15 Newsreader,Georgia,serif;margin:10px 0 14px}
+#contact .form-kicker{font:400 12px Sora,Arial,sans-serif;color:#806538}
+#contact .form-sub{font:400 13px/1.75 Sora,Arial,sans-serif;color:#59625d}
+#contact .field-label-text{font:400 13px/1.5 Sora,Arial,sans-serif}
+#contact .field-input{font:400 14px/1.5 Sora,Arial,sans-serif;min-height:48px;background:#fffefa;border-color:#d4d0c6}
+#contact .consent-label{font:400 13px/1.75 Sora,Arial,sans-serif;gap:12px;align-items:flex-start;min-height:44px}
+#contact .consent-label input{width:20px;height:20px;flex:none;margin:3px 0 0;accent-color:#344c50}
+#contact .form-legal-note{font-size:12px;margin:-10px 0 0 32px;color:#62695f}
+#contact .form-legal-note>a{display:inline-block;padding:8px 0}
+#contact .more-fields-row{font:400 12px/1.9 Sora,Arial,sans-serif;gap:4px 10px}
+#contact .more-fields-row button{min-height:40px;font:400 12px/1.8 Sora,Arial,sans-serif}
+#contact .submit-note{font:400 12px/1.7 Sora,Arial,sans-serif;color:#62695f}
+#contact .footnote-star{font:400 12px/1.6 Sora,Arial,sans-serif}
+#contact .submit-btn{min-height:50px;font:500 14px Sora,Arial,sans-serif;background:#2b4246;color:#fffaf0}
+#contact .submit-btn:disabled{background:#e2dfd6;color:#626960;opacity:1}
+/* Full-width sea-charcoal footer, with a quiet three-column information tier. */
+footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
+.finale-footer .site-footer{max-width:1320px;padding:70px 40px 28px;color:#c0cbc5;font:400 13px/1.8 Sora,Arial,sans-serif}
+.finale-footer .footer-main{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;padding:0 0 48px;align-items:start}
+.finale-footer .footer-eyebrow{font:400 12px/1.6 Sora,Arial,sans-serif;letter-spacing:.05em;color:#d4bd8d;margin:0 0 16px}
+.finale-footer .footer-brand{font:400 clamp(48px,5.2vw,76px)/1 Newsreader,Georgia,serif;letter-spacing:-.025em;color:#f6f1e6;text-decoration:none;display:inline-block}
+.finale-footer .footer-tagline{font-size:13px;color:#c0cbc5;margin:16px 0 0}
+.finale-footer .footer-contact{text-align:left;align-items:flex-start;gap:0;margin:0}
+.finale-footer .footer-phone{font:400 clamp(27px,3vw,42px)/1.2 Newsreader,Georgia,serif;color:#f6f1e6;text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
+.finale-footer .footer-contact>a.footer-email{font-size:15px;color:#e4dcc9;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;margin-top:6px}
+.finale-footer .footer-contact span{font-size:12px;color:#bac8c2;margin-top:5px}
+.finale-footer .footer-bottom{display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:48px;border:0;padding:32px;border-radius:12px;background:#ffffff05}
+.finale-footer .footer-agency{font-size:14px;color:#e3e8df}
+.finale-footer .footer-agency .footer-eyebrow{font-size:12px;margin-bottom:12px}
+.finale-footer .footer-agency span{font-size:12px;color:#bac8c2;line-height:1.8}
+.finale-footer .footer-role{font-size:12px;color:#bac8c2;margin:0;padding-top:32px;line-height:1.9}
+.finale-footer .footer-legal{font-size:13px;align-items:flex-start;text-align:left;gap:10px;padding-top:24px}
+.finale-footer .footer-legal a{color:#e4dcc9;min-height:44px;display:flex;flex-direction:column;justify-content:center;text-decoration:underline;text-decoration-color:#c4b18266;text-underline-offset:4px;line-height:1.7}
+.finale-footer .footer-disclosure{font-size:12px;margin-top:20px;max-width:820px}
+.finale-footer .footer-disclosure summary{display:inline-flex;align-items:center;min-height:44px;color:#c1cdc6;gap:12px}
+.finale-footer .footer-disclosure p{color:#c1cdc6}
+.finale-footer .footer-disclosure a{color:#e4dcc9}
+.finale-footer .footer-fineprint{font-size:12px;color:#acbdb6;margin-top:12px;gap:24px}
+.finale-footer a:hover{color:#f1d09b;text-decoration-color:#f1d09b}
+/* Existing catalog, larger reading and interaction sizes. */
+#plans .catalog-controls label,#plans .card-edition,#plans .plan-thumb-label,#plans #catalog-result,#plans .catalog-footnote{font-size:12px;color:#65685f}
+#plans .catalog-controls .sea-filter{font-size:13px;min-height:44px}
+#plans .catalog-controls select,#plans .view-chip{min-height:44px;font-size:13px}
+#plans .plan-variants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0 24px}
+#plans .plan-variants a{display:flex;align-items:center;justify-content:center;min-height:44px;box-sizing:border-box;padding:8px 3px;font-size:12px;text-align:center;color:#61685f}
+#plans .plan-variants a[aria-pressed=true]{color:#33433f;border-bottom:2px solid #a88a55;background:#eee9de;border-radius:6px 6px 0 0}
+#plans .plan-variants a:hover{background:#eee9de;color:#283c37}
+#plans .plan-meta{font-size:13px;color:#62695f}
+#plans .lot-details{font-size:13px;color:#62695f}
+#plans .lot-details summary{min-height:44px;box-sizing:border-box;align-items:center;padding:12px 0;color:#62695f;cursor:pointer}
+#plans .plan-links{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+#plans .plan-links a{min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;font-size:12px;line-height:1.5}
+#plans .plan-links .plan-link-calc{padding:10px 14px;justify-content:center;text-align:center}
+#plans .plan-links a:hover{color:#2b4246;background:#eee9de}
+#lightbox .lightbox-caption{font-size:12px;line-height:1.65;color:#c1c3ba}
+#lightbox #lightbox-variants button{min-height:44px;font-size:13px}
+#lightbox .lightbox-tools button,#lightbox .lightbox-close,#lightbox .lightbox-position{font-size:12px}
+#plans :is(a,button,select,input,summary):focus-visible,#progress :is(a,button,summary):focus-visible,.content-faq :is(a,summary):focus-visible,#contact :is(a,button,input,select):focus-visible{outline:2px solid #7b6137;outline-offset:4px}
+.finale-footer :is(a,summary):focus-visible,#lightbox button:focus-visible{outline:2px solid #f0d2a0;outline-offset:4px}
+@media(max-width:1000px){
+ #progress .construction-heading{gap:32px;grid-template-columns:1fr 1fr}
+ .content-faq{gap:36px;padding:72px 40px;grid-template-columns:1fr 1.4fr}
+ .contact-shell{gap:28px;grid-template-columns:1fr 1fr}
+ #contact .request-form{padding:24px}
+ .contact-invitation{padding:28px;min-height:400px}
+ .contact-invitation h2{font-size:38px}
+ .finale-footer .footer-main{gap:32px}
+ .finale-footer .footer-bottom{gap:24px;padding:24px;grid-template-columns:1fr 1fr}
+ .finale-footer .footer-role{padding-top:0}
+ .finale-footer .footer-legal{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;padding:0;gap:24px}
+ #plans .plan-links{grid-template-columns:1fr;gap:4px}
+ #plans .plan-links a{justify-content:center}
+}
+@media(max-width:700px){
+ #progress .construction-heading{grid-template-columns:1fr;gap:26px;margin-bottom:32px}
+ #progress .construction-heading h2{font-size:42px}
+ #progress .construction-status{padding-left:20px;max-width:none}
+ #progress .milestone-date{margin-bottom:12px}
+ #progress .construction-status>p:not(.milestone-date){font-size:14px}
+ #progress .construction-credit{font-size:12px;gap:12px}
+ #progress .month-tabs{gap:22px}
+ .content-faq{display:block;padding:60px 20px}
+ .content-faq .faq-intro{margin-bottom:24px}
+ .content-faq details p{font-size:13px}
+ #contact.contact-finale{padding:32px 20px 44px}
+ .contact-shell{grid-template-columns:1fr;gap:28px}
+ .contact-invitation{min-height:360px;padding:28px}
+ .contact-invitation h2{font-size:42px}
+ .contact-direct{padding:0 4px;grid-row:3}
+ #contact #contact-form-area{grid-column:1;grid-row:2}
+ #contact .request-form{padding:26px 22px;gap:20px}
+ #contact .form-title{font-size:30px}
+ .finale-footer .site-footer{padding:48px 20px 24px}
+ .finale-footer .footer-main{grid-template-columns:1fr;gap:36px;padding-bottom:32px}
+ .finale-footer .footer-brand{font-size:58px}
+ .finale-footer .footer-phone{font-size:31px}
+ .finale-footer .footer-bottom{grid-template-columns:1fr;padding:24px;gap:24px}
+ .finale-footer .footer-legal{grid-template-columns:1fr;gap:12px}
+ .finale-footer .footer-fineprint{flex-direction:column;gap:8px}
+ #lightbox #lightbox-variants{gap:18px}
+ #lightbox #lightbox-variants button{font-size:12px}
+ #lightbox .lightbox-caption{font-size:12px}
+ #plans .plan-links{grid-template-columns:1fr auto;gap:8px}
+}
+@media(max-width:360px){
+ #plans .card-heading{flex-wrap:wrap;gap:6px}
+ #plans .card-facts{align-items:flex-start;flex-direction:column;gap:16px}
+ #plans .plan-meta{width:100%;flex-direction:row;align-items:center;gap:10px}
+ #plans .plan-meta>span{max-width:10ch;font-size:12px}
+ #plans .plan-links{grid-template-columns:1fr;gap:6px}
+ #plans .plan-links a{justify-content:center}
+ .contact-invitation{padding:24px;min-height:340px}
+ .contact-invitation h2{font-size:36px}
+ #contact .request-form{padding:24px 18px}
+ #contact .form-legal-note{margin-left:0}
+ .finale-footer .footer-brand{font-size:50px}
+ .finale-footer .footer-phone{font-size:27px}
+ .finale-footer .footer-bottom{padding:20px}
+}

@@ -386,6 +386,8 @@ function renderLightbox(){
   if(lb.index==null)return;const items=lightboxItems(),item=items[lb.index];
   document.getElementById('lightbox-title-text').textContent=item.title;document.getElementById('lightbox-position').textContent=(lb.index+1)+' из '+items.length;
   document.getElementById('lightbox-caption').textContent=item.caption;
+  document.getElementById('lightbox').dataset.mode=lb.mode;
+  document.getElementById('lightbox-calc').hidden=lb.mode!=='plan';
   const img=document.getElementById('lightbox-asset');img.src=item.src;img.alt=item.title;
   const variants=document.getElementById('lightbox-variants');variants.hidden=lb.mode!=='plan';variants.innerHTML=lb.mode==='plan'?items.map((m,i)=>`<button type="button" data-lb-view="${i}" aria-pressed="${lb.index===i}">${ContentModel.views[m.type]}</button>`).join(''):'';
   if(lb.mode==='plan'){
@@ -398,6 +400,7 @@ function renderLightbox(){
 function lightboxNav(dir){lb.index=(lb.index+dir+lightboxCount())%lightboxCount();renderLightbox();}
 function wireLightboxEvents(){
   const overlay=document.getElementById('lightbox'),inner=document.getElementById('lightbox-inner'),image=document.getElementById('lightbox-image');
+  document.getElementById('lightbox-calc').addEventListener('click',()=>{const id=lb.lotId;closeLightbox();calcHere(PLANS.find(p=>p.id===id));});
   overlay.addEventListener('click',closeLightbox);inner.addEventListener('click',e=>e.stopPropagation());document.getElementById('lightbox-close').addEventListener('click',closeLightbox);
   document.getElementById('lightbox-prev').addEventListener('click',()=>lightboxNav(-1));document.getElementById('lightbox-next').addEventListener('click',()=>lightboxNav(1));
   document.getElementById('lightbox-variants').addEventListener('click',e=>{const b=e.target.closest('[data-lb-view]');if(b){lb.index=Number(b.dataset.lbView);renderLightbox();document.querySelector(`[data-lb-view="${lb.index}"]`).focus();}});

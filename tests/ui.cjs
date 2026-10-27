@@ -37,11 +37,11 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
    for(const [category,count] of [['studio',4],['1k',6],['2k',6],['3k',2]]){await page.locator('[data-tab="'+category+'"]').click();assert.equal(await page.locator('#plans-grid .card').count(),count);}
    await page.locator('[data-view="cats"]').click();assert.equal(await page.locator('#category-grid .category-card').count(),4);await page.locator('[data-category="1k"][data-category-action="lots"]').click();assert.equal(await page.locator('#plans-grid .card').count(),6);
    const thumb=page.locator('#plans-grid .plan-thumb').first();await thumb.click();assert.equal(await page.locator('#lightbox').isVisible(),true);await page.keyboard.press('ArrowRight');assert.match(await page.locator('#lightbox-position').textContent(),/2 из 3/);await page.keyboard.press('Tab');assert.ok(await page.evaluate(()=>document.getElementById('lightbox').contains(document.activeElement)));await page.keyboard.press('Escape');assert.equal(await page.locator('#lightbox').isVisible(),false);assert.equal(await thumb.evaluate(el=>el===document.activeElement),true);
-   await page.locator('#gallery-grid .gallery-item').first().click();await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#lightbox-position').textContent(),/8 из 8/);
+   await page.locator('#gallery-grid .gallery-item').first().click();await page.locator('#lightbox-asset').evaluate(i=>i.decode());await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#lightbox-position').textContent(),/8 из 8/);await page.locator('#lightbox-asset').evaluate(i=>i.decode());
    await page.locator('#lightbox-image').dispatchEvent('touchstart',{touches:[{identifier:0,clientX:250,clientY:250}]});
    await page.locator('#lightbox-image').dispatchEvent('touchmove',{touches:[{identifier:0,clientX:100,clientY:250}]});
    await page.locator('#lightbox-image').dispatchEvent('touchend',{touches:[],changedTouches:[{identifier:0,clientX:100,clientY:250}]});
-   assert.match(await page.locator('#lightbox-position').textContent(),/1 из 8/);
+   assert.match(await page.locator('#lightbox-position').textContent(),/1 из 8/);await page.locator('#lightbox-asset').evaluate(i=>i.decode());
    await page.locator('#lightbox-close').click();
    await page.locator('#plans-grid [data-action="calc-here"]').nth(1).click();assert.match(await page.locator('#calc-plan-title').textContent(),/1 спальня/);assert.equal(money(await page.locator('#price-label').textContent()),7956744);
    const setRange=async(id,value)=>page.locator('#'+id+'-range').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},value);

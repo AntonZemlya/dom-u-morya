@@ -4,10 +4,11 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "node tests/serve.cjs",
-    "check": "node --check script.js && node --check scripts/build-release.mjs && python3 tests/source_audit.py",
-    "test": "node tests/release.cjs && node tests/ui.cjs",
-    "build": "node scripts/build-release.mjs",
-    "test:dist": "node tests/ui.cjs --root dist"
+    "check": "node --check script.js && node --check content-model.js && node --check scripts/build-release.mjs && node scripts/generate-content.mjs --check && python3 tests/source_audit.py && node tests/content.cjs",
+    "test": "node tests/release.cjs && node tests/ui.cjs && node tests/catalog.cjs",
+    "build": "node scripts/generate-content.mjs && node scripts/build-release.mjs",
+    "test:dist": "node tests/ui.cjs --root dist && node tests/catalog.cjs --root dist",
+    "content": "node scripts/generate-content.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1",

@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2026-10-20",
+    "title": "ГК «Садовое кольцо» шесть лет подряд сохраняет высший рейтинг ЕРЗ по соблюдению сроков передачи квартир",
+    "scope": "developer_corporate",
+    "summary": "Сообщение группы о рейтинге соблюдения сроков. Датировать и атрибутировать застройщику, не превращать в гарантию будущей сдачи ЖК.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-shest-let-podryad-sokhranyaet-vysshiy-reyting-erz-po-soblyudeniyu-srokov-peredachi",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-10-16",
+    "title": "ГК «Садовое кольцо» приступила к возведению надземных этажей ЖК «Дом у моря» в Мариуполе",
+    "scope": "project_construction",
+    "summary": "Застройщик сообщил о начале монолитных конструкций первого надземного этажа после завершения фундамента и цоколя.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-pristupila-k-vozvedeniyu-nadzemnykh-etazhey-zhk-dom-u-morya-v-mariupole",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "Власти ДНР отметили работу команды ГК «Садовое кольцо»",
+    "scope": "developer_corporate",
+    "summary": "Материал о работе команды в регионе и двух мариупольских проектах; не все изображения относятся к нашему ЖК.",
+    "source_url": "https://sadovoe-kolco.ru/news/vlasti-dnr-otmetili-rabotu-komandy-gk-sadovoe-koltso",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-07-31",
+    "title": "ГК «Садовое кольцо» приступила к возведению цокольного этажа ЖК «Дом у моря» в Мариуполе",
+    "scope": "project_construction",
+    "summary": "Застройщик сообщил о переходе к устройству цокольного этажа.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-pristupila-k-vozvedeniyu-tsokolnogo-etazha-zhk-dom-u-morya-v-mariupole",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-06-19",
+    "title": "ГК «Садовое кольцо» стала «Лидером рынка жилого строительства ДНР» по версии премии Urban Awards",
+    "scope": "developer_award",
+    "summary": "Сообщение о награде Urban Awards. При публикации сохранять дату и источник.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-stala-liderom-rynka-zhilogo-stroitelstva-dnr-po-versii-premii-urban-awards",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-06-04",
+    "title": "ГК «Садовое кольцо» и ВТБ в ходе ПМЭФ подписали соглашение о жилищном развитии Мариуполя",
+    "scope": "developer_cooperation",
+    "summary": "Сообщение о соглашении группы с ВТБ по развитию жилья в Мариуполе. Не доказательство индивидуального кредитного одобрения.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-i-vtb-v-khode-pmef-podpisali-soglashenie-o-zhilishchnom-razvitii-mariupolya",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-06-02",
+    "title": "ГК «Садовое кольцо» поставила “Рекорд рынка недвижимости”, став “Девелопером в ДНР №1“",
+    "scope": "developer_award",
+    "summary": "Сообщение застройщика об отраслевой награде. Не подменяет независимую оценку объекта.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-postavila-rekord-rynka-nedvizhimosti-stav-developerom-v-dnr-1",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "date": "2026-05-25",
+    "title": "ГК «Садовое кольцо» начинает продажи квартир в самом видовом доме Мариуполя",
+    "scope": "project",
+    "summary": "Объявлен старт продаж ЖК. Исторические стартовые цены не использовать как текущий прайс.",
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-nachinaet-prodazhi-kvartir-v-samom-vidovom-dome-mariupolya",
+    "source_local": "data/news-source.json",
+    "fetched_at": "2026-10-26T22:45:34.510131+00:00"
+  }
+]

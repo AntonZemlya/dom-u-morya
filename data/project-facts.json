@@ -1,0 +1,278 @@
+[
+  {
+    "key": "project_name",
+    "value": "Дом у моря",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "city",
+    "value": "Мариуполь",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "address",
+    "value": "проспект Адмирала Лунина, 25",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "На странице контактов используется «ул.», в новостях «проспект»; сверка с реестром не выполнена.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "floors_total",
+    "value": 18,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "apartments_project_total",
+    "value": 258,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "Проектная квартирография, не текущий остаток продаж.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "completion_planned",
+    "value": "IV квартал 2027",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "Срок со страницы застройщика, не подтверждённая дата выдачи ключей.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "handover_date",
+    "value": null,
+    "source_url": "https://наш.дом.рф/сервисы/каталог-новостроек/объект/69398",
+    "source_local": "sources/domrf-isolated-browser.json",
+    "status": "not_verified_403",
+    "note": "Не подменять сроком строительства.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "coordinates",
+    "value": [
+      47.067329,
+      37.50867
+    ],
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "Координаты, опубликованные застройщиком; маршруты не измерялись.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "listed_apartments_count",
+    "value": 28,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/apartments.json",
+    "status": "computed_from_public_cards",
+    "note": "Все 28 индивидуальных страниц проверены; не гарантия свободного остатка.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "layout_groups_count",
+    "value": 19,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/plan-groups.json",
+    "status": "computed_exact_hash",
+    "note": "Группы по одинаковому SVG с мебелью; это не число квартир.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "current_listed_price_min_rub",
+    "value": 6978183,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22825?projectId=1",
+    "source_local": "data/apartments.json",
+    "status": "verified_public_card",
+    "note": "Цена на момент снимка; перед запуском перепроверить.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "current_listed_price_max_rub",
+    "value": 15154854,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23037?projectId=1",
+    "source_local": "data/apartments.json",
+    "status": "verified_public_card",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "current_listed_area_range_m2",
+    "value": [
+      28.9,
+      71.5
+    ],
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/apartments.json",
+    "status": "computed_from_public_cards",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "finishing",
+    "value": "Чистовая отделка",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/apartments.json",
+    "status": "developer_source_confirmed",
+    "note": "Меблировка в планах не означает включённую мебель.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "furnishing",
+    "value": "Возможна за отдельный заказ",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "storage_rooms",
+    "value": {
+      "count": 73,
+      "area_range_m2": [
+        2.8,
+        7
+      ]
+    },
+    "source_url": "https://sadovoe-kolco.ru/upload/iblock/ddc/y5z8qrb1jj4jusqp23fey553zxuklhzz/Дом_у_моря.pdf",
+    "source_local": "documents/developer-brochure.pdf",
+    "status": "brochure_visually_checked",
+    "note": "Планируемые характеристики; фактические договорные условия не проверены.",
+    "pdf_pages_1_based": [
+      9
+    ],
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "commercial_premises",
+    "value": {
+      "count": 15,
+      "area_range_m2": [
+        26,
+        65
+      ]
+    },
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "lifts",
+    "value": {
+      "passenger": 1,
+      "cargo": 2
+    },
+    "source_url": "https://sadovoe-kolco.ru/upload/iblock/ddc/y5z8qrb1jj4jusqp23fey553zxuklhzz/Дом_у_моря.pdf",
+    "source_local": "documents/developer-brochure.pdf",
+    "status": "brochure_visually_checked",
+    "note": "По презентации, не по проектной декларации.",
+    "pdf_pages_1_based": [
+      9
+    ],
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "lobby_features",
+    "value": [
+      "Зона ресепшен",
+      "Колясочная и велосипедная",
+      "Лапомойка и санузел",
+      "Видеонаблюдение",
+      "Дизайнерская отделка"
+    ],
+    "source_url": "https://sadovoe-kolco.ru/upload/iblock/ddc/y5z8qrb1jj4jusqp23fey553zxuklhzz/Дом_у_моря.pdf",
+    "source_local": "documents/developer-brochure.pdf",
+    "status": "brochure_visually_checked",
+    "note": "Планируемое оснащение, не уже действующие сервисы.",
+    "pdf_pages_1_based": [
+      14
+    ],
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "ceiling_height_m",
+    "value": null,
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/apartments.json",
+    "status": "conflict",
+    "note": "Проект/брошюра 2.85–3.3; карточки 2.78/3.23. Причина разницы не установлена.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "developer_brand",
+    "value": "ГК «Садовое кольцо»",
+    "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+    "source_local": "data/project-source.json",
+    "status": "developer_source_confirmed",
+    "note": "",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "developer_foundation_year",
+    "value": 2003,
+    "source_url": "https://sadovoe-kolco.ru/about",
+    "source_local": "data/developer-about.json",
+    "status": "developer_source_confirmed",
+    "note": "Не использовать плавающее «20 лет» из старого блока.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "project_legal_developer",
+    "value": null,
+    "source_url": "https://наш.дом.рф/сервисы/каталог-новостроек/объект/69398",
+    "source_local": "sources/domrf-isolated-browser.json",
+    "status": "not_verified_403",
+    "note": "Бренд группы не равен юридическому застройщику объекта.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  },
+  {
+    "key": "latest_project_news",
+    "value": {
+      "date": "2026-10-16",
+      "milestone": "Начаты монолитные конструкции первого надземного этажа; сообщается о завершении фундамента и цоколя."
+    },
+    "source_url": "https://sadovoe-kolco.ru/news/gk-sadovoe-koltso-pristupila-k-vozvedeniyu-nadzemnykh-etazhey-zhk-dom-u-morya-v-mariupole",
+    "source_local": "data/news-source.json",
+    "status": "dated_developer_report",
+    "note": "Дата публикации не равна дате съёмки фотографий.",
+    "pdf_pages_1_based": null,
+    "snapshot_at": "2026-10-26T22:45:34.510131+00:00"
+  }
+]

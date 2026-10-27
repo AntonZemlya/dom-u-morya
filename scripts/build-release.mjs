@@ -26,8 +26,17 @@ export async function validateReferences(root) {
     const relative = decodeURIComponent(url.pathname).replace(/^\//, '');
     if (!allowed.has(relative)) throw new Error(`Unlisted local resource in ${owner}: ${reference}`);
   };
-  const html = await fs.readFile(path.join(root, 'index.html'), 'utf8');
-  for (const match of html.matchAll(/\b(?:src|href|poster)\s*=\s*(["'])(.*?)\1/gs)) check(match[2], 'index.html');
+  for (const owner of RELEASE_FILES.filter(name=>name.endsWith('.html'))) {
+    const html=await fs.readFile(path.join(root,owner),'utf8');
+    for(const match of html.matchAll(/\b(?:src|href|poster)\s*=\s*(["'])(.*?)\1/gs))check(match[2],owner);
+    for(const match of html.matchAll(/\bsrcset\s*=\s*(["'])(.*?)\1/gs))for(const candidate of match[2].split(','))check(candidate.trim().split(/\s+/)[0],owner);
+    // Include media reached only after interactions, not just initial HTML attributes.
+    const payload=html.match(/<script id="site-data" type="application\/json">(.*?)<\/script>/s);
+    if(payload){
+      const visit=value=>{if(typeof value==='string'&&value.startsWith('assets/')){if(value.includes(', '))value.split(',').forEach(part=>check(part.trim().split(/\s+/)[0],owner));else check(value,owner);}else if(value&&typeof value==='object')Object.values(value).forEach(visit);};
+      visit(JSON.parse(payload[1]));
+    }
+  }
   for (const relative of RELEASE_FILES.filter(name => name.endsWith('.css'))) {
     const css = await fs.readFile(path.join(root, relative), 'utf8');
     for (const match of css.matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/g)) check(match[1] ?? match[2] ?? match[3], relative);

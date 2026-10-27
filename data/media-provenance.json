@@ -1,0 +1,2386 @@
+{
+  "snapshot_date": "2026-10-27",
+  "rights_status": "permission_not_verified",
+  "usage": "Локальная разработка и визуальная приёмка разрешены владельцем. Публичное распространение отдельно не согласовано.",
+  "transforms": {
+    "plans": "Byte-identical SHA-256 deduplication; no SVG rewriting.",
+    "rasters": "EXIF orientation, proportional LANCZOS resize without upscaling, WebP quality 84, method 6; metadata removed."
+  },
+  "sources": [
+    {
+      "original_path": "media/plans/22825-apt-6-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_6.svg",
+      "source_sha256": "93a3f786a168c852737f454bac72b410c13a0492ac3c5e8d1c4c76382440a106",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22825?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/93a3f786a168c852737f454bac72b410c13a0492ac3c5e8d1c4c76382440a106.svg",
+          "sha256": "93a3f786a168c852737f454bac72b410c13a0492ac3c5e8d1c4c76382440a106",
+          "bytes": 110352
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22825-apt-6-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_6.svg",
+      "source_sha256": "75e2f48a3925c9937d8f71620839ea3a8ec3ad3e605933748b5f3608fc6daada",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22825?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/75e2f48a3925c9937d8f71620839ea3a8ec3ad3e605933748b5f3608fc6daada.svg",
+          "sha256": "75e2f48a3925c9937d8f71620839ea3a8ec3ad3e605933748b5f3608fc6daada",
+          "bytes": 110467
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22825-apt-6-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_6.svg",
+      "source_sha256": "ce544002cd96983db56803fb24baded69344bd4e890fc5bf3b9320cd7ccbedb7",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22825?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/ce544002cd96983db56803fb24baded69344bd4e890fc5bf3b9320cd7ccbedb7.svg",
+          "sha256": "ce544002cd96983db56803fb24baded69344bd4e890fc5bf3b9320cd7ccbedb7",
+          "bytes": 950931
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22936-apt-117-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_9_5.svg",
+      "source_sha256": "512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22936?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f.svg",
+          "sha256": "512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f",
+          "bytes": 109456
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22936-apt-117-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_9_5.svg",
+      "source_sha256": "f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22936?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2.svg",
+          "sha256": "f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2",
+          "bytes": 109571
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22936-apt-117-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_5.svg",
+      "source_sha256": "8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22936?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f.svg",
+          "sha256": "8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f",
+          "bytes": 944911
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22952-apt-133-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_10_5.svg",
+      "source_sha256": "512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22952?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f.svg",
+          "sha256": "512a6b31ac8961dc3d3c53e6131e579876c0ad36e06aaf990f5244492502fb1f",
+          "bytes": 109456
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22952-apt-133-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_10_5.svg",
+      "source_sha256": "f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22952?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2.svg",
+          "sha256": "f33a157fa51b3d41c17c54dac3ba4ac76dbff41b17bdd823d0a8d68979454fc2",
+          "bytes": 109571
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22952-apt-133-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_5.svg",
+      "source_sha256": "8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22952?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f.svg",
+          "sha256": "8bf104343bfc9902fd5b098b5b70ef33a26eecfb02197851d97b45948558f95f",
+          "bytes": 944911
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22953-apt-134-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_10_6.svg",
+      "source_sha256": "32f97f040eff4aa4a1680a22e4d250089e964b08ba9f97a2624fccc4821f2ee2",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22953?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/32f97f040eff4aa4a1680a22e4d250089e964b08ba9f97a2624fccc4821f2ee2.svg",
+          "sha256": "32f97f040eff4aa4a1680a22e4d250089e964b08ba9f97a2624fccc4821f2ee2",
+          "bytes": 109576
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22953-apt-134-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_10_6.svg",
+      "source_sha256": "ec4f8bf2135f4b7df052a6b32ac69a660a6e6696b62c771a2784a936c47ce0aa",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22953?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/ec4f8bf2135f4b7df052a6b32ac69a660a6e6696b62c771a2784a936c47ce0aa.svg",
+          "sha256": "ec4f8bf2135f4b7df052a6b32ac69a660a6e6696b62c771a2784a936c47ce0aa",
+          "bytes": 109691
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22953-apt-134-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_6.svg",
+      "source_sha256": "5e8f1e76e00ed6b57dc629148fe6c69166a266c2077e438b1ea757080d275219",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22953?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/5e8f1e76e00ed6b57dc629148fe6c69166a266c2077e438b1ea757080d275219.svg",
+          "sha256": "5e8f1e76e00ed6b57dc629148fe6c69166a266c2077e438b1ea757080d275219",
+          "bytes": 944986
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22890-apt-71-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_6_7.svg",
+      "source_sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22890?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981.svg",
+          "sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+          "bytes": 156160
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22890-apt-71-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_6_7.svg",
+      "source_sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22890?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea.svg",
+          "sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+          "bytes": 156347
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22890-apt-71-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_7.svg",
+      "source_sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22890?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73.svg",
+          "sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+          "bytes": 945208
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22906-apt-87-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_7_7.svg",
+      "source_sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22906?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981.svg",
+          "sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+          "bytes": 156160
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22906-apt-87-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_7_7.svg",
+      "source_sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22906?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea.svg",
+          "sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+          "bytes": 156347
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22906-apt-87-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_7.svg",
+      "source_sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22906?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73.svg",
+          "sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+          "bytes": 945208
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22822-apt-3-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_3.svg",
+      "source_sha256": "1d0c3f859a1b1e15a398455bf50c1e322ef5ccb5273a4f576fff7442faa15b8c",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22822?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/1d0c3f859a1b1e15a398455bf50c1e322ef5ccb5273a4f576fff7442faa15b8c.svg",
+          "sha256": "1d0c3f859a1b1e15a398455bf50c1e322ef5ccb5273a4f576fff7442faa15b8c",
+          "bytes": 150529
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22822-apt-3-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_3.svg",
+      "source_sha256": "b7416e087e525c7f9fdb0b4aad762946bd7afcfb44c330e2308d89bbbb50e7f8",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22822?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/b7416e087e525c7f9fdb0b4aad762946bd7afcfb44c330e2308d89bbbb50e7f8.svg",
+          "sha256": "b7416e087e525c7f9fdb0b4aad762946bd7afcfb44c330e2308d89bbbb50e7f8",
+          "bytes": 150716
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22822-apt-3-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_3.svg",
+      "source_sha256": "4697cd2d9b0c1ca6dba0d2bac77a02cfe0f3b621cfa1ce7bf827bf956a8267d2",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22822?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/4697cd2d9b0c1ca6dba0d2bac77a02cfe0f3b621cfa1ce7bf827bf956a8267d2.svg",
+          "sha256": "4697cd2d9b0c1ca6dba0d2bac77a02cfe0f3b621cfa1ce7bf827bf956a8267d2",
+          "bytes": 951193
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22833-apt-14-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_14.svg",
+      "source_sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22833?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd.svg",
+          "sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
+          "bytes": 150149
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22833-apt-14-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_14.svg",
+      "source_sha256": "256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22833?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20.svg",
+          "sha256": "256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20",
+          "bytes": 150336
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22833-apt-14-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_14.svg",
+      "source_sha256": "0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22833?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79.svg",
+          "sha256": "0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79",
+          "bytes": 950208
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22838-apt-19-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_3.svg",
+      "source_sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22838?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81.svg",
+          "sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+          "bytes": 150688
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22838-apt-19-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_3.svg",
+      "source_sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22838?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443.svg",
+          "sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+          "bytes": 150875
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22838-apt-19-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_3.svg",
+      "source_sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22838?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7.svg",
+          "sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+          "bytes": 945332
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22849-apt-30-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_14.svg",
+      "source_sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22849?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0.svg",
+          "sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
+          "bytes": 150660
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22849-apt-30-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_14.svg",
+      "source_sha256": "1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22849?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414.svg",
+          "sha256": "1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414",
+          "bytes": 150843
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22849-apt-30-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_14.svg",
+      "source_sha256": "980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22849?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94.svg",
+          "sha256": "980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94",
+          "bytes": 945034
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22875-apt-56-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_5_8.svg",
+      "source_sha256": "5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22875?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8.svg",
+          "sha256": "5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8",
+          "bytes": 151083
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22875-apt-56-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_5_8.svg",
+      "source_sha256": "fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22875?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227.svg",
+          "sha256": "fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227",
+          "bytes": 151294
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22875-apt-56-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_8.svg",
+      "source_sha256": "c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22875?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500.svg",
+          "sha256": "c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500",
+          "bytes": 944736
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22820-apt-1-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_1.svg",
+      "source_sha256": "dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22820?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3.svg",
+          "sha256": "dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3",
+          "bytes": 160817
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22820-apt-1-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_1.svg",
+      "source_sha256": "bbf7482835d364f09a87afc8f7f579c2c35cbf61520a9ff45dc903b24f644e41",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22820?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/bbf7482835d364f09a87afc8f7f579c2c35cbf61520a9ff45dc903b24f644e41.svg",
+          "sha256": "bbf7482835d364f09a87afc8f7f579c2c35cbf61520a9ff45dc903b24f644e41",
+          "bytes": 161052
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22820-apt-1-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_1.svg",
+      "source_sha256": "8b1dc3f02050ef7419aebd6b33d2d5b3fda8ead91ef2be78654306979404a033",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22820?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/8b1dc3f02050ef7419aebd6b33d2d5b3fda8ead91ef2be78654306979404a033.svg",
+          "sha256": "8b1dc3f02050ef7419aebd6b33d2d5b3fda8ead91ef2be78654306979404a033",
+          "bytes": 951512
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22886-apt-67-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_6_3.svg",
+      "source_sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22886?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81.svg",
+          "sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+          "bytes": 150688
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22886-apt-67-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_6_3.svg",
+      "source_sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22886?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443.svg",
+          "sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+          "bytes": 150875
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22886-apt-67-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_3.svg",
+      "source_sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22886?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7.svg",
+          "sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+          "bytes": 945332
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22835-apt-16-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_16.svg",
+      "source_sha256": "a7ec0db79767dff0e227b9b5691367d0858895c3297ab732326a970fa5126c35",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22835?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/a7ec0db79767dff0e227b9b5691367d0858895c3297ab732326a970fa5126c35.svg",
+          "sha256": "a7ec0db79767dff0e227b9b5691367d0858895c3297ab732326a970fa5126c35",
+          "bytes": 159918
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22835-apt-16-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_16.svg",
+      "source_sha256": "e83cd47d23c56a89271049629ff7ef95cd868674d1f688506eef20e238693f72",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22835?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/e83cd47d23c56a89271049629ff7ef95cd868674d1f688506eef20e238693f72.svg",
+          "sha256": "e83cd47d23c56a89271049629ff7ef95cd868674d1f688506eef20e238693f72",
+          "bytes": 160153
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22835-apt-16-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_16.svg",
+      "source_sha256": "b593273548b477df0a83ba964b5dcb5d0a2e589987435ee9132e60f3f6897d1c",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22835?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/b593273548b477df0a83ba964b5dcb5d0a2e589987435ee9132e60f3f6897d1c.svg",
+          "sha256": "b593273548b477df0a83ba964b5dcb5d0a2e589987435ee9132e60f3f6897d1c",
+          "bytes": 949697
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22918-apt-99-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_8_3.svg",
+      "source_sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22918?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81.svg",
+          "sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+          "bytes": 150688
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22918-apt-99-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_8_3.svg",
+      "source_sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22918?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443.svg",
+          "sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+          "bytes": 150875
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22918-apt-99-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_3.svg",
+      "source_sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22918?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7.svg",
+          "sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+          "bytes": 945332
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22938-apt-119-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_9_7.svg",
+      "source_sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22938?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981.svg",
+          "sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+          "bytes": 156160
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22938-apt-119-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_9_7.svg",
+      "source_sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22938?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea.svg",
+          "sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+          "bytes": 156347
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22938-apt-119-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_7.svg",
+      "source_sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22938?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73.svg",
+          "sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+          "bytes": 945208
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22851-apt-32-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_16.svg",
+      "source_sha256": "3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22851?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744.svg",
+          "sha256": "3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744",
+          "bytes": 162702
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22851-apt-32-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_16.svg",
+      "source_sha256": "206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22851?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345.svg",
+          "sha256": "206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345",
+          "bytes": 162937
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22851-apt-32-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_16.svg",
+      "source_sha256": "b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22851?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f.svg",
+          "sha256": "b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f",
+          "bytes": 944572
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22867-apt-48-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_4_16.svg",
+      "source_sha256": "3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22867?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744.svg",
+          "sha256": "3c95fc76e7adbfc75f22230d632006db65a295b0ebe37809927880e9f5152744",
+          "bytes": 162702
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22867-apt-48-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_4_16.svg",
+      "source_sha256": "206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22867?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345.svg",
+          "sha256": "206d209ff68bccbeeeb2866ab6711c64a4cf0e0bfef461a5bd1772f9efa00345",
+          "bytes": 162937
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22867-apt-48-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_16.svg",
+      "source_sha256": "b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22867?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f.svg",
+          "sha256": "b2f125ab8cd21dee6fbbcd584e0e4f29a83549fea00477d42a4384f2adbd255f",
+          "bytes": 944572
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22907-apt-88-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_7_8.svg",
+      "source_sha256": "5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22907?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8.svg",
+          "sha256": "5e0949c7d1bd45719351df97f3864c45f3c48b4f75e41c90d79bf6e8072d2be8",
+          "bytes": 151083
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22907-apt-88-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_7_8.svg",
+      "source_sha256": "fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22907?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227.svg",
+          "sha256": "fdc0268c020d170ae50b0803ff9ca2182021019f5c1149c182bf80bdee243227",
+          "bytes": 151294
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22907-apt-88-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_8.svg",
+      "source_sha256": "c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22907?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500.svg",
+          "sha256": "c111662476bf78573c890b95077dd33832a3408f72211008d96c969d0f333500",
+          "bytes": 944736
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23029-apt-210-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_15_6.svg",
+      "source_sha256": "09ab9b358ff3778022c7a019b1d7fa15129c44c427f4a520517a6d1f6c05d5f2",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23029?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/09ab9b358ff3778022c7a019b1d7fa15129c44c427f4a520517a6d1f6c05d5f2.svg",
+          "sha256": "09ab9b358ff3778022c7a019b1d7fa15129c44c427f4a520517a6d1f6c05d5f2",
+          "bytes": 153428
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23029-apt-210-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_15_6.svg",
+      "source_sha256": "e30c8cd2817685b95edac5071c06807b4d633e534635420954ce28656e391aad",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23029?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/e30c8cd2817685b95edac5071c06807b4d633e534635420954ce28656e391aad.svg",
+          "sha256": "e30c8cd2817685b95edac5071c06807b4d633e534635420954ce28656e391aad",
+          "bytes": 153615
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23029-apt-210-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_15-17_6.svg",
+      "source_sha256": "c256b74ca11c93cf3e36319943ee62535b20bf73bd9a1854e8ff0865a916124b",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23029?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/c256b74ca11c93cf3e36319943ee62535b20bf73bd9a1854e8ff0865a916124b.svg",
+          "sha256": "c256b74ca11c93cf3e36319943ee62535b20bf73bd9a1854e8ff0865a916124b",
+          "bytes": 915632
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22828-apt-9-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_9.svg",
+      "source_sha256": "5c8911c8e15e2e5434ec310fc89c2050b439613758440e52536a1266fc85ed96",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22828?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/5c8911c8e15e2e5434ec310fc89c2050b439613758440e52536a1266fc85ed96.svg",
+          "sha256": "5c8911c8e15e2e5434ec310fc89c2050b439613758440e52536a1266fc85ed96",
+          "bytes": 176698
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22828-apt-9-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_9.svg",
+      "source_sha256": "9fb23cf0b6190877d0274b9e87f52dd42b7a9e4bcff2f3bd9c1ba776ee156a29",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22828?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/9fb23cf0b6190877d0274b9e87f52dd42b7a9e4bcff2f3bd9c1ba776ee156a29.svg",
+          "sha256": "9fb23cf0b6190877d0274b9e87f52dd42b7a9e4bcff2f3bd9c1ba776ee156a29",
+          "bytes": 176957
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22828-apt-9-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_9.svg",
+      "source_sha256": "0cc34afdbdda4cad1a2079d6161f5014335789df81cf26a4d369fc515012a8e1",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22828?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/0cc34afdbdda4cad1a2079d6161f5014335789df81cf26a4d369fc515012a8e1.svg",
+          "sha256": "0cc34afdbdda4cad1a2079d6161f5014335789df81cf26a4d369fc515012a8e1",
+          "bytes": 950994
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22844-apt-25-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_9.svg",
+      "source_sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22844?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0.svg",
+          "sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+          "bytes": 177265
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22844-apt-25-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_9.svg",
+      "source_sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22844?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408.svg",
+          "sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+          "bytes": 177524
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22844-apt-25-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_9.svg",
+      "source_sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22844?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166.svg",
+          "sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+          "bytes": 946004
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22876-apt-57-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_5_9.svg",
+      "source_sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22876?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0.svg",
+          "sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+          "bytes": 177265
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22876-apt-57-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_5_9.svg",
+      "source_sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22876?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408.svg",
+          "sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+          "bytes": 177524
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22876-apt-57-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_9.svg",
+      "source_sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22876?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166.svg",
+          "sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+          "bytes": 946004
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22940-apt-121-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_9_9.svg",
+      "source_sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22940?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0.svg",
+          "sha256": "df61bef6160c8d1d134b17e82d5638e1a02aee159db74e5658c9676b0dcce8c0",
+          "bytes": 177265
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22940-apt-121-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_9_9.svg",
+      "source_sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22940?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408.svg",
+          "sha256": "59782a21e616fd368594895b5e8bc28ab4cfbbc7b2240158ceb8805b1fff4408",
+          "bytes": 177524
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/22940-apt-121-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_9.svg",
+      "source_sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/22940?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166.svg",
+          "sha256": "ca6e7af4644dea412fc5efcb1343c45057b3fee94931fd4df7175ccf09fac166",
+          "bytes": 946004
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23003-apt-184-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_13_8.svg",
+      "source_sha256": "e8fa9353017af22c23588aab9d8041b3a36f78dd7cf1dd381c1bed83d3cded09",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23003?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/e8fa9353017af22c23588aab9d8041b3a36f78dd7cf1dd381c1bed83d3cded09.svg",
+          "sha256": "e8fa9353017af22c23588aab9d8041b3a36f78dd7cf1dd381c1bed83d3cded09",
+          "bytes": 179823
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23003-apt-184-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_13_8.svg",
+      "source_sha256": "bbd586918bd49a152e0bb7e42f73898641addbfa97d41a8824157ad94682783d",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23003?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/bbd586918bd49a152e0bb7e42f73898641addbfa97d41a8824157ad94682783d.svg",
+          "sha256": "bbd586918bd49a152e0bb7e42f73898641addbfa97d41a8824157ad94682783d",
+          "bytes": 180082
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23003-apt-184-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_13-14_8.svg",
+      "source_sha256": "db0abdf9ed5d027a55758fb1cce5e1149092580c013b7734a3de27cb4c292661",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23003?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/db0abdf9ed5d027a55758fb1cce5e1149092580c013b7734a3de27cb4c292661.svg",
+          "sha256": "db0abdf9ed5d027a55758fb1cce5e1149092580c013b7734a3de27cb4c292661",
+          "bytes": 947294
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23031-apt-212-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_15_8.svg",
+      "source_sha256": "6faec5241b6463b09399b46395864f9e10717b46fe433816a05d88e36fee9738",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23031?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/6faec5241b6463b09399b46395864f9e10717b46fe433816a05d88e36fee9738.svg",
+          "sha256": "6faec5241b6463b09399b46395864f9e10717b46fe433816a05d88e36fee9738",
+          "bytes": 176901
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23031-apt-212-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_15_8.svg",
+      "source_sha256": "add581058460079c49ee63a4edcfa24145c226c6ff7e9bff0c1e9f9d96434fe3",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23031?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/add581058460079c49ee63a4edcfa24145c226c6ff7e9bff0c1e9f9d96434fe3.svg",
+          "sha256": "add581058460079c49ee63a4edcfa24145c226c6ff7e9bff0c1e9f9d96434fe3",
+          "bytes": 177160
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23031-apt-212-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_15-17_8.svg",
+      "source_sha256": "d324485a96369e3a9fcf58bd5a891285acee9f2989668e54aef39a2c44987c02",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23031?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/d324485a96369e3a9fcf58bd5a891285acee9f2989668e54aef39a2c44987c02.svg",
+          "sha256": "d324485a96369e3a9fcf58bd5a891285acee9f2989668e54aef39a2c44987c02",
+          "bytes": 916510
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23024-apt-205-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_15_1.svg",
+      "source_sha256": "026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23024?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d.svg",
+          "sha256": "026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d",
+          "bytes": 238954
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23024-apt-205-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_15_1.svg",
+      "source_sha256": "255b5262b817acb1a2f6fd4b771907e182af3cbf9551a4338075e659023cf6ef",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23024?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/255b5262b817acb1a2f6fd4b771907e182af3cbf9551a4338075e659023cf6ef.svg",
+          "sha256": "255b5262b817acb1a2f6fd4b771907e182af3cbf9551a4338075e659023cf6ef",
+          "bytes": 239266
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23024-apt-205-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_15-17_1.svg",
+      "source_sha256": "1cc58f508753500fa8b2e0b519a115c9b8d2aa4feb0f570308aed07b34047390",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23024?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/1cc58f508753500fa8b2e0b519a115c9b8d2aa4feb0f570308aed07b34047390.svg",
+          "sha256": "1cc58f508753500fa8b2e0b519a115c9b8d2aa4feb0f570308aed07b34047390",
+          "bytes": 916178
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23037-apt-218-furnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_15_14.svg",
+      "source_sha256": "997358fcf1c1d21b8c86253574852094da100ba4e90e2ccd5a254f8eea275e89",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23037?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/997358fcf1c1d21b8c86253574852094da100ba4e90e2ccd5a254f8eea275e89.svg",
+          "sha256": "997358fcf1c1d21b8c86253574852094da100ba4e90e2ccd5a254f8eea275e89",
+          "bytes": 237721
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23037-apt-218-unfurnished.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_15_14.svg",
+      "source_sha256": "88be4bd36c92d6ee81062df7b2275bf7810253a453267fbdfcdbe0560fe70487",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23037?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/88be4bd36c92d6ee81062df7b2275bf7810253a453267fbdfcdbe0560fe70487.svg",
+          "sha256": "88be4bd36c92d6ee81062df7b2275bf7810253a453267fbdfcdbe0560fe70487",
+          "bytes": 238033
+        }
+      ]
+    },
+    {
+      "original_path": "media/plans/23037-apt-218-floor.svg",
+      "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_15-17_14.svg",
+      "source_sha256": "948b9d2154e6c6b5dc97262b85dbfd3d0f8b2d5cef6250e2d997462e3e8ccf68",
+      "rights_status": "permission_not_verified",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea/23037?projectId=1",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "outputs": [
+        {
+          "path": "assets/content/plans/948b9d2154e6c6b5dc97262b85dbfd3d0f8b2d5cef6250e2d997462e3e8ccf68.svg",
+          "sha256": "948b9d2154e6c6b5dc97262b85dbfd3d0f8b2d5cef6250e2d997462e3e8ccf68",
+          "bytes": 915266
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/afe/no0hqmfcv82tp4384qvhn4pimrdptsce/cam_1_04_final_1.jpg",
+      "source_sha256": "cac1215e0f09180328a8ae01f60d0f245acddecb27aceb5c9ba8918863855523",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/cac1215e0f091803-640.webp",
+          "sha256": "c6ad7309c0c58a36b41a0d3c0e76571195d7004bb6a7822a735cf36f8c8b8ce6",
+          "bytes": 49392,
+          "width": 640,
+          "height": 469
+        },
+        {
+          "path": "assets/content/gallery/cac1215e0f091803-1280.webp",
+          "sha256": "8f331b9b2b6ecb3bf6c8343be2efe98141757570a9fa738dc1ad1cd992ad42fd",
+          "bytes": 171900,
+          "width": 1280,
+          "height": 939
+        },
+        {
+          "path": "assets/content/gallery/cac1215e0f091803-1920.webp",
+          "sha256": "4b96890cc410b23e3ba2a7fb674ca8603e129d4e88a3f3a2142b09466de8ad56",
+          "bytes": 350618,
+          "width": 1920,
+          "height": 1408
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/9ac/08lzqihc6ngglsyahgnycypp7dx2thjm/cam_5_01_final_1.jpg",
+      "source_sha256": "d66bd7970af683c9936c494852c2f1629e6ab40c8f92ae298ff4df8d5cbf09f8",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/d66bd7970af683c9-640.webp",
+          "sha256": "c850f36ff0ac073918045f334df5bbf797c8a4c342e24f0cb542571158fffb6c",
+          "bytes": 32424,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/gallery/d66bd7970af683c9-1280.webp",
+          "sha256": "838509f39cedf0a4103243aa78018391311f919b977fb157617e8e33db8208ae",
+          "bytes": 103570,
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "path": "assets/content/gallery/d66bd7970af683c9-1920.webp",
+          "sha256": "0e6f44d2d5e74da1d04c903e102be6c269b18ff892d0afe99dfe199fa8fe5e27",
+          "bytes": 205298,
+          "width": 1920,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/602/966n57eexc1ydaie9gf5ekpn0h2u7348/cam_3_02_final_no_people_1.jpg",
+      "source_sha256": "33e2aae94cc666ead25a020651cfafaa3f4e294645c317b30825d7f8334ca5da",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/33e2aae94cc666ea-640.webp",
+          "sha256": "1852441e11965a67d219bf6d67a4aaf47ab59f740588e7def25f47c417ebfac4",
+          "bytes": 45206,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/gallery/33e2aae94cc666ea-1280.webp",
+          "sha256": "06fce219e87cbd1cf21f70205722f0f69e1b2a3b091f752847388f293cbb9bee",
+          "bytes": 145194,
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "path": "assets/content/gallery/33e2aae94cc666ea-1920.webp",
+          "sha256": "48c36aa3b168508fb33d2b3693a86e14ab0c3d373277e41eb3eb30e5e4b84011",
+          "bytes": 284912,
+          "width": 1920,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-05.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/71d/abb6lwlet3f61r22lv0p5re3573whbsl/cam_2_05_final_no_people_1.jpg",
+      "source_sha256": "129070b97e7b71fe9cb6114ded52ed5cbc45e1bbd876a4d759a6fda26a6f97c9",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/129070b97e7b71fe-640.webp",
+          "sha256": "e8d5e7496cce082283b8860c4fa12787e36d04bef83b38a46c86a01a44d0093a",
+          "bytes": 55768,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/gallery/129070b97e7b71fe-1280.webp",
+          "sha256": "674e6415691f875c5262d445b0f31a2a40f139712f5d76ff362c48770b7b4170",
+          "bytes": 193654,
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "path": "assets/content/gallery/129070b97e7b71fe-1920.webp",
+          "sha256": "ee03560047e3e0c381367b438cfa1eea7e9c9d150601641fceccdf38dbcb1491",
+          "bytes": 396046,
+          "width": 1920,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-08.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/a23/b7n859ate98ymov3mftzdnwsobezwlkj/24.jpg",
+      "source_sha256": "0892cc8e357270a8e7d81cfccc0c6631a9f29218ce9d16e8e4a84fd4eee4c39d",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/0892cc8e357270a8-640.webp",
+          "sha256": "32621cee01dbd699a81ce6901f9d64b27c90106ac2c14c732931990a1e9fb5e2",
+          "bytes": 34932,
+          "width": 640,
+          "height": 428
+        },
+        {
+          "path": "assets/content/gallery/0892cc8e357270a8-1280.webp",
+          "sha256": "fb2dac4b07db7c5c1450d40558d29bddf537c051aa68923a801b5f8921a1d4e5",
+          "bytes": 98866,
+          "width": 1280,
+          "height": 856
+        },
+        {
+          "path": "assets/content/gallery/0892cc8e357270a8-1920.webp",
+          "sha256": "ee88c562eb89222224db1a31b95713088e0723526e92df1a80a781c12a049f86",
+          "bytes": 183054,
+          "width": 1920,
+          "height": 1284
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-09.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/6f3/9y11t5cslrck4k88igsx6ku7edjzzdbo/10.jpg",
+      "source_sha256": "ba63897ab7394ceb68e0e4047c896b373d62bfa8611045f1e8749423f45e1895",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/ba63897ab7394ceb-640.webp",
+          "sha256": "498ed0329cddb5c28733aeb9969893dc0e5eb575466ecea2adaca8634a662afa",
+          "bytes": 25508,
+          "width": 640,
+          "height": 824
+        },
+        {
+          "path": "assets/content/gallery/ba63897ab7394ceb-1280.webp",
+          "sha256": "3f7f2c6b70533305c99c470795699d901638ced0237a8bec2b9fd72fbae85e50",
+          "bytes": 80660,
+          "width": 1280,
+          "height": 1647
+        },
+        {
+          "path": "assets/content/gallery/ba63897ab7394ceb-1882.webp",
+          "sha256": "184b950279620491293cc0e5cdacb6f992357c887f06c8dddc0517bcc43c6f34",
+          "bytes": 146138,
+          "width": 1882,
+          "height": 2422
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery_second-04.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/4d4/fh2rgchnwluhj3f8ptaud44ds3hx3pdd.webp",
+      "source_sha256": "c894c8378045c378fb8bd0b82916e9de165b6e435900810cfecd605f011d111a",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/c894c8378045c378-640.webp",
+          "sha256": "c2498c987ad46a11c9c633df248ec1d5d319db80e3ab58b229bdbed5e53ac7f1",
+          "bytes": 30712,
+          "width": 640,
+          "height": 825
+        },
+        {
+          "path": "assets/content/gallery/c894c8378045c378-1280.webp",
+          "sha256": "0921c869000bb15468a6afee3b02ef1681c522f7829474ff6c71e1cc3945c02c",
+          "bytes": 85172,
+          "width": 1280,
+          "height": 1650
+        },
+        {
+          "path": "assets/content/gallery/c894c8378045c378-1874.webp",
+          "sha256": "9e3273620329eb7b65a955c2063278e1804f6b6cb133f04e90b490038fc4db7a",
+          "bytes": 144016,
+          "width": 1874,
+          "height": 2416
+        }
+      ]
+    },
+    {
+      "original_path": "media/renders/gallery-11.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/6bc/4k96uihni2vssnupmrp7thnxp78mrru7/29.jpg",
+      "source_sha256": "6d0b138793244679edcb29d5b0091120de8c2d71b2e221268cd111a6c6398aeb",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/gallery/6d0b138793244679-640.webp",
+          "sha256": "fd003d376946947887f96fe3933fd3af668f91a8f2cfb6dba73090e36be5b811",
+          "bytes": 46850,
+          "width": 640,
+          "height": 873
+        },
+        {
+          "path": "assets/content/gallery/6d0b138793244679-1280.webp",
+          "sha256": "351c76553ba8020710d1d687fd096cea720f88722705542e879b1686bb014ccc",
+          "bytes": 149070,
+          "width": 1280,
+          "height": 1745
+        },
+        {
+          "path": "assets/content/gallery/6d0b138793244679-1799.webp",
+          "sha256": "f882ec5111cb33649afca7e4b7057e4e47a9944eddf97e2172440b15e22704a2",
+          "bytes": 292022,
+          "width": 1799,
+          "height": 2453
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-09-cover.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e7d/1000_773_1/nasrs27in11y2gf3ue5f1chj423inz5u.webp",
+      "source_sha256": "8374b1ad0570dfe94823fb7ecffb5dd5dce36be9a9c9e96c3ccd59cf409ca2f4",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/8374b1ad0570dfe9-640.webp",
+          "sha256": "ed3445463f2164d949d0c885b2bd8a987a8b7bfc4cbe88391828d50bfaf6da26",
+          "bytes": 92660,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/8374b1ad0570dfe9-1000.webp",
+          "sha256": "2e82d1ab1b76d7738840e75d2d860fc7a84cf1f5f2904aced14964ba6ce747cd",
+          "bytes": 221668,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-09-01.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/380/1000_773_1/aej3u4seiueg1f2y05ahuuo4gbf510qm.webp",
+      "source_sha256": "bbe3cee85ab251b6614eb34052cad29cf591153e0b8c262b2a9ac8166d74c169",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/bbe3cee85ab251b6-640.webp",
+          "sha256": "0fd43e8018302137d67b7df205c16c69df4d719a01eb0f25f7bfe745ee936b7a",
+          "bytes": 88108,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/bbe3cee85ab251b6-1000.webp",
+          "sha256": "6cbb39c678a28414a0104dce1ab9494d9e51f4d679b7896ba88e50d0e5f47de8",
+          "bytes": 208486,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-09-02.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/abb/1000_773_1/rzqip9hb9ju51t3clbe2x5amm0132dc9.webp",
+      "source_sha256": "401ebab63a6f903121255aaab79d345936c42120fb4a16867bda71d73d71c0ec",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/401ebab63a6f9031-640.webp",
+          "sha256": "89886ab611156c7f5492f28ab4d3f4a87d40efdcb2b6f5101830a54f18c28db9",
+          "bytes": 102602,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/401ebab63a6f9031-1000.webp",
+          "sha256": "765a93738bf1c98cc1145c05de877f340ca47ce7cb4bc511c9514b7e87bf474d",
+          "bytes": 240938,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-09-03.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/92a/1000_773_1/5h11truvqcgxtzxdjxwo0h0leiih10dy.webp",
+      "source_sha256": "99c9b102dedd8f8347f2d3dde84f60f94edbb18ad90121a2c5c992c78e630d91",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/99c9b102dedd8f83-640.webp",
+          "sha256": "728cf892917d884b4cff245dad183f1e1b9dd841e6ffeb1a313c48184c80be6c",
+          "bytes": 94140,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/99c9b102dedd8f83-1000.webp",
+          "sha256": "419326160ed4654165ff677be2ad4a0889a2eca8b4b93cda2df330b180690715",
+          "bytes": 218670,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-09-04.webp",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/aa4/1000_773_1/3vw2ljgii8op3nbelvbofxexsqtt6j0w.webp",
+      "source_sha256": "8374b1ad0570dfe94823fb7ecffb5dd5dce36be9a9c9e96c3ccd59cf409ca2f4",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/8374b1ad0570dfe9-640.webp",
+          "sha256": "ed3445463f2164d949d0c885b2bd8a987a8b7bfc4cbe88391828d50bfaf6da26",
+          "bytes": 92660,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/8374b1ad0570dfe9-1000.webp",
+          "sha256": "2e82d1ab1b76d7738840e75d2d860fc7a84cf1f5f2904aced14964ba6ce747cd",
+          "bytes": 221668,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-08-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/bf3/1000_773_1/exy6guhlpotvx8nrcnm0r24ghw70x00o.jpg",
+      "source_sha256": "40930ddf006e4971277596694976e631ff055e62d8912a424196a13629732a11",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/40930ddf006e4971-640.webp",
+          "sha256": "7dafa3bca6dbd2a3082f3e38f22196ebba5e62cd5a26990ba1df3052c3c319f9",
+          "bytes": 82416,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/40930ddf006e4971-1000.webp",
+          "sha256": "34e1cee8c1a63f84f9644dbb2370a21674bcdc29c11555a0903480e68277a7c3",
+          "bytes": 198420,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-08-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/8ca/1000_773_1/52ohaztiq51xl747z3rvg7ndhjcpxibm.jpg",
+      "source_sha256": "e82016341e91f86f96f5c8ce3ca77de08611241603bff4a54af8d2408d0c6b42",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/e82016341e91f86f-640.webp",
+          "sha256": "e15f75086f93f874f1b849e76fef1f19802231b43de1e1d737548ad1ef1ef2e2",
+          "bytes": 82272,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/e82016341e91f86f-1000.webp",
+          "sha256": "230d7294d1a56ba9623d9b15446fd63be167c56a7d456c5b7d64f37abf1034e0",
+          "bytes": 198322,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-08-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/c9c/1000_773_1/7c28rtnncxmpzibew70qb4jgpmjf1x31.jpg",
+      "source_sha256": "2efbd148a766af97801f23b917d45cd58b3f7a7aad80fafeb7fd1dd1d8387c9a",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/2efbd148a766af97-640.webp",
+          "sha256": "74c97080b52b0a359b53643f8de5d7b0cdbeb9e43b49b7f83d6f955354caccd7",
+          "bytes": 78692,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/2efbd148a766af97-1000.webp",
+          "sha256": "4e6b23e4238a6fee3f607d2d52af3c0b783b8580c11b851faaf1d7b96a978e8c",
+          "bytes": 191300,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-08-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/412/1000_773_1/b56gmbsgeib02dy4tju1cfmfqb5n0155.jpg",
+      "source_sha256": "1521f1ebfd068eb2a9ebe869f0cee1c29e82e0f3913b692e716a9f420429fd86",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/1521f1ebfd068eb2-640.webp",
+          "sha256": "177abb2f6e06ca095541f818f174ecf7b05fdd9315b4f11524135375d693b6d1",
+          "bytes": 92932,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/1521f1ebfd068eb2-1000.webp",
+          "sha256": "068db2fdca5aff9ce940a2bdf9ea8ff8a47d63ff969d981f998c9945c77a1b0e",
+          "bytes": 228776,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-08-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e7d/1000_773_1/dbfa8ixv9gyn3bovo1wasl3o3p9tewnw.jpg",
+      "source_sha256": "1d2bc89b06abb60c5c12e52bfaf101dea804fbb252033137ca221b7dfc4705bb",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/1d2bc89b06abb60c-640.webp",
+          "sha256": "dd8bd46a9ad689c45022d23575d615d47c0e9364e0a38e0ea008b43985611c9c",
+          "bytes": 94070,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/1d2bc89b06abb60c-1000.webp",
+          "sha256": "633f004cbb1c6c57b1086c5d40f494c1f3cee60cb08c288c9de2fc229fd749a6",
+          "bytes": 233276,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/7f5/bqhcmdrvt303f1inzzuz7vzct3d0cvtb/1000_773_1/DSC07000.jpg",
+      "source_sha256": "83b462c597ecb4b53910fd6d52c32b4a380acc6132b4d062bb947e9a27a34dd4",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/83b462c597ecb4b5-640.webp",
+          "sha256": "c82bb6ce0152284405a6b0fb65245373c818b1a01419f9ea9094f8137c498cf2",
+          "bytes": 67166,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/83b462c597ecb4b5-1000.webp",
+          "sha256": "0dd56edc2234f3bffdfdb19b337633955e0b3911beb016f03a061362cad1313a",
+          "bytes": 164316,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/0e9/qsmd49es5zf0hoyrp9z3r6er7jp2pkj0/1000_773_1/DSC06834.jpg",
+      "source_sha256": "203e483199919bec1f8d1fc13eb68bb7411bd6f3574c56a9ec836fa797d21ca4",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/203e483199919bec-640.webp",
+          "sha256": "1edc46f3eba09eb9c4b6495d8b939e2777c31d69290f02f11c6225136ad6daf3",
+          "bytes": 84956,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/203e483199919bec-1000.webp",
+          "sha256": "88a9b77bc1c0e1f07283d586144fc8b01f265ff3c4f561f9b35ce474f7ecbafb",
+          "bytes": 211442,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/9e2/16ja2tczgzwslmpv0dy2953b9k00pw23/1000_773_1/DSC06859.jpg",
+      "source_sha256": "ecc1253f238ef5af8a9894797158a9a3f6db13f0c637c4ac810e683c9a38b8a6",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/ecc1253f238ef5af-640.webp",
+          "sha256": "6f952d1588596429f3771987d33369ac9e25f7c67dfbdede5b5170d080fe27b7",
+          "bytes": 89250,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/ecc1253f238ef5af-1000.webp",
+          "sha256": "f852638e9d1711fbc4ee57b19ec6e10c90d0940bfccfcd0d66011fe7d3d40274",
+          "bytes": 214274,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e07/9otzjtd68ft5o7guztbrhzk48cgdx700/1000_773_1/DSC06905.jpg",
+      "source_sha256": "611e760509bd846206b599c80b4fd2281e7dab3a14481e92d10d6bbafa98095a",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/611e760509bd8462-640.webp",
+          "sha256": "755e7e071a505436b124f688639c9d53562e72a61e69dfa0ab74507a68225542",
+          "bytes": 93756,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/611e760509bd8462-1000.webp",
+          "sha256": "12b95ef84222d08099be7b452cb89009c305e19a711aba82beee5182e1a50965",
+          "bytes": 235944,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/d4d/835wn33m5n8q36lrhmgmigvdj5kkluv2/1000_773_1/DSC06939.jpg",
+      "source_sha256": "f87ff4ae2f76c6e5d4135607c36d33bb565bebdaca50327a87f3a65e231ec973",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/f87ff4ae2f76c6e5-640.webp",
+          "sha256": "60aca1a1a991a15a918eab0c16d34e1393ac77611a11d0763a2c58559350ba79",
+          "bytes": 83110,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/f87ff4ae2f76c6e5-1000.webp",
+          "sha256": "ef9ee50f17d994f1565a73eb49cb3e2cf4a9cdb7d0f0f870c41aa321b2aa9d0b",
+          "bytes": 198434,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-07-05.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/63d/09p4lvoqevoi4oo71xrwza5lbm9elmqe/1000_773_1/DSC07000.jpg",
+      "source_sha256": "a1cbe02f929c9eca898e5adfcb7dc35dea8e388855cb16d6d86652b4a88073c6",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/a1cbe02f929c9eca-640.webp",
+          "sha256": "eb2b6b22648507885445e1ac12a4b25b99f1150cbc4fc3c59072fd7676e359ac",
+          "bytes": 67004,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/a1cbe02f929c9eca-1000.webp",
+          "sha256": "616316b0d40b044029efce9996b1d89618a2677ef746ac5cba4f1dfa0a47388b",
+          "bytes": 164036,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-06-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/dc9/7x5kmdzbsh5ivxj2qb0f0yl3kc5p6rp4/1000_773_1/DSC09690.jpg",
+      "source_sha256": "d753d7c2e127f36056eb3cda4af7654e7ee599ccebb09b7163e07642f3502bc8",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/d753d7c2e127f360-640.webp",
+          "sha256": "f01b500a48b6498f7d827ae2f9686986f5aa57db0053e9766058086cad90883d",
+          "bytes": 74392,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/d753d7c2e127f360-1000.webp",
+          "sha256": "27bb5a2a6d7869af854fe28b2ed906e128b4e8ae87ff1948ecc786b5b686d7d6",
+          "bytes": 180792,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-06-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/198/k4w0efr3vknno6w68v4wusz0gmra4h07/1000_773_1/DSC09683.jpg",
+      "source_sha256": "81cdd22c744b435bff44a9d5eaa1e94c18d732fb47e6e94788c68cbc5396f26b",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/81cdd22c744b435b-640.webp",
+          "sha256": "778eb3847df1c18b6a53a4b74248d5f010373860284d8e15b7501c640ce5eeec",
+          "bytes": 97492,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/81cdd22c744b435b-1000.webp",
+          "sha256": "ae2eb1d2592137fd12dc0fbf0bc8e9f457c043d62513c47c3221c3d13493dd2a",
+          "bytes": 248014,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-06-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e56/eswuxnstd6rweojqermm2ypoeg6ljm21/1000_773_1/DSC09688.jpg",
+      "source_sha256": "19f91e0470e75d011b3e951c90fb830c0ed23e5c0886511906f4b894247bbb76",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/19f91e0470e75d01-640.webp",
+          "sha256": "176099b0697936c97277eb11abcc6c9b3318b878f50c0682d4203011476e5174",
+          "bytes": 108186,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/19f91e0470e75d01-1000.webp",
+          "sha256": "e694696a312c19dca4a680fc1eaf1d48fb9001ab2145980dfe01d252280febcb",
+          "bytes": 272278,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-06-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/387/fqln696qgr45btrjn4w8xmozcjjfa8d9/1000_773_1/DSC01849.jpg",
+      "source_sha256": "9195d09df94cf534439ba0ecf594d534acfacb9d01d571e8d8d978aec33d5de0",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/9195d09df94cf534-640.webp",
+          "sha256": "134958fbe86068e40e4e68064585879fec9ddf1149fa581b3799f8f49b2649ef",
+          "bytes": 102110,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/9195d09df94cf534-1000.webp",
+          "sha256": "c8a52ced0783fc9223daffcf2a9aea615ca865c654d444d74c474f949fb93b72",
+          "bytes": 248608,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-06-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/515/qzgn9673kdai42tepxs43at32en06nsj/1000_773_1/DSC09690.jpg",
+      "source_sha256": "a9629b7557ce12469a2839c819c53c2f09d0ce5801243f261566cbc3368e6f53",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/a9629b7557ce1246-640.webp",
+          "sha256": "52d49e71f6f3b2d66c6165a4a95c75efb9dbf41bba3f5fa478861e5abd49ab59",
+          "bytes": 74958,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/a9629b7557ce1246-1000.webp",
+          "sha256": "1a5356d31edd8492fb3a961772ee4cc351a14fa9686ccca1d86c3a16735ff6fc",
+          "bytes": 180956,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-05-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/655/yg7v0ctqmcp4ykh64ur5a85y1enxymb0/1000_773_1/Лунина.jpg",
+      "source_sha256": "e6f11bbb80ecc08c7f2767b3aa2571f887537680d1d7b9fd84d088b6a4c22bb8",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/e6f11bbb80ecc08c-640.webp",
+          "sha256": "ecad2c79b40aae64d466e6c47d944a2b1df72fddc572c3a342c6f2a730dfadcb",
+          "bytes": 76118,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/e6f11bbb80ecc08c-1000.webp",
+          "sha256": "8a110761553a51bc1da5a23615b3487a71b95f5454f2fb80602f86f8c337bbb0",
+          "bytes": 173608,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-05-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/2df/tbxd761y9d9kt50j8e5v8f58nt3mw8lt/1000_773_1/Лунина.jpg",
+      "source_sha256": "e6f11bbb80ecc08c7f2767b3aa2571f887537680d1d7b9fd84d088b6a4c22bb8",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/e6f11bbb80ecc08c-640.webp",
+          "sha256": "ecad2c79b40aae64d466e6c47d944a2b1df72fddc572c3a342c6f2a730dfadcb",
+          "bytes": 76118,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/e6f11bbb80ecc08c-1000.webp",
+          "sha256": "8a110761553a51bc1da5a23615b3487a71b95f5454f2fb80602f86f8c337bbb0",
+          "bytes": 173608,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-05-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e8f/1w01354v9wnqkbu1bl64s6iyzzk770mb/1000_773_1/Лунина_1.jpg",
+      "source_sha256": "4b0057a9d02ad35bff9f396e292272b3489880b719a36251e80f9a6d8ae64210",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/4b0057a9d02ad35b-640.webp",
+          "sha256": "76f259c0e72a24fb1eff0c76095069cea647b4e064a84a7bf069752c48a9525b",
+          "bytes": 81354,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/4b0057a9d02ad35b-1000.webp",
+          "sha256": "edc82089032c7b28932c30e37e524902762550cbf8cecbd2fc2cd659cb484428",
+          "bytes": 192092,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-05-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/149/mofgvxlpnvx2wdsnazc3vdrtrmjezipe/1000_773_1/Лунина_2.jpg",
+      "source_sha256": "3d1a974c95c3e1b997caa5b82513ab9828df7982bea75aaf13e32654d66961a9",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/3d1a974c95c3e1b9-640.webp",
+          "sha256": "3091aba5ea3662e36eb6cc195bda428c6a6ba6a70e2968f936d178d3bca012ff",
+          "bytes": 91968,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/3d1a974c95c3e1b9-1000.webp",
+          "sha256": "dd027df3396217687f5c0b980f2c003ebbdec5f5dc4b5167cf374010ff2e17e7",
+          "bytes": 217102,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-05-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/29d/j9somx0omic3d1qfbnv9me3vso11x3y5/1000_773_1/Лунина_3.jpg",
+      "source_sha256": "52c7c9ff53b2ec2b0bcf09ec934befda0f0d54a11591dc55e673a0f13a6a2bfc",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/52c7c9ff53b2ec2b-640.webp",
+          "sha256": "3708ec0bd8bb83bb8ac10d3a357f4bc9c8e40bcb60d3c1ed49b1d4f98a52c718",
+          "bytes": 94040,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/52c7c9ff53b2ec2b-1000.webp",
+          "sha256": "4c363c7e5a1caa3ec01648cc6c0ccfd107524790a2c374f7d7d5f7ce75637c75",
+          "bytes": 218804,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-04-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/838/3rsyrtjedg02hhkyyp3g2a20gn61wbjd/1000_773_1/Лунина.jpg",
+      "source_sha256": "930a39e0e2a315613ade8e4641561f23b41c3230063e4dfc605bc7cb1dbb8b3c",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/930a39e0e2a31561-640.webp",
+          "sha256": "0f662424ea5b7d28da31679be7c7cb9ae83ac0bca2b5a01cc1795a6e5664eae7",
+          "bytes": 79298,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/930a39e0e2a31561-1000.webp",
+          "sha256": "702b6f90464f8b74019ba2c58c292c88a69f6019055b75964dd075a9a2721fa3",
+          "bytes": 169342,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-04-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4f1/b5qqf3bg2yr61y2r9ufonaa07bym76lf/1000_773_1/Лунина_1.jpg",
+      "source_sha256": "9b7de6a1a9f08703c58b681bd5c895cc0a3c5b8ee7b462c349f1e291ef4b9ab9",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/9b7de6a1a9f08703-640.webp",
+          "sha256": "475aba2def163c08fc55a370abda7c147f728d8da42bd50ff42a934861af55d5",
+          "bytes": 74760,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/9b7de6a1a9f08703-1000.webp",
+          "sha256": "994107a02ffb3fc8b10fdfae368ae9315b2e178eef5d90b27055b7d8459f9966",
+          "bytes": 160480,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-04-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/842/vy91cb8s2ypzpnvi99tmdqyh6llctxl4/1000_773_1/Лунина_2.jpg",
+      "source_sha256": "cec5b584bf940952c26b17772fc14f57e15f494e09e4cc2337f90f9dcd3acce7",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/cec5b584bf940952-640.webp",
+          "sha256": "078945671ddad0a62381b941750ba5b441f595c5ef78ad9da89c7f82e197b0f5",
+          "bytes": 76216,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/cec5b584bf940952-1000.webp",
+          "sha256": "18b34985645246e5e833ef788aced723ff02cdf835703b2574c5ef70e206e29e",
+          "bytes": 166038,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-04-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/a53/peoxh6nita58r4v30j84n8yppfnrlu0m/1000_773_1/Лунина_3.jpg",
+      "source_sha256": "d032fe5421f3980dd46e8fa15828759ba7ed7993e4f41e426f75936a8a82dac8",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/d032fe5421f3980d-640.webp",
+          "sha256": "2f92820fe5be4a21c86aa04ae31658d96fab06fa121b3fc0db0d8c5cace7c711",
+          "bytes": 69392,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/d032fe5421f3980d-1000.webp",
+          "sha256": "2069d34bbb74013557185fdb367f721eb505b1435957d887977009457a4e4544",
+          "bytes": 153344,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-04-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4d5/22whdozkof3u98qnhdvxhsw679isn23i/1000_773_1/Лунина.jpg",
+      "source_sha256": "8d9abdf23712acbe41c0b550b9047f2d50e13380d74b0ea266504c260192a360",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-10-26T22:45:34.510131+00:00",
+      "rights_status": "permission_not_verified",
+      "outputs": [
+        {
+          "path": "assets/content/construction/8d9abdf23712acbe-640.webp",
+          "sha256": "b82f28464ac4e454fd06805a56094eafb53e193611392eb20db3a9606a15a3f1",
+          "bytes": 79302,
+          "width": 640,
+          "height": 360
+        },
+        {
+          "path": "assets/content/construction/8d9abdf23712acbe-1000.webp",
+          "sha256": "7dbc48e81b3c1a3930ea2ed1d39e30478499e9e1c4b3b53c816dd6e3fb2bcf03",
+          "bytes": 169344,
+          "width": 1000,
+          "height": 563
+        }
+      ]
+    }
+  ]
+}

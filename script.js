@@ -1,24 +1,10 @@
 "use strict";
 
 /* ---------- static data ---------- */
-const PLANS = [
-  {id:'s1',category:'studio',title:'Студия № 5',meta:'29 м² · 2 этаж из 18 · чистовая отделка',price:6700000},
-  {id:'s2',category:'studio',title:'Студия № 52',meta:'28,9 м² · 5 этаж из 18 · чистовая отделка',price:6800000},
-  {id:'s3',category:'studio',title:'Студия № 102',meta:'28,9 м² · 8 этаж из 18 · чистовая отделка',price:7000000},
-  {id:'s4',category:'studio',title:'Студия № 117',meta:'28,9 м² · 9 этаж из 18 · чистовая отделка',price:7200000},
-  {id:'s5',category:'studio',title:'Студия № 124',meta:'28,9 м² · 9 этаж из 18 · чистовая отделка',price:7300000},
-  {id:'o1',category:'1k',title:'1 спальня — минимальная цена',meta:'25 квартир в продаже · подберём под запрос',price:7400000},
-  {id:'o2',category:'1k',title:'1 спальня',meta:'35,7 м² · 2 этаж · чистовая отделка',price:7885023},
-  {id:'o3',category:'1k',title:'1 спальня',meta:'33,6 м² · 15 этаж · чистовая отделка',price:8831424},
-  {id:'t1',category:'2k',title:'2 спальни',meta:'7 квартир в продаже · до 71,5 м² · подберём под запрос',price:9400000},
-  {id:'r1',category:'3k',title:'3 спальни',meta:'2 квартиры в продаже · подберём под запрос',price:14700000},
-];
-const TABS = [
-  {key:'studio',label:'Студии · 11'},
-  {key:'1k',label:'1 спальня · 25'},
-  {key:'2k',label:'2 спальни · 7'},
-  {key:'3k',label:'3 спальни · 2'},
-];
+const SITE_DATA = JSON.parse(document.getElementById('site-data').textContent);
+const PLANS = ContentModel.plans(SITE_DATA.apartments);
+const CATEGORIES = ContentModel.categories(PLANS);
+const TABS = CATEGORIES.map(c=>({key:c.key,label:c.title+' · '+c.count}));
 const ICONS = {
   calc: 'M7.5 3h9a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1M9.5 7.5h5M9.5 12h1.5M9.5 16h1.5M14 12v4.5',
   plan: 'M4 4h16v16H4zM4 14h8M12 4v16',
@@ -31,34 +17,31 @@ const ABOUT_THEMES = [
    lead:'18 этажей над водой: чем выше квартира, тем шире панорама Азовского моря и городской набережной.',
    items:[
      {t:'Морские пейзажи за окном',d:'Первая береговая линия — вид на воду и набережную.'},
-     {t:'18 этажей, один корпус',d:'258 квартир, потолки от 2,85 до 3,3 метра.'},
+     {t:'18 этажей, один корпус',d:'258 квартир в проекте, от студий до квартир с тремя спальнями.'},
      {t:'Отделка «под ключ»',d:'Все квартиры сдаются с чистовой отделкой.'},
-     {t:'Пять минут до моря',d:'До набережной и пляжа — 5 минут пешком.'},
+     {t:'Рядом с побережьем',d:'Комплекс рядом с побережьем; время маршрута не измерялось.'},
    ]},
-  {key:'yard',label:'Двор и территория',photo:false,media:'фото двора — заглушка',
+  {key:'yard',label:'Двор и территория',photo:false,media:'проект благоустройства',
    title:'Закрытая озеленённая территория',
    lead:'Двор для жителей: игровые комплексы, спорт и зоны отдыха, машины — по периметру.',
    items:[
-     {t:'Закрытый двор',d:'Озеленение, видеонаблюдение 24/7, доступ только для резидентов.'},
+     {t:'Закрытый двор',d:'В материалах застройщика предусмотрены озеленение и видеонаблюдение.'},
      {t:'Детские площадки',d:'Игровые комплексы и зона отдыха с каучуковым покрытием.'},
      {t:'Спортивная площадка',d:'Комплекс уличных тренажёров на территории.'},
-     {t:'Паркинг',d:'Наземный паркинг на 36 машино-мест и гостевые парковки.'},
+     {t:'Паркинг',d:'В материалах проекта предусмотрены парковочные места.'},
    ]},
-  {key:'service',label:'Сервис в доме',photo:false,media:'фото входной группы — заглушка',
+  {key:'service',label:'Сервис в доме',photo:false,media:'визуализация входной группы',
    title:'Всё необходимое — не выходя за периметр',
-   lead:'Первый этаж работает на жителей: магазины, сервисы, консьерж и помещения для хранения.',
+   lead:'В проекте предусмотрены коммерческие помещения, входные группы и помещения для хранения.',
    items:[
-     {t:'Коммерческая галерея',d:'Магазины и сервисы на первом этаже дома.'},
-     {t:'Консьерж и охрана',d:'Помещения для консьержа и охранника, видеонаблюдение.'},
+     {t:'Коммерческая галерея',d:'Предусмотрены 15 коммерческих помещений площадью 26–65 м².'},
+     {t:'Консьерж и охрана',d:'По презентации планируются ресепшен и видеонаблюдение.'},
      {t:'Колясочная и велосипедная',d:'Отдельные помещения, безбарьерная среда и пандусы.'},
-     {t:'Своя УК',d:'Управляющая компания застройщика с доверительным управлением.'},
+     {t:'Кладовые',d:'По презентации: 73 кладовые площадью 2,8–7 м².'},
    ]},
 ];
 const CAT_LABEL = {studio:'Студия','1k':'1 спальня','2k':'2 спальни','3k':'3 спальни'};
-const GALLERY = [
-  'фасад — вид с моря','фасад — вид с проспекта Адмирала Лунина','входная группа',
-  'внутренний двор','детская площадка','вид из окна на Азовское море'
-];
+const GALLERY = SITE_DATA.media.gallery;
 const FIELD_LABELS = {
   plan: ['Интересующая планировка', 'интересующую планировку'],
   email: ['E-mail', 'e-mail для подборки'],
@@ -122,9 +105,9 @@ td{padding:12px 0;border-bottom:1px solid rgba(37,40,45,.10);vertical-align:base
 </style></head><body><div class="sheet">
 <div class="top"><img src="${logo}" alt="Дом у моря"><div class="date">Расчёт от ${d.date}<br>Ориентировочный</div></div>
 <h1>Расчёт ипотеки</h1>
-<p class="sub">Расчёт по ЖК «Дом у моря», г. Мариуполь, пр. Адмирала Лунина, 25. Льготная ставка 2% для новых регионов действует на сумму кредита до 6 млн ₽. Точную ставку и решение банк выдаёт индивидуально.</p>
+<p class="sub">Расчёт по ЖК «Дом у моря», г. Мариуполь, пр. Адмирала Лунина, 25. Единая выбранная ставка применяется ко всей сумме. Льготный лимит и условия банка требуют отдельной проверки; комбинированная ипотека не моделируется.</p>
 <div class="kick">${d.custom ? 'Произвольный расчёт' : 'Выбранная планировка'}</div>
-<div class="obj"><div class="t">${d.objectTitle}</div><div class="m">${d.objectMeta}</div></div>
+<div class="obj"><div class="t">${d.objectTitle}</div><div class="m">${d.objectMeta}</div>${d.sourceUrl?`<div class="m" style="margin-top:8px;overflow-wrap:anywhere;font-size:10px">Источник: ${d.sourceUrl.replaceAll("&","&amp;")}<br>Цену и наличие уточнит агентство.</div>`:""}</div>
 <div class="kick">Параметры</div>
 <table>
 ${row('Стоимость квартиры', d.price)}
@@ -137,8 +120,8 @@ ${row('Необходимый доход', d.income)}
 <div class="hl"><span class="l">Ежемесячный платёж</span><span class="r">${d.payment}</span></div>
 <p class="note">Доход рассчитан из условия, что платёж не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении. Материалы носят информационный характер и не являются офертой.</p>
 <div class="foot">
-<div><b>Отдел продаж</b>+7 (800) 775-28-92<br>info@sk-gc.ru</div>
-<div><b>Офис продаж</b>Пересечение ул. Артёма и б-ра Шевченко<br>Пн–сб 9:00–18:00</div>
+<div><b>Консультации агентства</b>+7 (952) 956-88-75<br>info@anyara.ru</div>
+<div><b>Оператор сайта</b>ИП Саврасова Елена Анатольевна</div>
 <div><b>ЖК «Дом у моря»</b>Проектная декларация — наш.дом.рф, объект 69398<br>ГК «Садовое кольцо», © 2026</div>
 </div>
 </div>
@@ -187,8 +170,8 @@ async function makeCalcPdf(html, filename){
 
 /* ---------- app state ---------- */
 const state = {
-  filter: 'studio',
-  price: 6700000, downPct: 10, term: 30, rate: 2,
+  filter: 'studio', budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6, planViews:{}, selectedPlanView:'furnished',
+  price: Math.min(...PLANS.map(p=>p.price)), downPct: 10, term: 30, rate: 2,
   plansView: 'lots', aboutTab: 'arch',
   selectedPlanId: null,
   snapshot: null,
@@ -326,163 +309,116 @@ function wireScrollTopBtn(){
 }
 
 /* ================= plans ================= */
-function currentFilteredPlans(){ return PLANS.filter(p => p.category === state.filter); }
-
+function currentFilteredPlans(){
+  return PLANS.filter(p=>p.category===state.filter && (!state.budget||p.price<=state.budget) && (!state.floor||p.floor===state.floor) && (!state.layout||p.plan_group_id===state.layout) && (!state.sea||p.features.includes('Вид на море'))).sort((a,b)=>(state.sort==='area'?a.area_m2-b.area_m2:state.sort==='floor'?a.floor-b.floor:a.price-b.price)||a.number-b.number);
+}
 function renderTabs(){
-  const hadFocus = document.getElementById('plan-tabs').contains(document.activeElement);
-  document.getElementById('plan-tabs').innerHTML = TABS.map(t =>
-    `<button type="button" class="tab-chip${state.filter === t.key ? ' active' : ''}" data-tab="${t.key}" aria-pressed="${state.filter === t.key}">${t.label}</button>`
-  ).join('');
-  if (hadFocus) document.querySelector('[data-tab="'+state.filter+'"]').focus({preventScroll:true});
+  const node=document.getElementById('plan-tabs'),hadFocus=node.contains(document.activeElement);
+  node.innerHTML=TABS.map(t=>`<button type="button" class="tab-chip${state.filter===t.key?' active':''}" data-tab="${t.key}" aria-pressed="${state.filter===t.key}">${t.label}</button>`).join('');
+  if(hadFocus)node.querySelector(`[data-tab="${state.filter}"]`).focus({preventScroll:true});
+  const groups=[...new Set(PLANS.filter(p=>p.category===state.filter).map(p=>p.plan_group_id))];
+  document.getElementById('layout-filter').innerHTML='<option value="">Все планировки</option>'+groups.map((g,i)=>{const ps=PLANS.filter(p=>p.plan_group_id===g);return `<option value="${g}">Тип ${i+1} · ${ps[0].area_m2.toLocaleString('ru-RU')} м² · ${ps.length} предл.</option>`;}).join('');
+  document.getElementById('layout-filter').value=state.layout;
 }
 function renderPlansGrid(){
-  const list = currentFilteredPlans();
-  document.getElementById('plans-grid').innerHTML = list.map((p, i) => `
-    <div class="card card-hover">
-      <button type="button" class="plan-thumb" data-action="open-plan-image" data-index="${i}" aria-label="Открыть схему: ${p.title}">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" style="opacity:.35"><rect x="3" y="3" width="24" height="24" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><path d="M3 21L10 14L15 18L25 8" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        <span class="plan-thumb-label">схема планировки — открыть</span>
-      </button>
-      <div class="plan-title">${p.title}</div>
-      <div class="plan-meta">${p.meta}</div>
-      <div class="plan-price">от ${rub(p.price)}</div>
-      <div class="plan-links">
-        <a href="#contact" data-action="ask-plan" data-id="${p.id}">Запросить планировку →</a>
-        <a href="#calculator" class="plan-link-calc link-hover-gold" data-action="calc-here" data-id="${p.id}"><span class="dot"></span>Рассчитать ипотеку →</a>
-      </div>
-    </div>`).join('');
+  const list=currentFilteredPlans();
+  document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||'furnished')).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
+  document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)} · цены на 27.10.2026`;
+  document.getElementById('show-more-plans').hidden=list.length<=state.limit||state.plansView!=='lots';
 }
+function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||'furnished'];}
 function askPlan(plan){
-  state.snapshot = {
-    kind: 'plan', kicker: 'Ваш запрос', planChoice: plan.category,
-    objectTitle: plan.title, objectMeta: plan.meta + ' · от ' + rub(plan.price),
-    rows: [{ k: 'Тип', v: CAT_LABEL[plan.category] }, { k: 'Стоимость', v: 'от ' + rub(plan.price) }],
-  };
-  state.planChoice = state.snapshot.planChoice || state.planChoice;
-  updateForm();
-  scrollToForm();
+  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:SITE_DATA.snapshot_date,objectTitle:plan.title,objectMeta:plan.meta+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[{k:'Тип',v:CAT_LABEL[plan.category]},{k:'Стоимость',v:rub(plan.price)},{k:'Данные',v:'27.10.2026 · наличие уточняется'}]};
+  state.planChoice=plan.category;updateForm();scrollToForm();
 }
-function calcHere(plan){
-  state.selectedPlanId = plan.id;
-  state.price = plan.price;
-  document.getElementById('price-range').value = plan.price;
-  renderCalculator();
-  scrollToEl('calculator', 80);
-}
+function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;renderCalculator();scrollToEl('calculator',80);}
 function wirePlansEvents(){
-  document.getElementById('plan-tabs').addEventListener('click', e => {
-    const tab = e.target.closest('[data-tab]');
-    if (!tab) return;
-    state.filter = tab.dataset.tab;
-    renderTabs(); renderPlansGrid();
+  document.getElementById('plan-tabs').addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;state.filter=tab.dataset.tab;state.layout='';state.limit=6;renderTabs();renderPlansGrid();});
+  document.getElementById('plans-grid').addEventListener('click',e=>{
+    const variant=e.target.closest('[data-plan-view]');
+    if(variant){e.preventDefault();const id=variant.dataset.id;state.planViews[id]=variant.dataset.planView;const card=variant.closest('[data-lot-id]'),plan=PLANS.find(p=>p.id===id),asset=plan.plans.find(p=>p.type===variant.dataset.planView);card.querySelector('img').src=asset.local_path;card.querySelector('img').alt=plan.title+' — '+planViewLabel(plan);card.querySelector('.plan-thumb').href=asset.local_path;card.querySelectorAll('[data-plan-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===variant)));return;}
+    const el=e.target.closest('[data-action]');if(!el)return;const plan=PLANS.find(p=>p.id===el.dataset.id);if(!plan)return;e.preventDefault();
+    if(el.dataset.action==='open-plan-image')openLightbox('plan',Object.keys(ContentModel.views).indexOf(state.planViews[plan.id]||'furnished'),plan.id);
+    else if(el.dataset.action==='ask-plan')askPlan(plan);else if(el.dataset.action==='calc-here')calcHere(plan);
   });
-  document.getElementById('plans-grid').addEventListener('click', e => {
-    const thumb = e.target.closest('[data-action="open-plan-image"]');
-    if (thumb) { openLightbox('plan', Number(thumb.dataset.index)); return; }
-    const ask = e.target.closest('[data-action="ask-plan"]');
-    if (ask) { e.preventDefault(); askPlan(currentFilteredPlans().find(p => p.id === ask.dataset.id)); return; }
-    const calc = e.target.closest('[data-action="calc-here"]');
-    if (calc) { e.preventDefault(); calcHere(currentFilteredPlans().find(p => p.id === calc.dataset.id)); return; }
-  });
+  for(const [id,key] of [['budget','budget'],['floor','floor'],['layout','layout'],['sort','sort'],['sea','sea']])document.getElementById(id+'-filter').addEventListener('change',e=>{state[key]=key==='sea'?e.target.checked:['budget','floor'].includes(key)?Number(e.target.value):e.target.value;state.limit=6;renderPlansGrid();});
+  document.getElementById('reset-filters').addEventListener('click',()=>{Object.assign(state,{budget:0,floor:0,layout:'',sort:'price',sea:false,limit:6});for(const id of ['budget','floor','layout'])document.getElementById(id+'-filter').value='';document.getElementById('sort-filter').value='price';document.getElementById('sea-filter').checked=false;renderPlansGrid();});
+  document.getElementById('show-more-plans').addEventListener('click',()=>{const next=currentFilteredPlans()[state.limit];state.limit+=6;renderPlansGrid();if(next)document.querySelector(`[data-lot-id="${next.id}"] .plan-thumb`).focus({preventScroll:true});});
 }
-
-/* ================= gallery ================= */
-function renderGallery(){
-  document.getElementById('gallery-grid').innerHTML = GALLERY.map((label, i) => `
-    <button type="button" class="gallery-item" data-action="open-gallery-image" data-index="${i}" aria-label="Открыть: ${label}">
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" style="opacity:.3"><rect x="4" y="7" width="26" height="20" rx="2" stroke="#5A6068" stroke-width="1.6"></rect><circle cx="12" cy="14" r="2.5" stroke="#5A6068" stroke-width="1.6"></circle><path d="M4 24L12 17L18 21L30 11" stroke="#5A6068" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-      <span class="gallery-item-label">${label}</span>
-    </button>`).join('');
-}
+/* ================= gallery and monthly albums ================= */
+function renderGallery(){/* Generated semantic HTML is also the live gallery. */}
 function wireGalleryEvents(){
-  document.getElementById('gallery-grid').addEventListener('click', e => {
-    const item = e.target.closest('[data-action="open-gallery-image"]');
-    if (item) openLightbox('gallery', Number(item.dataset.index));
-  });
+  document.getElementById('gallery-grid').addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(a){e.preventDefault();openLightbox('gallery',Number(a.dataset.index));}});
+  const tabs=document.getElementById('construction-tabs');
+  tabs.innerHTML=SITE_DATA.media.construction.map((m,i)=>`<button type="button" class="tab-chip${i===0?' active':''}" data-month="${m.month}" aria-pressed="${i===0}">${m.title}</button>`).join('');
+  const select=month=>{document.querySelectorAll('.construction-album').forEach(d=>{d.hidden=d.dataset.album!==month;d.open=!d.hidden;});tabs.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.month===month));b.classList.toggle('active',b.dataset.month===month);});};
+  tabs.addEventListener('click',e=>{const b=e.target.closest('[data-month]');if(b)select(b.dataset.month);});
+  document.getElementById('construction-albums').addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(a){e.preventDefault();openLightbox('construction',Number(a.dataset.index),a.dataset.month);}});
+  select(SITE_DATA.media.construction[0].month);
 }
-
-/* ================= lightbox (shared: plans + gallery) ================= */
-const lb = { mode: null, index: null, opener: null };
-function lightboxCount(){ return lb.mode === 'plan' ? currentFilteredPlans().length : GALLERY.length; }
-function lightboxTitle(i){ return lb.mode === 'plan' ? currentFilteredPlans()[i].title : GALLERY[i]; }
-function openLightbox(mode, index){
-  lb.opener = document.activeElement;
-  lb.mode = mode; lb.index = index;
-  document.getElementById('lightbox').hidden = false;
-  document.getElementById('main-content').inert = true;
-  document.getElementById('site-header').inert = true;
-  document.body.style.overflow = 'hidden';
-  renderLightbox();
-  document.getElementById('lightbox').classList.add('open');
-  document.getElementById('lightbox-close').focus();
+/* ================= lightbox ================= */
+const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0};
+function lightboxItems(){
+  if(lb.mode==='plan'){const p=PLANS.find(p=>p.id===lb.lotId);return p.plans.map(a=>({src:a.local_path,title:p.title+' · '+ContentModel.views[a.type],type:a.type,caption:p.meta+' · '+rub(p.price)+' · мебель приобретается отдельно'}));}
+  const items=lb.mode==='gallery'?GALLERY:SITE_DATA.media.construction.find(m=>m.month===lb.month).images;
+  return items.map(m=>({...m,src:m.variants.at(-1).src,caption:lb.mode==='gallery'?'Визуализация застройщика':SITE_DATA.media.construction.find(a=>a.month===lb.month).title+' · фото строительства · дата съёмки неизвестна'}));
+}
+function lightboxCount(){return lightboxItems().length;}
+function openLightbox(mode,index,id){
+  lb.opener=document.activeElement;lb.mode=mode;lb.index=index;lb.lotId=mode==='plan'?id:null;lb.month=mode==='construction'?id:null;
+  const overlay=document.getElementById('lightbox');overlay.hidden=false;overlay.classList.add('open');
+  lb.background=[...document.body.children].filter(el=>el!==overlay&&el.tagName!=='SCRIPT').map(el=>[el,el.inert]);lb.background.forEach(([el])=>el.inert=true);
+  lb.overflow=document.body.style.overflow;document.body.style.overflow='hidden';renderLightbox();document.getElementById('lightbox-close').focus();
 }
 function closeLightbox(){
-  document.getElementById('lightbox').classList.remove('open');
-  document.getElementById('lightbox').hidden = true;
-  document.getElementById('main-content').inert = false;
-  document.getElementById('site-header').inert = false;
-  document.body.style.overflow = '';
-  if (lb.opener?.isConnected) lb.opener.focus({preventScroll:true});
-  lb.mode = null; lb.index = null;
+  const overlay=document.getElementById('lightbox');overlay.classList.remove('open');overlay.hidden=true;
+  lb.background?.forEach(([el,inert])=>el.inert=inert);document.body.style.overflow=lb.overflow||'';
+  if(lb.opener?.isConnected)lb.opener.focus({preventScroll:true});lb.mode=null;lb.index=null;
+}
+function applyZoom(){
+  lb.zoom=Math.max(1,Math.min(4,lb.zoom));
+  const box=document.getElementById('lightbox-image').getBoundingClientRect();
+  lb.x=Math.max(-box.width*(lb.zoom-1)/2,Math.min(box.width*(lb.zoom-1)/2,lb.x));lb.y=Math.max(-box.height*(lb.zoom-1)/2,Math.min(box.height*(lb.zoom-1)/2,lb.y));
+  document.getElementById('lightbox-asset').style.transform=`translate(${lb.x}px,${lb.y}px) scale(${lb.zoom})`;
+  document.getElementById('zoom-reset').textContent=Math.round(lb.zoom*100)+'%';document.getElementById('zoom-out').disabled=lb.zoom===1;document.getElementById('zoom-in').disabled=lb.zoom===4;
 }
 function renderLightbox(){
-  if (lb.index == null) return;
-  const count = lightboxCount();
-  document.getElementById('lightbox-title-text').textContent = lightboxTitle(lb.index);
-  document.getElementById('lightbox-position').textContent = (lb.index + 1) + ' из ' + count;
-  document.getElementById('lightbox-image').style.transform = 'translate(0,0)';
+  if(lb.index==null)return;const items=lightboxItems(),item=items[lb.index];
+  document.getElementById('lightbox-title-text').textContent=item.title;document.getElementById('lightbox-position').textContent=(lb.index+1)+' из '+items.length;
+  document.getElementById('lightbox-caption').textContent=item.caption;
+  const img=document.getElementById('lightbox-asset');img.src=item.src;img.alt=item.title;
+  const variants=document.getElementById('lightbox-variants');variants.hidden=lb.mode!=='plan';variants.innerHTML=lb.mode==='plan'?items.map((m,i)=>`<button type="button" data-lb-view="${i}" aria-pressed="${lb.index===i}">${ContentModel.views[m.type]}</button>`).join(''):'';
+  if(lb.mode==='plan'){
+    state.planViews[lb.lotId]=item.type;
+    const card=document.querySelector(`[data-lot-id="${lb.lotId}"]`);
+    if(card){card.querySelector('img').src=item.src;card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
+  }
+  lb.zoom=1;lb.x=lb.y=0;applyZoom();
 }
-function lightboxNav(dir){
-  const count = lightboxCount();
-  lb.index = ((lb.index + dir) % count + count) % count;
-  renderLightbox();
-}
+function lightboxNav(dir){lb.index=(lb.index+dir+lightboxCount())%lightboxCount();renderLightbox();}
 function wireLightboxEvents(){
-  const overlay = document.getElementById('lightbox');
-  const inner = document.getElementById('lightbox-inner');
-  const image = document.getElementById('lightbox-image');
-  overlay.addEventListener('click', closeLightbox);
-  inner.addEventListener('click', e => e.stopPropagation());
-  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-  document.getElementById('lightbox-prev').addEventListener('click', () => lightboxNav(-1));
-  document.getElementById('lightbox-next').addEventListener('click', () => lightboxNav(1));
-
-  document.addEventListener('keydown', e => {
-    if (lb.index == null) return;
-    if (e.key === 'Escape') { closeLightbox(); return; }
-    if (e.key === 'Tab') {
-      const buttons = [...overlay.querySelectorAll('button')].filter(b => b.getClientRects().length);
-      const i = buttons.indexOf(document.activeElement);
-      e.preventDefault(); buttons[(i + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
-    }
-    if (e.key === 'ArrowLeft') lightboxNav(-1);
-    else if (e.key === 'ArrowRight') lightboxNav(1);
+  const overlay=document.getElementById('lightbox'),inner=document.getElementById('lightbox-inner'),image=document.getElementById('lightbox-image');
+  overlay.addEventListener('click',closeLightbox);inner.addEventListener('click',e=>e.stopPropagation());document.getElementById('lightbox-close').addEventListener('click',closeLightbox);
+  document.getElementById('lightbox-prev').addEventListener('click',()=>lightboxNav(-1));document.getElementById('lightbox-next').addEventListener('click',()=>lightboxNav(1));
+  document.getElementById('lightbox-variants').addEventListener('click',e=>{const b=e.target.closest('[data-lb-view]');if(b){lb.index=Number(b.dataset.lbView);renderLightbox();document.querySelector(`[data-lb-view="${lb.index}"]`).focus();}});
+  for(const [id,change] of [['zoom-in',.5],['zoom-out',-.5],['zoom-reset',0]])document.getElementById(id).addEventListener('click',()=>{lb.zoom=change?lb.zoom+change:1;applyZoom();});
+  image.addEventListener('dblclick',()=>{lb.zoom=lb.zoom===1?2:1;applyZoom();});
+  document.addEventListener('keydown',e=>{
+    if(lb.index==null)return;
+    if(e.key==='Escape'){e.preventDefault();closeLightbox();return;}
+    if(e.key==='Tab'){const controls=[...overlay.querySelectorAll('button,a[href]')].filter(b=>!b.disabled&&b.getClientRects().length);const i=controls.indexOf(document.activeElement);e.preventDefault();controls[(i+(e.shiftKey?-1:1)+controls.length)%controls.length].focus();}
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','0'].includes(e.key))e.preventDefault();
+    if(e.key==='+'||e.key==='='){lb.zoom+=.5;applyZoom();}else if(e.key==='-'){lb.zoom-=.5;applyZoom();}else if(e.key==='0'){lb.zoom=1;applyZoom();}
+    else if(lb.zoom>1){if(e.key==='ArrowLeft')lb.x+=50;if(e.key==='ArrowRight')lb.x-=50;if(e.key==='ArrowUp')lb.y+=50;if(e.key==='ArrowDown')lb.y-=50;applyZoom();}
+    else if(e.key==='ArrowLeft')lightboxNav(-1);else if(e.key==='ArrowRight')lightboxNav(1);
   });
-
-  let touchX = null, touchY = null, axis = null;
-  const body = overlay.querySelector('.lightbox-body');
-  body.addEventListener('touchstart', e => {
-    const t = e.touches[0];
-    touchX = t.clientX; touchY = t.clientY; axis = null;
-  }, { passive: true });
-  body.addEventListener('touchmove', e => {
-    if (touchX == null) return;
-    const t = e.touches[0];
-    const dx = t.clientX - touchX, dy = t.clientY - touchY;
-    if (!axis && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-    if (axis === 'x') image.style.transform = 'translate(' + dx + 'px,0)';
-    else if (axis === 'y') image.style.transform = 'translate(0,' + dy + 'px)';
-  }, { passive: true });
-  body.addEventListener('touchend', e => {
-    const t = e.changedTouches[0];
-    const dx = touchX != null ? t.clientX - touchX : 0;
-    const dy = touchY != null ? t.clientY - touchY : 0;
-    touchX = null;
-    if (axis === 'x' && Math.abs(dx) > 60) { lightboxNav(dx < 0 ? 1 : -1); axis = null; return; }
-    if (axis === 'y' && Math.abs(dy) > 90) { closeLightbox(); axis = null; return; }
-    axis = null;
-    image.style.transform = 'translate(0,0)';
-  });
+  let gesture=null;
+  const distance=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
+  image.addEventListener('touchstart',e=>{gesture={x:e.touches[0].clientX,y:e.touches[0].clientY,panX:lb.x,panY:lb.y,zoom:lb.zoom,pinch:e.touches.length>1?distance(e.touches):0,multi:e.touches.length>1};},{passive:true});
+  image.addEventListener('touchmove',e=>{if(!gesture)return;e.preventDefault();if(e.touches.length>1){if(!gesture.pinch){gesture.pinch=distance(e.touches);gesture.zoom=lb.zoom;}gesture.multi=true;lb.zoom=gesture.zoom*distance(e.touches)/gesture.pinch;applyZoom();}else if(lb.zoom>1){lb.x=gesture.panX+e.touches[0].clientX-gesture.x;lb.y=gesture.panY+e.touches[0].clientY-gesture.y;applyZoom();}},{passive:false});
+  image.addEventListener('touchend',e=>{if(!gesture)return;if(e.touches.length)return;const g=gesture;gesture=null;if(g.multi||g.zoom>1)return;const t=e.changedTouches[0],dx=t.clientX-g.x,dy=t.clientY-g.y;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))lightboxNav(dx<0?1:-1);else if(Math.abs(dy)>100&&Math.abs(dy)>Math.abs(dx))closeLightbox();});
+  image.addEventListener('touchcancel',()=>gesture=null);
+  let drag=null;image.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||lb.zoom===1)return;drag={x:e.clientX,y:e.clientY,panX:lb.x,panY:lb.y};image.setPointerCapture(e.pointerId);});image.addEventListener('pointermove',e=>{if(drag){lb.x=drag.panX+e.clientX-drag.x;lb.y=drag.panY+e.clientY-drag.y;applyZoom();}});image.addEventListener('pointerup',()=>drag=null);image.addEventListener('pointercancel',()=>drag=null);
 }
 
 /* ================= calculator ================= */
@@ -509,10 +445,11 @@ function renderCalculator(){
 
   const selectedPlan = s.selectedPlanId ? PLANS.find(p => p.id === s.selectedPlanId) : null;
   document.getElementById('calc-thumb').classList.toggle('has-plan', !!selectedPlan);
+  document.getElementById('calc-thumb').innerHTML=selectedPlan?`<img src="${selectedPlan.plans.find(p=>p.type===s.selectedPlanView).local_path}" alt="${ContentModel.esc(selectedPlan.title)}" width="120" height="100">`:'';
   document.getElementById('calc-plan-kicker').textContent = selectedPlan ? 'Расчёт для объекта' : 'Произвольный расчёт';
   document.getElementById('calc-plan-title').textContent = selectedPlan ? selectedPlan.title : 'Планировка не выбрана';
   const metaEl = document.getElementById('calc-plan-meta');
-  if (selectedPlan) metaEl.textContent = selectedPlan.meta + ' · от ' + rub(selectedPlan.price);
+  if (selectedPlan) metaEl.textContent = selectedPlan.meta + ' · ' + rub(selectedPlan.price) + ' · ' + ContentModel.views[s.selectedPlanView];
   else metaEl.innerHTML = 'Выберите планировку в разделе <a href="#plans" id="calc-goto-plans">«Планировки»</a> — цена подставится сюда';
   document.getElementById('calc-plan-clear').hidden = !selectedPlan;
 
@@ -526,10 +463,10 @@ function sendToForm(){
   const { downPayment, payment } = calcNumbers();
   state.planChoice = selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure');
   state.snapshot = {
-    kind: 'calc', kicker: 'Ваш расчёт',
+    kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:SITE_DATA.snapshot_date,
     planTitle: selectedPlan ? selectedPlan.title : '',
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
-    objectMeta: selectedPlan ? selectedPlan.meta : 'Планировка не выбрана — расчёт по указанной стоимости',
+    objectMeta: selectedPlan ? selectedPlan.meta + ' · '+ContentModel.views[s.selectedPlanView]+' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
     rows: [
       { k: 'Стоимость', v: rub(s.price) },
       { k: 'Первый взнос', v: s.downPct + '% · ' + rub(downPayment) },
@@ -547,9 +484,9 @@ function downloadCalc(){
   const { downPayment, loanAmount, payment, income } = calcNumbers();
   const d = {
     date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
-    custom: !selectedPlan,
+    custom: !selectedPlan, lotId:selectedPlan?.id||null, sourceUrl:selectedPlan?.source_url||null,
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
-    objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + CAT_LABEL[selectedPlan.category] : 'Планировка не выбрана — расчёт по указанной стоимости',
+    objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + ContentModel.views[s.selectedPlanView] + ' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
     price: rub(s.price), down: s.downPct + '% · ' + rub(downPayment), loan: rub(loanAmount),
     term: s.term + ' лет', rate: s.rate.toFixed(1) + '%',
     income: rub(income) + ' / мес', payment: rub(payment) + ' / мес',
@@ -718,7 +655,7 @@ function renderFormTitleSub(){
       ? 'Покажем эту планировку на объекте или онлайн, пришлём подборку похожих и актуальный прайс.'
       : (snap
         ? 'Уточним условия оплаты, пришлём документы и ответим на вопросы по вашему запросу.'
-        : 'Перезвоним в рабочее время (пн–сб, 9:00–18:00) и подберём планировку под ваш запрос.'));
+        : 'Подберём планировку под ваш запрос. Пока отправка формы не подключена, свяжитесь с агентством по телефону или e-mail.'));
 }
 function updateForm(){
   const s = state;
@@ -800,7 +737,7 @@ function handleSubmit(){
   }
   const status = document.getElementById('form-status');
   status.hidden = false;
-  status.textContent = 'Отправка заявки ещё не подключена. Данные не отправлены. Свяжитесь с отделом продаж по телефону или почте, указанным рядом.';
+  status.textContent = 'Отправка заявки ещё не подключена. Данные не отправлены. Свяжитесь с агентством по телефону +7 (952) 956-88-75 или e-mail info@anyara.ru.';
   status.focus();
 }
 function bindFormEvents(){
@@ -844,6 +781,7 @@ function renderContactArea(){
 
 /* ================= init ================= */
 function init(){
+  document.documentElement.classList.add('content-ready');
   setupAbout();
   renderTabs(); renderPlansGrid(); wirePlansEvents(); setupPlanViews(); setupMap();
   renderGallery(); wireGalleryEvents();
@@ -903,24 +841,15 @@ function setupAbout(){
   window.addEventListener('resize', () => { cancelAnimationFrame(scheduled); scheduled = requestAnimationFrame(reserveHeight); });
 }
 
-const CATEGORIES = [
-  {key:'studio', title:'Студии', count:11, price:'от 6,7 млн ₽', area:'28,9–29 м² · чистовая отделка'},
-  {key:'1k', title:'1 спальня', count:25, price:'от 7,4 млн ₽', area:'33,6–35,7 м² · чистовая отделка'},
-  {key:'2k', title:'2 спальни', count:7, price:'от 9,4 млн ₽', area:'до 71,5 м² · чистовая отделка'},
-  {key:'3k', title:'3 спальни', count:2, price:'от 14,7 млн ₽', area:'до 71,5 м² · чистовая отделка'},
-];
 function setupPlanViews(){
-  document.getElementById('category-grid').innerHTML = CATEGORIES.map(c => `<article class="category-card card-hover">
-    <div class="category-title">${c.title}</div>
-    <div class="category-note">${c.count} ${c.count < 5 ? 'квартиры' : 'квартир'} в продаже · корпус 1</div>
-    <div class="category-price">${c.price}</div><div class="category-area">${c.area}</div>
-    <div class="category-actions"><a href="#plans" data-category="${c.key}" data-category-action="lots">Смотреть квартиры →</a>
-    <a href="#contact" class="plan-link-calc" data-category="${c.key}" data-category-action="ask"><span class="dot"></span>Запросить подборку →</a></div>
-  </article>`).join('');
+  document.getElementById('category-grid').innerHTML = CATEGORIES.map(ContentModel.category).join('');
   const setView = view => {
     state.plansView = view;
     document.getElementById('plans-grid').hidden = view !== 'lots';
     document.getElementById('plan-tabs').hidden = view !== 'lots';
+    document.getElementById('catalog-controls').hidden = view !== 'lots';
+    document.getElementById('catalog-result').hidden = view !== 'lots';
+    document.getElementById('show-more-plans').hidden = view !== 'lots' || currentFilteredPlans().length <= state.limit;
     document.getElementById('category-grid').hidden = view !== 'cats';
     document.querySelectorAll('[data-view]').forEach(b => { b.classList.toggle('active', b.dataset.view === view); b.setAttribute('aria-pressed', String(b.dataset.view === view)); });
   };
@@ -928,8 +857,8 @@ function setupPlanViews(){
   document.getElementById('category-grid').addEventListener('click', e => {
     const a = e.target.closest('[data-category]'); if (!a) return; e.preventDefault();
     const c = CATEGORIES.find(c => c.key === a.dataset.category);
-    if (a.dataset.categoryAction === 'lots') { state.filter = c.key; renderTabs(); renderPlansGrid(); setView('lots'); document.querySelector('[data-tab="'+c.key+'"]').focus({preventScroll:true}); }
-    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[{k:'Тип',v:CAT_LABEL[c.key]},{k:'В продаже',v:c.count},{k:'Цена',v:c.price}]});
+    if (a.dataset.categoryAction === 'lots') { state.filter = c.key; state.layout=''; state.limit=6; renderTabs(); renderPlansGrid(); setView('lots'); document.querySelector('[data-tab="'+c.key+'"]').focus({preventScroll:true}); }
+    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[{k:'Тип',v:CAT_LABEL[c.key]},{k:'Опубликовано',v:c.count},{k:'Цена',v:c.price}]});
   });
 }
 function setupMap(){

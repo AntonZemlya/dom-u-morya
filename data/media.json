@@ -1,0 +1,1145 @@
+{
+  "snapshot_date": "2026-10-27",
+  "rights_status": "permission_not_verified",
+  "gallery": [
+    {
+      "id": "gallery-02",
+      "title": "Башня и территория",
+      "src": "assets/content/gallery/cac1215e0f091803-1280.webp",
+      "width": 1280,
+      "height": 939,
+      "srcset": "assets/content/gallery/cac1215e0f091803-640.webp 640w, assets/content/gallery/cac1215e0f091803-1280.webp 1280w, assets/content/gallery/cac1215e0f091803-1920.webp 1920w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/cac1215e0f091803-640.webp",
+          "width": 640,
+          "height": 469
+        },
+        {
+          "src": "assets/content/gallery/cac1215e0f091803-1280.webp",
+          "width": 1280,
+          "height": 939
+        },
+        {
+          "src": "assets/content/gallery/cac1215e0f091803-1920.webp",
+          "width": 1920,
+          "height": 1408
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/afe/no0hqmfcv82tp4384qvhn4pimrdptsce/cam_1_04_final_1.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-02.jpg",
+      "sha256": "cac1215e0f09180328a8ae01f60d0f245acddecb27aceb5c9ba8918863855523",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-01",
+      "title": "Террасы верхних этажей",
+      "src": "assets/content/gallery/d66bd7970af683c9-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "srcset": "assets/content/gallery/d66bd7970af683c9-640.webp 640w, assets/content/gallery/d66bd7970af683c9-1280.webp 1280w, assets/content/gallery/d66bd7970af683c9-1920.webp 1920w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/d66bd7970af683c9-640.webp",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "src": "assets/content/gallery/d66bd7970af683c9-1280.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "assets/content/gallery/d66bd7970af683c9-1920.webp",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/9ac/08lzqihc6ngglsyahgnycypp7dx2thjm/cam_5_01_final_1.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-01.jpg",
+      "sha256": "d66bd7970af683c9936c494852c2f1629e6ab40c8f92ae298ff4df8d5cbf09f8",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-04",
+      "title": "Коммерческая галерея",
+      "src": "assets/content/gallery/33e2aae94cc666ea-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "srcset": "assets/content/gallery/33e2aae94cc666ea-640.webp 640w, assets/content/gallery/33e2aae94cc666ea-1280.webp 1280w, assets/content/gallery/33e2aae94cc666ea-1920.webp 1920w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/33e2aae94cc666ea-640.webp",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "src": "assets/content/gallery/33e2aae94cc666ea-1280.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "assets/content/gallery/33e2aae94cc666ea-1920.webp",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/602/966n57eexc1ydaie9gf5ekpn0h2u7348/cam_3_02_final_no_people_1.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-04.jpg",
+      "sha256": "33e2aae94cc666ead25a020651cfafaa3f4e294645c317b30825d7f8334ca5da",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-05",
+      "title": "Вход со стороны двора",
+      "src": "assets/content/gallery/129070b97e7b71fe-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "srcset": "assets/content/gallery/129070b97e7b71fe-640.webp 640w, assets/content/gallery/129070b97e7b71fe-1280.webp 1280w, assets/content/gallery/129070b97e7b71fe-1920.webp 1920w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/129070b97e7b71fe-640.webp",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "src": "assets/content/gallery/129070b97e7b71fe-1280.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "assets/content/gallery/129070b97e7b71fe-1920.webp",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/71d/abb6lwlet3f61r22lv0p5re3573whbsl/cam_2_05_final_no_people_1.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-05.jpg",
+      "sha256": "129070b97e7b71fe9cb6114ded52ed5cbc45e1bbd876a4d759a6fda26a6f97c9",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-08",
+      "title": "Колясочная и велосипедная",
+      "src": "assets/content/gallery/0892cc8e357270a8-1280.webp",
+      "width": 1280,
+      "height": 856,
+      "srcset": "assets/content/gallery/0892cc8e357270a8-640.webp 640w, assets/content/gallery/0892cc8e357270a8-1280.webp 1280w, assets/content/gallery/0892cc8e357270a8-1920.webp 1920w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/0892cc8e357270a8-640.webp",
+          "width": 640,
+          "height": 428
+        },
+        {
+          "src": "assets/content/gallery/0892cc8e357270a8-1280.webp",
+          "width": 1280,
+          "height": 856
+        },
+        {
+          "src": "assets/content/gallery/0892cc8e357270a8-1920.webp",
+          "width": 1920,
+          "height": 1284
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/a23/b7n859ate98ymov3mftzdnwsobezwlkj/24.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-08.jpg",
+      "sha256": "0892cc8e357270a8e7d81cfccc0c6631a9f29218ce9d16e8e4a84fd4eee4c39d",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-09",
+      "title": "Лобби",
+      "src": "assets/content/gallery/ba63897ab7394ceb-1280.webp",
+      "width": 1280,
+      "height": 1647,
+      "srcset": "assets/content/gallery/ba63897ab7394ceb-640.webp 640w, assets/content/gallery/ba63897ab7394ceb-1280.webp 1280w, assets/content/gallery/ba63897ab7394ceb-1882.webp 1882w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/ba63897ab7394ceb-640.webp",
+          "width": 640,
+          "height": 824
+        },
+        {
+          "src": "assets/content/gallery/ba63897ab7394ceb-1280.webp",
+          "width": 1280,
+          "height": 1647
+        },
+        {
+          "src": "assets/content/gallery/ba63897ab7394ceb-1882.webp",
+          "width": 1882,
+          "height": 2422
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/6f3/9y11t5cslrck4k88igsx6ku7edjzzdbo/10.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-09.jpg",
+      "sha256": "ba63897ab7394ceb68e0e4047c896b373d62bfa8611045f1e8749423f45e1895",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery_second-04",
+      "title": "Входная группа",
+      "src": "assets/content/gallery/c894c8378045c378-1280.webp",
+      "width": 1280,
+      "height": 1650,
+      "srcset": "assets/content/gallery/c894c8378045c378-640.webp 640w, assets/content/gallery/c894c8378045c378-1280.webp 1280w, assets/content/gallery/c894c8378045c378-1874.webp 1874w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/c894c8378045c378-640.webp",
+          "width": 640,
+          "height": 825
+        },
+        {
+          "src": "assets/content/gallery/c894c8378045c378-1280.webp",
+          "width": 1280,
+          "height": 1650
+        },
+        {
+          "src": "assets/content/gallery/c894c8378045c378-1874.webp",
+          "width": 1874,
+          "height": 2416
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/4d4/fh2rgchnwluhj3f8ptaud44ds3hx3pdd.webp",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery_second-04.webp",
+      "sha256": "c894c8378045c378fb8bd0b82916e9de165b6e435900810cfecd605f011d111a",
+      "classification": "Визуализация застройщика"
+    },
+    {
+      "id": "gallery-11",
+      "title": "Лифтовой холл",
+      "src": "assets/content/gallery/6d0b138793244679-1280.webp",
+      "width": 1280,
+      "height": 1745,
+      "srcset": "assets/content/gallery/6d0b138793244679-640.webp 640w, assets/content/gallery/6d0b138793244679-1280.webp 1280w, assets/content/gallery/6d0b138793244679-1799.webp 1799w",
+      "variants": [
+        {
+          "src": "assets/content/gallery/6d0b138793244679-640.webp",
+          "width": 640,
+          "height": 873
+        },
+        {
+          "src": "assets/content/gallery/6d0b138793244679-1280.webp",
+          "width": 1280,
+          "height": 1745
+        },
+        {
+          "src": "assets/content/gallery/6d0b138793244679-1799.webp",
+          "width": 1799,
+          "height": 2453
+        }
+      ],
+      "source_url": "https://sadovoe-kolco.ru/upload/iblock/6bc/4k96uihni2vssnupmrp7thnxp78mrru7/29.jpg",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "permission_not_verified",
+      "original_path": "media/renders/gallery-11.jpg",
+      "sha256": "6d0b138793244679edcb29d5b0091120de8c2d71b2e221268cd111a6c6398aeb",
+      "classification": "Визуализация застройщика"
+    }
+  ],
+  "construction": [
+    {
+      "month": "2026-09",
+      "title": "Сентябрь 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-09-cover",
+          "title": "Сентябрь 2026 · фото 1",
+          "src": "assets/content/construction/8374b1ad0570dfe9-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/8374b1ad0570dfe9-640.webp 640w, assets/content/construction/8374b1ad0570dfe9-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/8374b1ad0570dfe9-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/8374b1ad0570dfe9-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e7d/1000_773_1/nasrs27in11y2gf3ue5f1chj423inz5u.webp",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-09-cover.webp",
+          "sha256": "8374b1ad0570dfe94823fb7ecffb5dd5dce36be9a9c9e96c3ccd59cf409ca2f4",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-09",
+          "is_cover": true
+        },
+        {
+          "id": "2026-09-01",
+          "title": "Сентябрь 2026 · фото 2",
+          "src": "assets/content/construction/bbe3cee85ab251b6-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/bbe3cee85ab251b6-640.webp 640w, assets/content/construction/bbe3cee85ab251b6-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/bbe3cee85ab251b6-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/bbe3cee85ab251b6-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/380/1000_773_1/aej3u4seiueg1f2y05ahuuo4gbf510qm.webp",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-09-01.webp",
+          "sha256": "bbe3cee85ab251b6614eb34052cad29cf591153e0b8c262b2a9ac8166d74c169",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-09",
+          "is_cover": false
+        },
+        {
+          "id": "2026-09-02",
+          "title": "Сентябрь 2026 · фото 3",
+          "src": "assets/content/construction/401ebab63a6f9031-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/401ebab63a6f9031-640.webp 640w, assets/content/construction/401ebab63a6f9031-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/401ebab63a6f9031-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/401ebab63a6f9031-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/abb/1000_773_1/rzqip9hb9ju51t3clbe2x5amm0132dc9.webp",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-09-02.webp",
+          "sha256": "401ebab63a6f903121255aaab79d345936c42120fb4a16867bda71d73d71c0ec",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-09",
+          "is_cover": false
+        },
+        {
+          "id": "2026-09-03",
+          "title": "Сентябрь 2026 · фото 4",
+          "src": "assets/content/construction/99c9b102dedd8f83-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/99c9b102dedd8f83-640.webp 640w, assets/content/construction/99c9b102dedd8f83-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/99c9b102dedd8f83-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/99c9b102dedd8f83-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/92a/1000_773_1/5h11truvqcgxtzxdjxwo0h0leiih10dy.webp",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-09-03.webp",
+          "sha256": "99c9b102dedd8f8347f2d3dde84f60f94edbb18ad90121a2c5c992c78e630d91",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-09",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
+      "month": "2026-08",
+      "title": "Август 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-08-cover",
+          "title": "Август 2026 · фото 1",
+          "src": "assets/content/construction/40930ddf006e4971-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/40930ddf006e4971-640.webp 640w, assets/content/construction/40930ddf006e4971-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/40930ddf006e4971-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/40930ddf006e4971-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/bf3/1000_773_1/exy6guhlpotvx8nrcnm0r24ghw70x00o.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-08-cover.jpg",
+          "sha256": "40930ddf006e4971277596694976e631ff055e62d8912a424196a13629732a11",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-08",
+          "is_cover": true
+        },
+        {
+          "id": "2026-08-01",
+          "title": "Август 2026 · фото 2",
+          "src": "assets/content/construction/e82016341e91f86f-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/e82016341e91f86f-640.webp 640w, assets/content/construction/e82016341e91f86f-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/e82016341e91f86f-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/e82016341e91f86f-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/8ca/1000_773_1/52ohaztiq51xl747z3rvg7ndhjcpxibm.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-08-01.jpg",
+          "sha256": "e82016341e91f86f96f5c8ce3ca77de08611241603bff4a54af8d2408d0c6b42",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-08",
+          "is_cover": false
+        },
+        {
+          "id": "2026-08-02",
+          "title": "Август 2026 · фото 3",
+          "src": "assets/content/construction/2efbd148a766af97-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/2efbd148a766af97-640.webp 640w, assets/content/construction/2efbd148a766af97-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/2efbd148a766af97-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/2efbd148a766af97-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/c9c/1000_773_1/7c28rtnncxmpzibew70qb4jgpmjf1x31.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-08-02.jpg",
+          "sha256": "2efbd148a766af97801f23b917d45cd58b3f7a7aad80fafeb7fd1dd1d8387c9a",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-08",
+          "is_cover": false
+        },
+        {
+          "id": "2026-08-03",
+          "title": "Август 2026 · фото 4",
+          "src": "assets/content/construction/1521f1ebfd068eb2-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/1521f1ebfd068eb2-640.webp 640w, assets/content/construction/1521f1ebfd068eb2-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/1521f1ebfd068eb2-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/1521f1ebfd068eb2-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/412/1000_773_1/b56gmbsgeib02dy4tju1cfmfqb5n0155.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-08-03.jpg",
+          "sha256": "1521f1ebfd068eb2a9ebe869f0cee1c29e82e0f3913b692e716a9f420429fd86",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-08",
+          "is_cover": false
+        },
+        {
+          "id": "2026-08-04",
+          "title": "Август 2026 · фото 5",
+          "src": "assets/content/construction/1d2bc89b06abb60c-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/1d2bc89b06abb60c-640.webp 640w, assets/content/construction/1d2bc89b06abb60c-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/1d2bc89b06abb60c-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/1d2bc89b06abb60c-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e7d/1000_773_1/dbfa8ixv9gyn3bovo1wasl3o3p9tewnw.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-08-04.jpg",
+          "sha256": "1d2bc89b06abb60c5c12e52bfaf101dea804fbb252033137ca221b7dfc4705bb",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-08",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
+      "month": "2026-07",
+      "title": "Июль 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-07-cover",
+          "title": "Июль 2026 · фото 1",
+          "src": "assets/content/construction/83b462c597ecb4b5-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/83b462c597ecb4b5-640.webp 640w, assets/content/construction/83b462c597ecb4b5-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/83b462c597ecb4b5-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/83b462c597ecb4b5-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/7f5/bqhcmdrvt303f1inzzuz7vzct3d0cvtb/1000_773_1/DSC07000.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-cover.jpg",
+          "sha256": "83b462c597ecb4b53910fd6d52c32b4a380acc6132b4d062bb947e9a27a34dd4",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": true
+        },
+        {
+          "id": "2026-07-01",
+          "title": "Июль 2026 · фото 2",
+          "src": "assets/content/construction/203e483199919bec-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/203e483199919bec-640.webp 640w, assets/content/construction/203e483199919bec-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/203e483199919bec-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/203e483199919bec-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/0e9/qsmd49es5zf0hoyrp9z3r6er7jp2pkj0/1000_773_1/DSC06834.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-01.jpg",
+          "sha256": "203e483199919bec1f8d1fc13eb68bb7411bd6f3574c56a9ec836fa797d21ca4",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": false
+        },
+        {
+          "id": "2026-07-02",
+          "title": "Июль 2026 · фото 3",
+          "src": "assets/content/construction/ecc1253f238ef5af-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/ecc1253f238ef5af-640.webp 640w, assets/content/construction/ecc1253f238ef5af-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/ecc1253f238ef5af-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/ecc1253f238ef5af-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/9e2/16ja2tczgzwslmpv0dy2953b9k00pw23/1000_773_1/DSC06859.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-02.jpg",
+          "sha256": "ecc1253f238ef5af8a9894797158a9a3f6db13f0c637c4ac810e683c9a38b8a6",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": false
+        },
+        {
+          "id": "2026-07-03",
+          "title": "Июль 2026 · фото 4",
+          "src": "assets/content/construction/611e760509bd8462-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/611e760509bd8462-640.webp 640w, assets/content/construction/611e760509bd8462-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/611e760509bd8462-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/611e760509bd8462-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e07/9otzjtd68ft5o7guztbrhzk48cgdx700/1000_773_1/DSC06905.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-03.jpg",
+          "sha256": "611e760509bd846206b599c80b4fd2281e7dab3a14481e92d10d6bbafa98095a",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": false
+        },
+        {
+          "id": "2026-07-04",
+          "title": "Июль 2026 · фото 5",
+          "src": "assets/content/construction/f87ff4ae2f76c6e5-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/f87ff4ae2f76c6e5-640.webp 640w, assets/content/construction/f87ff4ae2f76c6e5-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/f87ff4ae2f76c6e5-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/f87ff4ae2f76c6e5-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/d4d/835wn33m5n8q36lrhmgmigvdj5kkluv2/1000_773_1/DSC06939.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-04.jpg",
+          "sha256": "f87ff4ae2f76c6e5d4135607c36d33bb565bebdaca50327a87f3a65e231ec973",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": false
+        },
+        {
+          "id": "2026-07-05",
+          "title": "Июль 2026 · фото 6",
+          "src": "assets/content/construction/a1cbe02f929c9eca-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/a1cbe02f929c9eca-640.webp 640w, assets/content/construction/a1cbe02f929c9eca-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/a1cbe02f929c9eca-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/a1cbe02f929c9eca-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/63d/09p4lvoqevoi4oo71xrwza5lbm9elmqe/1000_773_1/DSC07000.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-07-05.jpg",
+          "sha256": "a1cbe02f929c9eca898e5adfcb7dc35dea8e388855cb16d6d86652b4a88073c6",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-07",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
+      "month": "2026-06",
+      "title": "Июнь 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-06-cover",
+          "title": "Июнь 2026 · фото 1",
+          "src": "assets/content/construction/d753d7c2e127f360-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/d753d7c2e127f360-640.webp 640w, assets/content/construction/d753d7c2e127f360-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/d753d7c2e127f360-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/d753d7c2e127f360-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/dc9/7x5kmdzbsh5ivxj2qb0f0yl3kc5p6rp4/1000_773_1/DSC09690.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-06-cover.jpg",
+          "sha256": "d753d7c2e127f36056eb3cda4af7654e7ee599ccebb09b7163e07642f3502bc8",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-06",
+          "is_cover": true
+        },
+        {
+          "id": "2026-06-01",
+          "title": "Июнь 2026 · фото 2",
+          "src": "assets/content/construction/81cdd22c744b435b-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/81cdd22c744b435b-640.webp 640w, assets/content/construction/81cdd22c744b435b-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/81cdd22c744b435b-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/81cdd22c744b435b-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/198/k4w0efr3vknno6w68v4wusz0gmra4h07/1000_773_1/DSC09683.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-06-01.jpg",
+          "sha256": "81cdd22c744b435bff44a9d5eaa1e94c18d732fb47e6e94788c68cbc5396f26b",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-06",
+          "is_cover": false
+        },
+        {
+          "id": "2026-06-02",
+          "title": "Июнь 2026 · фото 3",
+          "src": "assets/content/construction/19f91e0470e75d01-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/19f91e0470e75d01-640.webp 640w, assets/content/construction/19f91e0470e75d01-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/19f91e0470e75d01-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/19f91e0470e75d01-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e56/eswuxnstd6rweojqermm2ypoeg6ljm21/1000_773_1/DSC09688.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-06-02.jpg",
+          "sha256": "19f91e0470e75d011b3e951c90fb830c0ed23e5c0886511906f4b894247bbb76",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-06",
+          "is_cover": false
+        },
+        {
+          "id": "2026-06-03",
+          "title": "Июнь 2026 · фото 4",
+          "src": "assets/content/construction/9195d09df94cf534-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/9195d09df94cf534-640.webp 640w, assets/content/construction/9195d09df94cf534-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/9195d09df94cf534-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/9195d09df94cf534-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/387/fqln696qgr45btrjn4w8xmozcjjfa8d9/1000_773_1/DSC01849.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-06-03.jpg",
+          "sha256": "9195d09df94cf534439ba0ecf594d534acfacb9d01d571e8d8d978aec33d5de0",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-06",
+          "is_cover": false
+        },
+        {
+          "id": "2026-06-04",
+          "title": "Июнь 2026 · фото 5",
+          "src": "assets/content/construction/a9629b7557ce1246-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/a9629b7557ce1246-640.webp 640w, assets/content/construction/a9629b7557ce1246-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/a9629b7557ce1246-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/a9629b7557ce1246-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/515/qzgn9673kdai42tepxs43at32en06nsj/1000_773_1/DSC09690.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-06-04.jpg",
+          "sha256": "a9629b7557ce12469a2839c819c53c2f09d0ce5801243f261566cbc3368e6f53",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-06",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
+      "month": "2026-05",
+      "title": "Май 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-05-cover",
+          "title": "Май 2026 · фото 1",
+          "src": "assets/content/construction/e6f11bbb80ecc08c-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/e6f11bbb80ecc08c-640.webp 640w, assets/content/construction/e6f11bbb80ecc08c-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/e6f11bbb80ecc08c-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/e6f11bbb80ecc08c-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/655/yg7v0ctqmcp4ykh64ur5a85y1enxymb0/1000_773_1/Лунина.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-05-cover.jpg",
+          "sha256": "e6f11bbb80ecc08c7f2767b3aa2571f887537680d1d7b9fd84d088b6a4c22bb8",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-05",
+          "is_cover": true
+        },
+        {
+          "id": "2026-05-02",
+          "title": "Май 2026 · фото 2",
+          "src": "assets/content/construction/4b0057a9d02ad35b-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/4b0057a9d02ad35b-640.webp 640w, assets/content/construction/4b0057a9d02ad35b-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/4b0057a9d02ad35b-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/4b0057a9d02ad35b-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e8f/1w01354v9wnqkbu1bl64s6iyzzk770mb/1000_773_1/Лунина_1.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-05-02.jpg",
+          "sha256": "4b0057a9d02ad35bff9f396e292272b3489880b719a36251e80f9a6d8ae64210",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-05",
+          "is_cover": false
+        },
+        {
+          "id": "2026-05-03",
+          "title": "Май 2026 · фото 3",
+          "src": "assets/content/construction/3d1a974c95c3e1b9-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/3d1a974c95c3e1b9-640.webp 640w, assets/content/construction/3d1a974c95c3e1b9-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/3d1a974c95c3e1b9-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/3d1a974c95c3e1b9-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/149/mofgvxlpnvx2wdsnazc3vdrtrmjezipe/1000_773_1/Лунина_2.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-05-03.jpg",
+          "sha256": "3d1a974c95c3e1b997caa5b82513ab9828df7982bea75aaf13e32654d66961a9",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-05",
+          "is_cover": false
+        },
+        {
+          "id": "2026-05-04",
+          "title": "Май 2026 · фото 4",
+          "src": "assets/content/construction/52c7c9ff53b2ec2b-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/52c7c9ff53b2ec2b-640.webp 640w, assets/content/construction/52c7c9ff53b2ec2b-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/52c7c9ff53b2ec2b-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/52c7c9ff53b2ec2b-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/29d/j9somx0omic3d1qfbnv9me3vso11x3y5/1000_773_1/Лунина_3.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-05-04.jpg",
+          "sha256": "52c7c9ff53b2ec2b0bcf09ec934befda0f0d54a11591dc55e673a0f13a6a2bfc",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-05",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
+      "month": "2026-04",
+      "title": "Апрель 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "images": [
+        {
+          "id": "2026-04-cover",
+          "title": "Апрель 2026 · фото 1",
+          "src": "assets/content/construction/930a39e0e2a31561-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/930a39e0e2a31561-640.webp 640w, assets/content/construction/930a39e0e2a31561-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/930a39e0e2a31561-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/930a39e0e2a31561-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/838/3rsyrtjedg02hhkyyp3g2a20gn61wbjd/1000_773_1/Лунина.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-04-cover.jpg",
+          "sha256": "930a39e0e2a315613ade8e4641561f23b41c3230063e4dfc605bc7cb1dbb8b3c",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-04",
+          "is_cover": true
+        },
+        {
+          "id": "2026-04-01",
+          "title": "Апрель 2026 · фото 2",
+          "src": "assets/content/construction/9b7de6a1a9f08703-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/9b7de6a1a9f08703-640.webp 640w, assets/content/construction/9b7de6a1a9f08703-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/9b7de6a1a9f08703-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/9b7de6a1a9f08703-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4f1/b5qqf3bg2yr61y2r9ufonaa07bym76lf/1000_773_1/Лунина_1.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-04-01.jpg",
+          "sha256": "9b7de6a1a9f08703c58b681bd5c895cc0a3c5b8ee7b462c349f1e291ef4b9ab9",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-04",
+          "is_cover": false
+        },
+        {
+          "id": "2026-04-02",
+          "title": "Апрель 2026 · фото 3",
+          "src": "assets/content/construction/cec5b584bf940952-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/cec5b584bf940952-640.webp 640w, assets/content/construction/cec5b584bf940952-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/cec5b584bf940952-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/cec5b584bf940952-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/842/vy91cb8s2ypzpnvi99tmdqyh6llctxl4/1000_773_1/Лунина_2.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-04-02.jpg",
+          "sha256": "cec5b584bf940952c26b17772fc14f57e15f494e09e4cc2337f90f9dcd3acce7",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-04",
+          "is_cover": false
+        },
+        {
+          "id": "2026-04-03",
+          "title": "Апрель 2026 · фото 4",
+          "src": "assets/content/construction/d032fe5421f3980d-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/d032fe5421f3980d-640.webp 640w, assets/content/construction/d032fe5421f3980d-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/d032fe5421f3980d-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/d032fe5421f3980d-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/a53/peoxh6nita58r4v30j84n8yppfnrlu0m/1000_773_1/Лунина_3.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-04-03.jpg",
+          "sha256": "d032fe5421f3980dd46e8fa15828759ba7ed7993e4f41e426f75936a8a82dac8",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-04",
+          "is_cover": false
+        },
+        {
+          "id": "2026-04-04",
+          "title": "Апрель 2026 · фото 5",
+          "src": "assets/content/construction/8d9abdf23712acbe-1000.webp",
+          "width": 1000,
+          "height": 563,
+          "srcset": "assets/content/construction/8d9abdf23712acbe-640.webp 640w, assets/content/construction/8d9abdf23712acbe-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/8d9abdf23712acbe-640.webp",
+              "width": 640,
+              "height": 360
+            },
+            {
+              "src": "assets/content/construction/8d9abdf23712acbe-1000.webp",
+              "width": 1000,
+              "height": 563
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4d5/22whdozkof3u98qnhdvxhsw679isn23i/1000_773_1/Лунина.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "permission_not_verified",
+          "original_path": "media/construction/2026-04-04.jpg",
+          "sha256": "8d9abdf23712acbe41c0b550b9047f2d50e13380d74b0ea266504c260192a360",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-04",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    }
+  ]
+}

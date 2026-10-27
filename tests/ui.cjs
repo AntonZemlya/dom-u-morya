@@ -16,15 +16,15 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
  try {
   b=await browser();
   console.log('Testing '+siteRoot);
-  for(const width of [1440,768,390]){
-   const context=await b.newContext({viewport:{width,height:width===390?844:1000},acceptDownloads:true});const page=await context.newPage();
+  for(const width of [1440,768,390,320]){
+   const context=await b.newContext({viewport:{width,height:width<=390?844:1000},acceptDownloads:true});const page=await context.newPage();
    const errors=[],requests=[];page.on('response',r=>{if(r.url().startsWith(site.url) && r.status()>=400)errors.push(r.status()+' '+r.url())});page.on('requestfailed',r=>{if(r.url().startsWith(site.url))errors.push(r.failure().errorText+' '+r.url())});page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('request',r=>{if(r.method()!=='GET')requests.push({method:r.method(),url:r.url()})});
    await maskMap(page);await page.goto(site.url,{waitUntil:'domcontentloaded'});await stable(page);
    assert.equal(await page.locator('h1').count(),1);assert.ok(await page.title());assert.equal(await page.locator('meta[name=description]').count(),1);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    assert.deepEqual(await page.evaluate(()=>[...document.querySelectorAll('a[href^="#"]')].filter(a=>!document.getElementById(a.hash.slice(1))).map(a=>a.hash)),[]);
    const images=await page.evaluate(async()=>{
-    const urls=new Set([...document.images].map(i=>i.src));
+    const urls=new Set([...document.images].filter(i=>i.getAttribute('src')).map(i=>i.src));
     document.querySelectorAll('*').forEach(el=>{const bg=getComputedStyle(el).backgroundImage;if(bg.includes('data:'))return;for(const m of bg.matchAll(/url\(["']?([^"')]+)["']?\)/g))if(!m[1].startsWith('data:'))urls.add(new URL(m[1],location.href).href)});
     return Promise.all([...urls].map(url=>new Promise(resolve=>{const i=new Image();i.onload=()=>resolve({url,ok:true});i.onerror=()=>resolve({url,ok:false});i.src=url})));
    });assert.ok(images.every(i=>i.ok),JSON.stringify(images));
@@ -34,21 +34,21 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
    if(width<=1140){await page.locator('#nav-toggle').click();assert.equal(await page.locator('#nav-toggle').getAttribute('aria-expanded'),'true');await page.keyboard.press('Escape');assert.equal(await page.locator('#nav-toggle').getAttribute('aria-expanded'),'false');await page.locator('#nav-toggle').click();await page.locator('#mobile-menu a[href="#about"]').click();assert.equal(await page.locator('#nav-toggle').getAttribute('aria-expanded'),'false');}
    const heights=[];for(const tab of ['arch','yard','service']){await page.locator('[data-about-tab="'+tab+'"]').click();heights.push(await page.locator('#about').evaluate(el=>el.getBoundingClientRect().height));}assert.ok(Math.max(...heights)-Math.min(...heights)<1,JSON.stringify(heights));
    await page.locator('[data-about-tab="service"]').focus();await page.keyboard.press('ArrowLeft');assert.equal(await page.locator('[data-about-tab="yard"]').getAttribute('aria-selected'),'true');await page.keyboard.press('Home');assert.equal(await page.locator('[data-about-tab="arch"]').getAttribute('aria-selected'),'true');
-   for(const [category,count] of [['studio',5],['1k',3],['2k',1],['3k',1]]){await page.locator('[data-tab="'+category+'"]').click();assert.equal(await page.locator('#plans-grid .card').count(),count);}
-   await page.locator('[data-view="cats"]').click();assert.equal(await page.locator('#category-grid .category-card').count(),4);await page.locator('[data-category="1k"][data-category-action="lots"]').click();assert.equal(await page.locator('#plans-grid .card').count(),3);
+   for(const [category,count] of [['studio',4],['1k',6],['2k',6],['3k',2]]){await page.locator('[data-tab="'+category+'"]').click();assert.equal(await page.locator('#plans-grid .card').count(),count);}
+   await page.locator('[data-view="cats"]').click();assert.equal(await page.locator('#category-grid .category-card').count(),4);await page.locator('[data-category="1k"][data-category-action="lots"]').click();assert.equal(await page.locator('#plans-grid .card').count(),6);
    const thumb=page.locator('#plans-grid .plan-thumb').first();await thumb.click();assert.equal(await page.locator('#lightbox').isVisible(),true);await page.keyboard.press('ArrowRight');assert.match(await page.locator('#lightbox-position').textContent(),/2 из 3/);await page.keyboard.press('Tab');assert.ok(await page.evaluate(()=>document.getElementById('lightbox').contains(document.activeElement)));await page.keyboard.press('Escape');assert.equal(await page.locator('#lightbox').isVisible(),false);assert.equal(await thumb.evaluate(el=>el===document.activeElement),true);
-   await page.locator('#gallery-grid .gallery-item').first().click();await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#lightbox-position').textContent(),/6 из 6/);
+   await page.locator('#gallery-grid .gallery-item').first().click();await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#lightbox-position').textContent(),/8 из 8/);
    await page.locator('#lightbox-image').dispatchEvent('touchstart',{touches:[{identifier:0,clientX:250,clientY:250}]});
    await page.locator('#lightbox-image').dispatchEvent('touchmove',{touches:[{identifier:0,clientX:100,clientY:250}]});
    await page.locator('#lightbox-image').dispatchEvent('touchend',{touches:[],changedTouches:[{identifier:0,clientX:100,clientY:250}]});
-   assert.match(await page.locator('#lightbox-position').textContent(),/1 из 6/);
+   assert.match(await page.locator('#lightbox-position').textContent(),/1 из 8/);
    await page.locator('#lightbox-close').click();
-   await page.locator('#plans-grid [data-action="calc-here"]').nth(1).click();assert.match(await page.locator('#calc-plan-title').textContent(),/1 спальня/);assert.equal(money(await page.locator('#price-label').textContent()),7885023);
+   await page.locator('#plans-grid [data-action="calc-here"]').nth(1).click();assert.match(await page.locator('#calc-plan-title').textContent(),/1 спальня/);assert.equal(money(await page.locator('#price-label').textContent()),7956744);
    const setRange=async(id,value)=>page.locator('#'+id+'-range').evaluate((el,value)=>{el.value=String(value);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
    await setRange('down',20);await setRange('term',20);await setRange('rate',6);
-   assert.equal(money(await page.locator('#payment-label').textContent()),Math.round(annuity(7885023,20,20,6)));
-   assert.equal(money(await page.locator('#income-label').textContent()),Math.round(annuity(7885023,20,20,6)/.4));
-   assert.equal(money(await page.locator('#loan-label').textContent()),Math.round(7885023*.8));
+   assert.equal(money(await page.locator('#payment-label').textContent()),Math.round(annuity(7956744,20,20,6)));
+   assert.equal(money(await page.locator('#income-label').textContent()),Math.round(annuity(7956744,20,20,6)/.4));
+   assert.equal(money(await page.locator('#loan-label').textContent()),Math.round(7956744*.8));
    await page.locator('#send-to-form').click();assert.match(await page.locator('#form-title').textContent(),/Обсудим ваш расчёт/);assert.match(await page.locator('#snapshot-slot').textContent(),/Платёж/);
    assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#name-input').fill('Тестовая заявка');await page.locator('#phone-input').fill('70000000000');assert.equal(await page.locator('#phone-input').inputValue(),'+7 (000) 000-00-00');await page.locator('#consent-input').check();
    await page.locator('.more-field-btn[data-field="email"]').click();await page.locator('#email-input').fill('bad');await page.locator('#name-input').focus();assert.equal(await page.locator('#email-error').isVisible(),true);assert.equal(await page.locator('#submit-btn').isEnabled(),false);await page.locator('#email-input').fill('test@example.invalid');
@@ -75,7 +75,7 @@ const annuity=(p,d,t,r)=>p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-t*12));
   await motionPage.emulateMedia({reducedMotion:'reduce'});assert.equal(await motionPage.locator('.loc-zoom').first().evaluate(el=>getComputedStyle(el).animationName),'none');
   await motionPage.locator('.skip-link').focus();assert.equal(await motionPage.locator('.skip-link').evaluate(el=>getComputedStyle(el).clipPath),'none');await motionPage.close();
   console.log('PASS reveal animations, reduced motion and skip-link focus');
-  const offline=await b.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const p=await offline.newPage();await p.goto(site.url);assert.equal(await p.locator('h1').count(),1);assert.equal(await p.locator('#request-form').count(),1);assert.equal(await p.locator('#plans-grid .card').count(),5);assert.equal(await p.locator('#gallery-grid .gallery-item').count(),6);assert.match(await p.locator('#form-title').textContent(),/Оставьте заявку/);assert.equal(await p.locator('#about').isVisible(),true);await offline.close();
+  const offline=await b.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});const p=await offline.newPage();await p.goto(site.url);assert.equal(await p.locator('h1').count(),1);assert.equal(await p.locator('#request-form').count(),1);assert.equal(await p.locator('#plans-grid .card').count(),28);assert.equal(await p.locator('#gallery-grid .gallery-item').count(),8);assert.match(await p.locator('#form-title').textContent(),/Оставьте заявку/);assert.equal(await p.locator('#about').isVisible(),true);await offline.close();
   console.log('PASS '+results.length+' viewports, no-JavaScript content; temporary PDF removed after verification');
  }finally{if(b)await b.close();await site.close();fs.rmSync(temp,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1});

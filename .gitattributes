@@ -1,2 +1,2 @@
-# Preserve publisher SVG bytes (including CRLF) and their source SHA-256 across checkouts.
-assets/content/plans/*.svg -text
+# Publisher SVG assets are immutable source media: preserve bytes and prevent text merges.
+assets/content/plans/*.svg binary

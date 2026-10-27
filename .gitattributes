@@ -1,0 +1,2 @@
+# Preserve publisher SVG bytes (including CRLF) and their source SHA-256 across checkouts.
+assets/content/plans/*.svg -text

@@ -940,3 +940,15 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 #contact .more-fields-row>span{flex-basis:100%;font-size:11px;color:#72786d}
 #contact .more-field-btn{min-height:36px;font-size:12px}
 @media(max-width:600px){#contact .contact-panorama .contact-style-3{background:linear-gradient(0deg,rgba(16,18,22,.72),rgba(16,18,22,.36) 72%,rgba(16,18,22,.12))}#contact .contact-panorama .contact-style-4{color:#fff2d4}}
+
+/* ENG-001 — catalog disclosure and mortgage status, using accepted controls. */
+#plans .catalog-toolbar,#catalog-filter-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+#plans .catalog-toolbar{justify-content:flex-end}
+#toggle-filters{display:inline-flex;align-items:center;gap:8px}
+#filter-disclosure-status{font-size:10px;color:#65685f}
+#filter-count{min-width:20px;border-radius:50%;background:#e6ddcb;color:#514329;font-size:12px}
+#plans :is(#toggle-filters,#reset-filters-compact,#reset-filters):focus-visible{outline:2px solid #8c744b;outline-offset:4px}
+#mortgage-program{margin-bottom:24px}
+#mortgage-program:focus-visible{outline:2px solid #8c744b;outline-offset:4px}
+.mortgage-warning{padding:12px 0;border-top:1px solid #c8a96a;color:#65502c}
+@media(max-width:600px){#plans .catalog-toolbar{justify-content:flex-start;width:100%;gap:12px}#plans .catalog-controls label{min-width:0;max-width:100%}#plans .catalog-controls{min-width:0}#catalog-filter-actions{max-width:100%}}

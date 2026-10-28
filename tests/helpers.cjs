@@ -4,6 +4,10 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json','.webp':'image/webp','.png':'image/png','.woff2':'font/woff2','.ttf':'font/ttf','.pdf':'application/pdf'};
 function server(directory = root, port = 0) {
+  if (process.env.QA_BASE_URL) {
+    if (process.env.QA_BASE_URL !== 'http://127.0.0.1:4183/') throw Error('Use the approved preview URL');
+    return Promise.resolve({url:process.env.QA_BASE_URL.replace(/\/$/, ''), close:async()=>{}});
+  }
   const instance = http.createServer((req,res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const file = path.resolve(directory, '.' + (pathname === '/' ? '/index.html' : pathname));

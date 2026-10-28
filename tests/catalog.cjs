@@ -15,7 +15,7 @@ for(const width of [1440,768,390,320]){
    await page.locator(`[data-tab="${key}"]`).click();while(await page.locator('#show-more-plans').isVisible())await page.locator('#show-more-plans').click();
    assert.deepEqual((await page.locator('#plans-grid [data-lot-id]').evaluateAll(els=>els.map(e=>e.dataset.lotId))).sort(),apartments.filter(a=>a.bedrooms===bedrooms).map(a=>a.id).sort());
  }
- await page.locator('[data-tab="1k"]').click();await page.locator('#budget-filter').selectOption('8000000');assert.equal(await page.locator('#plans-grid .card').count(),2);assert.equal(await page.locator('#plans-grid .card').first().getAttribute('data-lot-id'),'22890');
+ await page.locator('[data-tab="1k"]').click();await page.locator('#toggle-filters').click();await page.locator('#budget-filter').selectOption('8000000');assert.equal(await page.locator('#plans-grid .card').count(),2);assert.equal(await page.locator('#plans-grid .card').first().getAttribute('data-lot-id'),'22890');
  await page.locator('#floor-filter').selectOption('2');assert.equal(await page.locator('#plans-grid .card').count(),0);assert.match(await page.locator('#plans-grid').textContent(),/предложений нет/);await page.locator('#reset-filters').click();
  await page.locator('#layout-filter').selectOption('layout-12c10e0ed8f5');assert.deepEqual((await page.locator('#plans-grid .card').evaluateAll(els=>els.map(e=>e.dataset.lotId))).sort(),['22890','22906','22938']);await page.locator('#reset-filters').click();
  await page.locator('#sea-filter').check();for(const id of await page.locator('#plans-grid .card').evaluateAll(els=>els.map(e=>e.dataset.lotId)))assert.ok(apartments.find(p=>p.id===id).features.includes('Вид на море'));await page.locator('#reset-filters').click();

@@ -270,8 +270,8 @@
 <h2 id="plans-heading" class="plans-style-5">Квартира под ваш ритм</h2>
 <p class="plans-style-6">От первого собственного пространства до большой квартиры для семьи. Найдите площадь, этаж и вид, которые подходят именно вам.</p>
 <p class="content-note">28 квартир · 19 планировок · чистовая отделка</p>
-<div class="plans-style-7 enhanced-only"><div id="plan-tabs" class="plans-style-8"></div><div id="plan-views" class="plans-style-9"><button type="button" class="view-chip" data-view="cats" aria-pressed="false">Категории</button><button type="button" class="view-chip active" data-view="lots" aria-pressed="true">Квартиры</button></div></div>
-<div id="catalog-controls" class="catalog-controls enhanced-only">
+<div class="plans-style-7 enhanced-only"><div id="plan-tabs" class="plans-style-8"></div><div class="catalog-toolbar"><div id="plan-views" class="plans-style-9"><button type="button" class="view-chip" data-view="cats" aria-pressed="false">Категории</button><button type="button" class="view-chip active" data-view="lots" aria-pressed="true">Квартиры</button></div><div id="catalog-filter-actions"><button type="button" id="toggle-filters" class="view-chip" aria-expanded="false" aria-controls="catalog-controls">Фильтры <span id="filter-count" hidden></span><span id="filter-disclosure-status">Скрыты</span></button><button type="button" id="reset-filters-compact" class="view-chip" hidden>Сбросить фильтры</button></div></div></div>
+<div id="catalog-controls" class="catalog-controls enhanced-only" hidden>
 <label>Бюджет<select id="budget-filter"><option value="">Любой</option><option value="8000000">До 8 млн ₽</option><option value="10000000">До 10 млн ₽</option><option value="12000000">До 12 млн ₽</option><option value="16000000">До 16 млн ₽</option></select></label>
 <label>Этаж<select id="floor-filter"><option value="">Любой</option><option value="2">2 этаж</option><option value="3">3 этаж</option><option value="4">4 этаж</option><option value="5">5 этаж</option><option value="6">6 этаж</option><option value="7">7 этаж</option><option value="8">8 этаж</option><option value="9">9 этаж</option><option value="10">10 этаж</option><option value="13">13 этаж</option><option value="15">15 этаж</option></select></label>
 <label>Планировка<select id="layout-filter"><option value="">Все планировки</option></select></label>
@@ -472,7 +472,7 @@
 <div>Действует до 31.12.2030</div>
 <div>Только на новостройки</div>
         </div>
-        <a href="#calculator" class="pricing-style-8">Рассчитать платёж →</a>
+        <a href="#calculator" data-mortgage-program="regional" class="pricing-style-8">Рассчитать платёж →</a>
       </div>
       <div class="pricing-style-4">
         <div class="pricing-style-5">Семейная ипотека 6%</div>
@@ -483,7 +483,7 @@
 <div>Ставка 6% на весь срок</div>
 <div>Можно с материнским капиталом</div>
         </div>
-        <a href="#contact" data-action="ask-installment" class="pricing-style-8">Узнать условия →</a>
+        <a href="#calculator" data-mortgage-program="family" class="pricing-style-8">Рассчитать платёж →</a>
       </div>
       <div class="pricing-style-4">
         <div class="pricing-style-5">100% оплата</div>
@@ -503,6 +503,7 @@
   <div class="location-style-3">Ипотечный калькулятор</div>
   <h2 class="pricing-style-11">Посчитайте платёж и нужный доход</h2>
   <p class="pricing-style-12">Ориентировочный расчёт по единой выбранной ставке на всю сумму. Льготный лимит и условия банка требуют отдельной проверки; комбинированную ипотеку калькулятор не моделирует.</p>
+  <p id="mortgage-program" class="pricing-style-12" tabindex="-1" aria-live="polite">Льготная ипотека 2% · взнос от 10% · лимит 6 000 000 ₽</p>
   <div class="location-style-4">
     <div class="pricing-style-13">
       <div>
@@ -575,6 +576,7 @@
         <div class="pricing-style-25">Сумма кредита</div>
         <div id="loan-label" class="pricing-style-27">6 280 365 ₽</div>
       </div>
+      <p id="mortgage-warning" class="calc-note mortgage-warning" role="status" hidden></p>
       <div class="pricing-style-28">
         <a href="#contact" class="location-style-21" id="send-to-form">Отправить расчёт в заявку →</a>
         <button class="btn-cream btn-hover-white" id="download-calc" type="button">

@@ -110,6 +110,7 @@ td{padding:12px 0;border-bottom:1px solid rgba(37,40,45,.10);vertical-align:base
 <div class="obj"><div class="t">${d.objectTitle}</div><div class="m">${d.objectMeta}</div>${d.sourceUrl?`<div class="m" style="margin-top:8px;overflow-wrap:anywhere;font-size:10px">Источник: ${d.sourceUrl.replaceAll("&","&amp;")}<br>Цену и наличие уточнит агентство.</div>`:""}</div>
 <div class="kick">Параметры</div>
 <table>
+${row('Программа', d.program)}
 ${row('Стоимость квартиры', d.price)}
 ${row('Первоначальный взнос', d.down)}
 ${row('Сумма кредита', d.loan)}
@@ -117,6 +118,7 @@ ${row('Срок кредита', d.term)}
 ${row('Ставка', d.rate)}
 ${row('Необходимый доход', d.income)}
 </table>
+${d.warning ? `<p class="note">${d.warning}</p>` : ''}
 <div class="hl"><span class="l">Ежемесячный платёж</span><span class="r">${d.payment}</span></div>
 <p class="note">Доход рассчитан из условия, что платёж не превышает 40% ежемесячного дохода — стандартное требование банков при одобрении. Материалы носят информационный характер и не являются офертой.</p>
 <div class="foot">
@@ -169,6 +171,7 @@ async function makeCalcPdf(html, filename){
 
 /* ---------- app state ---------- */
 const state = {
+  filtersOpen: false, mortgageProgram: 'regional',
   filter: 'studio', budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6, planViews:{}, selectedPlanView:'furnished',
   price: Math.min(...PLANS.map(p=>p.price)), downPct: 10, term: 30, rate: 2,
   plansView: 'lots', aboutTab: 'arch',
@@ -319,7 +322,31 @@ function renderTabs(){
   document.getElementById('layout-filter').innerHTML='<option value="">Все планировки</option>'+groups.map((g,i)=>{const ps=PLANS.filter(p=>p.plan_group_id===g);return `<option value="${g}">Тип ${i+1} · ${ps[0].area_m2.toLocaleString('ru-RU')} м² · ${ps.length} предл.</option>`;}).join('');
   document.getElementById('layout-filter').value=state.layout;
 }
+function renderFilterDisclosure(){
+  const lots = state.plansView === 'lots';
+  const count = [state.budget, state.floor, state.layout, state.sea, state.sort !== 'price'].filter(Boolean).length;
+  const open = lots && state.filtersOpen;
+  document.getElementById('catalog-filter-actions').hidden = !lots;
+  document.getElementById('catalog-controls').hidden = !open;
+  document.getElementById('toggle-filters').setAttribute('aria-expanded', String(open));
+  document.getElementById('filter-disclosure-status').textContent = open ? 'Открыты' : 'Скрыты';
+  const badge = document.getElementById('filter-count');
+  badge.textContent = String(count);
+  badge.setAttribute('aria-label', 'Активных условий: ' + count);
+  badge.hidden = !count;
+  document.getElementById('reset-filters-compact').hidden = !count;
+}
+function resetCatalogFilters(){
+  const compactFocused = document.activeElement.id === 'reset-filters-compact';
+  Object.assign(state, {budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6});
+  for (const id of ['budget','floor','layout']) document.getElementById(id+'-filter').value = '';
+  document.getElementById('sort-filter').value = 'price';
+  document.getElementById('sea-filter').checked = false;
+  renderPlansGrid();
+  if (compactFocused) document.getElementById('toggle-filters').focus({preventScroll:true});
+}
 function renderPlansGrid(){
+  renderFilterDisclosure();
   const list=currentFilteredPlans();
   document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||'furnished')).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
   document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)}`;
@@ -346,7 +373,16 @@ function wirePlansEvents(){
     else if(el.dataset.action==='ask-plan')askPlan(plan);else if(el.dataset.action==='calc-here')calcHere(plan);
   });
   for(const [id,key] of [['budget','budget'],['floor','floor'],['layout','layout'],['sort','sort'],['sea','sea']])document.getElementById(id+'-filter').addEventListener('change',e=>{state[key]=key==='sea'?e.target.checked:['budget','floor'].includes(key)?Number(e.target.value):e.target.value;state.limit=6;renderPlansGrid();});
-  document.getElementById('reset-filters').addEventListener('click',()=>{Object.assign(state,{budget:0,floor:0,layout:'',sort:'price',sea:false,limit:6});for(const id of ['budget','floor','layout'])document.getElementById(id+'-filter').value='';document.getElementById('sort-filter').value='price';document.getElementById('sea-filter').checked=false;renderPlansGrid();});
+  for (const id of ['reset-filters','reset-filters-compact']) document.getElementById(id).addEventListener('click', resetCatalogFilters);
+  document.getElementById('toggle-filters').addEventListener('click', () => {
+    state.filtersOpen = !state.filtersOpen; renderFilterDisclosure();
+  });
+  document.getElementById('catalog-controls').addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      e.preventDefault(); state.filtersOpen = false; renderFilterDisclosure();
+      document.getElementById('toggle-filters').focus({preventScroll:true});
+    }
+  });
   document.getElementById('show-more-plans').addEventListener('click',()=>{const next=currentFilteredPlans()[state.limit];state.limit+=6;renderPlansGrid();if(next)document.querySelector(`[data-lot-id="${next.id}"] .plan-thumb`).focus({preventScroll:true});});
 }
 /* ================= gallery and monthly albums ================= */
@@ -430,6 +466,26 @@ function wireLightboxEvents(){
 }
 
 /* ================= calculator ================= */
+// Presets reflect the published site content, not a bank eligibility decision.
+const MORTGAGE_PROGRAMS = {
+  regional: {title:'Льготная ипотека 2%', rate:2, minDown:10, limit:6000000},
+  family: {title:'Семейная ипотека 6%', rate:6, minDown:20, limit:12000000},
+};
+function mortgageContext(){
+  const program = MORTGAGE_PROGRAMS[state.mortgageProgram];
+  const warning = program && calcNumbers().loanAmount > program.limit
+    ? `Сумма кредита превышает лимит программы ${rub(program.limit)}. Расчёт по ставке ${program.rate}% не означает её доступность на всю сумму. Комбинированная ипотека не моделируется; условия уточнит банк.` : '';
+  return {program, title:program ? program.title : 'Индивидуальная ставка', warning};
+}
+function selectMortgageProgram(key){
+  const program = MORTGAGE_PROGRAMS[key];
+  state.mortgageProgram = key;
+  state.rate = program.rate;
+  state.downPct = Math.max(state.downPct, program.minDown);
+  renderCalculator();
+  scrollToEl('calculator', 80);
+  document.getElementById('mortgage-program').focus({preventScroll:true});
+}
 function calcNumbers(){
   const s = state;
   const downPayment = s.price * s.downPct / 100;
@@ -443,6 +499,13 @@ function calcNumbers(){
 function renderCalculator(){
   const s = state;
   const { downPayment, loanAmount, payment, income } = calcNumbers();
+  const {program, title, warning} = mortgageContext();
+  document.getElementById('mortgage-program').textContent = title + (program ? ` · взнос от ${program.minDown}% · лимит ${rub(program.limit)}` : ' · расчёт на всю сумму');
+  const warningEl = document.getElementById('mortgage-warning');
+  warningEl.textContent = warning; warningEl.hidden = !warning;
+  document.getElementById('rate-range').value = s.rate;
+  document.getElementById('down-range').min = program ? program.minDown : 10;
+  document.getElementById('down-range').value = s.downPct;
   document.getElementById('price-label').textContent = rub(s.price);
   document.getElementById('down-label').textContent = s.downPct + '% · ' + rub(downPayment);
   document.getElementById('term-label').textContent = s.term + ' лет';
@@ -469,6 +532,7 @@ function sendToForm(){
   const s = state;
   const selectedPlan = s.selectedPlanId ? PLANS.find(p => p.id === s.selectedPlanId) : null;
   const { downPayment, payment } = calcNumbers();
+  const {title, warning} = mortgageContext();
   state.planChoice = selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure');
   state.snapshot = {
     kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:SITE_DATA.snapshot_date,
@@ -476,10 +540,12 @@ function sendToForm(){
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
     objectMeta: selectedPlan ? selectedPlan.meta + ' · '+ContentModel.views[s.selectedPlanView]+' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
     rows: [
+      { k: 'Программа', v: title },
       { k: 'Стоимость', v: rub(s.price) },
       { k: 'Первый взнос', v: s.downPct + '% · ' + rub(downPayment) },
       { k: 'Срок / ставка', v: s.term + ' лет · ' + s.rate.toFixed(1) + '%' },
       { k: 'Платёж', v: rub(payment) + ' / мес' },
+      ...(warning ? [{k:'Ограничение', v:warning}] : []),
     ],
   };
   updateForm();
@@ -492,6 +558,7 @@ function downloadCalc(){
   const { downPayment, loanAmount, payment, income } = calcNumbers();
   const d = {
     date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
+    program: mortgageContext().title, warning: mortgageContext().warning,
     custom: !selectedPlan, lotId:selectedPlan?.id||null, sourceUrl:selectedPlan?.source_url||null,
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
     objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + ContentModel.views[s.selectedPlanView] + ' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
@@ -517,7 +584,7 @@ function wireCalculatorEvents(){
     state.term = Number(e.target.value); renderCalculator();
   });
   document.getElementById('rate-range').addEventListener('input', e => {
-    state.rate = Number(e.target.value); renderCalculator();
+    state.rate = Number(e.target.value); state.mortgageProgram = null; renderCalculator();
   });
   document.getElementById('calc-plan-clear').addEventListener('click', e => {
     e.preventDefault(); state.selectedPlanId = null; renderCalculator(); scrollToEl('plans', 80);
@@ -531,11 +598,9 @@ function wireCalculatorEvents(){
 
 /* ================= pricing CTAs ================= */
 function wirePricingCtas(){
-  const installment = document.querySelector('[data-action="ask-installment"]');
-  installment.addEventListener('click', e => {
-    e.preventDefault();
-    openGenericRequest({ kind: 'installment', kicker: 'Ваш запрос', objectTitle: 'Семейная ипотека 6%', objectMeta: 'Запрос условий · первый взнос от 20%, сумма кредита до 12 млн ₽' });
-  });
+  document.querySelectorAll('[data-mortgage-program]').forEach(link => link.addEventListener('click', e => {
+    e.preventDefault(); selectMortgageProgram(link.dataset.mortgageProgram);
+  }));
   const fullpay = document.querySelector('[data-action="ask-fullpay"]');
   fullpay.addEventListener('click', e => {
     e.preventDefault();
@@ -848,7 +913,7 @@ function setupPlanViews(){
     state.plansView = view;
     document.getElementById('plans-grid').hidden = view !== 'lots';
     document.getElementById('plan-tabs').hidden = view !== 'lots';
-    document.getElementById('catalog-controls').hidden = view !== 'lots';
+    renderFilterDisclosure();
     document.getElementById('catalog-result').hidden = view !== 'lots';
     document.getElementById('show-more-plans').hidden = view !== 'lots' || currentFilteredPlans().length <= state.limit;
     document.getElementById('category-grid').hidden = view !== 'cats';

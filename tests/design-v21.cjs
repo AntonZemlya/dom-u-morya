@@ -17,7 +17,7 @@ const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
    assert.equal(await p.locator('#progress time').getAttribute('datetime'),'2026-10-16');
    assert.equal(await p.locator('[data-month="2026-10"]').count(),0);
    assert.doesNotMatch(await p.locator('.consent-label').innerText(),/принимаю|политик/);
-   assert.equal(await p.locator('.form-legal-note a[href="privacy.html"]').count(),1);
+   assert.equal(await p.locator('#request-form a[href="privacy.html"]').count(),0);
    for(const selector of ['#plans .plan-variants a','#plans .plan-links a','.footer-legal a','#construction-tabs button']){
     for(const box of await p.locator(selector).evaluateAll(els=>els.map(e=>({h:e.getBoundingClientRect().height,font:parseFloat(getComputedStyle(e).fontSize)})))){
      assert.ok(box.h>=44,`${width}: ${selector} height ${box.h}`);assert.ok(box.font>=12,`${width}: ${selector} font ${box.font}`);
@@ -30,7 +30,7 @@ const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
    assert.equal(await p.locator('[data-plan-view="floor"]').first().getAttribute('aria-pressed'),'true');
    const faq=p.locator('.content-faq summary').first();await faq.focus();await p.keyboard.press('Enter');
    assert.equal(await p.locator('.content-faq details').first().getAttribute('open'),'');
-   await p.locator('.faq-contact').click();assert.equal(new URL(p.url()).hash,'#contact');
+   assert.equal(await p.locator('.faq-contact').count(),0);await p.locator('.contact-form-link').click();assert.equal(new URL(p.url()).hash,'#request-form');
    const legal=p.locator('footer .footer-legal a').first();await p.keyboard.press('Tab');await legal.focus();
    assert.notEqual(await legal.evaluate(e=>getComputedStyle(e).outlineStyle),'none');
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);

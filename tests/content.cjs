@@ -14,5 +14,7 @@ for(const c of M.categories(plans))assert.ok(html.includes(c.price));
 // Frozen hero: exact source and the three image hashes, independent of generated content.
 const {execFileSync}=require('node:child_process');const base=execFileSync('git',['show','b63b88e:index.html'],{cwd:root,encoding:'utf8'});const hero=s=>s.match(/<section id="hero-section"[\s\S]*?<\/section>/)[0];assert.equal(hero(html),hero(base));
 for(const name of ['hero-desktop.webp','hero-tablet.webp','hero-mobile.webp'])assert.equal(hash(fs.readFileSync(path.join(root,'assets',name))),hash(execFileSync('git',['show','b63b88e:assets/'+name],{cwd:root,maxBuffer:5*1024*1024})));
-assert.ok(fs.readFileSync(path.join(root,'styles.css'),'utf8').startsWith(execFileSync('git',['show','b63b88e:styles.css'],{cwd:root,encoding:'utf8'})), 'Existing CSS, including every hero breakpoint and animation, must remain unchanged');
+// V2.2 removes two unused hint rules; every other rule of the approved stylesheet remains intact.
+const withoutHints=css=>css.replace(/\.form-hint(?:-dot)?\{[^}]*\}\n/g,'');
+assert.ok(withoutHints(fs.readFileSync(path.join(root,'styles.css'),'utf8')).startsWith(withoutHints(execFileSync('git',['show','b63b88e:styles.css'],{cwd:root,encoding:'utf8'}))), 'Approved CSS, including every hero breakpoint and animation, remains unchanged except removed obsolete form hints');
 console.log('PASS 28 IDs, categories 4/16/6/2, 19 groups, 84 links/57 byte-identical SVG, media provenance, generated HTML and frozen hero sources');

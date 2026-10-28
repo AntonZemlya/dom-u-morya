@@ -148,8 +148,6 @@ button{font-family:inherit}
 .form-footnotes{display:flex;flex-direction:column;gap:6px;margin-top:-4px}
 .footnote-star{font:400 12px Sora;color:#8A9099}
 .footnote-star .req{color:#C8A96A}
-.form-hint{display:flex;align-items:center;gap:8px;font:400 12px Sora;color:#5A6068}
-.form-hint-dot{width:5px;height:5px;border-radius:50%;background:#C8A96A;flex:none}
 
 .submit-btn{padding:16px;border-radius:16px;font:600 14px Sora;transition:background .3s ease,color .3s ease,border-color .3s ease;width:100%;background:rgba(37,40,45,.12);color:#5A6068;cursor:not-allowed;border:none}
 .submit-btn.ready{background:#25282D;color:#F6F3ED;cursor:pointer;border:1px solid #25282D}
@@ -845,3 +843,100 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
  .finale-footer .footer-phone{font-size:27px}
  .finale-footer .footer-bottom{padding:20px}
 }
+
+/* DESIGN-003 / V2.2 — scoped editorial refinements to the existing static site. */
+#gallery .pricing-style-3{font:400 14px/1.8 Sora,Arial,sans-serif;max-width:620px;margin-bottom:30px;color:#626b63}
+#gallery .gallery-grid{display:grid;grid-template-columns:1.65fr 1fr;grid-template-rows:repeat(2,230px);gap:16px 24px}
+#gallery #gallery-grid>.gallery-item{grid-column:2;grid-row:auto;display:block;position:relative;height:100%;border-radius:12px;overflow:hidden;background:#e7e0d3}
+#gallery #gallery-grid>.gallery-item:first-child{grid-column:1;grid-row:1/3}
+#gallery #gallery-grid>.gallery-item img{height:100%;width:100%;aspect-ratio:auto;object-fit:cover;border-radius:12px}
+#gallery #gallery-grid>.gallery-item:first-child img{object-position:50% 52%}
+#gallery #gallery-grid>.gallery-item .gallery-item-label{position:absolute;inset:auto 0 0;margin:0;padding:30px 18px 14px;max-width:none;color:#fffaf0;background:linear-gradient(transparent,#14262ac9);font-size:12px}
+#gallery .gallery-more{grid-column:1/-1}
+.content-ready #gallery .gallery-more{display:none}
+.gallery-overflow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+#gallery .gallery-overflow .gallery-item{grid-column:auto}
+#gallery .gallery-overflow img{width:100%;height:180px;object-fit:cover}
+.gallery-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:24px;font:400 12px/1.7 Sora,Arial,sans-serif;color:#687066}
+.editorial-button{border:1px solid #c2b59a;border-radius:99px;background:transparent;color:#3c4d46;min-height:46px;padding:12px 22px;display:inline-flex;align-items:center;justify-content:center;gap:24px;font:400 12px/1.5 Sora,Arial,sans-serif;cursor:pointer;text-decoration:none}
+.editorial-button:hover{background:#e8e1d3;border-color:#8c7751}
+.editorial-button:focus-visible,#gallery summary:focus-visible{outline:2px solid #7b6137;outline-offset:4px}
+#progress .construction-heading{margin-bottom:32px}
+#progress .construction-story{font:400 12px/1.8 Sora,Arial,sans-serif;color:#677067;margin:16px 0 0;max-width:44ch}
+#progress .construction-grid{max-width:1100px;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,1fr);grid-auto-rows:140px;gap:12px}
+#progress .construction-grid .gallery-item,#progress .construction-grid .gallery-item:first-child{grid-column:auto;grid-row:auto;aspect-ratio:auto;height:100%;border-radius:10px;min-height:0}
+#progress .construction-grid .gallery-item:first-child{grid-column:1;grid-row:1/4}
+.content-ready #progress .construction-grid .gallery-item:nth-child(n+5){display:none}
+#progress .construction-grid img{height:100%;width:100%;object-fit:cover}
+#progress .album-view-all{margin-top:20px}
+#progress .month-tabs{overflow-x:auto;scroll-padding-inline:8px;scrollbar-width:thin;scrollbar-color:#b39a69 #e5ded2;padding-bottom:4px}
+#plans .catalog-footnote{font:400 12px/1.8 Sora,Arial,sans-serif;color:#677066;margin:28px 0 0;padding-top:20px;border-top:1px solid #ded7c9}
+#plans .plan-links a[data-action="ask-plan"]{border:1px solid #c7b68f;border-radius:99px;justify-content:center;text-align:center;padding:10px 16px;color:#6c552d;background:transparent;transition:background .2s,color .2s,border-color .2s}
+#plans .plan-links a[data-action="ask-plan"]:is(:hover,:focus-visible,:active){background:#344c4c;color:#fff9eb;border-color:#344c4c}
+#plans .plan-links a[data-action="ask-plan"]:focus-visible{outline:2px solid #8b6d34;outline-offset:4px}
+#plans .plan-links a[data-action="ask-plan"]:active{transform:translateY(1px)}
+.content-faq summary{cursor:pointer}
+.content-faq summary:after{border:1px solid #c6b58e;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:22px}
+#contact.contact-finale{background:#f4f0e8;padding-top:72px}
+#contact .contact-shell{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);grid-template-rows:auto auto;gap:48px 72px}
+#contact .contact-panorama{grid-column:1/-1;grid-row:1;min-height:clamp(320px,42vw,520px);margin:0;background-position:center 30%;padding:clamp(28px,5vw,56px);border-radius:24px;animation:none}
+.contact-panorama-copy{position:relative;z-index:1}
+#contact .contact-style-5{font:400 clamp(32px,3.5vw,48px)/1.12 Newsreader,Georgia,serif;letter-spacing:-.02em;margin-bottom:16px;max-width:22ch}
+#contact .contact-style-6{font:400 15px/1.7 Sora,Arial,sans-serif;max-width:34ch;color:#fff8ea}
+.contact-form-link{font:400 12px/1.5 Sora,Arial,sans-serif;border-bottom:1px solid #e9d4a9;color:#fff8ea;min-height:44px;display:inline-flex;align-items:center;gap:28px;margin-top:18px;text-decoration:none}
+#contact .contact-direct{grid-column:1;grid-row:2;align-self:start;padding-top:28px}
+#contact #contact-form-area{grid-column:2;grid-row:2}
+#contact .request-form{padding:32px;gap:20px;height:auto}
+#contact .form-title{font-size:30px;margin:8px 0 12px}
+#contact .snap-card{padding:14px 16px;border-radius:12px;background:#f1ede4;animation:none}
+#contact .snap-head{flex-wrap:nowrap;gap:10px;margin:0}
+#contact .snap-kicker{font:400 10px/1.5 Sora,Arial,sans-serif;margin-bottom:4px;color:#78623c}
+#contact .snap-title{font-size:21px;line-height:1.15}
+#contact .snap-meta{font:400 12px/1.7 Sora,Arial,sans-serif;color:#53615a;margin-top:5px}
+#contact .snap-remove{border-radius:99px;min-height:44px;padding:8px 12px;font:400 11px Sora,Arial,sans-serif}
+#contact .snap-rows{margin-top:12px;padding-top:12px;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr))}
+#contact .snap-row-k,#contact .snap-row-v{font:400 11px/1.6 Sora,Arial,sans-serif}
+@media(min-width:1100px){#plans .plan-links{grid-template-columns:1fr 1fr;gap:10px}#plans .plan-links a{font-size:12px}}
+@media(max-width:900px){#gallery .gallery-grid{grid-template-rows:repeat(2,185px);gap:14px}#progress .construction-grid{grid-auto-rows:110px}#contact .contact-shell{gap:36px}#contact .request-form{padding:26px}}
+@media(max-width:600px){
+ #gallery .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:230px 130px;gap:12px}
+ #gallery #gallery-grid>.gallery-item:first-child{grid-column:1/-1;grid-row:1}
+ #gallery #gallery-grid>.gallery-item{grid-column:auto;grid-row:2}
+ #gallery #gallery-grid>.gallery-item .gallery-item-label{font-size:10px;line-height:1.4;padding:24px 10px 10px}
+ #gallery .pricing-style-3{font-size:13px;margin-bottom:24px}
+ .gallery-bottom{align-items:flex-start;flex-direction:column;gap:12px;margin-top:18px}
+ .gallery-overflow{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ #progress .construction-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:210px 76px;grid-auto-rows:100px;gap:8px}
+ #progress .construction-grid .gallery-item:first-child{grid-column:1/-1;grid-row:1}
+ #progress .construction-heading{gap:22px;margin-bottom:24px}
+ #progress .construction-status{padding-left:18px}
+ #progress .construction-story{margin-top:12px;font-size:12px}
+ #progress .month-tabs{gap:24px;margin-bottom:20px}
+ #progress .album-view-all{margin-top:16px}
+ #contact.contact-finale{padding:40px 20px}
+ #contact .contact-shell{grid-template-columns:minmax(0,1fr);gap:28px}
+ #contact .contact-panorama{grid-column:1;min-height:380px;padding:28px 24px;background-position:58% 30%;border-radius:18px}
+ #contact .contact-style-5{font-size:36px;max-width:13ch}
+ #contact .contact-style-4{font-size:10px;line-height:1.7;max-width:25ch}
+ #contact .contact-style-6{font-size:13px;max-width:25ch}
+ #contact #contact-form-area{grid-column:1;grid-row:2}
+ #contact .contact-direct{grid-column:1;grid-row:3;padding:0 4px}
+ #contact .request-form{padding:24px 20px;gap:18px}
+ #contact .form-sub{font-size:12px}
+ #contact .form-title{font-size:28px}
+ #contact .snap-card{padding:12px}
+ #contact .snap-title{font-size:20px}
+ #contact .snap-rows{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #plans .catalog-footnote{font-size:12px;margin-top:24px}
+ .content-faq summary{font-size:14px}
+}
+@media(max-width:360px){#gallery .gallery-grid{grid-template-rows:200px 110px}#progress .construction-grid{grid-template-rows:180px 64px}#contact .contact-panorama{min-height:360px;padding:24px 20px}#contact .contact-style-5{font-size:32px}#contact .request-form{padding:22px 16px}#contact .snap-head{flex-wrap:wrap}#contact .snap-remove{margin-left:auto}}
+#lightbox .lightbox-inner{max-width:1100px;height:min(900px,calc(100dvh - 48px))}
+#lightbox .lightbox-image{max-height:78dvh}
+
+/* Visual QA: improve the mobile sunset text contrast and keep optional inputs concise. */
+#progress .construction-status>p.construction-story{font:400 12px/1.8 Sora,Arial,sans-serif;color:#677067;margin:16px 0 0}
+#contact .more-fields-row{gap:4px 16px}
+#contact .more-fields-row>span{flex-basis:100%;font-size:11px;color:#72786d}
+#contact .more-field-btn{min-height:36px;font-size:12px}
+@media(max-width:600px){#contact .contact-panorama .contact-style-3{background:linear-gradient(0deg,rgba(16,18,22,.72),rgba(16,18,22,.36) 72%,rgba(16,18,22,.12))}#contact .contact-panorama .contact-style-4{color:#fff2d4}}

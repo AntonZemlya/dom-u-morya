@@ -322,12 +322,12 @@ function renderTabs(){
 function renderPlansGrid(){
   const list=currentFilteredPlans();
   document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||'furnished')).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
-  document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)} · цены на 27.10.2026`;
+  document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)}`;
   document.getElementById('show-more-plans').hidden=list.length<=state.limit||state.plansView!=='lots';
 }
 function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||'furnished'];}
 function askPlan(plan){
-  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:SITE_DATA.snapshot_date,objectTitle:plan.title,objectMeta:plan.meta+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[{k:'Тип',v:CAT_LABEL[plan.category]},{k:'Стоимость',v:rub(plan.price)},{k:'Данные',v:'27.10.2026 · наличие уточняется'}]};
+  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:SITE_DATA.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
   state.planChoice=plan.category;updateForm();scrollToForm();
 }
 function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;renderCalculator();scrollToEl('calculator',80);}
@@ -352,11 +352,12 @@ function wirePlansEvents(){
 /* ================= gallery and monthly albums ================= */
 function renderGallery(){/* Generated semantic HTML is also the live gallery. */}
 function wireGalleryEvents(){
+  document.getElementById('gallery-view-all').addEventListener('click',()=>openLightbox('gallery',0));
   document.getElementById('gallery-grid').addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(a){e.preventDefault();openLightbox('gallery',Number(a.dataset.index));}});
   const tabs=document.getElementById('construction-tabs');
   tabs.innerHTML=SITE_DATA.media.construction.map((m,i)=>`<button type="button" class="tab-chip${i===0?' active':''}" data-month="${m.month}" aria-pressed="${i===0}">${m.title}</button>`).join('');
   const select=month=>{document.querySelectorAll('.construction-album').forEach(d=>{d.hidden=d.dataset.album!==month;d.open=!d.hidden;});tabs.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.month===month));b.classList.toggle('active',b.dataset.month===month);});};
-  tabs.addEventListener('click',e=>{const b=e.target.closest('[data-month]');if(b)select(b.dataset.month);});
+  tabs.addEventListener('click',e=>{const b=e.target.closest('[data-month]');if(b){select(b.dataset.month);b.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"});}});
   document.getElementById('construction-albums').addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(a){e.preventDefault();openLightbox('construction',Number(a.dataset.index),a.dataset.month);}});
   select(SITE_DATA.media.construction[0].month);
 }
@@ -365,7 +366,7 @@ const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0}
 function lightboxItems(){
   if(lb.mode==='plan'){const p=PLANS.find(p=>p.id===lb.lotId);return p.plans.map(a=>({src:a.local_path,title:p.title+' · '+ContentModel.views[a.type],type:a.type,caption:p.meta+' · '+rub(p.price)+' · мебель приобретается отдельно'}));}
   const items=lb.mode==='gallery'?GALLERY:SITE_DATA.media.construction.find(m=>m.month===lb.month).images;
-  return items.map(m=>({...m,src:m.variants.at(-1).src,caption:lb.mode==='gallery'?'Визуализация застройщика':SITE_DATA.media.construction.find(a=>a.month===lb.month).title+' · фото строительства · дата съёмки неизвестна'}));
+  return items.map(m=>({...m,src:m.variants.at(-1).src,caption:lb.mode==='gallery'?'Визуализация застройщика':'Фото строительства'}));
 }
 function lightboxCount(){return lightboxItems().length;}
 function openLightbox(mode,index,id){
@@ -607,14 +608,14 @@ function renderMoreFieldsRow(){
   const row = document.getElementById('more-fields-row');
   const locked = planLockedActive();
   const remaining = FIELD_ORDER.filter(k => !state.opts.includes(k) && !(k === 'plan' && locked));
-  const label = state.opts.length === 0 ? 'Можно сразу указать' : 'Ещё можно указать';
+  const label = 'Дополнительно';
   const sig = label + '|' + remaining.join(',');
   if (row.dataset.sig === sig) return; // avoid rebuilding mid-click (blur on another field would destroy the button being clicked)
   row.dataset.sig = sig;
   if (remaining.length === 0) { row.hidden = true; row.innerHTML = ''; return; }
   row.hidden = false;
   row.innerHTML = `<span>${label}</span>` + remaining.map((k, i) =>
-    `<button type="button" class="more-field-btn" data-field="${k}">${FIELD_LABELS[k][1]}${i < remaining.length - 1 ? ',' : ''}</button>`
+    `<button type="button" class="more-field-btn" data-field="${k}">${({plan:'Планировка',email:'E-mail',channel:'Связь',time:'Время'})[k]}</button>`
   ).join('');
 }
 function renderSnapshot(){
@@ -626,10 +627,8 @@ function renderSnapshot(){
   if (!snap) { slot.hidden = true; slot.innerHTML = ''; return; }
   slot.hidden = false;
   const rows = snap.rows || [];
-  const iconPath = ICONS[snap.kind] || ICONS.calc;
   slot.innerHTML = `<div class="snap-card">
     <div class="snap-head">
-      <div class="snap-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="${iconPath}" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
       <div class="snap-body">
         <div class="snap-kicker">${snap.kicker || ''}</div>
         <div class="snap-title">${snap.objectTitle || ''}</div>
@@ -643,7 +642,7 @@ function renderSnapshot(){
 function renderPlanLocked(){
   const locked = planLockedActive();
   const slot = document.getElementById('plan-locked-slot');
-  slot.hidden = !locked;
+  slot.hidden = true; // The selected object is already shown once in the compact snapshot.
   if (locked) {
     document.getElementById('plan-locked-value').textContent = snapPlanTitle();
     document.getElementById('plan-locked-note').textContent = state.snapshot.kind === 'calc' ? 'из вашего расчёта' : 'из вашего запроса';
@@ -655,25 +654,13 @@ function renderFormTitleSub(){
   const titleEl = document.getElementById('form-title');
   const subEl = document.getElementById('form-sub');
   if (!titleEl) return;
-  titleEl.textContent = snapKind === 'calc' ? 'Обсудим ваш расчёт' : (snap ? 'Обсудим ваш запрос' : 'Оставьте заявку на подбор');
-  subEl.textContent = snapKind === 'calc'
-    ? 'Проверим условия расчёта, зафиксируем платёж и покажем планировку — на объекте или онлайн.'
-    : (snapKind === 'plan'
-      ? 'Покажем эту планировку на объекте или онлайн, пришлём подборку похожих и актуальный прайс.'
-      : (snap
-        ? 'Уточним условия оплаты, пришлём документы и ответим на вопросы по вашему запросу.'
-        : 'Подберём планировку под ваш запрос. Пока отправка формы не подключена, свяжитесь с агентством по телефону или e-mail.'));
+  titleEl.textContent = snapKind === 'calc' ? 'Обсудим ваш расчёт' : (snap ? 'Обсудим ваш запрос' : 'Как с вами связаться');
+  subEl.textContent = 'Оставьте контакты и добавьте пожелания к квартире.';
 }
 function updateForm(){
   const s = state;
   const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(s.phone);
   const emailBad = !!s.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email);
-  const formMissing = [];
-  if (!s.name.trim()) formMissing.push('имя');
-  if (!phoneOk) formMissing.push(s.phone ? 'телефон полностью' : 'телефон');
-  if (!s.consent) formMissing.push('согласие на обработку данных');
-  if (emailBad) formMissing.push('корректный e-mail');
-  const formTouched = !!(s.name || s.phone || s.consent || s.email);
   const formReady = !!(s.name.trim() && phoneOk && s.consent && !emailBad);
 
   const nameErr = !!s.blurred.name && !s.name.trim();
@@ -685,6 +672,9 @@ function updateForm(){
   document.getElementById('phone-input').classList.toggle('error', phoneErr);
   document.getElementById('phone-input').setAttribute('aria-invalid', String(phoneErr));
   document.getElementById('phone-error').hidden = !phoneErr;
+  const consentErr=!!s.blurred.consent&&!s.consent;
+  document.getElementById('consent-input').setAttribute('aria-invalid',String(consentErr));
+  document.getElementById('consent-error').hidden=!consentErr;
 
   syncOpenedFields();
 
@@ -709,10 +699,7 @@ function updateForm(){
   const btn = document.getElementById('submit-btn');
   btn.classList.toggle('ready', formReady);
   btn.disabled = !formReady;
-  const hintWrap = document.getElementById('form-hint');
-  const showHint = !!(formMissing.length && formTouched);
-  hintWrap.hidden = !showHint;
-  document.getElementById('form-hint-text').textContent = formMissing.length ? 'Осталось: ' + formMissing.join(', ') : '';
+
 }
 function handlePhoneInput(e){
   const el = e.target;
@@ -738,8 +725,9 @@ function handleSubmit(){
   const emailBad = !!state.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.email);
   const formReady = !!(state.name.trim() && phoneOk && state.consent && !emailBad);
   if (!formReady) {
-    state.blurred = { name: true, phone: true, email: true };
+    state.blurred = { name: true, phone: true, email: true, consent: true };
     updateForm();
+    document.querySelector('#request-form [aria-invalid="true"]')?.focus();
     return;
   }
   const status = document.getElementById('form-status');
@@ -762,6 +750,7 @@ function bindFormEvents(){
     if (e.target.id === 'name-input') { state.blurred.name = true; updateForm(); }
     else if (e.target.id === 'phone-input') { state.blurred.phone = true; updateForm(); }
     else if (e.target.id === 'email-input') { state.blurred.email = true; updateForm(); }
+    else if (e.target.id === 'consent-input') { state.blurred.consent = true; updateForm(); }
   });
   form.addEventListener('click', e => {
     const chip = e.target.closest('.chip');
@@ -792,6 +781,11 @@ function init(){
   setupAbout();
   renderTabs(); renderPlansGrid(); wirePlansEvents(); setupPlanViews(); setupMap();
   renderGallery(); wireGalleryEvents();
+  document.querySelectorAll('.faq-questions details').forEach(d=>{
+    const summary=d.querySelector('summary');
+    const sync=()=>summary.setAttribute('aria-expanded',String(d.open));
+    sync();d.addEventListener('toggle',()=>{if(d.open)document.querySelectorAll('.faq-questions details').forEach(other=>{if(other!==d)other.open=false;});sync();});
+  });
   wireCalculatorEvents(); renderCalculator();
   renderContactArea();
   wireHeaderEvents(); applyMenuState();

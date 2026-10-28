@@ -40,7 +40,7 @@ for(const width of [1440,768,390,320]){
   }
  }
  // Month controls contain actual dated album photos, with no fake October album.
- for(const album of media.construction){await page.locator(`#construction-tabs [data-month="${album.month}"]`).click();const grid=page.locator(`[data-album="${album.month}"]`);assert.equal(await grid.isVisible(),true);assert.equal(await grid.locator('.gallery-item').count(),album.images.length);await grid.locator('.gallery-item').first().click();assert.match(await page.locator('#lightbox-caption').textContent(),/дата съёмки неизвестна/);await page.keyboard.press('Escape');}
+ for(const album of media.construction){await page.locator(`#construction-tabs [data-month="${album.month}"]`).click();const grid=page.locator(`[data-album="${album.month}"]`);assert.equal(await grid.isVisible(),true);assert.equal(await grid.locator('.gallery-item').count(),album.images.length);await grid.locator('.gallery-item').first().click();assert.match(await page.locator('#lightbox-caption').textContent(),/Фото строительства/);await page.keyboard.press('Escape');}
  if(evidence){
   await page.locator('[data-tab="studio"]').click();await page.locator('#plans').screenshot({path:path.join(evidence,`catalog-${width}.jpg`),type:'jpeg',quality:88});
   for(const [section,name] of [['#gallery','gallery'],['#progress','construction']])await page.locator(section).screenshot({path:path.join(evidence,`${name}-${width}.jpg`),type:'jpeg',quality:85});

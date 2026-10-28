@@ -1,0 +1,5 @@
+PASS ENG-001 1440: disclosure/keyboard/persistence/reset, both mortgage presets/thresholds/lot/term/context/PDFs, limits, manual rate, full payment, honest no-send, legal links, no overflow/errors
+PASS ENG-001 768: disclosure/keyboard/persistence/reset, both mortgage presets/thresholds/lot/term/context, limits, manual rate, full payment, honest no-send, legal links, no overflow/errors
+PASS ENG-001 390: disclosure/keyboard/persistence/reset, both mortgage presets/thresholds/lot/term/context, limits, manual rate, full payment, honest no-send, legal links, no overflow/errors
+PASS ENG-001 320: disclosure/keyboard/persistence/reset, both mortgage presets/thresholds/lot/term/context, limits, manual rate, full payment, honest no-send, legal links, no overflow/errors
+PASS ENG-001 no-JS: all 28 lots accessible at 320px; protected sections/data/legal unchanged

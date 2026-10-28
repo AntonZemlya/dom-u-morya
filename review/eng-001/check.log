@@ -1,0 +1,7 @@
+
+> dom-u-morya@1.0.0 check
+> node --check script.js && node --check content-model.js && node --check scripts/build-release.mjs && node scripts/generate-content.mjs --check && python3 tests/source_audit.py && node tests/content.cjs
+
+PASS generated HTML, embedded data, calculator baseline and media allowlist
+PASS: current sources, SEO structure, credential patterns, resources/licenses, no historical/runtime dependencies
+PASS 28 IDs, categories 4/16/6/2, 19 groups, 84 links/57 byte-identical SVG, media provenance, generated HTML and frozen hero sources

@@ -1,0 +1,12 @@
+{
+  "url": "http://127.0.0.1:4183/",
+  "project": "dom-u-morya",
+  "revision": "9405c14d6226",
+  "build": "/Users/azm1982/.codex/worktrees/dom-u-morya-eng-001/dom-u-morya/dist",
+  "cache": "disabled, content-hashed CSS and JS references",
+  "port": 4183,
+  "verifiedFiles": 169,
+  "sourceDistPreview": "PASS",
+  "note": "Only preview cache-busting query strings and revision meta normalized for index.html.",
+  "implementationRevision": "9405c14d62263bf1b797dad7aabb8a110f42021b"
+}

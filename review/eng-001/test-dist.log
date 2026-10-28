@@ -1,0 +1,16 @@
+
+> dom-u-morya@1.0.0 test:dist
+> node tests/ui.cjs --root dist && node tests/catalog.cjs --root dist
+
+Testing /Users/azm1982/.codex/worktrees/dom-u-morya-eng-001/dom-u-morya/dist
+PASS 1440px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map, PDF
+PASS 768px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS 390px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS 320px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS reveal animations, reduced motion and skip-link focus
+PASS 4 viewports, no-JavaScript content; temporary PDF removed after verification
+PASS catalog 1440px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot/PDF, monthly photos, no overflow/errors/hotlinks
+PASS catalog 768px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 390px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 320px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS no-JavaScript catalog and six albums at 320px

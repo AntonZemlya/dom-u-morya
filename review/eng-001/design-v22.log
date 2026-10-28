@@ -1,0 +1,5 @@
+PASS V2.2 1440: order/navigation, 8 full-quality views, 29 album photos, compact layout, price note both modes, pill/focus/context, required consent/errors, 5 single-open FAQ, no developer exits
+PASS V2.2 768: order/navigation, 8 full-quality views, 29 album photos, compact layout, price note both modes, pill/focus/context, required consent/errors, 5 single-open FAQ, no developer exits
+PASS V2.2 390: order/navigation, 8 full-quality views, 29 album photos, compact layout, price note both modes, pill/focus/context, required consent/errors, 5 single-open FAQ, no developer exits
+PASS V2.2 320: order/navigation, 8 full-quality views, 29 album photos, compact layout, price note both modes, pill/focus/context, required consent/errors, 5 single-open FAQ, no developer exits
+PASS V2.2 no-JS: all 28 lots, 8 images, 29 photos/6 albums, native FAQ and required consent; frozen hero/about/legal/media/data verified

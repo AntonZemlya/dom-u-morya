@@ -1,0 +1,16 @@
+Compatibility fixture: /var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-u-morya-rec003-compat-mekp4p REC-003: 0ba0fbf46977d797239fd54b4a40352f8ab2242f
+/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-u-morya-rec003-compat-mekp4p/dist: 169 files, 38130294 bytes (36.36 MiB)
+SHA-256 of sorted paths and contents: fa8bf71f2f80e50ed6b00f15905386910a627feb1c8a97faacf3c84c78c8fa31
+Testing /private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-u-morya-rec003-compat-mekp4p/dist
+PASS 1440px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map, PDF
+PASS 768px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS 390px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS 320px: layout, images, anchors, cookies, tabs, plans, lightbox, calculator, form, map
+PASS reveal animations, reduced motion and skip-link focus
+PASS 4 viewports, no-JavaScript content; temporary PDF removed after verification
+PASS catalog 1440px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot/PDF, monthly photos, no overflow/errors/hotlinks
+PASS catalog 768px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 390px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 320px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS no-JavaScript catalog and six albums at 320px
+PASS actual V2.2: REC-003 legal documents/banner/PDF footer byte-identical; separate required consent and no-send behavior verified; contacts, form, PDF and REC-004 catalog/media pass together. No source substitution or merge performed.

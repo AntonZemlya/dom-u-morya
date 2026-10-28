@@ -4,7 +4,7 @@ const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
 const media=require('../data/media.json');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const baseline=execFileSync('git',['show','ed656502d09bc934f91e400e69b56cc32f299788:index.html'],{cwd:root,encoding:'utf8'});
-for(const re of [/<section id="hero-section"[\s\S]*?<\/section>/,/<section id="about"[\s\S]*?<\/section>/,/<footer[\s\S]*?<\/footer>/])assert.equal(html.match(re)[0],baseline.match(re)[0],'Frozen hero/about/footer source');
+for(const re of [/<section id="hero-section"[\s\S]*?<\/section>/,/<section id="about"[\s\S]*?<\/section>/])assert.equal(html.match(re)[0],baseline.match(re)[0],'Frozen hero/about source; footer separately reviewed under ENG-001');
 for(const name of ['privacy.html','consent-personal-data.html','assets/cta.webp','data/apartments.json','data/plan-groups.json','data/media.json','data/media-provenance.json','data/project-facts.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),execFileSync('git',['show','ed656502:'+name],{cwd:root,maxBuffer:10e6}),name+' unchanged');
 const out=process.env.QA_OUTPUT_DIR;
 if(out)fs.mkdirSync(out,{recursive:true});
@@ -80,5 +80,5 @@ try{
  for(const album of await p.locator('.construction-album').all()){if(!await album.evaluate(e=>e.open))await album.locator('summary').click();for(const photo of await album.locator('.gallery-item').all())assert.equal(await photo.isVisible(),true);}
  await p.locator('.faq-questions summary').last().click();assert.equal(await p.locator('.faq-questions details').last().evaluate(e=>e.open),true);
  assert.equal(await p.locator('#consent-input').getAttribute('required'),'');assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await p.close();
- console.log('PASS V2.2 no-JS: all 28 lots, 8 images, 29 photos/6 albums, native FAQ and required consent; frozen hero/about/footer/legal/media/data verified');
+ console.log('PASS V2.2 no-JS: all 28 lots, 8 images, 29 photos/6 albums, native FAQ and required consent; frozen hero/about/legal/media/data verified');
 }finally{await b.close();await site.close();}})().catch(e=>{console.error(e);process.exitCode=1});

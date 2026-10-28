@@ -952,3 +952,13 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 #mortgage-program:focus-visible{outline:2px solid #8c744b;outline-offset:4px}
 .mortgage-warning{padding:12px 0;border-top:1px solid #c8a96a;color:#65502c}
 @media(max-width:600px){#plans .catalog-toolbar{justify-content:flex-start;width:100%;gap:12px}#plans .catalog-controls label{min-width:0;max-width:100%}#plans .catalog-controls{min-width:0}#catalog-filter-actions{max-width:100%}}
+
+/* ENG-001 — optional footer polish; isolated from the functional changes. */
+.finale-footer .footer-brand{display:block;max-width:360px}
+.finale-footer .footer-logo{display:block;width:100%;height:auto;filter:brightness(0) invert(1);opacity:.95}
+.finale-footer .footer-bottom{grid-template-columns:1.2fr 1fr;background:none;border-radius:0;border-top:1px solid #c0cbc52e;padding:28px 0;gap:32px 64px}
+.finale-footer .footer-role,.finale-footer .footer-legal{padding-top:0}
+.finale-footer .footer-legal{grid-column:auto;display:flex;gap:8px}
+.finale-footer .footer-operator{margin:0;font-size:11px;color:#acbdb6;line-height:1.9;overflow-wrap:anywhere}
+@media(max-width:900px){.finale-footer .footer-bottom{gap:24px 32px}}
+@media(max-width:600px){.finale-footer .footer-brand{max-width:280px}.finale-footer .footer-bottom{grid-template-columns:1fr;padding:24px 0;gap:20px}}

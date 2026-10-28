@@ -859,7 +859,7 @@ function setupPlanViews(){
     const a = e.target.closest('[data-category]'); if (!a) return; e.preventDefault();
     const c = CATEGORIES.find(c => c.key === a.dataset.category);
     if (a.dataset.categoryAction === 'lots') { state.filter = c.key; state.layout=''; state.limit=6; renderTabs(); renderPlansGrid(); setView('lots'); document.querySelector('[data-tab="'+c.key+'"]').focus({preventScroll:true}); }
-    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[{k:'Тип',v:CAT_LABEL[c.key]},{k:'Опубликовано',v:c.count},{k:'Цена',v:c.price}]});
+    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[]});
   });
 }
 function setupMap(){

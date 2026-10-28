@@ -50,7 +50,7 @@ try{
   await p.locator('#name-input').fill('Тест');await p.locator('#phone-input').fill('70000000000');assert.equal(await p.locator('#submit-btn').isEnabled(),false);
   await p.locator('#consent-input').check();assert.equal(await p.locator('#submit-btn').isEnabled(),true);
   await p.locator('#snapshot-remove-btn').click();assert.equal(await p.locator('#snapshot-slot').isVisible(),false);
-  await p.locator('[data-view="cats"]').click();await p.locator('[data-category="2k"][data-category-action="ask"]').click();assert.match(await p.locator('#snapshot-slot').innerText(),/2 спальни/);
+  await p.locator('[data-view="cats"]').click();await p.locator('[data-category="2k"][data-category-action="ask"]').click();assert.match(await p.locator('#snapshot-slot').innerText(),/2 спальни/);assert.ok((await p.locator('#snapshot-slot').boundingBox()).height<200,'Compact category request');
   const cta=await p.locator('.contact-panorama').boundingBox(),shell=await p.locator('.contact-shell').boundingBox(),form=await p.locator('#request-form').boundingBox();
   assert.ok(Math.abs(cta.width-shell.width)<1&&form.y>cta.y+cta.height,'Panorama spans full column; form below');
   await p.locator('.contact-form-link').click();assert.equal(new URL(p.url()).hash,'#request-form');

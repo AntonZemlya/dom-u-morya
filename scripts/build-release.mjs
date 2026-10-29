@@ -2,6 +2,7 @@ import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {optimizeText} from './optimize-release.mjs';
 import {RELEASE_FILES} from './release-files.mjs';
 import {siteOrigin,generateSEO} from './seo.mjs';
 
@@ -94,6 +95,7 @@ export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.
       await fs.copyFile(path.join(sourceRoot, relative), target);
     }
     await generateSEO(staging,origin);
+    for(const name of ['styles.css','script.js','content-model.js','assets/fonts/fonts.css']) {const file=path.join(staging,name);await fs.writeFile(file,await optimizeText(name,await fs.readFile(file,'utf8')));}
     const result = await validateRelease(staging);
     await fs.rm(outputRoot, {recursive: true, force: true});
     await fs.rename(staging, outputRoot);

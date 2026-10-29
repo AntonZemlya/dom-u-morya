@@ -8,6 +8,7 @@ export const RELEASE_FILES = Object.freeze([
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
   'assets/location.webp', 'assets/logo-cropped.webp',
   'assets/fonts/fonts.css',
+  ...Array.from({length:9},(_,i)=>`assets/fonts/font-${i+1}.woff2`),
   'assets/fonts/font-1.ttf', 'assets/fonts/font-2.ttf', 'assets/fonts/font-3.ttf',
   'assets/fonts/font-4.ttf', 'assets/fonts/font-5.ttf', 'assets/fonts/font-6.ttf',
   'assets/fonts/font-7.ttf', 'assets/fonts/font-8.ttf', 'assets/fonts/font-9.ttf',

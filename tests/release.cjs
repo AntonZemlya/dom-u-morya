@@ -6,6 +6,7 @@ const path = require('node:path');
 (async () => {
   const {buildRelease, validateRelease, projectRoot} = await import('../scripts/build-release.mjs');
   const {RELEASE_FILES} = await import('../scripts/release-files.mjs');
+  const {optimizeText} = await import('../scripts/optimize-release.mjs');
   const {seoHTML} = await import('../scripts/seo.mjs');
   const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'dom-u-morya-release-'));
   const outputRoot = path.join(fixture, 'dist');
@@ -22,7 +23,7 @@ const path = require('node:path');
     await assert.rejects(fs.access(path.join(outputRoot, '.env')));
     await assert.rejects(fs.access(path.join(outputRoot, 'docs')));
     for (const relative of RELEASE_FILES) {
-      assert.deepEqual(await fs.readFile(path.join(outputRoot, relative)), relative.endsWith('.html') ? Buffer.from(seoHTML(await fs.readFile(path.join(projectRoot, relative),'utf8'),relative,'')) : await fs.readFile(path.join(projectRoot, relative)));
+      assert.deepEqual(await fs.readFile(path.join(outputRoot, relative)), relative.endsWith('.html') ? Buffer.from(seoHTML(await fs.readFile(path.join(projectRoot, relative),'utf8'),relative,'')) : /\.(js|css)$/.test(relative) ? Buffer.from(await optimizeText(relative,await fs.readFile(path.join(projectRoot,relative),'utf8'))) : await fs.readFile(path.join(projectRoot, relative)));
     }
     await fs.writeFile(path.join(outputRoot, 'stale.zip'), 'old output');
     await assert.rejects(validateRelease(outputRoot), /allowlist/);

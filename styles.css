@@ -970,3 +970,9 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 #download-calc:enabled:not(.busy):active{background:#E4D3AD;border-color:#B4915A;box-shadow:inset 0 1px 3px rgba(37,40,45,.12)}
 #download-calc:disabled,#download-calc.busy{background:#F4EFE7;border-color:rgba(37,40,45,.10);box-shadow:none;opacity:.6;cursor:not-allowed}
 #download-calc.busy{cursor:progress}
+
+/* SEO-001: native lazy images retain the approved background composition without JS. */
+.about-style-4,.location-style-11,.contact-style-2{background-image:none}
+.deferred-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none}
+.contact-panorama>.deferred-background{object-position:center 30%}
+@media(max-width:600px){.contact-panorama>.deferred-background{object-position:58% 30%}}

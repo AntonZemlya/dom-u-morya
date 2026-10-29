@@ -9,7 +9,7 @@ for(const name of pages){
  const before=execFileSync('git',['show','1c5d513:'+name],{cwd:root,encoding:'utf8',maxBuffer:1e6});
  const source=fs.readFileSync(path.join(root,name),'utf8');
  assert.equal(require('./seo-contract.cjs').semantic(require('./seo-contract.cjs').body(source)),require('./seo-contract.cjs').body(withNofollow(before)),name+': only external nofollow additions');
- assert.equal(fs.readFileSync(path.join(root,'dist',name),'utf8'),source,name+': build preserves attributes');
+ assert.equal(require('./seo-contract.cjs').body(fs.readFileSync(path.join(root,'dist',name),'utf8')),require('./seo-contract.cjs').body(source),name+': build preserves attributes');
 }
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();try{
  for(const width of [1440,390]){

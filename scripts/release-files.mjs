@@ -3,7 +3,7 @@ import {CONTENT_FILES} from './content-files.mjs';
 export const RELEASE_FILES = Object.freeze([
   'privacy.html', 'consent-personal-data.html', 'index.html', 'styles.css', 'script.js', 'content-model.js', 'favicon.png',
   ...CONTENT_FILES,
-  'assets/architecture.webp', 'assets/cta.webp',
+  'assets/og-project.jpg', 'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
   'assets/location.webp', 'assets/logo-cropped.webp',
   'assets/fonts/fonts.css',

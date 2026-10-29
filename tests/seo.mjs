@@ -14,7 +14,8 @@ try{
  assert.ok(files['robots.txt'].includes(origin+'/sitemap.xml'));assert.deepEqual(Object.keys(indexingFiles('')),['robots.txt']);
  const titles=[],descriptions=[];
  for(const file of SEO_PAGES){const source=fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');titles.push(source.match(/<title>(.*?)<\/title>/s)[1]);descriptions.push(source.match(/<meta name="description" content="(.*?)"/)[1]);
- const built=seoHTML(source,file,origin);assert.ok(built.includes(`href="${pageURL(origin,file)}"`));assert.equal((built.match(/rel="canonical"/g)||[]).length,1);assert.doesNotMatch(seoHTML(source,file,''),/rel="canonical"/);}
+ const built=seoHTML(source,file,origin);assert.ok(built.includes(`href="${pageURL(origin,file)}"`));assert.equal((built.match(/rel="canonical"/g)||[]).length,1);assert.doesNotMatch(seoHTML(source,file,''),/rel="canonical"|property="og:url"|property="og:image"/);
+ const ld=JSON.parse(built.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(ld['@graph'].length,5);assert.equal(ld['@graph'][0].taxID,'366210396814');assert.equal(ld['@graph'][4].about['@id'],origin+'/#complex');assert.doesNotMatch(JSON.stringify(ld),/InStock|AggregateRating|Review|Offer|RealEstateAgent/);assert.ok(built.includes('content="image/jpeg"'));}
  assert.equal(new Set(titles).size,3);assert.equal(new Set(descriptions).size,3);
  console.log('PASS SEO: HTTPS validation/fail-closed, three self canonicals, robots and parsed XML sitemap; local build has no invented origin');
 }finally{fs.rmSync(tmp,{recursive:true,force:true})}

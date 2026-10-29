@@ -9,7 +9,7 @@
     "build": "node scripts/generate-content.mjs && node scripts/build-release.mjs",
     "test:dist": "node tests/ui.cjs --root dist && node tests/catalog.cjs --root dist",
     "content": "node scripts/generate-content.mjs",
-    "test:eng-001": "node tests/eng-001.cjs"
+    "test:eng-001": "node tests/eng-001.cjs && node tests/eng-001-final.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1",

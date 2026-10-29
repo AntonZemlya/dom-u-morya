@@ -3,15 +3,16 @@ const {execFileSync}=require('node:child_process');
 const {PDFDocument}=require('pdf-lib');
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
 const apartments=require('../data/apartments.json');
+const {withNofollow}=require('./external-links.cjs');
 const out=process.env.QA_OUTPUT_DIR;
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const base=execFileSync('git',['show','1d79ebc:index.html'],{cwd:root,encoding:'utf8',maxBuffer:1e6});
 for(const id of ['hero-section','about','location','gallery','progress','developer']){
  const re=new RegExp(`<section id="${id}"[\\s\\S]*?<\\/section>`);
- assert.equal(html.match(re)[0],base.match(re)[0],`${id} source unchanged from V2.2`);
+ assert.equal(html.match(re)[0],withNofollow(base.match(re)[0]),`${id} source unchanged from V2.2`);
 }
 for(const file of ['content-model.js','privacy.html','consent-personal-data.html','data/apartments.json','data/plan-groups.json','data/media.json']){
- assert.deepEqual(fs.readFileSync(path.join(root,file)),execFileSync('git',['show','1d79ebc:'+file],{cwd:root,maxBuffer:5e6}),file+' unchanged');
+ assert.deepEqual(fs.readFileSync(path.join(root,file)),Buffer.from(withNofollow(execFileSync('git',['show','1d79ebc:'+file],{cwd:root,maxBuffer:5e6}))),file+' unchanged except external nofollow');
 }
 const money=s=>Number(s.replace(/\D/g,''));
 const payment=(p,d,t,r)=>Math.round(p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-12*t)));

@@ -2,10 +2,11 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {execFileSync}=require('node:child_process');
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
 const media=require('../data/media.json');
+const {withNofollow}=require('./external-links.cjs');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const baseline=execFileSync('git',['show','ed656502d09bc934f91e400e69b56cc32f299788:index.html'],{cwd:root,encoding:'utf8'});
 for(const re of [/<section id="hero-section"[\s\S]*?<\/section>/,/<section id="about"[\s\S]*?<\/section>/])assert.equal(html.match(re)[0],baseline.match(re)[0],'Frozen hero/about source; footer separately reviewed under ENG-001');
-for(const name of ['privacy.html','consent-personal-data.html','assets/cta.webp','data/apartments.json','data/plan-groups.json','data/media.json','data/media-provenance.json','data/project-facts.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),execFileSync('git',['show','ed656502:'+name],{cwd:root,maxBuffer:10e6}),name+' unchanged');
+for(const name of ['privacy.html','consent-personal-data.html','assets/cta.webp','data/apartments.json','data/plan-groups.json','data/media.json','data/media-provenance.json','data/project-facts.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),((before)=>name.endsWith('.html')?Buffer.from(withNofollow(before)):before)(execFileSync('git',['show','ed656502:'+name],{cwd:root,maxBuffer:10e6})),name+' unchanged except external nofollow');
 const out=process.env.QA_OUTPUT_DIR;
 if(out)fs.mkdirSync(out,{recursive:true});
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();

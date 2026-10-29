@@ -2,11 +2,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import linkAttributes from '../tests/external-links.cjs';
+const {withNofollow}=linkAttributes;
 import {execFileSync,spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(fileURLToPath(new URL('..',import.meta.url)));
 const ref='0ba0fbf46977d797239fd54b4a40352f8ab2242f';
-const source=name=>execFileSync('git',['show',ref+':'+name],{cwd:root,encoding:'utf8',maxBuffer:5e6});
+const source=name=>withNofollow(execFileSync('git',['show',ref+':'+name],{cwd:root,encoding:'utf8',maxBuffer:5e6}));
 const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'dom-u-morya-rec003-compat-'));
 const read=name=>fs.readFileSync(path.join(fixture,name),'utf8'),write=(name,s)=>fs.writeFileSync(path.join(fixture,name),s);
 const extract=(s,re)=>{const match=s.match(re);if(!match)throw Error('Missing integration boundary '+re);return match[0];};
@@ -37,5 +39,5 @@ try{
   const result=spawnSync(process.execPath,args,{cwd:fixture,stdio:'inherit',env:{...process.env,QA_OUTPUT_DIR:''}});if(result.status!==0)throw Error('Compatibility check failed: '+args.join(' '));
  }
  for(const name of ['privacy.html','consent-personal-data.html'])if(read(name)!==source(name))throw Error('REC-003 document changed: '+name);
- console.log('PASS actual V2.2: REC-003 legal documents/banner/PDF footer byte-identical; separate required consent and no-send behavior verified; contacts, form, PDF and REC-004 catalog/media pass together. No source substitution or merge performed.');
+ console.log('PASS actual V2.2: REC-003 legal documents unchanged except external nofollow; banner/PDF footer byte-identical; separate required consent and no-send behavior verified; contacts, form, PDF and REC-004 catalog/media pass together. No source substitution or merge performed.');
 }finally{fs.rmSync(fixture,{recursive:true,force:true});}

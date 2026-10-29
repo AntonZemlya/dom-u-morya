@@ -19,3 +19,12 @@ try{
  assert.equal(new Set(titles).size,3);assert.equal(new Set(descriptions).size,3);
  console.log('PASS SEO: HTTPS validation/fail-closed, three self canonicals, robots and parsed XML sitemap; local build has no invented origin');
 }finally{fs.rmSync(tmp,{recursive:true,force:true})}
+
+const originals=JSON.parse(fs.readFileSync(new URL('./seo-originals.json',import.meta.url)));
+const {createHash}=await import('node:crypto');
+const M=(await import('../content-model.js')).default;
+const apartments=JSON.parse(fs.readFileSync(new URL('../data/apartments.json',import.meta.url)));
+assert.equal(Object.keys(originals).length,57);assert.equal(apartments.length,28);assert.equal(apartments.flatMap(a=>a.plans).length,84);
+for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
+for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
+console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');

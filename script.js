@@ -367,7 +367,7 @@ function wirePlansEvents(){
   document.getElementById('plan-tabs').addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(!tab)return;state.filter=tab.dataset.tab;state.layout='';state.limit=6;renderTabs();renderPlansGrid();});
   document.getElementById('plans-grid').addEventListener('click',e=>{
     const variant=e.target.closest('[data-plan-view]');
-    if(variant){e.preventDefault();const id=variant.dataset.id;state.planViews[id]=variant.dataset.planView;const card=variant.closest('[data-lot-id]'),plan=PLANS.find(p=>p.id===id),asset=plan.plans.find(p=>p.type===variant.dataset.planView);card.querySelector('img').src=asset.local_path;card.querySelector('img').alt=plan.title+' — '+planViewLabel(plan);card.querySelector('.plan-thumb').href=asset.local_path;card.querySelectorAll('[data-plan-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===variant)));return;}
+    if(variant){e.preventDefault();const id=variant.dataset.id;state.planViews[id]=variant.dataset.planView;const card=variant.closest('[data-lot-id]'),plan=PLANS.find(p=>p.id===id),asset=plan.plans.find(p=>p.type===variant.dataset.planView);card.querySelector('img').src=ContentModel.previewPath(asset);card.querySelector('img').alt=plan.title+' — '+planViewLabel(plan);card.querySelector('.plan-thumb').href=asset.local_path;card.querySelectorAll('[data-plan-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===variant)));return;}
     const el=e.target.closest('[data-action]');if(!el)return;const plan=PLANS.find(p=>p.id===el.dataset.id);if(!plan)return;e.preventDefault();
     if(el.dataset.action==='open-plan-image')openLightbox('plan',Object.keys(ContentModel.views).indexOf(state.planViews[plan.id]||'furnished'),plan.id);
     else if(el.dataset.action==='ask-plan')askPlan(plan);else if(el.dataset.action==='calc-here')calcHere(plan);
@@ -516,7 +516,7 @@ function renderCalculator(){
 
   const selectedPlan = s.selectedPlanId ? PLANS.find(p => p.id === s.selectedPlanId) : null;
   document.getElementById('calc-thumb').classList.toggle('has-plan', !!selectedPlan);
-  document.getElementById('calc-thumb').innerHTML=selectedPlan?`<img src="${selectedPlan.plans.find(p=>p.type===s.selectedPlanView).local_path}" alt="${ContentModel.esc(selectedPlan.title)}" width="120" height="100">`:'';
+  document.getElementById('calc-thumb').innerHTML=selectedPlan?`<img src="${ContentModel.previewPath(selectedPlan.plans.find(p=>p.type===s.selectedPlanView))}" alt="${ContentModel.esc(selectedPlan.title)}" width="120" height="100">`:'';
   document.getElementById('calc-plan-kicker').textContent = selectedPlan ? 'Расчёт для объекта' : 'Произвольный расчёт';
   document.getElementById('calc-plan-title').textContent = selectedPlan ? selectedPlan.title : 'Планировка не выбрана';
   const metaEl = document.getElementById('calc-plan-meta');

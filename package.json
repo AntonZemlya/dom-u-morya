@@ -16,6 +16,6 @@
   "devDependencies": {
     "pdf-lib": "1.17.1",
     "playwright": "1.62.1",
-    "sharp": "0.34.5"
+    "sharp": "0.35.5"
   }
 }

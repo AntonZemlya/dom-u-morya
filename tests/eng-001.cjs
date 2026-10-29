@@ -11,7 +11,7 @@ for(const id of ['hero-section','about','location','gallery','progress','develop
  const re=new RegExp(`<section id="${id}"[\\s\\S]*?<\\/section>`);
  assert.equal(require('./seo-contract.cjs').semantic(html.match(re)[0]),withNofollow(base.match(re)[0]),`${id} source unchanged from V2.2`);
 }
-for(const file of ['content-model.js','privacy.html','consent-personal-data.html','data/apartments.json','data/plan-groups.json','data/media.json']){
+for(const file of ['privacy.html','consent-personal-data.html','data/apartments.json','data/plan-groups.json','data/media.json']){
  assert.deepEqual(fs.readFileSync(path.join(root,file)),Buffer.from(withNofollow(execFileSync('git',['show','1d79ebc:'+file],{cwd:root,maxBuffer:5e6}))),file+' unchanged except external nofollow');
 }
 const money=s=>Number(s.replace(/\D/g,''));

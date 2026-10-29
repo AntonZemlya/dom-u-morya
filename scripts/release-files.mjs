@@ -1,8 +1,9 @@
+import {PREVIEW_FILES} from './preview-files.mjs';
 import {CONTENT_FILES} from './content-files.mjs';
 // Publication is explicit: add resources here when changing asset filenames.
 export const RELEASE_FILES = Object.freeze([
   'privacy.html', 'consent-personal-data.html', 'index.html', 'styles.css', 'script.js', 'content-model.js', 'favicon.png',
-  ...CONTENT_FILES,
+  ...CONTENT_FILES, ...PREVIEW_FILES,
   'assets/og-project.jpg', 'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
   'assets/location.webp', 'assets/logo-cropped.webp',

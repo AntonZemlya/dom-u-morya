@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {optimizeText} from './optimize-release.mjs';
 import {RELEASE_FILES} from './release-files.mjs';
-import {siteOrigin,generateSEO} from './seo.mjs';
+import {siteOrigin,generateSEO,validateSEO} from './seo.mjs';
 
 export const projectRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const allowed = new Set(RELEASE_FILES);
@@ -96,6 +96,7 @@ export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.
     }
     await generateSEO(staging,origin);
     for(const name of ['styles.css','script.js','content-model.js','assets/fonts/fonts.css']) {const file=path.join(staging,name);await fs.writeFile(file,await optimizeText(name,await fs.readFile(file,'utf8')));}
+    await validateSEO(staging,origin);
     const result = await validateRelease(staging);
     await fs.rm(outputRoot, {recursive: true, force: true});
     await fs.rename(staging, outputRoot);

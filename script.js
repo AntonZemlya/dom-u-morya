@@ -434,7 +434,7 @@ function renderLightbox(){
   if(lb.mode==='plan'){
     state.planViews[lb.lotId]=item.type;
     const card=document.querySelector(`[data-lot-id="${lb.lotId}"]`);
-    if(card){card.querySelector('img').src=item.src;card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
+    if(card){card.querySelector('img').src=ContentModel.previewPath({local_path:item.src});card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
   }
   lb.zoom=1;lb.x=lb.y=0;applyZoom();
 }

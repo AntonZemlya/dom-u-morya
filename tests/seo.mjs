@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {siteOrigin,seoHTML,indexingFiles,SEO_PAGES,pageURL} from '../scripts/seo.mjs';
+import {siteOrigin,seoHTML,indexingFiles,SEO_PAGES,pageURL,validateSEO} from '../scripts/seo.mjs';
 assert.equal(siteOrigin(''),'');assert.throws(()=>siteOrigin('','production'));
 for(const value of ['http://anyara.ru','https://localhost','https://127.0.0.1','https://example.com','https://example.test','https://test.ru','https://anyara.ru/path','https://anyara.ru/?a','https://anyara.ru/#a','https://user@anyara.ru','https://anyara.ru:8443',' https://anyara.ru'])assert.throws(()=>siteOrigin(value),value);
 // Only the rendering layer sees this isolated fixture origin; production validation rejects it.
@@ -28,3 +28,12 @@ assert.equal(Object.keys(originals).length,57);assert.equal(apartments.length,28
 for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
 for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
 console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');
+
+const sharp=(await import('sharp')).default;
+const og=await sharp(new URL('../assets/og-project.jpg',import.meta.url).pathname).metadata();assert.deepEqual([og.width,og.height,og.format],[1200,630,'jpeg']);
+// Test complete production metadata in a disposable QA directory, never dist.
+const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'seo-complete-'));
+try{for(const file of SEO_PAGES)fs.writeFileSync(path.join(fixture,file),seoHTML(fs.readFileSync(new URL('../'+file,import.meta.url),'utf8'),file,origin));for(const [file,content] of Object.entries(indexingFiles(origin)))fs.writeFileSync(path.join(fixture,file),content);await validateSEO(fixture,origin);fs.writeFileSync(path.join(fixture,'robots.txt'),'User-agent: *\nDisallow: /');await assert.rejects(validateSEO(fixture,origin));}finally{fs.rmSync(fixture,{recursive:true,force:true});}
+const {buildRelease}=await import('../scripts/build-release.mjs');
+const builtIndex=fs.readFileSync(new URL('../dist/index.html',import.meta.url));await assert.rejects(buildRelease({target:'production',siteUrl:''}));await assert.rejects(buildRelease({target:'production',siteUrl:'https://example.test'}));assert.deepEqual(fs.readFileSync(new URL('../dist/index.html',import.meta.url)),builtIndex);
+console.log('PASS full fixture consistency, tampered robots rejection, actual JPEG dimensions/MIME and production fail-closed preserves dist');

@@ -11,7 +11,10 @@
     "content": "node scripts/generate-content.mjs",
     "test:eng-001": "node tests/eng-001.cjs && node tests/eng-001-final.cjs",
     "build:production": "BUILD_TARGET=production npm run build",
-    "test:seo": "node tests/seo.mjs"
+    "test:seo": "node tests/seo.mjs && node tests/seo-browser.cjs",
+    "test:performance": "node tests/performance.cjs",
+    "test:previews": "node tests/plan-previews.cjs",
+    "test:catalog-transfer": "node tests/catalog-transfer.cjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

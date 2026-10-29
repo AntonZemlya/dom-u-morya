@@ -1,0 +1,12 @@
+const fs=require('fs'),path=require('path');
+const {browser,stable,maskMap}=require('./helpers.cjs');
+const phase=process.argv[2]||'current',out=path.join(process.env.QA_OUTPUT_DIR||require('os').tmpdir()+'/seo-001-qa',phase);
+const assert=require('node:assert/strict');
+(async()=>{const b=await browser(),results=[];try{for(const width of [1440,390]){
+ const c=await b.newContext({viewport:{width,height:844},deviceScaleFactor:width<500?2:1,reducedMotion:'reduce'}),p=await c.newPage(),cdp=await c.newCDPSession(p);await maskMap(p);await cdp.send('Network.enable');await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});let rows=[],responses={};cdp.on('Network.responseReceived',e=>responses[e.requestId]=e.response.url);cdp.on('Network.loadingFinished',e=>{if(responses[e.requestId]?.includes('/plans/'))rows.push({url:responses[e.requestId],bytes:e.encodedDataLength})});
+ await p.goto('http://127.0.0.1:4183/');await stable(p);await p.locator('#cookie-decline').click();await p.evaluate(()=>document.querySelector('[data-tab="1k"]').click());
+ const load=async()=>{for(const i of await p.locator('#plans-grid .plan-thumb img').all()){await i.scrollIntoViewIfNeeded();await i.evaluate(e=>e.decode())}await p.waitForTimeout(300)};
+ await load();const six={cards:await p.locator('#plans-grid .card').count(),bytes:rows.reduce((a,r)=>a+r.bytes,0),requests:rows.length};assert.equal(six.cards,6);const ids=new Set();
+ for(const key of ['studio','1k','2k','3k']){await p.evaluate(key=>document.querySelector(`[data-tab="${key}"]`).click(),key);while(await p.locator('#show-more-plans').isVisible())await p.locator('#show-more-plans').click();await load();for(const id of await p.locator('#plans-grid .card').evaluateAll(es=>es.map(e=>e.dataset.lotId)))ids.add(id);}
+ assert.equal(ids.size,28);const all={cards:ids.size,bytes:rows.reduce((a,r)=>a+r.bytes,0),requests:rows.length};await p.locator('#plans-grid .plan-thumb').first().click();await p.locator('#lightbox-asset').evaluate(e=>e.decode());await p.waitForTimeout(300);const lightbox={bytes:rows.reduce((a,r)=>a+r.bytes,0),requests:rows.length};lightbox.extraBytes=lightbox.bytes-all.bytes;results.push({width,six,all,lightbox,rows});console.log(phase,width,JSON.stringify({six,all,lightbox}));await c.close();}
+}finally{await b.close()}fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'catalog-transfer.json'),JSON.stringify(results,null,2))})().catch(e=>{console.error(e);process.exitCode=1});

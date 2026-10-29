@@ -13,12 +13,12 @@ export function siteOrigin(value='', target='preview') {
 export const pageURL=(origin,file)=>origin+(file==='index.html'?'/':'/'+file);
 const escape=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 export function graph(file,origin,title,description) {
-  const id=key=>origin?{'@id':origin+'/#'+key}:{};
+  const id=key=>({'@id':origin?origin+'/#'+key:'_:'+key});
   const operator={'@type':'Organization',...id('operator'),name:'ИП Саврасова Елена Анатольевна',taxID:'366210396814',identifier:{'@type':'PropertyValue',propertyID:'ОГРНИП',value:'318366800035941'},telephone:'+79529568875',email:'info@anyara.ru'};
   const developer={'@type':'Organization',...id('developer'),name:'ГК «Садовое кольцо»'};
   const complex={'@type':'ApartmentComplex',...id('complex'),name:'ЖК «Дом у моря»',description:'Жилой комплекс в Мариуполе. Застройщик — ГК «Садовое кольцо».',address:{'@type':'PostalAddress',addressLocality:'Мариуполь'}};
-  const website={'@type':'WebSite',...id('website'),name:'ЖК «Дом у моря»',inLanguage:'ru',publisher:origin?id('operator'):operator,...(origin?{url:origin+'/'}:{})};
-  const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:{}),name:title,description,inLanguage:'ru',isPartOf:origin?id('website'):website,about:origin?id('complex'):complex,publisher:origin?id('operator'):operator};
+  const website={'@type':'WebSite',...id('website'),name:'ЖК «Дом у моря»',inLanguage:'ru',publisher:id('operator'),...(origin?{url:origin+'/'}:{})};
+  const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:id('webpage')),name:title,description,inLanguage:'ru',isPartOf:id('website'),about:id('complex'),publisher:id('operator')};
   return {'@context':'https://schema.org','@graph':[operator,developer,complex,website,page]};
 }
 export function seoHTML(html,file,origin) {
@@ -38,4 +38,22 @@ export function indexingFiles(origin) {
 export async function generateSEO(directory,origin) {
   for(const file of SEO_PAGES){const p=path.join(directory,file);await fs.writeFile(p,seoHTML(await fs.readFile(p,'utf8'),file,origin));}
   for(const [file,body] of Object.entries(indexingFiles(origin)))await fs.writeFile(path.join(directory,file),body);
+}
+
+// Check the emitted artifacts together before accepting a release.
+export async function validateSEO(directory,origin) {
+  for(const [file,expected] of Object.entries(indexingFiles(origin)))if(await fs.readFile(path.join(directory,file),'utf8')!==expected)throw Error('Inconsistent indexing artifact: '+file);
+  if(!origin){try{await fs.access(path.join(directory,'sitemap.xml'));throw Error('Preview must not contain sitemap');}catch(e){if(e.code!=='ENOENT')throw e;}}
+  for(const file of SEO_PAGES){
+    const html=await fs.readFile(path.join(directory,file),'utf8');
+    const canonical=[...html.matchAll(/<link rel="canonical" href="([^"]+)">/g)].map(x=>x[1]);
+    if(JSON.stringify(canonical)!==JSON.stringify(origin?[pageURL(origin,file)]:[]))throw Error('Canonical mismatch: '+file);
+    const section=html.match(/<!-- SEO:generated -->(.*?)<!-- \/SEO:generated -->/s)?.[1];if(!section)throw Error('Missing SEO metadata: '+file);
+    if(/localhost|127\.0\.0\.1|example\.|TODO/.test(origin?section.replaceAll(origin,''):section))throw Error('Placeholder SEO URL');
+    const graphs=[...section.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];if(graphs.length!==1)throw Error('Duplicate/missing graph');
+    const data=JSON.parse(graphs[0][1]),nodes=data['@graph'];if(nodes.length!==5)throw Error('Graph shape');
+    const ids=nodes.map(x=>x['@id']).filter(Boolean);if(new Set(ids).size!==ids.length)throw Error('Duplicate graph IDs');
+    if(origin){if(!section.includes(`property="og:url" content="${pageURL(origin,file)}"`)||!section.includes(`property="og:image" content="${origin}/assets/og-project.jpg"`))throw Error('OG URL mismatch');}
+    else if(ids.some(id=>!id.startsWith('_:'))||/property="og:(?:url|image)"/.test(section))throw Error('Preview has public identities');
+  }
 }

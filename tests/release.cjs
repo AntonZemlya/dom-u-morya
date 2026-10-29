@@ -17,7 +17,7 @@ const path = require('node:path');
     await fs.writeFile(path.join(fixture, 'docs/private.txt'), 'fixture only');
     await fs.writeFile(path.join(fixture, '.env'), 'FIXTURE_ONLY=true');
     const first = await buildRelease({sourceRoot: fixture, outputRoot});
-    assert.equal(first.files, RELEASE_FILES.length);
+    assert.equal(first.files, RELEASE_FILES.length+1);
     await assert.rejects(fs.access(path.join(outputRoot, '.env')));
     await assert.rejects(fs.access(path.join(outputRoot, 'docs')));
     for (const relative of RELEASE_FILES) {

@@ -3,6 +3,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {RELEASE_FILES} from './release-files.mjs';
+import {siteOrigin,generateSEO} from './seo.mjs';
 
 export const projectRoot = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const allowed = new Set(RELEASE_FILES);
@@ -57,7 +58,7 @@ async function filesUnder(directory, prefix = '') {
 
 export async function validateRelease(directory) {
   const actual = await filesUnder(directory);
-  const expected = [...RELEASE_FILES].sort();
+  const expected = [...RELEASE_FILES, 'robots.txt', ...(actual.includes('sitemap.xml') ? ['sitemap.xml'] : [])].sort();
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error('Release file set does not match the allowlist');
   for (const relative of RELEASE_FILES) await requireRegularFile(directory, relative);
   await validateReferences(directory);
@@ -71,7 +72,8 @@ export async function validateRelease(directory) {
   return {directory, files: actual.length, bytes, sha256: hash.digest('hex')};
 }
 
-export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.join(sourceRoot, 'dist')} = {}) {
+export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.join(sourceRoot, 'dist'), siteUrl=process.env.SITE_URL||'', target=process.env.BUILD_TARGET||'preview'} = {}) {
+  const origin=siteOrigin(siteUrl,target);
   sourceRoot = path.resolve(sourceRoot);
   outputRoot = path.resolve(outputRoot);
   if (outputRoot === sourceRoot || sourceRoot.startsWith(outputRoot + path.sep)) throw new Error('Output cannot replace the source tree');
@@ -91,6 +93,7 @@ export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.
       await fs.mkdir(path.dirname(target), {recursive: true});
       await fs.copyFile(path.join(sourceRoot, relative), target);
     }
+    await generateSEO(staging,origin);
     const result = await validateRelease(staging);
     await fs.rm(outputRoot, {recursive: true, force: true});
     await fs.rename(staging, outputRoot);

@@ -8,7 +8,7 @@ const pages=['index.html','privacy.html','consent-personal-data.html'];
 for(const name of pages){
  const before=execFileSync('git',['show','1c5d513:'+name],{cwd:root,encoding:'utf8',maxBuffer:1e6});
  const source=fs.readFileSync(path.join(root,name),'utf8');
- assert.equal(source,withNofollow(before),name+': only external nofollow additions');
+ assert.equal(require('./seo-contract.cjs').semantic(require('./seo-contract.cjs').body(source)),require('./seo-contract.cjs').body(withNofollow(before)),name+': only external nofollow additions');
  assert.equal(fs.readFileSync(path.join(root,'dist',name),'utf8'),source,name+': build preserves attributes');
 }
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();try{

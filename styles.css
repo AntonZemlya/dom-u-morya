@@ -241,7 +241,7 @@ button{font-family:inherit}
 .hero-style-4 { position: absolute; inset: 0px; background: linear-gradient(90deg, rgba(18, 22, 28, 0) 0%, rgba(18, 22, 28, 0.06) 30%, rgba(18, 22, 28, 0.22) 52%, rgba(18, 22, 28, 0.42) 72%, rgba(18, 22, 28, 0.58) 100%); }
 .hero-style-5 { display: none; position: absolute; inset: 0px; background: linear-gradient(rgba(18, 22, 28, 0.3) 0%, rgba(18, 22, 28, 0.72) 100%); }
 .hero-style-6 { position: relative; z-index: 1; max-width: 1320px; margin: 0px auto; width: 100%; padding: 0px clamp(28px, 7vw, 40px) clamp(28px, 6vw, 64px) clamp(20px, 5vw, 40px); display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
-.hero-style-7 { font: 500 clamp(12px, 2vw, 11.5px) Sora; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(232, 210, 160); margin-bottom: clamp(10px, 2vw, 22px); }
+.hero-style-7 { font: 500 clamp(12px, 2vw, 11.5px) Sora; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(232, 210, 160); margin: 0 0 clamp(10px, 2vw, 22px); }
 .hero-style-8 { font: 500 clamp(36px, 6.2vw, 72px) / 1.1 Newsreader, serif; margin: 0px 0px clamp(14px, 3vw, 28px); color: rgb(246, 243, 237); max-width: 14ch; overflow-wrap: break-word; }
 .hero-style-9 { font: 400 clamp(15.5px, 2.6vw, 18px) / 1.7 Sora; color: rgba(246, 243, 237, 0.85); max-width: 42ch; margin: 0px 0px clamp(18px, 3vw, 36px); }
 .hero-style-10 { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; margin-bottom: clamp(20px, 4vw, 44px); }

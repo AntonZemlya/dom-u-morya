@@ -11,11 +11,50 @@ import shutil
 import stat
 import sys
 import tarfile
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 
 HOME = Path('/home/users/j/j84938826')
 DOC = HOME / 'domains/zhk-dom-umorya.ru'
 PRIVATE = HOME / '.dom-u-morya'
+ORIGIN = 'https://zhk-dom-umorya.ru'
+HTTP_TLS_CONTEXT = None # Tests may trust their own loopback certificate; production uses system CAs.
+REVOKED_SHA = '9f6ee0429f078758f289673055f9d3860ca0e6980c89d29d8de2a5b6d6e54cf0'
+SECURITY_POLICY = b'''# BEGIN DOM-U-MORYA PERMANENT DOTFILE GUARD v1
+# Applied before publishing any release; retained by rollback.
+<FilesMatch "^\\.">
+    Require all denied
+</FilesMatch>
+RewriteEngine On
+# Only the standard root ACME token path is exempt from the dot-directory deny.
+RewriteRule ^\\.well-known/acme-challenge/[A-Za-z0-9_-]+$ - [END]
+RewriteRule (^|/)\\. - [F,END]
+# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1
+'''
+HTTPS_REDIRECT = b'''
+# Jino HTTPS redirect: activate only after verifying the proxy header over HTTP.
+RewriteCond %{HTTP:X-Forwarded-Protocol} !=https
+RewriteRule .* https://zhk-dom-umorya.ru%{REQUEST_URI} [R=301,L]
+'''
+
+def guard_http_check():
+    """No response bodies or visitor data are logged. TLS verification remains on."""
+    nonce=secrets.token_hex(8)
+    result={}
+    for name in ['.envrc','.htaccess','.env','.git/config','assets/.env']:
+        request=urllib.request.Request(ORIGIN+'/'+name+'?security-check='+nonce,headers={'Cache-Control':'no-cache'})
+        try:
+            with urllib.request.urlopen(request,timeout=15,context=HTTP_TLS_CONTEXT) as response:
+                code=response.getcode()
+        except urllib.error.HTTPError as error:
+            code=error.code
+            error.close()
+        ensure(code in [403,404], 'Service path is not denied: '+name+' HTTP '+str(code))
+        result[name]=code
+    with urllib.request.urlopen(ORIGIN+'/?security-check='+nonce,timeout=15,context=HTTP_TLS_CONTEXT) as response:
+        ensure(response.getcode()==200, 'Security policy broke the current index')
+    return result
 
 def ensure(condition, message):
     if not condition:
@@ -48,7 +87,7 @@ def private():
     ensure(not PRIVATE.is_symlink(), 'Unsafe private directory')
     PRIVATE.mkdir(mode=0o700, exist_ok=True)
     ensure(PRIVATE.resolve() == PRIVATE and stat.S_IMODE(PRIVATE.stat().st_mode) == 0o700, 'Private directory must be 0700')
-    for name in ['releases','backups','state']:
+    for name in ['releases','backups','state','security']:
         p = PRIVATE / name
         ensure(not p.is_symlink(), 'Unsafe private subdirectory')
         p.mkdir(mode=0o700, exist_ok=True)
@@ -85,6 +124,7 @@ def unpack(folder):
             content = archive.extractfile('public/'+name).read()
             ensure(hashlib.sha256(content).hexdigest() == sha, 'Public member SHA mismatch')
             files[name] = content
+        ensure(files.get('.htaccess') == SECURITY_POLICY + HTTPS_REDIRECT, 'Package must contain the permanent guard and the reviewed redirect')
         return manifest, files
 
 def atomic(path, data, mode=0o644):
@@ -111,9 +151,93 @@ def atomic(path, data, mode=0o644):
     finally:
         unlink(tmp)
 
+def ensure_security():
+    """The release-independent floor; never restore an unprotected .htaccess."""
+    private()
+    saved=PRIVATE/'security/dotfiles.htaccess'
+    if saved.exists():
+        ensure(not saved.is_symlink() and saved.read_bytes()==SECURITY_POLICY, 'Permanent security policy differs; review before migration')
+    else:
+        atomic(saved,SECURITY_POLICY,0o600)
+    current=DOC/'.htaccess'
+    if current.exists():
+        ensure(not current.is_symlink() and current.read_bytes() in [SECURITY_POLICY,SECURITY_POLICY+HTTPS_REDIRECT], 'Unexpected existing .htaccess; do not overwrite Jino/operator rules')
+    atomic(current,SECURITY_POLICY)
+
+def protect():
+    """Explicit security-only remediation, authorized independently of production GO."""
+    before=inventory()
+    ensure(set(before) <= {'.envrc','index.html','.htaccess'}, 'Security-only fix expects the current placeholder')
+    private()
+    if (DOC/'.htaccess').exists():
+        ensure((DOC/'.htaccess').read_bytes()==SECURITY_POLICY, 'Unexpected .htaccess before security-only fix')
+    stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    backup=PRIVATE/'security'/('before-'+stamp)
+    backup.mkdir(mode=0o700)
+    with tarfile.open(backup/'docroot.tar.gz','w:gz') as archive:
+        archive.add(DOC,arcname='docroot',recursive=True)
+    (backup/'docroot.tar.gz').chmod(0o600)
+    atomic(backup/'manifest.json',json.dumps(before,sort_keys=True,indent=2).encode(),0o600)
+    ensure_security()
+    statuses=guard_http_check()
+    after=inventory()
+    ensure(all(after[n]==v for n,v in before.items() if n!='.htaccess'), 'Security fix changed the placeholder or managed file')
+    ensure(set(after)=={'.envrc','index.html','.htaccess'}, 'Unexpected public files after security fix')
+    held=PRIVATE/'releases'/REVOKED_SHA
+    if held.is_dir():
+        atomic(held/'HOLD.json',json.dumps({'sha256':REVOKED_SHA,'status':'HOLD','reason':'dotfile exposure; never deploy this package'}).encode(),0o600)
+    result={'security_only':True,'production_published':False,'backup':str(backup),'backup_sha256':digest(backup/'docroot.tar.gz'),
+            'guard_sha256':digest(DOC/'.htaccess'),'envrc_unchanged':True,'index_unchanged':True,'http':statuses}
+    atomic(PRIVATE/'security/receipt.json',json.dumps(result,sort_keys=True,indent=2).encode(),0o600)
+    return result
+
+def security_probe(action, identity, token_hash=''):
+    ensure(re.fullmatch('[a-f0-9]{24}',identity), 'Invalid security probe identity')
+    ensure((DOC/'.htaccess').read_bytes() in [SECURITY_POLICY,SECURITY_POLICY+HTTPS_REDIRECT], 'Install the permanent guard first')
+    receipt=PRIVATE/'security'/('probe-'+identity+'.json')
+    php=DOC/('security-probe-'+identity+'.php')
+    acme=DOC/'.well-known/acme-challenge'/identity
+    dotfiles=[DOC/('.dotfile-security-'+identity+suffix) for suffix in ['.css','.php']]
+    if action=='remove':
+        saved=json.loads(receipt.read_text()) if receipt.exists() else {'created_dirs':[]}
+        unlink(php);unlink(acme)
+        for path in dotfiles:unlink(path)
+        for relative in reversed(saved['created_dirs']):
+            try:
+                (DOC/relative).rmdir()
+            except OSError:
+                pass
+        unlink(receipt)
+        return {'runtime_removed':not php.exists(),'acme_removed':not acme.exists(),'dotfiles_removed':all(not p.exists() for p in dotfiles)}
+    ensure(action=='install' and re.fullmatch('[a-f0-9]{64}',token_hash), 'Invalid security probe request')
+    ensure(not receipt.exists() and not php.exists() and not acme.exists() and all(not p.exists() for p in dotfiles), 'Refusing to overwrite a probe or operator file')
+    created=[]
+    for relative in ['.well-known','.well-known/acme-challenge']:
+        p=DOC/relative
+        ensure(not p.is_symlink(), 'Unsafe ACME directory')
+        if not p.exists():
+            p.mkdir(mode=0o755)
+            created.append(relative)
+        ensure(p.is_dir(), 'ACME path is not a directory')
+    atomic(receipt,json.dumps({'created_dirs':created}).encode(),0o600)
+    expiry=int(datetime.now(timezone.utc).timestamp())+120
+    source="""<?php
+ini_set('display_errors','0');ini_set('log_errors','0');
+header('Cache-Control: no-store');header('X-Robots-Tag: noindex');
+if(time()>EXPIRY || !hash_equals('TOKEN',hash('sha256',$_SERVER['HTTP_X_LEAD_DIAGNOSTIC']??''))){http_response_code(404);exit;}
+header('Content-Type: application/json');
+echo json_encode(['php_version'=>PHP_VERSION,'php_version_id'=>PHP_VERSION_ID,'mail_available'=>function_exists('mail'),'filter_available'=>function_exists('filter_var'),'no_mail_sent'=>true]);
+""".replace('EXPIRY',str(expiry)).replace('TOKEN',token_hash)
+    atomic(php,source.encode())
+    atomic(acme,('security-acme-'+identity).encode())
+    for path in dotfiles:atomic(path,b'Non-sensitive denial probe; must return 403/404')
+    return {'php_path':php.name,'acme_path':str(acme.relative_to(DOC)),'dotfile_paths':[p.name for p in dotfiles],'expires_in_seconds':120}
+
 def prepare(sha):
     before = inventory()
-    ensure(set(before) == {'.envrc','index.html'}, 'Initial rollout requires exactly the reviewed placeholder and .envrc')
+    ensure(sha!=REVOKED_SHA, 'Old package is HOLD; prepare a new reviewed SHA')
+    ensure(set(before) == {'.envrc','index.html','.htaccess'} and (DOC/'.htaccess').read_bytes()==SECURITY_POLICY, 'Prepare requires the protected placeholder baseline')
+    guard_http_check()
     private()
     folder = release(sha)
     ensure(not folder.exists(), 'Package already prepared; inspect the existing prepare result')
@@ -176,16 +300,18 @@ def rollback(sha):
     ensure(digest(DOC/'.envrc') == record['before']['.envrc']['sha256'], 'Managed .envrc changed; preserve and inspect manually')
     if (PRIVATE/'config.php').is_file():
         set_form(sha,False)
+    # Security survives every rollback, including a legacy backup without .htaccess.
+    ensure_security()
     # Remove only paths in this exact reviewed release; no recursive root deletion.
     with tarfile.open(backup/'docroot.tar.gz','r:gz') as archive:
         for name,metadata in record['before'].items():
-            if name == '.envrc':
+            if name in ['.envrc','.htaccess']:
                 continue
             atomic(DOC/name,archive.extractfile('docroot/'+name).read(),metadata['mode'])
             os.chown(DOC/name,metadata['uid'],metadata['gid'])
             os.chmod(DOC/name,metadata['mode'])
     for name in sorted(files,reverse=True):
-        if name not in record['before']:
+        if name not in record['before'] and name!='.htaccess':
             target=DOC/name
             ensure(not target.is_symlink(), 'Unsafe rollback path')
             unlink(target)
@@ -194,20 +320,29 @@ def rollback(sha):
             directory.rmdir()
         except OSError:
             pass
-    ensure(inventory() == record['before'], 'Rollback inventory differs from backup')
+    actual=inventory()
+    expected=dict(record['before'])
+    expected['.htaccess']=actual['.htaccess']
+    ensure((DOC/'.htaccess').read_bytes()==SECURITY_POLICY and actual==expected, 'Rollback differs from backup plus permanent security floor')
+    statuses=guard_http_check()
     record['deployed']=False
     record['form_enabled']=False
     record['rolled_back_at']=datetime.now(timezone.utc).isoformat()
     atomic(folder/'record.json',json.dumps(record,indent=2).encode(),0o600)
-    return {'rolled_back':True,'backup':str(backup),'envrc_preserved':True}
+    return {'rolled_back':True,'backup':str(backup),'envrc_preserved':True,'security_retained':True,'http':statuses}
 
 def deploy(sha):
+    ensure(sha!=REVOKED_SHA, 'Old package is HOLD; production deployment is forbidden')
     folder,record=load_record(sha)
+    ensure(not (folder/'HOLD.json').exists(), 'This package is on HOLD')
     manifest,files=unpack(folder)
     ensure(not record['deployed'], 'This release is already deployed')
     ensure(inventory() == record['before'], 'Document root differs from reviewed backup; redo preflight')
     config=PRIVATE/'config.php'
     ensure(not config.exists(), 'Private config already exists; inspect before this initial rollout')
+    ensure_security()
+    # Fail closed on a 200/500 before any asset or index can be published.
+    guard_http_check()
     atomic(config,("<?php return ['FORM_ENABLED'=>false,'DELIVERY_VERIFIED'=>false,'LEGAL_APPROVED'=>'','HMAC_SECRET'=>'"+secrets.token_hex(32)+"','STATE_DIR'=>__DIR__.'/state'];\n").encode(),0o600)
     try:
         # Assets/API/legal documents first; index is the final publication switch.
@@ -230,6 +365,7 @@ def redirect(sha):
     manifest,files=unpack(folder)
     ensure('.htaccess' in files,'No reviewed redirect in package')
     atomic(DOC/'.htaccess',files['.htaccess'])
+    guard_http_check()
     ensure(all(digest(DOC/name)==expected for name,expected in manifest['files'].items()),'Final deployed manifest mismatch')
     record['redirect_pending']=False
     atomic(folder/'record.json',json.dumps(record,indent=2).encode(),0o600)
@@ -294,6 +430,12 @@ def main():
         result={'docroot':str(DOC),'inventory':inventory(),'private_exists':PRIVATE.exists(),'free_bytes':shutil.disk_usage(DOC).free}
     elif operation=='prepare':
         result=prepare(sys.argv[2])
+    elif operation=='protect':
+        result=protect()
+    elif operation=='guard-check':
+        result={'http':guard_http_check()}
+    elif operation=='security-probe':
+        result=security_probe(*sys.argv[2:])
     elif operation=='deploy':
         result=deploy(sys.argv[2])
     elif operation=='rollback':

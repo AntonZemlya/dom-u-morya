@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tarfile
 import urllib.request
+from security_http import check_denials, fetch
 
 ROOT=Path(__file__).resolve().parent.parent
 REMOTE=Path(__file__).with_name('jino_remote.py')
@@ -60,19 +61,72 @@ def package():
     (output/'package.json').write_text(json.dumps(metadata,indent=2)+'\n')
     return metadata
 
+def security_check(with_runtime=False):
+    origin='https://zhk-dom-umorya.ru'
+    result={'service_files':check_denials(origin),'no_mail_sent':True}
+    code,_,_=fetch(origin+'/')
+    if code!=200:
+        raise RuntimeError('Current site does not return HTTPS 200')
+    result['https_status']=code
+    if with_runtime:
+        identity=secrets.token_hex(12)
+        token=secrets.token_hex(32)
+        installed=False
+        try:
+            installed=True # Cleanup also covers an unknown outcome of the SSH install.
+            probe=remote('security-probe','install',identity,hashlib.sha256(token.encode()).hexdigest())
+            url=origin+'/'+probe['php_path']
+            code,_,_=fetch(url)
+            if code!=404:
+                raise RuntimeError('Unauthenticated temporary PHP probe must return 404')
+            code,_,body=fetch(url,headers={'X-Lead-Diagnostic':token})
+            runtime=json.loads(body)
+            if code!=200 or not 80400<=runtime.get('php_version_id',0)<80500 or not runtime.get('no_mail_sent'):
+                raise RuntimeError('Security check did not confirm HTTP PHP 8.4')
+            result['runtime']=runtime
+            code,_,body=fetch(origin+'/'+probe['acme_path'])
+            if code!=200 or body!=('security-acme-'+identity).encode():
+                raise RuntimeError('Root ACME challenge exception failed HTTP check: '+str(code))
+            result['acme_status']=code
+            result['existing_dotfile_probes']=[]
+            for path in probe['dotfile_paths']:
+                for method in ['GET','HEAD']:
+                    code,_,_=fetch(origin+'/'+path,method)
+                    if code not in [403,404]:
+                        raise RuntimeError('Existing hidden static/PHP probe is accessible: '+str(code))
+                    result['existing_dotfile_probes'].append({'extension':Path(path).suffix,'method':method,'status':code})
+        finally:
+            if installed:
+                removed=remote('security-probe','remove',identity)
+                if not all(removed.values()):
+                    raise RuntimeError('Temporary security probes must be removed immediately')
+                result['probes_removed']=True
+        result['removed_probe_http']=[]
+        for path in [probe['php_path'],probe['acme_path']]:
+            code,_,body=fetch(origin+'/'+path+'?removed-check='+secrets.token_hex(8),headers={'Cache-Control':'no-cache'})
+            kind='php' if path==probe['php_path'] else 'acme'
+            row={'kind':kind,'fresh_status':code,'filesystem_removed':True}
+            if code not in [403,404]:
+                raise RuntimeError('Removed '+kind+' security probe returned HTTP '+str(code))
+            result['removed_probe_http'].append(row)
+    return result
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['package','preflight','prepare','deploy','rollback','runtime','probe','cleanup','enable','disable','redirect'])
+    parser.add_argument('command',choices=['package','preflight','prepare','deploy','rollback','runtime','probe','cleanup','enable','disable','redirect','protect','security-check'])
     parser.add_argument('--sha')
     parser.add_argument('--go',help='Exact owner-approved package SHA; required to modify the public docroot')
     parser.add_argument('--permit',help='Separate permission: SEND ONE SYNTHETIC <SHA>')
     parser.add_argument('--delivery-confirmed',help='Received synthetic probe ID, confirmed by mailbox owner')
     parser.add_argument('--legal-approved',help='Exact owner-approved legal revision')
     parser.add_argument('--mail-auth',help='Owner-confirmed header results: SPF=pass;DKIM=pass;duplicates=0')
+    parser.add_argument('--with-runtime',action='store_true',help='Temporary protected PHP/ACME security probes; never sends mail')
     args=parser.parse_args()
     if args.command=='package':
         result=package()
-    elif args.command in ['preflight','cleanup']:
+    elif args.command=='security-check':
+        result=security_check(args.with_runtime)
+    elif args.command in ['preflight','cleanup','protect']:
         result=remote(args.command)
     else:
         if not args.sha or len(args.sha)!=64 or any(c not in '0123456789abcdef' for c in args.sha):

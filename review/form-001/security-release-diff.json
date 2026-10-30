@@ -1,0 +1,16 @@
+{
+  "old_package_sha256": "9f6ee0429f078758f289673055f9d3860ca0e6980c89d29d8de2a5b6d6e54cf0",
+  "public_files": 242,
+  "changed_public_paths": [
+    ".htaccess"
+  ],
+  "all_other_public_bytes_identical": true,
+  "favicon_sha256": "e42d727e524d540240dc7afe635a37d5e93fbffe793e4c94bfb0746152a9a460",
+  "design_files_unchanged": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "content-model.js",
+    "favicon.png"
+  ]
+}

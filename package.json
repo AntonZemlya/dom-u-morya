@@ -16,7 +16,8 @@
     "test:previews": "node tests/plan-previews.cjs",
     "test:catalog-transfer": "node tests/catalog-transfer.cjs",
     "test:form": "node scripts/test-form.mjs",
-    "test:legal": "node scripts/check-rec003-integration.mjs"
+    "test:legal": "node scripts/check-rec003-integration.mjs",
+    "test:security": "python3 -B ops/test_release.py && python3 -B ops/test_security_http.py"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

@@ -1,0 +1,1202 @@
+{
+  "server": "Apache 2.4 loopback HTTP/HTTPS + PHP 8.4 FastCGI",
+  "real_mail": "disabled",
+  "stages": [
+    {
+      "stage": "before-index-publication",
+      "service_checks": [
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        }
+      ],
+      "index": 200,
+      "php": "8.4.14",
+      "https": 200,
+      "acme_http": 200,
+      "acme_https": 200,
+      "envrc_unchanged": true
+    },
+    {
+      "stage": "after-publication-before-301",
+      "service_checks": [
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        }
+      ],
+      "index": 200,
+      "php": "8.4.14",
+      "https": 200,
+      "acme_http": 200,
+      "acme_https": 200,
+      "envrc_unchanged": true
+    },
+    {
+      "stage": "after-publication-with-301",
+      "service_checks": [
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        }
+      ],
+      "index": 200,
+      "php": "8.4.14",
+      "https": 200,
+      "acme_http": 200,
+      "acme_https": 200,
+      "envrc_unchanged": true
+    },
+    {
+      "stage": "after-rollback",
+      "service_checks": [
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        }
+      ],
+      "index": 200,
+      "php": "8.4.14",
+      "https": 200,
+      "acme_http": 200,
+      "acme_https": 200,
+      "envrc_unchanged": true
+    },
+    {
+      "stage": "after-legacy-rollback",
+      "service_checks": [
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.local",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.css",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.env.php",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc.bak",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.htaccess~",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.git/HEAD",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.svn/entries",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/assets/.git/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2eenvrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2ehtaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/%2egit/config",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.well-known/acme-challenge/.env",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": false
+        },
+        {
+          "path": "/.envrc",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.envrc",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "GET",
+          "status": 403,
+          "cache_busted": true
+        },
+        {
+          "path": "/.htaccess",
+          "method": "HEAD",
+          "status": 403,
+          "cache_busted": true
+        }
+      ],
+      "index": 200,
+      "php": "8.4.14",
+      "https": 200,
+      "acme_http": 200,
+      "acme_https": 200,
+      "envrc_unchanged": true
+    }
+  ],
+  "all_processes_stopped": true
+}

@@ -1,6 +1,6 @@
 # FORM-001 / RELEASE-001 — локальная приёмка
 
-Дата: **30 октября 2026, МСК**. Статус: код подготовлен; production GO и реальная почта не выполнялись.
+Первичная приёмка: **30 октября 2026, МСК**. Исправление блокера dotfiles: **31 октября 2026, МСК**. Статус: код подготовлен; production GO и реальная почта не выполнялись.
 
 База сверена с GitHub: `f2f61dd31f1fe62281802f4addc5ac26cb5a64fe`. Разработка — отдельный worktree, ветка `codex/form-001-jino-prod`. Main не менялся. Точный итоговый HEAD, SHA архива, manifest путей и путь фактического backup сохраняются после коммита в `.release-output/` и предъявляются в `GO-PROD.md`; это исключает самоссылку SHA внутри собственного коммита/пакета.
 
@@ -22,7 +22,7 @@
 | npm ci | PASS, lockfile сохранён, 0 уязвимостей по результату npm audit при установке |
 | PHP 8.4 lint + contract | PASS, **60 assertions**, fake mail; размер, JSON, типы, согласие, телефон, поля, Unicode/CRLF, Origin, honeypot, rate/replay/TTL/lock, отказ транспорта и выключенный/отсутствующий конфиг |
 | PHP 8.4 HTTP + браузер | PASS, 1440/768/390/320; лот 22825, расчёт, UTF-8 письмо в fake-mail, one request/one message, потерянный ответ → тот же key, 4xx/5xx/не-JSON, отсутствие конфига, no-JS, фокус/нет overflow |
-| ops/test_release.py | PASS, 5 сценариев: подготовка без изменения docroot, manifest/права/.envrc, deploy/откат, gate включения, отложенный redirect, подмена/неожиданный файл/symlink, повреждённый архив, автоматический rollback при сбое записи |
+| ops/test_release.py | PASS, 10 сценариев (добавлены guard до index, HTTP fail-closed, сохранение при legacy rollback, запрет старого SHA, security-only fix): подготовка без изменения docroot, manifest/права/.envrc, deploy/откат, gate включения, отложенный redirect, подмена/неожиданный файл/symlink, повреждённый архив, автоматический rollback при сбое записи |
 | npm run check | PASS, структура и неизменность каталога/57 SVG/Hero, generated content и шаблоны секретов |
 | npm test | PASS, воспроизводимость allowlist, UI/catalog всех 4 ширин, no-JS, PDF |
 | npm run build | PASS, SITE_URL=https://zhk-dom-umorya.ru, production, **242 файла** |
@@ -42,9 +42,9 @@ PHP 8.4.14 собран из официального https://www.php.net/distri
 
 ## Read-only production preflight
 
-В панели «Сайты» у zhk-dom-umorya.ru выбран PHP 8.4, `.envrc` содержит load_prefix для php84. Фактический HTTP runtime остаётся **не проверен до GO**. На сервере Python 3.6.8; release receiver использует совместимые API.
+В панели «Сайты» у zhk-dom-umorya.ru выбран PHP 8.4, `.envrc` содержит load_prefix для php84. Для отдельной проверки исправления dotfiles владелец разрешил проверку PHP: временный защищённый endpoint подтвердил фактический HTTP PHP 8.4; probe удалён. Это не публикация application endpoint и не проверка доставки почты. На сервере Python 3.6.8; release receiver использует совместимые API.
 
-Публичный каталог `/home/users/j/j84938826/domains/zhk-dom-umorya.ru` содержит только index.html (797 bytes, 0644) и .envrc (31 bytes, 0644), каталог 0755, владелец j84938826. SHA .envrc `f228ab287db1926f8ca47f987a5155f7d3811ff3f9275247d0cd5658875faefe`. Наличие свободного места подтверждено. Публичных изменений не делали.
+Первоначальный публичный каталог `/home/users/j/j84938826/domains/zhk-dom-umorya.ru` содержал только index.html (797 bytes, 0644) и .envrc (31 bytes, 0644), каталог 0755, владелец j84938826. SHA .envrc `f228ab287db1926f8ca47f987a5155f7d3811ff3f9275247d0cd5658875faefe`. Наличие свободного места подтверждено. До независимой приёмки публичных изменений не делали. По отдельному поручению владельца на HOLD установлена только постоянная защита dotfiles в `.htaccess`; index и `.envrc` остались прежними. Текущий docroot содержит эти три файла; application release не опубликован.
 
 HTTPS 200; WWW HTTPS → apex 301; HTTP apex → HTTPS **302**, менять после GO документированным механизмом с проверкой заголовка прокси. Gzip подтверждён. SSL в панели активен для apex/www до 28.01.2027.
 
@@ -55,3 +55,18 @@ NS Jino, MX mail.zhk-dom-umorya.ru, SPF `v=spf1 redirect=_spf.jino.ru` и DKIM �
 Точный GO на пакет; утверждение legal редакции и доступа/удаления писем; фиксация прав на полный набор медиа. Для одного synthetic email — отдельное разрешение. До подтверждённой доставки в Inbox/Spam и заголовков/отсутствия дублей форма остаётся выключена. Выбор при недоставке — rollback или информационная версия по отдельному решению владельца. [Команды и порядок выпуска/отката](../../ops/README.md).
 
 GitHub CI/Actions не запускались, платные минуты не расходовались, staging не создавался, другие домены не менялись. Production DONE не заявляется до фактического выпуска и приёмки письма.
+
+
+## Исправление блокера независимой приёмки — 31.10.2026
+
+[Первый комментарий](https://github.com/AntonZemlya/dom-u-morya/pull/16#issuecomment-6533142991) и [дополнение про rollback](https://github.com/AntonZemlya/dom-u-morya/pull/16#issuecomment-6533174102) учтены. Старый архив `9f6ee0429f078758f289673055f9d3860ca0e6980c89d29d8de2a5b6d6e54cf0` остаётся HOLD и программно запрещён к deploy.
+
+Постоянный guard применяется до публикации index, независимо от блока 301. Он сохраняется после rollback; unsafe `.htaccess` из старой копии не восстанавливается. Build/release отвергает пакет без guard. Deploy требует HTTP 403/404 до записи index; rollback повторяет HTTP-проверку. Реальный loopback Apache 2.4.66 + TLS + PHP 8.4.14 FastCGI проверяет исходную утечку 200, затем 5 защищённых состояний: до index, после публикации без 301, с 301, после обычного и legacy rollback. Во всех состояниях проверяются существующие hidden files, nested dot-directories, percent-encoded paths, GET/HEAD, ACME HTTP/HTTPS 200, PHP и index. Все временные процессы остановлены. [Машинный отчёт](security-http.json).
+
+На Jino выполнено только разрешённое security-only исправление текущей заглушки. Создан отдельный pre-security backup; `.envrc`/index побайтово сохранены, их владельцы/права не менялись. Подтверждены прямой /.envrc = 403, HTTPS index = 200, прежние HTTP 302 / WWW 301. Настройки интерпретатора, SSL, остальных доменов не менялись. Реальных писем нет; application release/форма не опубликованы.
+
+[Проверка Jino](security-jino.json): 38 HTTP-проверок служебных путей, существующие скрытые CSS/PHP = 403, фактический PHP 8.4.27, ACME = 200, удалённые пробы = 403/404; только три ожидаемых файла после cleanup. Полные результаты Jino, новый HEAD/SHA, приватный пакет, новый backup и команды находятся в обновлённом `.release-output/GO-PROD.md`. Статус — HOLD для повторной независимой приёмки; staging не создаётся. Favicon, дизайн, HTML/CSS/JS, каталог и медиа при этом исправлении не изменены.
+
+Основание правил: [Apache FilesMatch](https://httpd.apache.org/docs/2.4/mod/core.html#filesmatch), [Require all denied](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#require), [RewriteRule F/END](https://httpd.apache.org/docs/2.4/rewrite/flags.html). Правило 301 остаётся основанным на [справке Jino](https://jino.ru/spravka/hosting/).
+
+Сравнение dist со старым независимо принятым архивом: из 242 публичных путей изменена только `.htaccess`; остальные 241 файла, включая favicon, HTML/CSS/JS, планы и фотографии, побайтово идентичны. [Хеши и список](security-release-diff.json). Полный визуальный/SEO/performance baseline принят ранее; повторены проверки сборки, PHP/fake-mail и расширенный security lifecycle, относящиеся к этому исправлению.

@@ -8,6 +8,7 @@ from pathlib import Path
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
+from security_http import check_denials
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,req,fp,code,msg,headers,newurl):
@@ -39,7 +40,7 @@ def main():
     import tarfile
     with tarfile.open(metadata['archive'],'r:gz') as tar:
         manifest=json.load(tar.extractfile('manifest.json'))
-    report={'package_sha256':metadata['sha256'],'checks':[]}
+    report={'package_sha256':metadata['sha256'],'service_files':check_denials(origin),'checks':[]}
     for url in ['http://zhk-dom-umorya.ru/','https://www.zhk-dom-umorya.ru/','http://www.zhk-dom-umorya.ru/']:
         status,headers,_=get(url)
         assert status==301 or (args.allow_http_302 and url.startswith('http:') and status==302),(url,status)

@@ -1,0 +1,14 @@
+# BEGIN DOM-U-MORYA PERMANENT DOTFILE GUARD v1
+# Applied before publishing any release; retained by rollback.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+RewriteEngine On
+# Only the standard root ACME token path is exempt from the dot-directory deny.
+RewriteRule ^\.well-known/acme-challenge/[A-Za-z0-9_-]+$ - [END]
+RewriteRule (^|/)\. - [F,END]
+# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1
+
+# Jino HTTPS redirect: activate only after verifying the proxy header over HTTP.
+RewriteCond %{HTTP:X-Forwarded-Protocol} !=https
+RewriteRule .* https://zhk-dom-umorya.ru%{REQUEST_URI} [R=301,L]

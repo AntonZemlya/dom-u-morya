@@ -1,0 +1,326 @@
+{
+  "date_moscow": "2026-10-31",
+  "scope": "security-only fix of placeholder; application not published",
+  "security_backup": {
+    "backup": "/home/users/j/j84938826/.dom-u-morya/security/before-20261030T211627Z",
+    "backup_sha256": "ad6a73e58b4bb02a3abcdb51bda349feccab0f65bf84752ed2f54a22f777ca01",
+    "envrc_unchanged": true,
+    "guard_sha256": "0130655d08ece2dff7b9cc861527b5a35cd3ff57124fbc19fd27e4d953fc3057",
+    "http": {
+      ".env": 403,
+      ".envrc": 404,
+      ".git/config": 404,
+      ".htaccess": 403,
+      "assets/.env": 403
+    },
+    "index_unchanged": true,
+    "production_published": false,
+    "security_only": true
+  },
+  "http": {
+    "service_files": [
+      {
+        "path": "/.envrc",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.envrc",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.htaccess",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.htaccess",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.local",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.local",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.css",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.css",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.php",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.env.php",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.envrc.bak",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.envrc.bak",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.htaccess~",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.htaccess~",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.git/config",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.git/config",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.git/HEAD",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.git/HEAD",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.svn/entries",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.svn/entries",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/assets/.env",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/assets/.env",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/assets/.git/config",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/assets/.git/config",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2eenvrc",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2eenvrc",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2ehtaccess",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2ehtaccess",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2egit/config",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/%2egit/config",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.well-known/acme-challenge/.env",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.well-known/acme-challenge/.env",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": false
+      },
+      {
+        "path": "/.envrc",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": true
+      },
+      {
+        "path": "/.envrc",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": true
+      },
+      {
+        "path": "/.htaccess",
+        "method": "GET",
+        "status": 403,
+        "cache_busted": true
+      },
+      {
+        "path": "/.htaccess",
+        "method": "HEAD",
+        "status": 403,
+        "cache_busted": true
+      }
+    ],
+    "no_mail_sent": true,
+    "https_status": 200,
+    "runtime": {
+      "php_version": "8.4.27",
+      "php_version_id": 80427,
+      "mail_available": true,
+      "filter_available": true,
+      "no_mail_sent": true
+    },
+    "acme_status": 200,
+    "existing_dotfile_probes": [
+      {
+        "extension": ".css",
+        "method": "GET",
+        "status": 403
+      },
+      {
+        "extension": ".css",
+        "method": "HEAD",
+        "status": 403
+      },
+      {
+        "extension": ".php",
+        "method": "GET",
+        "status": 403
+      },
+      {
+        "extension": ".php",
+        "method": "HEAD",
+        "status": 403
+      }
+    ],
+    "probes_removed": true,
+    "removed_probe_http": [
+      {
+        "kind": "php",
+        "fresh_status": 404,
+        "filesystem_removed": true
+      },
+      {
+        "kind": "acme",
+        "fresh_status": 403,
+        "filesystem_removed": true
+      }
+    ]
+  },
+  "post_cleanup_inventory": {
+    ".envrc": {
+      "bytes": 31,
+      "gid": 3294,
+      "mode": 420,
+      "sha256": "f228ab287db1926f8ca47f987a5155f7d3811ff3f9275247d0cd5658875faefe",
+      "uid": 3292
+    },
+    ".htaccess": {
+      "bytes": 403,
+      "gid": 3294,
+      "mode": 420,
+      "sha256": "0130655d08ece2dff7b9cc861527b5a35cd3ff57124fbc19fd27e4d953fc3057",
+      "uid": 3292
+    },
+    "index.html": {
+      "bytes": 797,
+      "gid": 3294,
+      "mode": 420,
+      "sha256": "1d1c1209183e15cc80ee850b1d9fe36999b10feb43eecb1fd505d217972e72b1",
+      "uid": 3292
+    }
+  },
+  "redirects": {
+    "https_apex": 200,
+    "http_to_https": 302,
+    "https_www_to_apex": 301
+  },
+  "favicon_and_design_unchanged": true
+}

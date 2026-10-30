@@ -62,6 +62,15 @@ export async function validateRelease(directory) {
   const expected = [...RELEASE_FILES, 'robots.txt', ...(actual.includes('sitemap.xml') ? ['sitemap.xml'] : [])].sort();
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error('Release file set does not match the allowlist');
   for (const relative of RELEASE_FILES) await requireRegularFile(directory, relative);
+  const access = await fs.readFile(path.join(directory, '.htaccess'), 'utf8');
+  if (!access.includes('<FilesMatch "^\\.">\n    Require all denied\n</FilesMatch>')
+      || !access.includes('RewriteRule (^|/)\\. - [F,END]')
+      || !access.includes('RewriteRule ^\\.well-known/acme-challenge/[A-Za-z0-9_-]+$ - [END]')
+      || !access.includes('# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1')
+      || !access.includes('RewriteCond %{HTTP:X-Forwarded-Protocol}')
+      || access.indexOf('# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1') > access.indexOf('RewriteCond %{HTTP:X-Forwarded-Protocol}')) {
+    throw new Error('Release lacks the permanent dotfile guard before HTTPS redirect');
+  }
   await validateReferences(directory);
   const hash = createHash('sha256');
   let bytes = 0;

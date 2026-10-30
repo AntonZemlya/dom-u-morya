@@ -1,0 +1,5 @@
+# Jino documents X-Forwarded-Protocol for Apache behind its HTTPS proxy.
+# ops/release.py activates this only after verifying that header over HTTPS.
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Protocol} !=https
+RewriteRule .* https://zhk-dom-umorya.ru%{REQUEST_URI} [R=301,L]

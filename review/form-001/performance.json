@@ -1,0 +1,208 @@
+{
+  "environment": "Local Mac preview 127.0.0.1:4183; Chromium headless; cache disabled; 3 runs per viewport",
+  "production_field_data": false,
+  "slow_profile": {
+    "latency_ms": 150,
+    "download_bytes_sec": 210000,
+    "upload_bytes_sec": 85000,
+    "cpu_throttle": 4
+  },
+  "release_content_sha256": "0221e2e8516a0e712540025a98f157ae1deed1b9ee53d9bc515008375c36d6b4",
+  "results": [
+    {
+      "width": 1440,
+      "slow": false,
+      "median": {
+        "lcp": 172,
+        "cls": 0,
+        "bytes": 1087753,
+        "requests": 17
+      },
+      "runs": [
+        {
+          "lcp": 244,
+          "cls": 0,
+          "bytes": 1087753,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 172,
+          "cls": 0,
+          "bytes": 1087753,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 172,
+          "cls": 0,
+          "bytes": 1087753,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "slow": false,
+      "median": {
+        "lcp": 148,
+        "cls": 0.02085813879966736,
+        "bytes": 1048756,
+        "requests": 17
+      },
+      "runs": [
+        {
+          "lcp": 164,
+          "cls": 0.02085813879966736,
+          "bytes": 1048756,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 132,
+          "cls": 0.021661698818206787,
+          "bytes": 1048756,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 148,
+          "cls": 0.01715335249900818,
+          "bytes": 1048756,
+          "requests": 17,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "slow": false,
+      "median": {
+        "lcp": 148,
+        "cls": 0,
+        "bytes": 927642,
+        "requests": 15
+      },
+      "runs": [
+        {
+          "lcp": 148,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 128,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 148,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "slow": false,
+      "median": {
+        "lcp": 144,
+        "cls": 0,
+        "bytes": 927642,
+        "requests": 15
+      },
+      "runs": [
+        {
+          "lcp": 124,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 148,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 144,
+          "cls": 0,
+          "bytes": 927642,
+          "requests": 15,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "slow": true,
+      "median": {
+        "lcp": 1796,
+        "cls": 0.012760831966936951,
+        "bytes": 766038,
+        "requests": 14
+      },
+      "runs": [
+        {
+          "lcp": 1796,
+          "cls": 0.012760831966936951,
+          "bytes": 766038,
+          "requests": 14,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 1800,
+          "cls": 0.012760831966936951,
+          "bytes": 766038,
+          "requests": 14,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        },
+        {
+          "lcp": 1792,
+          "cls": 0.012760831966936951,
+          "bytes": 766038,
+          "requests": 14,
+          "overflow": false,
+          "errors": [],
+          "bad": []
+        }
+      ]
+    }
+  ]
+}

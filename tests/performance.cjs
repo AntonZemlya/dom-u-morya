@@ -3,7 +3,7 @@ const root=path.resolve(__dirname,'..');
 const assert=require('node:assert/strict');
 const {chromium}=require(root+'/node_modules/playwright');
 const phase=process.argv[2]||'current', out=path.join(process.env.QA_OUTPUT_DIR||require('os').tmpdir()+'/seo-001-qa',phase);fs.mkdirSync(out,{recursive:true});
-(async()=>{const b=await chromium.launch({executablePath:process.env.HOME+'/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell'});const results=[];
+(async()=>{const b=await chromium.launch({executablePath:process.env.HOME+'/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell'});const results=[];try{
 for(const width of [1440,768,390,320,390]){const slow=results.length===4;const record={width,slow,runs:[]};
 for(let rep=0;rep<3;rep++){
  const c=await b.newContext({viewport:{width,height:width===1440?900:width===768?1024:844},deviceScaleFactor:width<500?2:1,isMobile:width<500,hasTouch:width<500,reducedMotion:'reduce',serviceWorkers:'block'}),p=await c.newPage(),cdp=await c.newCDPSession(p);let net=[],responses={},errors=[];
@@ -21,4 +21,4 @@ for(let rep=0;rep<3;rep++){
  for(const doc of ['privacy.html','consent-personal-data.html']){await p.goto('http://127.0.0.1:4183/'+doc);await p.evaluate(()=>document.fonts.ready);await p.screenshot({path:path.join(out,doc+'-'+width+'.png'),fullPage:true})}
  }await c.close();}
 const median=key=>record.runs.map(r=>r[key]).sort((a,b)=>a-b)[1];record.median={lcp:median('lcp'),cls:median('cls'),bytes:median('bytes'),requests:median('requests')};assert.ok(record.median.lcp<2500,'LCP budget');assert.ok(record.median.cls<0.1,'CLS budget');for(const r of record.runs){assert.equal(r.overflow,false);assert.deepEqual(r.errors,[]);assert.deepEqual(r.bad,[]);}results.push(record);fs.writeFileSync(path.join(out,'measurements.json'),JSON.stringify(results,null,2));}
-await b.close()})().catch(e=>{console.error(e);process.exitCode=1});
+}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

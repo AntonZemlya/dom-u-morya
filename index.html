@@ -6,6 +6,11 @@
 <title>ЖК «Дом у моря» в Мариуполе — квартиры, цены и планировки</title>
 <meta name="description" content="ЖК «Дом у моря» в Мариуполе — квартиры на первой линии у Азовского моря. Смотрите планировки, цены и фото стройки, рассчитайте ипотеку 2%. Консультация агентства.">
 <link rel="icon" href="favicon.png">
+<link rel="preload" href="assets/fonts/font-4.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/fonts/font-2.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/fonts/font-6.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/fonts/font-7.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/fonts/font-8.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
 <script src="content-model.js" defer></script>
@@ -642,7 +647,8 @@
       <div class="contact-panorama-copy"><p class="contact-style-4">Следующий шаг — к своему дому</p><h2 id="contact-heading" class="contact-style-5">Оставьте заявку на просмотр</h2><p class="contact-style-6">Найдём пространство, которое подходит именно вам.</p><a href="#request-form" class="contact-form-link">Перейти к форме <span aria-hidden="true">↓</span></a></div>
     </div>
     <div class="contact-direct"><p class="contact-eyebrow">Поговорим о вашей будущей квартире</p><a class="contact-phone" href="tel:+79529568875">+7 (952) 956-88-75</a><p>Консультации агентства. Время связи согласуем индивидуально.</p><a class="contact-email" href="mailto:info@anyara.ru">info@anyara.ru</a></div>
-    <div id="contact-form-area"><form id="request-form" class="request-form" novalidate="">
+    <div id="contact-form-area"><form id="request-form" class="request-form" method="post" action="api/lead.php" novalidate="">
+    <label class="sr-only" aria-hidden="true">Не заполняйте это поле<input id="website-input" name="website" tabindex="-1" autocomplete="off" maxlength="100"></label>
     <div>
       <div class="form-kicker">Заявка</div>
       <div class="form-title" id="form-title">Как с вами связаться</div>
@@ -653,13 +659,13 @@
     <label class="field-label">
       <span class="field-label-text">Имя <span class="req">*</span>
 </span>
-      <input class="field-input" id="name-input" required="" aria-describedby="name-error" placeholder="Как к вам обращаться" autocomplete="name" name="name">
+      <input class="field-input" id="name-input" required="" maxlength="80" aria-describedby="name-error" placeholder="Как к вам обращаться" autocomplete="name" name="name">
       <div class="field-error" id="name-error" hidden="">Укажите, как к вам обращаться</div>
     </label>
     <label class="field-label">
       <span class="field-label-text">Телефон <span class="req">*</span>
 </span>
-      <input class="field-input" id="phone-input" required="" aria-describedby="phone-error" placeholder="+7 (___) ___-__-__" type="tel" inputmode="tel" autocomplete="tel" name="phone">
+      <input class="field-input" id="phone-input" required="" maxlength="18" aria-describedby="phone-error" placeholder="+7 (___) ___-__-__" type="tel" inputmode="tel" autocomplete="tel" name="phone">
       <div class="field-error" id="phone-error" hidden="">Номер введён не полностью — 10 цифр после +7</div>
     </label>
     <div class="plan-locked-row" id="plan-locked-slot" hidden="">
@@ -688,7 +694,8 @@
     <button type="submit" class="submit-btn" id="submit-btn" disabled="">Отправить заявку</button>
     <p id="form-status" class="form-status" role="status" tabindex="-1" hidden="">
 </p>
-    <div class="submit-note">Отправка формы не подключена. Введённые данные остаются в этой вкладке и не отправляются агентству.</div>
+    <div class="submit-note" id="form-availability" role="status">Приём заявок через форму временно выключен. Свяжитесь с агентством: <a href="tel:+79529568875">+7 (952) 956-88-75</a> или <a href="mailto:info@anyara.ru">info@anyara.ru</a>. Данные не отправлены.</div>
+    <noscript><p>Для отправки через форму нужен JavaScript. Позвоните или напишите агентству по контактам выше.</p></noscript>
   </form></div>
   </div>
 </section>

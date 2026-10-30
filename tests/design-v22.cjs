@@ -5,8 +5,9 @@ const media=require('../data/media.json');
 const {withNofollow}=require('./external-links.cjs');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const baseline=execFileSync('git',['show','ed656502d09bc934f91e400e69b56cc32f299788:index.html'],{cwd:root,encoding:'utf8'});
-for(const re of [/<section id="hero-section"[\s\S]*?<\/section>/,/<section id="about"[\s\S]*?<\/section>/])assert.equal(html.match(re)[0],baseline.match(re)[0],'Frozen hero/about source; footer separately reviewed under ENG-001');
-for(const name of ['privacy.html','consent-personal-data.html','assets/cta.webp','data/apartments.json','data/plan-groups.json','data/media.json','data/media-provenance.json','data/project-facts.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),((before)=>name.endsWith('.html')?Buffer.from(withNofollow(before)):before)(execFileSync('git',['show','ed656502:'+name],{cwd:root,maxBuffer:10e6})),name+' unchanged except external nofollow');
+for(const re of [/<section id="hero-section"[\s\S]*?<\/section>/,/<section id="about"[\s\S]*?<\/section>/])assert.equal(require('./seo-contract.cjs').semantic(html.match(re)[0]),baseline.match(re)[0],'Frozen hero/about source; authorized SEO markup only');
+require('./legal-contract.cjs')(root);
+for(const name of ['assets/cta.webp','data/apartments.json','data/plan-groups.json','data/media.json','data/media-provenance.json','data/project-facts.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),((before)=>name.endsWith('.html')?Buffer.from(withNofollow(before)):before)(execFileSync('git',['show','ed656502:'+name],{cwd:root,maxBuffer:10e6})),name+' unchanged except external nofollow');
 const out=process.env.QA_OUTPUT_DIR;
 if(out)fs.mkdirSync(out,{recursive:true});
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();
@@ -49,7 +50,7 @@ try{
   await p.locator('#request-form').evaluate(f=>f.requestSubmit());
   for(const id of ['name','phone','consent']){assert.equal(await p.locator(`#${id}-input`).getAttribute('aria-invalid'),'true');assert.equal(await p.locator(`#${id}-error`).isVisible(),true);}
   await p.locator('#name-input').fill('Тест');await p.locator('#phone-input').fill('70000000000');assert.equal(await p.locator('#submit-btn').isEnabled(),false);
-  await p.locator('#consent-input').check();assert.equal(await p.locator('#submit-btn').isEnabled(),true);
+  await p.locator('#consent-input').check();assert.equal(await p.locator('#submit-btn').isEnabled(),false);
   await p.locator('#snapshot-remove-btn').click();assert.equal(await p.locator('#snapshot-slot').isVisible(),false);
   await p.locator('[data-view="cats"]').click();await p.locator('[data-category="2k"][data-category-action="ask"]').click();assert.match(await p.locator('#snapshot-slot').innerText(),/2 спальни/);assert.ok((await p.locator('#snapshot-slot').boundingBox()).height<200,'Compact category request');
   const cta=await p.locator('.contact-panorama').boundingBox(),shell=await p.locator('.contact-shell').boundingBox(),form=await p.locator('#request-form').boundingBox();

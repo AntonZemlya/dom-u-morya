@@ -177,6 +177,7 @@ const state = {
   plansView: 'lots', aboutTab: 'arch',
   selectedPlanId: null,
   snapshot: null,
+  formEnabled: false, formBusy: false, formAttempt: null,
   name: '', phone: '', email: '', planChoice: '', consent: false,
   channel: 'Звонок', callTime: '',
   opts: [],
@@ -536,6 +537,7 @@ function sendToForm(){
   state.planChoice = selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure');
   state.snapshot = {
     kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:SITE_DATA.snapshot_date,
+    calculation: {price:s.price, downPct:s.downPct, term:s.term, rate:s.rate, program:s.mortgageProgram},
     planTitle: selectedPlan ? selectedPlan.title : '',
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
     objectMeta: selectedPlan ? selectedPlan.meta + ' · '+ContentModel.views[s.selectedPlanView]+' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
@@ -631,7 +633,7 @@ function createFieldEl(key){
       <option value="unsure">Пока не определился(-лась)</option>
     </select>`;
   } else if (key === 'email') {
-    bodyHtml = `<input class="field-input" id="email-input" aria-label="E-mail" aria-describedby="email-error" type="email" autocomplete="email" name="email" placeholder="пришлём подборку и прайс">
+    bodyHtml = `<input class="field-input" id="email-input" aria-label="E-mail" aria-describedby="email-error" type="email" maxlength="254" autocomplete="email" name="email" placeholder="пришлём подборку и прайс">
       <div class="field-error" id="email-error" hidden>Проверьте адрес — похоже, в нём опечатка</div>`;
   } else if (key === 'channel') {
     bodyHtml = `<div class="chip-row" id="channel-chips">${CHANNELS.map(c => `<button type="button" class="chip" data-chip-group="channel" data-chip-value="${c}">${c}</button>`).join('')}</div>`;
@@ -726,9 +728,10 @@ function updateForm(){
   const s = state;
   const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(s.phone);
   const emailBad = !!s.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email);
-  const formReady = !!(s.name.trim() && phoneOk && s.consent && !emailBad);
+  const nameOk = !!s.name.trim() && s.name.trim().length <= 80 && !/[\p{C}<>]/u.test(s.name);
+  const formReady = !!(nameOk && phoneOk && s.consent && !emailBad);
 
-  const nameErr = !!s.blurred.name && !s.name.trim();
+  const nameErr = !!s.blurred.name && !nameOk;
   document.getElementById('name-input').classList.toggle('error', nameErr);
   document.getElementById('name-input').setAttribute('aria-invalid', String(nameErr));
   document.getElementById('name-error').hidden = !nameErr;
@@ -763,7 +766,9 @@ function updateForm(){
 
   const btn = document.getElementById('submit-btn');
   btn.classList.toggle('ready', formReady);
-  btn.disabled = !formReady;
+  btn.disabled = !formReady || !s.formEnabled || s.formBusy;
+  btn.textContent = s.formBusy ? 'Отправляем…' : 'Отправить заявку';
+  document.getElementById('request-form').setAttribute('aria-busy', String(s.formBusy));
 
 }
 function handlePhoneInput(e){
@@ -785,10 +790,11 @@ function handlePhoneInput(e){
   state.phone = formatted;
   updateForm();
 }
-function handleSubmit(){
+async function handleSubmit(){
+  if (state.formBusy) return;
   const phoneOk = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(state.phone);
   const emailBad = !!state.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.email);
-  const formReady = !!(state.name.trim() && phoneOk && state.consent && !emailBad);
+  const formReady = !!(state.name.trim() && state.name.trim().length <= 80 && !/[\p{C}<>]/u.test(state.name) && phoneOk && state.consent && !emailBad);
   if (!formReady) {
     state.blurred = { name: true, phone: true, email: true, consent: true };
     updateForm();
@@ -797,8 +803,53 @@ function handleSubmit(){
   }
   const status = document.getElementById('form-status');
   status.hidden = false;
-  status.textContent = 'Отправка заявки ещё не подключена. Данные не отправлены. Свяжитесь с агентством по телефону +7 (952) 956-88-75 или e-mail info@anyara.ru.';
-  status.focus();
+  if (!state.formEnabled) {
+    status.textContent = 'Приём заявок через форму временно выключен. Данные не отправлены. Позвоните +7 (952) 956-88-75 или напишите info@anyara.ru.';
+    status.focus();
+    return;
+  }
+  const payload = {name:state.name.trim(), phone:'+' + state.phone.replace(/\D/g, ''), consent:true,
+    consentVersion:'2026-10-30', lotId:state.snapshot?.lotId || '', category:state.planChoice || '',
+    requestKind:state.snapshot?.kind || 'general', planView:state.snapshot?.planView || '',
+    email:state.email.trim(), channel:state.channel, callTime:state.callTime,
+    website:document.getElementById('website-input').value};
+  if (state.snapshot?.calculation) payload.calculation = state.snapshot.calculation;
+  const serialized = JSON.stringify(payload);
+  // Retain only in this tab; retry after a lost response uses exactly the same key.
+  if (!state.formAttempt || state.formAttempt.payload !== serialized) state.formAttempt = {payload:serialized,key:crypto.randomUUID()};
+  const attempt = state.formAttempt;
+  state.formBusy = true;
+  updateForm();
+  status.textContent = 'Передаём запрос на обработку…';
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), 12000);
+  let failureMessage = 'Ответ сервера не подтвердил приём. Позвоните или напишите агентству.';
+  try {
+    const response = await fetch('api/lead.php', {method:'POST', credentials:'same-origin', cache:'no-store',
+      headers:{'Content-Type':'application/json','X-Lead-Request':'1','Idempotency-Key':attempt.key},
+      body:attempt.payload, signal:controller.signal});
+    const result = await response.json();
+    if (response.status !== 202 || result.ok !== true || !/^\d{8}-[a-f0-9]{16}$/.test(result.id)) {
+      const messages = {422:'Проверьте имя, телефон, выбранную квартиру и отдельное согласие.',
+        429:'Слишком много попыток. Попробуйте через 10 минут или позвоните агентству.',
+        409:'Повторная отправка остановлена. Уточните приём запроса по телефону агентства.',
+        503:'Приём через форму временно недоступен. Позвоните или напишите агентству.'};
+      failureMessage = messages[response.status] || 'Запрос не принят. Позвоните или напишите агентству.';
+      throw new Error('rejected');
+    }
+    status.textContent = 'Запрос принят на обработку. Номер: ' + result.id + '. Агентство свяжется с вами по указанным контактам.';
+    state.consent = false;
+    document.getElementById('consent-input').checked = false;
+  } catch (error) {
+    status.textContent = error.name === 'AbortError' || error instanceof TypeError
+      ? 'Не удалось подтвердить приём. Повторите без изменения полей или позвоните агентству.'
+      : failureMessage;
+  } finally {
+    clearTimeout(timer);
+    state.formBusy = false;
+    updateForm();
+    status.focus();
+  }
 }
 function bindFormEvents(){
   const form = document.getElementById('request-form');
@@ -838,6 +889,17 @@ function renderContactArea(){
   // Initial form is semantic HTML and remains readable without JavaScript.
   bindFormEvents();
   updateForm();
+  // Static Mac preview stays local and makes no requests to a production backend.
+  const local = ['127.0.0.1','localhost'].includes(location.hostname);
+  if (local && !new URLSearchParams(location.search).has('form-qa')) return;
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), 5000);
+  fetch('api/form-status.php', {cache:'no-store', credentials:'same-origin', signal:controller.signal})
+    .then(r=>r.ok ? r.json() : null).then(result=>{
+      state.formEnabled = result?.enabled === true && result.consentVersion === '2026-10-30';
+      if (state.formEnabled) document.getElementById('form-availability').textContent = 'После отправки запрос передаётся агентству. Согласие относится только к вашему обращению.';
+      updateForm();
+    }).catch(()=>{}).finally(()=>clearTimeout(timer));
 }
 
 /* ================= init ================= */

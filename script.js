@@ -809,7 +809,7 @@ async function handleSubmit(){
     return;
   }
   const payload = {name:state.name.trim(), phone:'+' + state.phone.replace(/\D/g, ''), consent:true,
-    consentVersion:'2026-10-30', lotId:state.snapshot?.lotId || '', category:state.planChoice || '',
+    consentVersion:'2026-10-31', lotId:state.snapshot?.lotId || '', category:state.planChoice || '',
     requestKind:state.snapshot?.kind || 'general', planView:state.snapshot?.planView || '',
     email:state.email.trim(), channel:state.channel, callTime:state.callTime,
     website:document.getElementById('website-input').value};
@@ -896,7 +896,7 @@ function renderContactArea(){
   const timer = setTimeout(()=>controller.abort(), 5000);
   fetch('api/form-status.php', {cache:'no-store', credentials:'same-origin', signal:controller.signal})
     .then(r=>r.ok ? r.json() : null).then(result=>{
-      state.formEnabled = result?.enabled === true && result.consentVersion === '2026-10-30';
+      state.formEnabled = result?.enabled === true && result.consentVersion === '2026-10-31';
       if (state.formEnabled) document.getElementById('form-availability').textContent = 'После отправки запрос передаётся агентству. Согласие относится только к вашему обращению.';
       updateForm();
     }).catch(()=>{}).finally(()=>clearTimeout(timer));

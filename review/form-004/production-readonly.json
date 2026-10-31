@@ -1,0 +1,10 @@
+{
+  "accepted_baseline_matches": true,
+  "public_files_compared": 243,
+  "private_config_metadata_unchanged": true,
+  "form_status": {
+    "enabled": false,
+    "consentVersion": "2026-10-30"
+  },
+  "operation": "read-only snapshot and GET; no writes, no SMTP"
+}

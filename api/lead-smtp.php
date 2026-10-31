@@ -15,7 +15,7 @@ function smtpSettings(array $cfg): array {
     if ((!$test && ($host !== 'smtp.jino.ru' || !in_array([$port, $tls], [[587,'starttls'],[465,'smtps']], true)))
         || ($test && (!is_int($port) || $port < 1024 || $port > 65535 || !in_array($tls, ['starttls','smtps'], true)))
         || ($cfg['MAIL_FROM'] ?? '') !== MAIL_FROM
-        || !in_array($cfg['MAIL_TO'] ?? '', ['azm1982@yandex.ru','info@anyara.ru'], true)
+        || ($cfg['MAIL_TO'] ?? '') !== MAIL_TO || ($cfg['MAIL_BCC'] ?? '') !== MAIL_BCC
         || !is_string($cfg['SMTP_USERNAME'] ?? null) || (!$test && $cfg['SMTP_USERNAME'] !== MAIL_FROM)
         || !is_string($cfg['SMTP_PASSWORD'] ?? null) || $cfg['SMTP_PASSWORD'] === '') reject(503, 'unavailable');
     return [$host, $port, $tls];
@@ -50,6 +50,17 @@ function smtpTransport(array $m, array $cfg): bool {
         [$host, $port, $tls] = smtpSettings($cfg);
         smtpRuntime($cfg);
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        // PHPMailer normally sends DATA to accepted recipients even if another RCPT fails.
+        // Abort that transaction before DATA; never deliver a partial To/BCC envelope.
+        $mail->setSMTPInstance(new class extends \PHPMailer\PHPMailer\SMTP {
+            public function recipient($address, $dsn = '') {
+                if (!parent::recipient($address, $dsn)) {
+                    $this->reset();
+                    throw new \PHPMailer\PHPMailer\Exception('Recipient rejected');
+                }
+                return true;
+            }
+        });
         $mail->isSMTP();
         $mail->Host = $host;
         $mail->Port = $port;
@@ -74,6 +85,7 @@ function smtpTransport(array $m, array $cfg): bool {
         $mail->setFrom(MAIL_FROM, 'ЖК Дом у моря');
         $mail->Sender = MAIL_FROM;
         $mail->addAddress($cfg['MAIL_TO']);
+        $mail->addBCC($cfg['MAIL_BCC']);
         if ($m['replyTo'] !== '') $mail->addReplyTo($m['replyTo']);
         $mail->Subject = $m['subject'];
         $mail->Body = $m['body'];

@@ -8,10 +8,10 @@ use DomLead\Rejection;
 if (PHP_VERSION_ID < 80400 || PHP_VERSION_ID >= 80500) throw new RuntimeException('Run on PHP 8.4');
 $dir = sys_get_temp_dir().'/dom-lead-contract-'.bin2hex(random_bytes(6));
 mkdir($dir, 0700);
-$cfg = ['FORM_ENABLED'=>true,'DELIVERY_VERIFIED'=>true,'LEGAL_APPROVED'=>'2026-10-30','HMAC_SECRET'=>str_repeat('fixture-only-',4),'STATE_DIR'=>$dir,
-    'MAIL_TO'=>'azm1982@yandex.ru','DELIVERY_VERIFIED_TO'=>'azm1982@yandex.ru','LEGAL_MAIL_TO'=>'azm1982@yandex.ru'];
+$cfg = ['FORM_ENABLED'=>true,'SMTP_TRANSPORT_VERIFIED'=>true,'CONTROL_MAILBOX_VERIFIED'=>'azm1982@yandex.ru','OWNER_CONFIRMED_TO'=>'info@anyara.ru','ACCEPT_UNTESTED_MAIN'=>true,'LEGAL_MAIL_BCC'=>'azm1982@yandex.ru','LEGAL_APPROVED'=>'2026-10-31','HMAC_SECRET'=>str_repeat('fixture-only-',4),'STATE_DIR'=>$dir,
+    'MAIL_TO'=>'info@anyara.ru','MAIL_BCC'=>'azm1982@yandex.ru','LEGAL_MAIL_TO'=>'info@anyara.ru'];
 $server = ['REQUEST_METHOD'=>'POST','CONTENT_TYPE'=>'application/json','HTTP_ORIGIN'=>DomLead\ORIGIN,'HTTP_X_LEAD_REQUEST'=>'1','HTTP_IDEMPOTENCY_KEY'=>str_repeat('a',32),'REMOTE_ADDR'=>'192.0.2.1'];
-$payload = ['name'=>'Синтетический тест','phone'=>'+70000000000','consent'=>true,'consentVersion'=>'2026-10-30','lotId'=>'22825','category'=>'studio'];
+$payload = ['name'=>'Синтетический тест','phone'=>'+70000000000','consent'=>true,'consentVersion'=>'2026-10-31','lotId'=>'22825','category'=>'studio'];
 $mails = []; $now = 1800000000; $checks = 0;
 $fake = function ($m) use (&$mails) { $mails[] = $m; return true; };
 function check(bool $ok): void { global $checks; $checks++; if (!$ok) throw new RuntimeException('Contract failed at check '.$checks); }
@@ -25,7 +25,7 @@ function error(int $code, callable $fn): void {
 }
 try {
     $one=request([]); check(count($mails)===1); check(!isset($mails[0]['to']));
-    check(str_contains($mails[0]['body'],'6 978 183 ₽')); check(!str_contains($mails[0]['body'],'2026-10-30'));
+    check(str_contains($mails[0]['body'],'6 978 183 ₽')); check(str_contains($mails[0]['body'],'Редакция согласия: 2026-10-31'));
     check($mails[0]['subject']==='ЖК «Дом у моря» — новая заявка'); check(!str_contains($mails[0]['body'],$one['id']));
     $audit=array_values(json_decode(file_get_contents($dir.'/state.json'),true)['items'])[0];
     check($audit['created']===$now && $audit['consentVersion']===DomLead\CONSENT_VERSION && $audit['id']===$one['id']);
@@ -59,9 +59,11 @@ try {
     error(422,fn()=>request(['calculation'=>array_replace($calc,['term'=>'20'])]));
     request(['calculation'=>$calc],['HTTP_IDEMPOTENCY_KEY'=>str_repeat('c',32)]); check(count($mails)===2);
     check(str_contains($mails[1]['body'],'не является предложением банка'));
+    foreach (['CONTROL_MAILBOX_VERIFIED','OWNER_CONFIRMED_TO','LEGAL_MAIL_BCC','MAIL_BCC'] as $flag) error(503,fn()=>request([],[],array_replace($cfg,[$flag=>''])));
+    error(503,fn()=>request([],[],array_replace($cfg,['ACCEPT_UNTESTED_MAIN'=>false])));
     error(503,fn()=>request([],[],[]));
     error(503,fn()=>request([],[],array_replace($cfg,['FORM_ENABLED'=>false])));
-    error(503,fn()=>request([],[],array_replace($cfg,['DELIVERY_VERIFIED'=>false])));
+    error(503,fn()=>request([],[],array_replace($cfg,['SMTP_TRANSPORT_VERIFIED'=>false])));
     error(503,fn()=>request([],[],array_replace($cfg,['LEGAL_APPROVED'=>''])));
     error(502,fn()=>request(['name'=>'Сбой транспорта'],['HTTP_IDEMPOTENCY_KEY'=>str_repeat('d',32)],null,fn($m)=>false));
     error(409,fn()=>request(['name'=>'Сбой транспорта'],['HTTP_IDEMPOTENCY_KEY'=>str_repeat('d',32)]));
@@ -74,7 +76,7 @@ try {
     check((fileperms($dir.'/state.json')&0777)===0600);
     $s=json_decode($state,true); check(count($s['items'])===2); // Uncertain delivery stays blocked for seven days.
     error(409,fn()=>request(['name'=>'Сбой транспорта'],['HTTP_IDEMPOTENCY_KEY'=>str_repeat('d',32)],null,null,$now+86401));
-    error(503,fn()=>request([],[],array_replace($cfg,['MAIL_TO'=>'info@anyara.ru'])));
+    error(503,fn()=>request([],[],array_replace($cfg,['MAIL_TO'=>'intruder@example.invalid'])));
     error(503,fn()=>request([],[],array_replace($cfg,['HMAC_SECRET'=>''])));
     chmod($dir,0755);error(503,fn()=>request([]));chmod($dir,0700);
     check(DomLead\validate(json_encode(array_replace($payload,['calculation'=>array_replace($calc,['program'=>null,'rate'=>6.5])]),JSON_THROW_ON_ERROR))['calculation']['program']==='custom');
@@ -125,13 +127,19 @@ E-mail: synthetic@example.invalid
 Расчёт предварительный и не является предложением банка.
 
 Стоимость и наличие квартиры требуют подтверждения агентством.
+
+СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ
+Отдельная галочка: подтверждена.
+Редакция согласия: 2026-10-31
+Дата и время подтверждения: 31.10.2026, 14:33:57 МСК
+Способ: отметка согласия и отправка формы на zhk-dom-umorya.ru.
 BODY;
     check(str_replace("\r\n","\n",$formatted['body'])===$expected);
     check($formatted['subject']==='ЖК «Дом у моря» — новая заявка' && $formatted['id']==='20261031-0123456789abcdef' && $formatted['replyTo']===$full['email']);
-    foreach (['20261031-0123456789abcdef','Оператор:','соглас','UTC','2026-10-30','consent-personal-data.html','/#contact','family'] as $technical) check(!str_contains($formatted['subject'].' '.$formatted['body'],$technical));
+    foreach (['20261031-0123456789abcdef','Оператор:','UTC','consent-personal-data.html','/#contact','family'] as $technical) check(!str_contains($formatted['subject'].' '.$formatted['body'],$technical));
     $minimal=DomLead\validate(json_encode(['name'=>$payload['name'],'phone'=>$payload['phone'],'consent'=>true,'consentVersion'=>DomLead\CONSENT_VERSION],JSON_THROW_ON_ERROR));
     $simple=DomLead\message($minimal,'20261031-0000000000000000',$stamp);
-    check($simple['body']==="Новая заявка с сайта ЖК «Дом у моря»\r\nДата и время: 31.10.2026, 14:33:57 МСК\r\n\r\nКОНТАКТЫ\r\nИмя: Синтетический тест\r\nТелефон: +70000000000");
+    check($simple['body']==="Новая заявка с сайта ЖК «Дом у моря»\r\nДата и время: 31.10.2026, 14:33:57 МСК\r\n\r\nКОНТАКТЫ\r\nИмя: Синтетический тест\r\nТелефон: +70000000000\r\n\r\nСОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ\r\nОтдельная галочка: подтверждена.\r\nРедакция согласия: 2026-10-31\r\nДата и время подтверждения: 31.10.2026, 14:33:57 МСК\r\nСпособ: отметка согласия и отправка формы на zhk-dom-umorya.ru.");
     check($simple['replyTo']==='');
     $rollover=DomLead\message($minimal,'20261031-0000000000000000',(new DateTimeImmutable('2026-10-30T22:01:02+00:00'))->getTimestamp());
     check(str_contains($rollover['body'],'31.10.2026, 01:01:02 МСК'));

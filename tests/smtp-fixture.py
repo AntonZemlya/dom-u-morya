@@ -82,7 +82,7 @@ class Handler(socketserver.BaseRequestHandler):
                     sender = command.split(':',1)[1]
                 elif verb == 'RCPT':
                     envelope.append(command.split(':',1)[1])
-                    send('550 recipient rejected' if mode() == 'rcpt_fail' else '250 recipient OK')
+                    send('550 recipient rejected' if mode() == 'rcpt_fail' or (mode() == 'bcc_fail' and 'azm1982@yandex.ru' in command) else '250 recipient OK')
                 elif verb == 'DATA':
                     if not authenticated:
                         send('530 authenticate')
@@ -103,7 +103,7 @@ class Handler(socketserver.BaseRequestHandler):
                                 'replyTo':str(msg['Reply-To'] or ''), 'messageId':str(msg['Message-ID']),
                                 'contentType':msg.get_content_type(), 'charset':msg.get_content_charset(),
                                 'encoding':str(msg['Content-Transfer-Encoding']),
-                                'sender':sender, 'recipients':envelope}
+                                'headers':str(msg).split('\n\n',1)[0], 'sender':sender, 'recipients':envelope}
                     with LOCK:
                         target = ROOT/'fake-mail.json'
                         messages = json.loads(target.read_text()) if target.exists() else []

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace DomLead;
 
-const CONSENT_VERSION = '2026-10-30';
+const CONSENT_VERSION = '2026-10-31';
 const MAIL_FROM = 'sales@zhk-dom-umorya.ru';
+const MAIL_TO = 'info@anyara.ru';
+const MAIL_BCC = 'azm1982@yandex.ru';
 const ORIGIN = 'https://zhk-dom-umorya.ru';
 const MAX_BODY = 8192;
 
@@ -29,11 +31,38 @@ function config(): array {
 
 function enabled(array $config): bool {
     return ($config['FORM_ENABLED'] ?? false) === true
-        && ($config['DELIVERY_VERIFIED'] ?? false) === true
+        && ($config['SMTP_TRANSPORT_VERIFIED'] ?? false) === true
+        && ($config['CONTROL_MAILBOX_VERIFIED'] ?? '') === MAIL_BCC
+        && ($config['OWNER_CONFIRMED_TO'] ?? '') === MAIL_TO
+        && ($config['ACCEPT_UNTESTED_MAIN'] ?? false) === true
         && ($config['LEGAL_APPROVED'] ?? '') === CONSENT_VERSION
-        && in_array($config['MAIL_TO'] ?? '', ['azm1982@yandex.ru','info@anyara.ru'], true)
-        && ($config['DELIVERY_VERIFIED_TO'] ?? '') === $config['MAIL_TO']
-        && ($config['LEGAL_MAIL_TO'] ?? '') === $config['MAIL_TO'];
+        && ($config['MAIL_TO'] ?? '') === MAIL_TO
+        && ($config['MAIL_BCC'] ?? '') === MAIL_BCC
+        && ($config['LEGAL_MAIL_TO'] ?? '') === MAIL_TO
+        && ($config['LEGAL_MAIL_BCC'] ?? '') === MAIL_BCC;
+}
+
+/** Read-only readiness: never create a state file or contact SMTP. */
+function stateReady(array $cfg): bool {
+    $dir = $cfg['STATE_DIR'] ?? '';
+    $real = is_string($dir) ? realpath($dir) : false;
+    $secret = $cfg['HMAC_SECRET'] ?? '';
+    if (!is_string($secret) || strlen($secret) < 32 || !$real || is_link($dir)
+        || str_starts_with($real.'/', realpath(dirname(__DIR__)).'/')
+        || !is_writable($real) || (fileperms($real) & 0077)) return false;
+    $file = $real.'/state.json';
+    if (is_link($file)) return false;
+    if (!file_exists($file)) return true;
+    if (!is_file($file) || !is_writable($file) || (fileperms($file) & 0777) !== 0600
+        || filesize($file) > 2 * 1024 * 1024) return false;
+    $handle = fopen($file, 'r');
+    if (!$handle) return false;
+    try {
+        if (!flock($handle, LOCK_SH | LOCK_NB)) return false;
+        $state = json_decode(stream_get_contents($handle, 2 * 1024 * 1024 + 1), true, 12, JSON_THROW_ON_ERROR);
+        return is_array($state) && is_array($state['items'] ?? null) && is_array($state['rates'] ?? null);
+    } catch (\Throwable) { return false; }
+    finally { flock($handle, LOCK_UN); fclose($handle); }
 }
 
 function text(mixed $value, int $max, bool $required = false): string {
@@ -121,6 +150,10 @@ function message(array $v, string $id, int $now): array {
             '', 'Расчёт предварительный и не является предложением банка.');
     }
     if ($v['lot']) array_push($lines, '', 'Стоимость и наличие квартиры требуют подтверждения агентством.');
+    array_push($lines, '', 'СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ',
+        'Отдельная галочка: подтверждена.', 'Редакция согласия: '.CONSENT_VERSION,
+        'Дата и время подтверждения: '.$date->format('d.m.Y, H:i:s').' МСК',
+        'Способ: отметка согласия и отправка формы на zhk-dom-umorya.ru.');
     return ['subject'=>'ЖК «Дом у моря» — новая заявка',
         'body'=>implode("\r\n", $lines), 'id'=>$id, 'replyTo'=>$v['email']];
 }
@@ -162,7 +195,7 @@ function accept(array $v, string $key, string $ip, array $cfg, callable $mailer,
         if (count($s['items']) + count($s['rates']) !== $count) $save();
         $hash = fn(string $value): string => hash_hmac('sha256', $value, $secret);
         $k = $hash('key:'.$key);
-        $fingerprint = $hash('body:'.$cfg['MAIL_TO'].':'.json_encode($v, JSON_THROW_ON_ERROR));
+        $fingerprint = $hash('body:'.$cfg['MAIL_TO'].':'.$cfg['MAIL_BCC'].':'.json_encode($v, JSON_THROW_ON_ERROR));
         if (isset($s['items'][$k])) {
             $item = $s['items'][$k];
             if (!hash_equals($item['fingerprint'], $fingerprint)) reject(409, 'idempotency_conflict');
@@ -226,7 +259,8 @@ function serve(bool $statusOnly = false): never {
         $cfg = config();
         if ($statusOnly) {
             if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') reject(405, 'method_not_allowed');
-            response(200, ['enabled'=>enabled($cfg) && smtpReady($cfg), 'consentVersion'=>CONSENT_VERSION]);
+            $ready = stateReady($cfg) && smtpReady($cfg);
+            response(200, ['enabled'=>enabled($cfg) && $ready, 'ready'=>$ready, 'consentVersion'=>CONSENT_VERSION]);
         }
         if (enabled($cfg) && !smtpReady($cfg)) reject(503, 'unavailable');
         $raw = file_get_contents('php://input', false, null, 0, MAX_BODY + 1);

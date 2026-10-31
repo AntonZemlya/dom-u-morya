@@ -839,6 +839,7 @@ async function handleSubmit(){
     }
     status.textContent = 'Запрос принят на обработку. Номер: ' + result.id + '. Агентство свяжется с вами по указанным контактам.';
     state.consent = false;
+    state.blurred.consent = false; // The post-success reset must not show a new consent error.
     document.getElementById('consent-input').checked = false;
   } catch (error) {
     status.textContent = error.name === 'AbortError' || error instanceof TypeError
@@ -897,7 +898,8 @@ function renderContactArea(){
   fetch('api/form-status.php', {cache:'no-store', credentials:'same-origin', signal:controller.signal})
     .then(r=>r.ok ? r.json() : null).then(result=>{
       state.formEnabled = result?.enabled === true && result.consentVersion === '2026-10-31';
-      if (state.formEnabled) document.getElementById('form-availability').textContent = 'После отправки запрос передаётся агентству. Согласие относится только к вашему обращению.';
+      // Keep the disabled/no-JS fallback, but no redundant explanation on an active form.
+      document.getElementById('form-availability').hidden = state.formEnabled;
       updateForm();
     }).catch(()=>{}).finally(()=>clearTimeout(timer));
 }

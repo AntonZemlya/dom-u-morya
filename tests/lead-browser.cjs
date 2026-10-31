@@ -15,11 +15,18 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
   assert.equal(await p.locator('#consent-input').isChecked(),false);
   await p.locator('#request-form').screenshot({path:path.join(out,`form-${width}.png`)});
   await fill(p);await p.waitForFunction(()=>!document.getElementById('submit-btn').disabled);
+  // Live-enabled UI must hide the disabled-service notice without removing the fallback.
+  assert.equal(await p.locator('#form-availability').isVisible(),false);
   let posted; p.on('request',r=>{if(r.method()==='POST')posted=r;});
   await p.locator('#submit-btn').click();await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Запрос принят на обработку'));
   assert.equal(mails().length,1);assert.match(mails()[0].body,/Квартира № 6 \(лот 22825\)/);
   assert.equal(posted.postDataJSON().lotId,'22825');assert.equal(posted.postDataJSON().phone,'+70000000000');
   assert.equal(posted.postDataJSON().consent,true);assert.equal(await p.locator('#consent-input').isChecked(),false);
+  // A 202 is a completed request, not another request for consent.
+  assert.equal(await p.locator('#consent-error').isVisible(),false);
+  assert.equal(await p.locator('#consent-input').getAttribute('aria-invalid'),'false');
+  assert.equal(await p.locator('#submit-btn').isEnabled(),false);
+  assert.equal(await p.locator('#form-status').isVisible(),true);
   const reply=await fetch(base+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':base,'X-Lead-Request':'1','Idempotency-Key':posted.headers()['idempotency-key']},body:posted.postData()});
   assert.equal(reply.status,202);assert.match(reply.headers.get('cache-control'),/no-store/);assert.equal(mails().length,1);
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);

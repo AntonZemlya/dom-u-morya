@@ -1,0 +1,17 @@
+{
+  "name": "anton-zemlya/dom-u-morya-form",
+  "description": "Private SMTP runtime for the lead endpoint",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": "~8.4.0",
+    "ext-openssl": "*",
+    "ext-filter": "*",
+    "phpmailer/phpmailer": "7.1.1"
+  },
+  "config": {
+    "platform": {"php": "8.4.0"},
+    "allow-plugins": {},
+    "sort-packages": true
+  }
+}

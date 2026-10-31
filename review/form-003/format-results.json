@@ -1,0 +1,11 @@
+{
+  "full_received_mime": "PASS",
+  "minimal_received_mime": "PASS",
+  "subject": "ЖК «Дом у моря» — новая заявка",
+  "full_moscow_time": "31.10.2026, 14:59:25 МСК",
+  "minimal_moscow_time": "31.10.2026, 14:59:34 МСК",
+  "private_consent_audit_preserved": true,
+  "header_message_id_preserved": true,
+  "reply_to_preserved": true,
+  "public_or_real_mail": false
+}

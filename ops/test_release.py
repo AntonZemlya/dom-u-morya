@@ -138,6 +138,13 @@ class ReleaseTest(unittest.TestCase):
         for name in ['.envrc','../other-domain/index.html','/index.html','api/phpinfo.php','assets/.env']:
             with self.assertRaises(RuntimeError):remote.safe_name(name)
 
+    def test_smtp_blocks_legacy_probe_and_enable(self):
+        sha,_=self.prepare({'index.html':b'smtp candidate','.htaccess':remote.SECURITY_POLICY+remote.HTTPS_REDIRECT,'api/lead-smtp.php':b'<?php /* fixture */'})
+        remote.deploy(sha)
+        with self.assertRaises(RuntimeError):remote.set_form(sha,True,'probe','2026-10-30','SPF=pass;DKIM=pass;duplicates=0')
+        with self.assertRaises(RuntimeError):remote.diagnostic(sha,'probe','runtime-'+'b'*24+'.php','c'*64,'d'*24)
+        self.assertFalse((remote.DOC/'api'/('runtime-'+'b'*24+'.php')).exists())
+
     def test_unexpected_and_symlink_rejection(self):
         (remote.DOC/'unexpected.txt').write_text('owner file')
         with self.assertRaises(RuntimeError):self.prepare()

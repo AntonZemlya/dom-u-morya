@@ -104,7 +104,7 @@ def safe_name(name):
     ensure(name in ['.htaccess','index.html','privacy.html','consent-personal-data.html','styles.css','script.js','content-model.js','favicon.png','robots.txt','sitemap.xml']
            or (len(p.parts) > 1 and p.parts[0] in ['api','assets','data']), 'Unapproved public path')
     if p.parts[0] == 'api':
-        ensure(name in ['api/lead.php','api/lead-core.php','api/form-status.php'], 'Unapproved endpoint')
+        ensure(name in ['api/lead.php','api/lead-core.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php'], 'Unapproved endpoint')
 
 def unpack(folder):
     package = folder / 'package.tar.gz'
@@ -272,6 +272,7 @@ def set_form(sha, active, probe_id='', legal_version='', auth=''):
     config=PRIVATE/'config.php'
     ensure(config.is_file() and not config.is_symlink(), 'Private config missing or unsafe')
     if active:
+        ensure(not (DOC/'api/lead-smtp.php').exists(), 'SMTP-001 activation needs recipient-bound delivery/legal evidence; follow ops/SMTP-GO.md')
         ensure(record['deployed'] and 80400 <= record.get('http_php_version_id',0) < 80500 and not record.get('redirect_pending',True), 'Verify HTTP PHP 8.4 and activate the reviewed redirect before enabling')
         ensure(legal_version=='2026-10-30', 'Exact legal text must be approved by owner')
         ensure(auth=='SPF=pass;DKIM=pass;duplicates=0', 'Confirm received mail, SPF/DKIM and no duplicates')
@@ -391,6 +392,7 @@ header('Content-Type: application/json');
     if action == 'runtime':
         source += "echo json_encode(['php_version'=>PHP_VERSION,'php_version_id'=>PHP_VERSION_ID,'mail_available'=>function_exists('mail'),'forwarded_protocol'=>in_array($_SERVER['HTTP_X_FORWARDED_PROTOCOL']??'',['http','https'],true)?$_SERVER['HTTP_X_FORWARDED_PROTOCOL']:'other']);"
     elif action == 'probe':
+        ensure(not (DOC/'api/lead-smtp.php').exists(), 'Legacy mail() probe is disabled for SMTP-001; follow ops/SMTP-GO.md')
         ensure(re.fullmatch('[a-f0-9]{24}',probe_id), 'Invalid probe ID')
         source += """
 if($_SERVER['REQUEST_METHOD']!=='POST' || PHP_VERSION_ID<80400 || PHP_VERSION_ID>=80500){http_response_code(409);exit;}

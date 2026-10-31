@@ -5,3 +5,5 @@ node_modules/
 /.release-stage-*/
 /.release-output/
 __pycache__/
+/vendor/
+/.dom-u-morya/

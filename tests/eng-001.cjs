@@ -11,9 +11,10 @@ for(const id of ['hero-section','about','location','gallery','progress','develop
  const re=new RegExp(`<section id="${id}"[\\s\\S]*?<\\/section>`);
  assert.equal(require('./seo-contract.cjs').semantic(html.match(re)[0]),withNofollow(base.match(re)[0]),`${id} source unchanged from V2.2`);
 }
-for(const file of ['privacy.html','consent-personal-data.html','data/apartments.json','data/plan-groups.json','data/media.json']){
+for(const file of ['data/apartments.json','data/plan-groups.json','data/media.json']){
  assert.deepEqual(fs.readFileSync(path.join(root,file)),Buffer.from(withNofollow(execFileSync('git',['show','1d79ebc:'+file],{cwd:root,maxBuffer:5e6}))),file+' unchanged except external nofollow');
 }
+require('./legal-contract.cjs')(root);
 const money=s=>Number(s.replace(/\D/g,''));
 const payment=(p,d,t,r)=>Math.round(p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-12*t)));
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();try{
@@ -81,7 +82,7 @@ const payment=(p,d,t,r)=>Math.round(p*(1-d/100)*(r/1200)/(1-(1+r/1200)**(-12*t))
   await p.locator('[data-mortgage-program="family"]').click();assert.equal(await p.locator('#mortgage-warning').isVisible(),false);await setRange('price',20000000);await setRange('down',40);assert.equal(await p.locator('#mortgage-warning').isVisible(),false,'Exactly 12m is within limit');await setRange('down',39);assert.equal(await p.locator('#mortgage-warning').isVisible(),true);
   if(out)await p.locator('#calculator').screenshot({path:path.join(out,`mortgage-${width}.png`)});
   const before=await p.evaluate(()=>({id:state.selectedPlanId,rate:state.rate,term:state.term,price:state.price}));await p.locator('[data-action="ask-fullpay"]').click();assert.match(await p.locator('#snapshot-slot').innerText(),/100% оплата/);assert.deepEqual(await p.evaluate(()=>({id:state.selectedPlanId,rate:state.rate,term:state.term,price:state.price})),before);
-  await p.locator('#send-to-form').click();await p.locator('#name-input').fill('Локальная проверка');await p.locator('#phone-input').fill('70000000000');await p.locator('#consent-input').check();await p.locator('#submit-btn').click();assert.match(await p.locator('#form-status').innerText(),/Данные не отправлены/);assert.deepEqual(writes,[]);
+  await p.locator('#send-to-form').click();await p.locator('#name-input').fill('Локальная проверка');await p.locator('#phone-input').fill('70000000000');await p.locator('#consent-input').check();assert.equal(await p.locator('#submit-btn').isEnabled(),false);assert.match(await p.locator('#form-availability').innerText(),/Данные не отправлены/);assert.deepEqual(writes,[]);
   for(const doc of ['privacy.html','consent-personal-data.html'])assert.equal((await p.request.get(site.url+'/'+doc)).status(),200);
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);
   await context.close();console.log(`PASS ENG-001 ${width}: disclosure/keyboard/persistence/reset, both mortgage presets/thresholds/lot/term/context${width===1440?'/PDFs':''}, limits, manual rate, full payment, honest no-send, legal links, no overflow/errors`);

@@ -4,12 +4,15 @@ const {PDFDocument}=require('pdf-lib');
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
 const {withNofollow}=require('./external-links.cjs');
 const pages=['index.html','privacy.html','consent-personal-data.html'];
+require('./legal-contract.cjs')(root);
+const body=s=>s.slice(s.search(/<body\b/));
+const withoutForm=s=>s.replace(/<form id="request-form"[\s\S]*?<\/form>/,'FORM-001');
 // Exact comparisons preserve every URL, text, target, noopener and internal link.
 for(const name of pages){
  const before=execFileSync('git',['show','1c5d513:'+name],{cwd:root,encoding:'utf8',maxBuffer:1e6});
  const source=fs.readFileSync(path.join(root,name),'utf8');
- assert.equal(require('./seo-contract.cjs').semantic(require('./seo-contract.cjs').body(source)),require('./seo-contract.cjs').body(withNofollow(before)),name+': only external nofollow additions');
- assert.equal(require('./seo-contract.cjs').body(fs.readFileSync(path.join(root,'dist',name),'utf8')),require('./seo-contract.cjs').body(source),name+': build preserves attributes');
+ if(name==='index.html')assert.equal(withoutForm(require('./seo-contract.cjs').semantic(body(source))),withoutForm(body(withNofollow(before))),name+': only authorized SEO and FORM-001 boundaries');
+ assert.equal(body(fs.readFileSync(path.join(root,'dist',name),'utf8')),body(source),name+': build preserves attributes');
 }
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();try{
  for(const width of [1440,390]){

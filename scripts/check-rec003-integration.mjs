@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import legalContract from '../tests/legal-contract.cjs';
 import linkAttributes from '../tests/external-links.cjs';
 const {withNofollow}=linkAttributes;
 import {execFileSync,spawnSync} from 'node:child_process';
@@ -13,14 +14,12 @@ const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'dom-u-morya-rec003-compat-')
 const read=name=>fs.readFileSync(path.join(fixture,name),'utf8'),write=(name,s)=>fs.writeFileSync(path.join(fixture,name),s);
 const extract=(s,re)=>{const match=s.match(re);if(!match)throw Error('Missing integration boundary '+re);return match[0];};
 try{
- fs.cpSync(root,fixture,{recursive:true,filter:src=>!['.git','node_modules','dist'].includes(path.basename(src))});
+ fs.cpSync(root,fixture,{recursive:true,filter:src=>!['.git','node_modules','dist','.release-output'].includes(path.basename(src))});
  fs.symlinkSync(path.join(root,'node_modules'),path.join(fixture,'node_modules'),'dir');
  // Check the actual V2.2 implementation. Never overwrite it with PR #8 in the fixture.
- for(const name of ['privacy.html','consent-personal-data.html']){
-  if(read(name)!==source(name))throw Error('REC-003 document changed: '+name);
- }
+ legalContract(root);
  const html=read('index.html'),legal=source('index.html');
- for(const re of [/<div class="cookie-banner"[\s\S]*?(?=<div class="lightbox")/,/<div class="submit-note">[\s\S]*?<\/div>/]){
+ for(const re of [/<div class="cookie-banner"[\s\S]*?(?=<div class="lightbox")/]){
   if(extract(html,re)!==extract(legal,re))throw Error('REC-003 disclosure differs: '+re);
  }
  const consent=extract(html,/<label class="consent-label">[\s\S]*?<\/label>/);
@@ -38,6 +37,6 @@ try{
  for(const args of [['scripts/build-release.mjs'],['tests/rec003.cjs','--root','dist'],['tests/catalog.cjs','--root','dist']]){
   const result=spawnSync(process.execPath,args,{cwd:fixture,stdio:'inherit',env:{...process.env,QA_OUTPUT_DIR:''}});if(result.status!==0)throw Error('Compatibility check failed: '+args.join(' '));
  }
- for(const name of ['privacy.html','consent-personal-data.html'])if(read(name)!==source(name))throw Error('REC-003 document changed: '+name);
- console.log('PASS actual V2.2: REC-003 legal documents unchanged except external nofollow; banner/PDF footer byte-identical; separate required consent and no-send behavior verified; contacts, form, PDF and REC-004 catalog/media pass together. No source substitution or merge performed.');
+ legalContract(root);
+ console.log('PASS actual V2.2: REC-003 legal boundaries preserved; FORM-001 processing disclosure verified; banner/PDF footer byte-identical; separate required consent and default-disabled behavior verified; contacts, form, PDF and REC-004 catalog/media pass together. No source substitution or merge performed.');
 }finally{fs.rmSync(fixture,{recursive:true,force:true});}

@@ -122,6 +122,8 @@ def main():
     parser.add_argument('--mail-auth',help='Owner-confirmed header results: SPF=pass;DKIM=pass;duplicates=0')
     parser.add_argument('--with-runtime',action='store_true',help='Temporary protected PHP/ACME security probes; never sends mail')
     args=parser.parse_args()
+    if (ROOT/'api/lead-smtp.php').exists() and args.command in ['prepare','deploy','probe','enable','package']:
+        raise RuntimeError('Legacy FORM-001 rollout does not package the private SMTP runtime or recipient-bound evidence. Use ops/smtp_package.py and ops/SMTP-GO.md; no remote change was made.')
     if args.command=='package':
         result=package()
     elif args.command=='security-check':

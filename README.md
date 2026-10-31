@@ -1,5 +1,18 @@
 # ЖК «Дом у моря»
 
+**FORM-002 / SMTP-001 (Draft, без публикации):** авторизованный SMTP Jino,
+PHPMailer 7.1.1 и PHP 8.4. Актуальные границы, приватный пакет, GO для одного
+синтетического письма, включения и rollback: [ops/SMTP-GO.md](ops/SMTP-GO.md).
+Сначала `composer install --no-dev --no-plugins --no-scripts`, затем
+`npm run check:smtp`, `npm run build` и `PHP84_BIN=/path/to/php84 npm run test:form`.
+`ops/release.py` блокирует старую схему публикации/пробного mail()/включения
+для этой версии. Production сейчас не менять; форма остаётся выключенной.
+Просматриваемый one-shot GO A harness: `ops/smtp_e2e.py`, `ops/smtp_e2e_remote.py`,
+`ops/smtp_e2e_wrapper.php`. Его локальный no-send/Apache TLS/SMTP sink QA:
+`PHP84_BIN=/path/to/php84 PHP84_CGI_BIN=/path/to/php84-cgi npm run test:smtp-e2e`.
+Jino-команды отдельно блокируются точной строкой owner GO; инструкция и recovery
+cleanup приведены в `ops/SMTP-GO.md`.
+
 Статический сайт на HTML5, CSS и vanilla JavaScript. Источник кода —
 `AntonZemlya/dom-u-morya`; новый hosted Site и другой фреймворк не используются.
 Node.js нужен только для подготовки и проверки: на хостинг передаются статические файлы.

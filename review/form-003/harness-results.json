@@ -1,0 +1,108 @@
+{
+  "success": true,
+  "tests_run": 9,
+  "errors": 0,
+  "failures": 0,
+  "scope": "loopback only; no Jino SSH/HTTP, no real mail",
+  "evidence": [
+    {
+      "test": "test_01_real_cgi_no_send_auth_replay_and_cleanup",
+      "smtp_data_count": 0,
+      "private_invocations": 1,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_02_exactly_one_smtp_and_marker_before_transport",
+      "smtp_data_count": 1,
+      "private_invocations": 1,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_03_expired_ttl_and_invalid_origin_never_invoke",
+      "smtp_data_count": 0,
+      "private_invocations": 0,
+      "approval_markers_retained": 2,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_04_controller_timeout_finally_retains_uncertain",
+      "smtp_data_count": 1,
+      "private_invocations": 1,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_05_drift_and_failed_install_cleanup",
+      "smtp_data_count": 0,
+      "private_invocations": 0,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_06_go_gate_and_package_rejection_before_network",
+      "smtp_data_count": 0,
+      "private_invocations": 0,
+      "approval_markers_retained": 0,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_07_whole_command_cannot_reuse_owner_grant",
+      "smtp_data_count": 1,
+      "private_invocations": 1,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_08_cleanup_refuses_changed_wrapper",
+      "smtp_data_count": 0,
+      "private_invocations": 0,
+      "approval_markers_retained": 1,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    },
+    {
+      "test": "test_09_unknown_install_and_cleanup_recovery",
+      "smtp_data_count": 0,
+      "private_invocations": 1,
+      "approval_markers_retained": 2,
+      "public_wrappers_remaining": 0,
+      "processes_stopped": true,
+      "production_state_unchanged": true,
+      "secret_free_logs": true
+    }
+  ],
+  "php_cli": "PHP 8.4.27 (cli) (built: Oct 26 2026 22:11:24) (NTS)",
+  "php_cgi": "PHP 8.4.14 (cgi-fcgi) (built: Oct 31 2026 13:38:19) (NTS)",
+  "source_sha256": {
+    "ops/smtp_e2e.py": "e719ef37a4319321f44839c8a7f94edfc4dc058876ba50af3870d71466180871",
+    "ops/smtp_e2e_remote.py": "6e48b2711cc7879786e131262b0b80d8bf131e90fc9cab1ed9700419e2ff0128",
+    "ops/smtp_e2e_wrapper.php": "1f25aa1ca63f89fdec010166f702261074948ee21399c72edb376149b1e3b89c",
+    "ops/test_smtp_e2e.py": "1c5be0e86d5e43c928de7cad5267e682c400c5fb7180ee51f236948f80ce1929",
+    "tests/smtp-fixture.py": "57141cf19cf7dc1f9c3436beddc6a225bcc164867305ac3bdf3d2f2fffc98e88"
+  }
+}

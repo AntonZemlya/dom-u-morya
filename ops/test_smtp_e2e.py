@@ -11,6 +11,7 @@ import signal
 import socket
 import ssl
 import subprocess
+import sys
 import tarfile
 import tempfile
 import time
@@ -23,6 +24,17 @@ ROOT=Path(__file__).resolve().parent.parent
 PHP=os.environ.get('PHP84_BIN','/private/tmp/rehab-ci-php84/runtime/bin/php')
 CGI=os.environ.get('PHP84_CGI_BIN','/private/tmp/dom-smtp-harness-php84/sapi/cgi/php-cgi')
 HTTPD=os.environ.get('HTTPD_BIN','/usr/sbin/httpd')
+
+def local_network_only(event,args):
+    # Test isolation is enforced even if a future negative fixture accidentally matches a valid GO.
+    if event=='socket.getaddrinfo' and args[0] not in ['127.0.0.1','::1','localhost']:
+        raise RuntimeError('External DNS/network forbidden in local QA')
+    if event=='socket.connect' and isinstance(args[1],tuple) and args[1][0] not in ['127.0.0.1','::1']:
+        raise RuntimeError('External network forbidden in local QA')
+    if event=='subprocess.Popen' and Path(str(args[0])).name=='ssh':
+        raise RuntimeError('SSH forbidden in local QA')
+
+sys.addaudithook(local_network_only)
 
 def port():
     with socket.socket() as s: s.bind(('127.0.0.1',0));return s.getsockname()[1]
@@ -48,7 +60,7 @@ class E2E(unittest.TestCase):
         for name in ['.htaccess','api/lead-core.php','api/lead.php','api/form-status.php']:
             (self.doc/name).write_bytes(subprocess.check_output(['git','show',remote.BASE+':'+name],cwd=ROOT))
         self.published={'base_commit':remote.BASE,'files':{str(p.relative_to(self.doc)):remote.metadata(p)['sha256'] for p in self.doc.rglob('*') if p.is_file() and p.name!='.envrc'}}
-        self.payload=(ROOT/'.release-output/form-002/smtp-update.tar.gz').read_bytes();self.package_sha=cli.sha(self.payload)
+        self.payload=Path(os.environ.get('SMTP_QA_PACKAGE',str(ROOT/'.release-output/form-002/smtp-update.tar.gz'))).read_bytes();self.package_sha=cli.sha(self.payload)
         self.manifest,_=remote.unpack(self.payload,self.package_sha);self.template=(ROOT/'ops/smtp_e2e_wrapper.php').read_bytes()
         self.processes=[]
         self.smtpdir=self.home/'sink';self.smtpdir.mkdir(mode=0o700);(self.smtpdir/'mode').write_text('success')
@@ -173,8 +185,10 @@ class E2E(unittest.TestCase):
             self.assertTrue(all(x['one_shot_before_smtp'] and x['tls'] for x in rows if x.get('command') in ['AUTH','MAIL','RCPT','DATA']))
             messages=json.loads((self.smtpdir/'fake-mail.json').read_text());self.assertEqual(len(messages),1)
             self.assertEqual(messages[0]['to'],'azm1982@yandex.ru')
-            for part in ['Лот 22825','6978183','взнос 20%; срок 20 лет; ставка 6%; программа family','Telegram','12-15','2026-10-30']:
+            for part in ['Квартира № 6 (лот 22825)','6 978 183 ₽','Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','Telegram','12:00–15:00']:
                 self.assertIn(part,messages[0]['body'])
+            self.assertEqual(messages[0]['subject'],'ЖК «Дом у моря» — новая заявка')
+            self.assertNotIn('соглас',messages[0]['body']);self.assertNotIn('UTC',messages[0]['body'])
         finally: result=w.cleanup(rid)
         self.assertEqual(result['invocations'],1);self.assertTrue(w.verify(rid)['public_unchanged']);self.http.disabled()
 
@@ -222,10 +236,14 @@ class E2E(unittest.TestCase):
         self.assertTrue(self.worker.cleanup(secrets.token_hex(12),b,self.published)['wrapper_removed'])
 
     def test_06_go_gate_and_package_rejection_before_network(self):
-        c=self.control();h='b'*64;calls=[]
-        for go in [None,'old approval',cli.permit('0'*40,self.package_sha,h,'send-once'),cli.permit(c['commit'],self.package_sha,h,'no-send')]:
-            with self.assertRaises(RuntimeError): cli.execute(c,self.payload,h,{},'send-once',go,lambda q:calls.append(q))
-        self.assertEqual(calls,[])
+        c=self.control();h='b'*64;calls=[];network=[]
+        class NoNetwork:
+            def disabled(self):network.append('disabled');raise AssertionError('No network permitted')
+            def request(self,*args,**kwargs):network.append('request');raise AssertionError('No network permitted')
+        wrong_commit='f'*40 if c['commit']!='f'*40 else 'e'*40
+        for go in [None,'old approval',cli.permit(wrong_commit,self.package_sha,h,'send-once'),cli.permit(c['commit'],self.package_sha,h,'no-send')]:
+            with self.assertRaises(RuntimeError): cli.execute(c,self.payload,h,{},'send-once',go,lambda q:calls.append(q),NoNetwork())
+        self.assertEqual(calls,[]);self.assertEqual(network,[])
         with self.assertRaises(RuntimeError): remote.unpack(self.payload,'0'*64)
         broken=io.BytesIO()
         with tarfile.open(fileobj=broken,mode='w:gz') as a:

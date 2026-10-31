@@ -85,31 +85,43 @@ function validate(string $raw): array {
     return $v;
 }
 
-/** Plain text only; optional fields are omitted and visitor strings never become From/To/Subject. */
+/** Manager-facing plain text; delivery/consent identifiers remain in private state and Message-ID. */
 function message(array $v, string $id, int $now): array {
-    $lines = ['ЖК «Дом у моря» — запрос на обработку', 'ID: '.$id, 'Время UTC: '.gmdate('c', $now),
-        'Оператор: ИП Саврасова Елена Анатольевна', 'Имя: '.$v['name'], 'Телефон: '.$v['phone'],
-        'Источник: '.ORIGIN.'/#contact'];
-    $labels = [
-        'email'=>['E-mail', []], 'channel'=>['Способ связи', []], 'callTime'=>['Время связи', []],
-        'category'=>['Категория', ['studio'=>'Студия','1k'=>'1 спальня','2k'=>'2 спальни','3k'=>'3 спальни','unsure'=>'Не определена']],
-        'requestKind'=>['Тип запроса', ['general'=>'Обращение с сайта','plan'=>'Выбранная квартира','calc'=>'Ипотечный расчёт','full'=>'100% оплата, актуальный прайс и условия']],
-        'planView'=>['Вид планировки', ['furnished'=>'С мебелью','unfurnished'=>'Без мебели','floor'=>'На этаже']],
-    ];
-    foreach ($labels as $key=>[$label, $values]) if ($v[$key] !== '') $lines[] = $label.': '.($values[$v[$key]] ?? $v[$key]);
+    $date = (new \DateTimeImmutable('@'.$now))->setTimezone(new \DateTimeZone('Europe/Moscow'));
+    $money = static fn(int $rub): string => number_format($rub, 0, ',', ' ').' ₽';
+    $number = static fn(int|float $value): string => str_replace('.', ',', (string)$value);
+    $categories = ['studio'=>'Студия','1k'=>'1 спальня','2k'=>'2 спальни','3k'=>'3 спальни','unsure'=>'Пока не определена'];
+    $views = ['furnished'=>'с мебелью','unfurnished'=>'без мебели','floor'=>'на этаже'];
+    $times = ['9-12'=>'09:00–12:00','12-15'=>'12:00–15:00','15-18'=>'15:00–18:00'];
+    $programs = ['family'=>'Семейная ипотека','regional'=>'Льготная ипотека','custom'=>'Индивидуальный расчёт'];
+    $lines = ['Новая заявка с сайта ЖК «Дом у моря»', 'Дата и время: '.$date->format('d.m.Y, H:i:s').' МСК',
+        '', 'КОНТАКТЫ', 'Имя: '.$v['name'], 'Телефон: '.$v['phone']];
+    if ($v['email'] !== '') $lines[] = 'E-mail: '.$v['email'];
+    if ($v['channel'] !== '') $lines[] = 'Способ связи: '.$v['channel'];
+    if ($v['callTime'] !== '') $lines[] = 'Удобное время: '.$times[$v['callTime']];
+    if ($v['requestKind'] === 'full') array_push($lines, '', 'ЗАПРОС', 'Полная оплата: актуальный прайс и условия.');
     if ($v['lot']) {
         $lot = $v['lot'];
-        $lines[] = 'Каталог от '.$lot['snapshot_date'].'; наличие и цена требуют подтверждения агентством.';
-        $lines[] = 'Лот '.$lot['id'].'; квартира '.$lot['number'].'; этаж '.$lot['floor'].'; площадь '.$lot['area_m2'].' м²; цена каталога '.$lot['price_rub'].' руб.';
+        array_push($lines, '', 'КВАРТИРА', 'Категория: '.$categories[$v['category']],
+            'Квартира № '.$lot['number'].' (лот '.$lot['id'].')', 'Этаж: '.$lot['floor'],
+            'Площадь: '.$number($lot['area_m2']).' м²', 'Стоимость по каталогу: '.$money($lot['price_rub']));
+        if ($v['planView'] !== '') $lines[] = 'Вид планировки: '.$views[$v['planView']];
+    } elseif ($v['category'] !== '' || $v['planView'] !== '') {
+        array_push($lines, '', 'ПРЕДПОЧТЕНИЯ');
+        if ($v['category'] !== '') $lines[] = 'Интересующая категория: '.$categories[$v['category']];
+        if ($v['planView'] !== '') $lines[] = 'Вид планировки: '.$views[$v['planView']];
     }
     if ($v['calculation']) {
         $c = $v['calculation'];
-        $lines[] = 'Параметры расчёта введены пользователем, не являются предложением банка:';
-        $lines[] = 'Стоимость '.$c['price'].' руб.; взнос '.$c['downPct'].'%; срок '.$c['term'].' лет; ставка '.$c['rate'].'%; программа '.$c['program'];
+        $term = $c['term'];
+        $years = $term % 100 >= 11 && $term % 100 <= 14 ? 'лет' : match ($term % 10) { 1=>'год', 2,3,4=>'года', default=>'лет' };
+        array_push($lines, '', 'ИПОТЕЧНЫЙ РАСЧЁТ', 'Стоимость для расчёта: '.$money($c['price']),
+            'Первоначальный взнос: '.$c['downPct'].'%', 'Срок: '.$term.' '.$years,
+            'Ставка: '.$number($c['rate']).'%', 'Программа: '.$programs[$c['program']],
+            '', 'Расчёт предварительный и не является предложением банка.');
     }
-    $lines[] = 'Самостоятельное согласие: true; редакция '.CONSENT_VERSION.'; получено UTC '.gmdate('c', $now);
-    $lines[] = ORIGIN.'/consent-personal-data.html';
-    return ['subject'=>'ЖК Дом у моря — новая заявка №'.$id,
+    if ($v['lot']) array_push($lines, '', 'Стоимость и наличие квартиры требуют подтверждения агентством.');
+    return ['subject'=>'ЖК «Дом у моря» — новая заявка',
         'body'=>implode("\r\n", $lines), 'id'=>$id, 'replyTo'=>$v['email']];
 }
 

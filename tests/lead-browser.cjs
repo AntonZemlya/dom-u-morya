@@ -17,7 +17,7 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
   await fill(p);await p.waitForFunction(()=>!document.getElementById('submit-btn').disabled);
   let posted; p.on('request',r=>{if(r.method()==='POST')posted=r;});
   await p.locator('#submit-btn').click();await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Запрос принят на обработку'));
-  assert.equal(mails().length,1);assert.match(mails()[0].body,/Лот 22825/);
+  assert.equal(mails().length,1);assert.match(mails()[0].body,/Квартира № 6 \(лот 22825\)/);
   assert.equal(posted.postDataJSON().lotId,'22825');assert.equal(posted.postDataJSON().phone,'+70000000000');
   assert.equal(posted.postDataJSON().consent,true);assert.equal(await p.locator('#consent-input').isChecked(),false);
   const reply=await fetch(base+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':base,'X-Lead-Request':'1','Idempotency-Key':posted.headers()['idempotency-key']},body:posted.postData()});
@@ -39,8 +39,8 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
  await p.locator('#submit-btn').click();await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Не удалось подтвердить'));
  assert.equal(mails().length,1);await p.unroute('**/api/lead.php');await p.locator('#submit-btn').click();
  await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Запрос принят на обработку'));assert.equal(mails().length,1);
- assert.match(mails()[0].body,/Параметры расчёта введены пользователем/);
- for(const text of ['Лот 22825','6978183','взнос 20%; срок 20 лет; ставка 6%; программа family','synthetic@example.invalid','Способ связи: Telegram','Время связи: 12-15'])assert.ok(mails()[0].body.includes(text),text);
+ assert.match(mails()[0].body,/ИПОТЕЧНЫЙ РАСЧЁТ/);
+ for(const text of ['Квартира № 6 (лот 22825)','6 978 183 ₽','Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','synthetic@example.invalid','Способ связи: Telegram','Удобное время: 12:00–15:00'])assert.ok(mails()[0].body.includes(text),text);
  for(const [code,copy] of [[422,'Проверьте'],[429,'Слишком много'],[409,'Повторная отправка'],[500,'Запрос не принят'],[503,'временно недоступен']]){
   await p.route('**/api/lead.php',r=>r.fulfill({status:code,contentType:'application/json',body:'{"ok":false}'}));
   await p.locator('#consent-input').check();await p.locator('#submit-btn').click();await p.waitForFunction(copy=>document.getElementById('form-status').textContent.includes(copy),copy);
@@ -60,7 +60,7 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
  await p.locator('#rate-range').evaluate(e=>{e.value='7.5';e.dispatchEvent(new Event('input',{bubbles:true}));});
  await p.locator('#send-to-form').click();await p.locator('#consent-input').check();await p.locator('#submit-btn').click();
  await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Запрос принят на обработку'));
- assert.equal(mails().length,2);assert.match(mails()[1].body,/ставка 7.5%; программа custom/);assert.doesNotMatch(mails()[1].body,/Лот 22825/);
+ assert.equal(mails().length,2);assert.match(mails()[1].body,/Ставка: 7,5%/);assert.match(mails()[1].body,/Программа: Индивидуальный расчёт/);assert.doesNotMatch(mails()[1].body,/КВАРТИРА/);
  fs.unlinkSync(path.join(temp,'config.php'));
  assert.equal((await (await fetch(base+'/api/form-status.php')).json()).enabled,false);assert.equal((await post('{}',{'Origin':'https://zhk-dom-umorya.ru'})).status,503);
  await p.reload();await fill(p);assert.equal(await p.locator('#submit-btn').isEnabled(),false);assert.match(await p.locator('#form-availability').innerText(),/временно выключен/);

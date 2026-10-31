@@ -36,6 +36,18 @@ const reset=(mode='success')=>{fs.writeFileSync(temp+'/mode',mode);fs.writeFileS
 const mails=()=>fs.existsSync(temp+'/fake-mail.json')?JSON.parse(fs.readFileSync(temp+'/fake-mail.json')):[];
 const audit=()=>fs.existsSync(temp+'/smtp-audit.jsonl')?fs.readFileSync(temp+'/smtp-audit.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse):[];
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
+const previewDir=path.join(root,'.test-output/form-003');fs.mkdirSync(previewDir,{recursive:true});
+const plain=m=>m.body.replace(/\r\n/g,'\n').trimEnd();
+const moscow=seconds=>{const parts=Object.fromEntries(new Intl.DateTimeFormat('ru-RU',{timeZone:'Europe/Moscow',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date(seconds*1000)).map(p=>[p.type,p.value]));return `${parts.day}.${parts.month}.${parts.year}, ${parts.hour}:${parts.minute}:${parts.second} МСК`;};
+const privateAudit=id=>Object.values(JSON.parse(fs.readFileSync(temp+'/state/state.json')).items).find(item=>item.id===id);
+const formatChecks=(m,id)=>{
+ assert.equal(m.subject,'ЖК «Дом у моря» — новая заявка');assert.equal(m.messageId,'<'+id+'@zhk-dom-umorya.ru>');
+ for(const secret of [id,'Оператор:','соглас','UTC','consent-personal-data.html','/#contact','family','regional','custom'])assert.ok(![m.subject,m.body].join(' ').includes(secret),'No technical value: '+secret);
+ const audit=privateAudit(id);assert.equal(audit.consentVersion,'2026-10-30');assert.equal(audit.status,'accepted');
+ assert.equal(plain(m).split('\n')[1],'Дата и время: '+moscow(audit.created));assert.doesNotMatch(plain(m),/\n{3,}/);
+ return moscow(audit.created);
+};
+const preview=(m,name)=>{fs.writeFileSync(path.join(previewDir,name+'-email.txt'),'Тема: '+m.subject+'\n\n'+plain(m)+'\n');fs.copyFileSync(temp+'/received.eml',path.join(previewDir,name+'.eml'));};
 let server,log='',smtpLog='';smtp.stderr.on('data',b=>{smtpLog+=b;});
 try{
  for(let i=0;!fs.existsSync(temp+'/smtps-port')&&i<100;i++)await pause(50);
@@ -45,22 +57,25 @@ try{
  server=spawn(php,['-n','-d','disable_functions=mail','-d','display_errors=0','-S',`127.0.0.1:${port}`,'-t',path.join(root,'dist')],
   {cwd:root,env:{...process.env,LEAD_CONFIG:cfgPath,LEAD_SMTP_TEST:'1'},stdio:['ignore','ignore','pipe']});server.stderr.on('data',b=>{log+=b;});
  let ready=false;for(let i=0;i<100;i++){try{await fetch(origin+'/api/form-status.php');ready=true;break;}catch{}await pause(50);}assert.ok(ready);
- const payload={name:'Синтетический тест',phone:'+70000000000',consent:true,consentVersion:'2026-10-30',lotId:'22825',category:'studio',planView:'furnished',
+ const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-30',lotId:'22825',category:'studio',planView:'furnished',
   requestKind:'calc',email:'synthetic@example.invalid',channel:'Telegram',callTime:'12-15',calculation:{price:6978183,downPct:20,term:20,rate:6,program:'family'}};
  const post=(p=payload,key=randomUUID(),headers={})=>fetch(origin+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin,'X-Lead-Request':'1','Idempotency-Key':key,...headers},body:typeof p==='string'?p:JSON.stringify(p)});
  const status=async()=>await(await fetch(origin+'/api/form-status.php')).json();
  reset();assert.equal((await status()).enabled,true);const key=randomUUID(),accepted=await post(payload,key);assert.equal(accepted.status,202);const result=await accepted.json();
  assert.match(accepted.headers.get('cache-control'),/no-store/);assert.equal(mails().length,1);const m=mails()[0];
- assert.equal(m.subject,'ЖК Дом у моря — новая заявка №'+result.id);assert.equal(m.messageId,'<'+result.id+'@zhk-dom-umorya.ru>');
+ const fullDate=formatChecks(m,result.id);
  assert.equal(m.from,'ЖК Дом у моря <sales@zhk-dom-umorya.ru>');assert.equal(m.to,'azm1982@yandex.ru');assert.equal(m.replyTo,payload.email);
  assert.equal(m.sender,'<sales@zhk-dom-umorya.ru>');assert.deepEqual(m.recipients,['<azm1982@yandex.ru>']);assert.equal(m.contentType,'text/plain');assert.equal(m.charset,'utf-8');assert.equal(m.encoding,'base64');
- for(const part of [result.id,'Время UTC:','Синтетический тест','+70000000000',payload.email,'Способ связи: Telegram','Время связи: 12-15','Источник: https://zhk-dom-umorya.ru/#contact',
-  'Категория: Студия','Тип запроса: Ипотечный расчёт','Вид планировки: С мебелью','Лот 22825; квартира 6; этаж 2; площадь 29 м²; цена каталога 6978183 руб.',
-  'Стоимость 6978183 руб.; взнос 20%; срок 20 лет; ставка 6%; программа family','не являются предложением банка','Самостоятельное согласие: true; редакция 2026-10-30','consent-personal-data.html'])assert.ok(m.body.includes(part),'Received MIME contains '+part);
+ assert.equal(plain(m),['Новая заявка с сайта ЖК «Дом у моря»','Дата и время: '+fullDate,'','КОНТАКТЫ','Имя: '+payload.name,'Телефон: '+payload.phone,
+  'E-mail: '+payload.email,'Способ связи: Telegram','Удобное время: 12:00–15:00','','КВАРТИРА','Категория: Студия','Квартира № 6 (лот 22825)',
+  'Этаж: 2','Площадь: 29 м²','Стоимость по каталогу: 6 978 183 ₽','Вид планировки: с мебелью','','ИПОТЕЧНЫЙ РАСЧЁТ','Стоимость для расчёта: 6 978 183 ₽',
+  'Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','','Расчёт предварительный и не является предложением банка.',
+  '', 'Стоимость и наличие квартиры требуют подтверждения агентством.'].join('\n'));
+ preview(m,'full');
  assert.ok(audit().some(x=>x.auth===true&&x.tls));assert.ok(audit().filter(x=>['AUTH','MAIL','RCPT','DATA'].includes(x.command)).every(x=>x.tls));
  assert.equal((await post(payload,key)).status,202);assert.equal((await post(payload)).status,202);assert.equal(mails().length,1);assert.equal((await post({...payload,name:'Изменено'},key)).status,409);
  reset();const concurrentKey=randomUUID(),concurrent=await Promise.all([post(payload,concurrentKey),post(payload,concurrentKey)]);assert.ok(concurrent.every(r=>r.status===202));assert.equal(mails().length,1);
- console.log('PASS received MIME: complete lot/calc/consent, UTF-8 headers, AUTH after TLS, fixed envelope, concurrent/replayed requests');
+ console.log('PASS FORM-003 full received MIME: exact human subject/body, Moscow seconds, private consent audit, unchanged Message-ID/Reply-To/TLS/replay');
  for(const mode of ['no_starttls','wrong_name','auth_fail','rcpt_fail','data_fail','accept_drop','accept_timeout']){
   reset(mode);config();const key=randomUUID(),reply=await post(payload,key);assert.equal(reply.status,502,mode);assert.equal((await reply.json()).error,'mail_unavailable');
   const stored=mails().length;assert.equal(stored,['accept_drop','accept_timeout'].includes(mode)?1:0,mode);
@@ -83,8 +98,16 @@ try{
   const r=await post(raw,randomUUID(),headers);assert.equal(r.status,code);assert.match(r.headers.get('cache-control'),/no-store/);assert.equal(r.headers.get('access-control-allow-origin'),null);
  }
  assert.equal((await fetch(origin+'/api/lead.php')).status,405);assert.equal(mails().length,0);
- reset();const minimal={name:payload.name,phone:payload.phone,consent:true,consentVersion:payload.consentVersion};assert.equal((await post(minimal)).status,202);
- assert.equal(mails()[0].replyTo,'');for(const absent of ['E-mail:','Способ связи:','Время связи:','Категория:','Вид планировки:','не указан'])assert.ok(!mails()[0].body.includes(absent));
+ reset();const minimal={name:payload.name,phone:payload.phone,consent:true,consentVersion:payload.consentVersion};const minimalResponse=await post(minimal);assert.equal(minimalResponse.status,202);
+ const minimalResult=await minimalResponse.json();const minimalMail=mails()[0];const minimalDate=formatChecks(minimalMail,minimalResult.id);
+ assert.equal(minimalMail.replyTo,'');assert.equal(minimalMail.contentType,'text/plain');assert.equal(minimalMail.charset,'utf-8');
+ assert.equal(plain(minimalMail),['Новая заявка с сайта ЖК «Дом у моря»','Дата и время: '+minimalDate,'','КОНТАКТЫ','Имя: '+payload.name,'Телефон: '+payload.phone].join('\n'));
+ for(const absent of ['E-mail:','Способ связи:','Удобное время:','Категория:','Вид планировки:','не указан','КВАРТИРА','ИПОТЕЧНЫЙ РАСЧЁТ'])assert.ok(!minimalMail.body.includes(absent));
+ preview(minimalMail,'minimal');
+ fs.writeFileSync(path.join(previewDir,'format-results.json'),JSON.stringify({full_received_mime:'PASS',minimal_received_mime:'PASS',
+  subject:'ЖК «Дом у моря» — новая заявка',full_moscow_time:fullDate,minimal_moscow_time:minimalDate,
+  private_consent_audit_preserved:true,header_message_id_preserved:true,reply_to_preserved:true,public_or_real_mail:false},null,2)+'\n');
+ console.log('PASS FORM-003 minimal received MIME: only actual contact fields, no empty sections; full/minimal previews saved');
  for(let i=0;i<2;i++)assert.equal((await post({...minimal,name:'Синтетический '+i})).status,202);assert.equal((await post({...minimal,name:'Лимит'})).status,429);assert.equal(mails().length,3);
  reset();config();fs.chmodSync(cfgPath,0o644);assert.equal((await status()).enabled,false);assert.equal((await post(payload,randomUUID(),{'Origin':'https://zhk-dom-umorya.ru'})).status,503);fs.chmodSync(cfgPath,0o600);
  console.log('PASS untrusted CA, explicit SMTPS, recipient/approval binding, config permissions, injection/JSON/Origin/size/rate limits and optional-field omission');

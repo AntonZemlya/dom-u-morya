@@ -16,8 +16,10 @@ ops/release_core.py
 ops/release_manager.py
 ops/smtp_e2e.py
 ops/smtp_package.py
+ops/test_release_guard_http.py
 ops/test_release_manager.py
 package.json
+review/ci-cd-backup-001/CORRECTIONS.md
 review/ci-cd-backup-001/REPORT.md
 review/ci-cd-backup-001/changed-files.txt
 review/ci-cd-backup-001/ci-fast.json
@@ -25,6 +27,7 @@ review/ci-cd-backup-001/ci-fast.md
 review/ci-cd-backup-001/ci-full.json
 review/ci-cd-backup-001/ci-full.md
 review/ci-cd-backup-001/engine-tests.txt
+review/ci-cd-backup-001/manager-guard-http.json
 scripts/ci-legacy-fixtures.py
 scripts/ci-static.mjs
 scripts/ci.mjs

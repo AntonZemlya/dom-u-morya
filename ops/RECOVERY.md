@@ -67,9 +67,24 @@ X.509 сертификат получателя. Backup проверяется �
 отдельное безопасное хранение ключа и проверка расшифрования. Облако не подключено.
 
 ```sh
-npm run backup -- export --release-id RELEASE_ID --certificate /private/path/owner-public.crt --output /private/path/backup.cms
+npm run backup -- verify --release-id RELEASE_ID
+npm run backup -- export-plan --release-id RELEASE_ID --sha BACKUP_SHA256 --certificate /private/path/owner-public.crt --destination /private/path/backup.cms --output .release-output/export-plan.json
+# После отдельного точного owner GO из export-plan:
+npm run backup -- export --release-id RELEASE_ID --sha BACKUP_SHA256 --certificate /private/path/owner-public.crt --output /private/path/backup.cms --plan .release-output/export-plan.json --go 'EXACT_EXPORT_GO'
 openssl cms -decrypt -binary -inform DER -in /private/path/backup.cms -recip /private/path/owner-public.crt -inkey /private/path/owner.key -out /private/path/backup.tar.gz
 ```
+
+`export-plan` читает только backup/receipt metadata; не читает tar и не создаёт
+ciphertext. План фиксирует домен, release ID, backup SHA, SHA-256 DER-сертификата
+получателя и полный абсолютный путь назначения. GO имеет отдельное действие:
+`GO EXPORT DOMAIN RELEASE_ID BACKUP SHA CERT FINGERPRINT DEST DEST_SHA PLAN PLAN_SHA`.
+DEST_SHA — SHA-256 точного пути из плана, PLAN_SHA связывает весь JSON. CLI и worker
+проверяют exact GO и все поля **до чтения/извлечения backup**. Подмена ID, SHA,
+сертификата или назначения требует нового плана и отдельного GO; без GO нет SSH
+export-вызова. Допускается ровно один публичный PEM-сертификат, bundle с private key
+отклоняется локально до передачи на Jino. Read-only план не является разрешением.
+В JSON export receipt фиксируются backup/certificate/destination/plan/go SHA;
+нельзя использовать APPLY/ROLLBACK/PRUNE GO для экспорта.
 
 Расшифрование выполняется только в приватном каталоге с umask 077; сверить plaintext
 SHA с export receipt и внутренним manifest перед восстановлением. CMS envelope

@@ -4,16 +4,16 @@
   "complete": true,
   "node": "v22.23.2",
   "platform": "darwin",
-  "started_at": "2026-10-31T22:02:05.494Z",
+  "started_at": "2026-10-31T23:05:59.623Z",
   "status": "PASS",
-  "seconds": 169.271,
+  "seconds": 168.905,
   "checks": [
     {
       "id": "toolchain",
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.027,
+      "seconds": 0.022,
       "command": [
         "node",
         "-e",
@@ -25,7 +25,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.441,
+      "seconds": 0.356,
       "command": [
         "npm",
         "run",
@@ -37,7 +37,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 1.044,
+      "seconds": 0.852,
       "command": [
         "node",
         "scripts/ci-static.mjs"
@@ -48,7 +48,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.773,
+      "seconds": 0.736,
       "command": [
         "node",
         "tests/release.cjs"
@@ -59,7 +59,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.467,
+      "seconds": 0.41,
       "command": [
         "npm",
         "run",
@@ -71,7 +71,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.292,
+      "seconds": 0.256,
       "command": [
         "node",
         "tests/ci-contract.mjs"
@@ -82,7 +82,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.142,
+      "seconds": 0.12,
       "command": [
         "node",
         "tests/seo.mjs"
@@ -93,7 +93,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.061,
+      "seconds": 0.051,
       "command": [
         "node",
         "-e",
@@ -105,7 +105,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 1.154,
+      "seconds": 1.49,
       "command": [
         "python3",
         "-B",
@@ -123,7 +123,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.008,
+      "seconds": 0.014,
       "command": [
         "PHP84_BIN",
         "-n",
@@ -136,7 +136,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.324,
+      "seconds": 0.31,
       "command": [
         "composer",
         "validate",
@@ -150,7 +150,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 2.979,
+      "seconds": 2.928,
       "command": [
         "composer",
         "audit",
@@ -163,7 +163,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.035,
+      "seconds": 0.049,
       "command": [
         "node",
         "scripts/smtp-runtime.mjs"
@@ -174,7 +174,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 24.52,
+      "seconds": 24.143,
       "command": [
         "npm",
         "run",
@@ -186,7 +186,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.277,
+      "seconds": 0.23,
       "command": [
         "node",
         "tests/ci-browser-dependency.cjs"
@@ -197,7 +197,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 12.725,
+      "seconds": 12.222,
       "command": [
         "node",
         "tests/ui.cjs",
@@ -210,7 +210,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 20.091,
+      "seconds": 23.126,
       "command": [
         "node",
         "tests/catalog.cjs",
@@ -223,7 +223,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 5.995,
+      "seconds": 5.836,
       "command": [
         "node",
         "tests/catalog-transfer.cjs"
@@ -234,7 +234,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 12.119,
+      "seconds": 11.394,
       "command": [
         "node",
         "tests/plan-previews.cjs"
@@ -245,7 +245,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 2.906,
+      "seconds": 2.564,
       "command": [
         "node",
         "tests/seo-browser.cjs"
@@ -256,7 +256,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 63.402,
+      "seconds": 63.332,
       "command": [
         "node",
         "tests/performance.cjs",
@@ -268,7 +268,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.246,
+      "seconds": 0.204,
       "command": [
         "python3",
         "-B",
@@ -276,11 +276,23 @@
       ]
     },
     {
+      "id": "manager-guard-http",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.221,
+      "command": [
+        "python3",
+        "-B",
+        "ops/test_release_guard_http.py"
+      ]
+    },
+    {
       "id": "legacy-security",
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 2.885,
+      "seconds": 2.586,
       "command": [
         "npm",
         "run",
@@ -292,7 +304,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 4.143,
+      "seconds": 3.619,
       "command": [
         "npm",
         "run",
@@ -304,7 +316,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.278,
+      "seconds": 0.215,
       "command": [
         "npm",
         "run",
@@ -316,7 +328,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 11.889,
+      "seconds": 11.585,
       "command": [
         "npm",
         "run",

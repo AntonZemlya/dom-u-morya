@@ -14,7 +14,7 @@ import time
 import urllib.error
 import urllib.request
 from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, Manager, canonical, digest,
-                          ensure, pack, regular, sha, verify_package)
+                          ensure, pack, regular, sha, verify_package, check_export_go, export_destination, certificate_sha256, validate_id)
 
 ROOT=Path(__file__).resolve().parent.parent
 CORE=ROOT/'ops/release_core.py'
@@ -98,12 +98,18 @@ def load(path):
     return json.loads(Path(path).read_text())
 
 
-def export_command(policy, release_id, certificate, output):
-    target=Path(output).resolve()
+def export_command(policy, release_id, backup_sha, certificate, output, plan, go):
+    target=Path(output).resolve();destination=str(target)
     ensure(target.suffix=='.cms' and not target.exists(), 'New .cms destination required')
-    encrypted=remote('export',policy,release_id=release_id,certificate=base64.b64encode(Path(certificate).read_bytes()).decode())
+    cert=Path(certificate).read_bytes()
+    check_export_go(plan,go,release_id,backup_sha,cert,destination) # No SSH without a matching separate GO.
+    encrypted=remote('export',policy,release_id=release_id,backup_sha256=backup_sha,
+                     certificate=base64.b64encode(cert).decode(),destination=destination,plan=plan,go=go)
     raw=base64.b64decode(encrypted.pop('ciphertext'))
-    ensure(sha(raw)==encrypted['sha256'],'Ciphertext stream SHA mismatch')
+    ensure(sha(raw)==encrypted['sha256'] and encrypted['backup_sha256']==backup_sha
+           and encrypted['certificate_sha256']==plan['certificate_sha256']
+           and encrypted['destination']==destination and encrypted['export_plan_sha256']==plan['sha256'],
+           'Encrypted export receipt differs from approved plan')
     fd=os.open(str(target),os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
     with os.fdopen(fd,'wb') as f:
         f.write(raw);f.flush();os.fsync(f.fileno())
@@ -117,7 +123,7 @@ def main():
     p.add_argument('--commit',default='HEAD');p.add_argument('--archive');p.add_argument('--sha')
     p.add_argument('--release-id');p.add_argument('--plan');p.add_argument('--output');p.add_argument('--go')
     p.add_argument('--policy',default=str(ROOT/'ops/release-policy.json'));p.add_argument('--quota-evidence')
-    p.add_argument('--dry-run',action='store_true');p.add_argument('--certificate')
+    p.add_argument('--dry-run',action='store_true');p.add_argument('--certificate');p.add_argument('--destination')
     a=p.parse_args();policy=load(a.policy)
     ensure(policy['keep_verified']>=2 and policy['protect_days']>=0 and policy['reserve_bytes']>=0,'Unsafe retention policy')
     if a.quota_evidence:policy['quota_evidence']=load(a.quota_evidence)
@@ -159,9 +165,16 @@ def main():
         if a.dry_run or not a.go:result=remote('prune-plan',policy)
         else:
             ensure(a.plan,'--plan required');result=remote('prune',policy,plan=load(a.plan)['plan'],go=a.go)
+    elif a.group=='backup' and a.command=='export-plan':
+        ensure(a.destination and a.certificate and a.release_id and a.sha,'--destination --certificate --release-id --sha required')
+        destination=export_destination(str(Path(a.destination).resolve()));validate_id(a.release_id)
+        cert=Path(a.certificate).read_bytes();certificate_sha256(cert) # Never upload a key/bundle as a public certificate.
+        result=remote('export-plan',policy,release_id=a.release_id,backup_sha256=a.sha,
+                      certificate=base64.b64encode(cert).decode(),destination=destination)
     elif a.group=='backup' and a.command=='export':
-        ensure(a.output and a.certificate and a.release_id,'--output, --certificate and --release-id required')
-        result=export_command(policy,a.release_id,a.certificate,a.output)
+        ensure(a.output and a.certificate and a.release_id and a.sha and a.plan and a.go,
+               'Export requires --output --certificate --release-id --sha --plan and separate exact --go')
+        result=export_command(policy,a.release_id,a.sha,a.certificate,a.output,load(a.plan)['plan'],a.go)
     else:raise RuntimeError('Unknown command')
     if a.output and not (a.group=='release' and a.command=='build') and not a.command=='export':
         Path(a.output).write_bytes(canonical(result))

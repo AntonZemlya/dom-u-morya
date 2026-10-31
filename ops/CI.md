@@ -11,6 +11,10 @@ SEO/legal и синтетические release/backup/restore/rollback/prune/CM
 validate/audit, PHPMailer 7.1.1 по lock/manifest, fake SMTP с TLS/ошибками/неопределённым
 результатом, HTTP API, согласие, fallback, error/success и no-JS, Playwright Chromium
 1440/768/390/320, каталог/PDF, SEO/performance, 57 пар SVG/preview и dotfile security.
+Отдельный `manager-guard-http` запускает изолированный Apache с exact принятой
+.htaccess: GET/HEAD 403/404, ACME 200 и чувствительность к permissive marker fixture.
+Engine tests проверяют exact EXPORT GO на CLI/worker до archive read/SSH и STOP
+inventory/rotation при утрате любого обязательного файла или расхождении metadata.
 Исторические release/security тесты получают синтетические baselines, без серверных
 receipts или секретов. Поднимаются только disposable loopback серверы, системный
 `mail()` отключён. Реальные получатели не вызываются; SMTP sink — `127.0.0.1`.

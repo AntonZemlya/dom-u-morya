@@ -6,20 +6,21 @@
 A–G и серверный inventory переданы владельцу локально вне Git после auto-review
 запрета публикации этих данных в публичном репозитории.
 
-## Проверки
+## Проверки после correction pass
 
-- `npm run ci:fast`: **PASS**, 9 checks, 4.43 s.
-- `PHP84_BIN=... PHP84_CGI_BIN=... npm run ci:full`: **PASS**, 26 checks, 169.27 s.
-- **0 FAIL / 0 SKIP**; **28** synthetic release/backup/restore/security/CMS tests.
-- Playwright Chromium: 1440/768/390/320, UI/форма/fake SMTP, PDF/catalog, SEO/performance.
-- Production build из exact commit повторён с одинаковым SHA; read-only preflight/plan проверены.
-- Публичных изменений нет: план noop, демонстрационного production apply не было.
+- `npm run ci:fast`: **PASS**, 9 checks, 4.52 s.
+- `PHP84_BIN=... PHP84_CGI_BIN=... npm run ci:full`: **PASS**, 27 checks, 168.91 s.
+- **0 FAIL / 0 SKIP**; **36** synthetic release/backup/restore/security/CMS tests.
+- Дополнительный изолированный Apache HTTP test: **PASS** (403/404, ACME 200,
+  permissive marker fixture реально отдаёт 200 и отклоняется новым manager).
+- Playwright Chromium 1440/768/390/320, форма/fake SMTP, PDF/catalog, SEO/performance.
+- Exact final HEAD build/verify, Actions и read-only noop-plan — результаты в итоговом
+  correction-комментарии к существующему Draft PR #21; приватные server metadata вне Git.
 
-Машинные результаты: [fast JSON](ci-fast.json), [full JSON](ci-full.json).
-[Fast summary](ci-fast.md), [full summary](ci-full.md), [engine tests](engine-tests.txt).
-После CI публичная история пересоздана с тем же кодом; изменена только публикация
-документации/evidence. Побайтное сравнение всех implementation/test/workflow файлов
-с проверенным локальным commit подтвердило отсутствие различий.
+Машинные результаты: [fast JSON](ci-fast.json), [full JSON](ci-full.json),
+[Apache HTTP](manager-guard-http.json). [Fast summary](ci-fast.md),
+[full summary](ci-full.md), [engine tests](engine-tests.txt).
+Изменения Control Plane: [CORRECTIONS.md](CORRECTIONS.md).
 Все public source bytes и принятые SMTP/legal/consent контракты сохранены.
 
 ## Release и backup

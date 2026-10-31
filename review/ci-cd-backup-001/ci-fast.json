@@ -4,16 +4,16 @@
   "complete": true,
   "node": "v22.23.2",
   "platform": "darwin",
-  "started_at": "2026-10-31T22:02:00.942Z",
+  "started_at": "2026-10-31T23:05:54.996Z",
   "status": "PASS",
-  "seconds": 4.43,
+  "seconds": 4.522,
   "checks": [
     {
       "id": "toolchain",
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.028,
+      "seconds": 0.023,
       "command": [
         "node",
         "-e",
@@ -25,7 +25,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.468,
+      "seconds": 0.385,
       "command": [
         "npm",
         "run",
@@ -37,7 +37,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 1.056,
+      "seconds": 0.848,
       "command": [
         "node",
         "scripts/ci-static.mjs"
@@ -48,7 +48,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.818,
+      "seconds": 0.834,
       "command": [
         "node",
         "tests/release.cjs"
@@ -59,7 +59,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.444,
+      "seconds": 0.387,
       "command": [
         "npm",
         "run",
@@ -71,7 +71,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.27,
+      "seconds": 0.25,
       "command": [
         "node",
         "tests/ci-contract.mjs"
@@ -82,7 +82,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.187,
+      "seconds": 0.169,
       "command": [
         "node",
         "tests/seo.mjs"
@@ -93,7 +93,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 0.061,
+      "seconds": 0.055,
       "command": [
         "node",
         "-e",
@@ -105,7 +105,7 @@
       "status": "PASS",
       "required": true,
       "reason": "",
-      "seconds": 1.095,
+      "seconds": 1.567,
       "command": [
         "python3",
         "-B",

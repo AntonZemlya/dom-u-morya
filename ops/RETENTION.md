@@ -14,7 +14,14 @@
 дополнительно защищает непосредственного предшественника для корректного rollback
 указателя. Пока есть unfinished/problem release, очистка всех точек блокируется.
 Неизвестные файлы/receipt, повреждённый backup, symlink или несоответствие inventory
-останавливают ротацию целиком. Backup до 14 дней защищён даже при наличии альтернатив.
+останавливают ротацию целиком.
+`verified` требует шесть файлов: receipt.json, package.tar.gz, manifest.json,
+plan.json, backup.tar.gz и backup.json. Проверяются точный состав/0600, package SHA,
+совпадение встроенного/stored manifest, plan SHA/commit/baseline и receipt GO/package/
+backup SHA, архивные bytes/modes и evidence after/HTTP. Нельзя считать отсутствующий
+backup.json «необязательным» и пропускать проверку. Нарушение даёт STOP в list,
+prune-plan и под lock перед первым удалением. Для завершённых фаз после backup
+действует тот же обязательный набор; reserved не становится verified автоматически. Backup до 14 дней защищён даже при наличии альтернатив.
 
 ```sh
 npm run backup -- list

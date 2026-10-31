@@ -38,7 +38,7 @@ class Lifecycle(unittest.TestCase):
         self.runtime_data['manifest.json']=c.canonical(dict(identity=self.identity,files=hashes))
         rt=self.private/'smtp-runtime'/self.identity;rt.mkdir(parents=True,mode=0o700);(rt/'src').mkdir(mode=0o700)
         for n,b in self.runtime_data.items():(rt/n).write_bytes(b);(rt/n).chmod(0o600)
-        self.guard=b'Require all denied\n'+c.GUARD+b'\n'
+        self.guard=(Path(__file__).resolve().parent.parent/'.htaccess').read_bytes()
         (self.doc/'api').mkdir();(self.doc/'.envrc').write_bytes(b'protected php84 fixture')
         (self.doc/'.htaccess').write_bytes(self.guard);(self.doc/'index.html').write_bytes(b'old index')
         (self.doc/'script.js').write_bytes(b'old script');(self.doc/'api/smtp-manifest.php').write_bytes(b'fixed runtime descriptor')
@@ -218,11 +218,143 @@ class Lifecycle(unittest.TestCase):
         self.assertEqual(plan['candidates'],[])
         with self.assertRaises(RuntimeError):self.plan('next-release',version='next')
 
+    def test_htaccess_rejects_marker_plus_permissive_directive(self):
+        for policy in [self.guard+b'\nRequire all granted\n',
+                       self.guard.replace(b'RewriteRule (^|/)\\. - [F,END]',b'RewriteRule ^\\.envrc$ - [END]\nRewriteRule (^|/)\\. - [F,END]')+b'\n<Files ".envrc">\nRequire all granted\n</Files>\n']:
+            with self.subTest(policy=c.sha(policy)):
+                raw,manifest=self.package(extra={'.htaccess':policy})
+                self.assertIn(c.GUARD,policy);self.assertIn(b'Require all denied',policy)
+                with self.assertRaisesRegex(RuntimeError,'Apache policy'):c.verify_package(raw,c.sha(raw))
+                with self.assertRaisesRegex(RuntimeError,'Apache policy'):self.m.preflight(manifest,len(raw))
+        self.assertFalse(self.m.root.exists());self.assert_protected()
+
+    def test_ordinary_release_preserves_exact_apache_policy(self):
+        raw,m,review=self.verified()
+        self.assertEqual(c.sha(self.guard),c.APPROVED_HTACCESS_SHA256)
+        self.assertNotIn('.htaccess',[change['path'] for change in review['plan']['changes']])
+        self.assertEqual(c.meta(self.doc/'.htaccess'),self.baseline['public']['.htaccess'])
+        (self.doc/'.htaccess').write_bytes(self.guard+b'\nRequire all granted\n')
+        with self.assertRaisesRegex(RuntimeError,'Apache policy'):self.m.snapshot(self.identity)
+
+    def test_verified_inventory_missing_each_required_file_stops_every_prune(self):
+        self.verified();run=self.m.run('test-release');review=self.m.prune_plan()
+        for name in sorted(c.RUN_FILES):
+            with self.subTest(missing=name):
+                data=(run/name).read_bytes();(run/name).unlink()
+                try:
+                    for operation in [self.m.list_backups,self.m.prune_plan,lambda:self.m.prune(review['plan'],review['go'])]:
+                        with self.assertRaises(Exception):operation()
+                    self.assertFalse((run/'pruned.json').exists())
+                finally:c.atomic(run/name,data)
+        self.assertEqual(self.m.list_backups()[0]['phase'],'verified');self.assert_protected()
+
+    def test_verified_inventory_rejects_disagreement_and_corrupt_archive(self):
+        self.verified();run=self.m.run('test-release')
+        mutations=[('receipt.json',lambda v:dict(v,backup_sha256='0'*64)),
+                   ('receipt.json',lambda v:dict(v,package_sha256='0'*64)),
+                   ('receipt.json',lambda v:dict(v,http=dict(status='FAIL',package_sha256=v['package_sha256']))),
+                   ('manifest.json',lambda v:dict(v,commit='b'*40)),
+                   ('plan.json',lambda v:dict(v,package_bytes=v['package_bytes']+1)),
+                   ('backup.json',lambda v:dict(v,sha256='0'*64))]
+        for name,mutate in mutations:
+            with self.subTest(inconsistent=name):
+                original=(run/name).read_bytes();c.atomic(run/name,c.canonical(mutate(json.loads(original))))
+                try:
+                    with self.assertRaises(Exception):self.m.list_backups()
+                    with self.assertRaises(Exception):self.m.prune_plan()
+                finally:c.atomic(run/name,original)
+        for name in ['backup.tar.gz','package.tar.gz']:
+            with self.subTest(corrupt=name):
+                original=(run/name).read_bytes();c.atomic(run/name,original+b'corrupt')
+                try:
+                    with self.assertRaises(Exception):self.m.list_backups()
+                    with self.assertRaises(Exception):self.m.prune_plan()
+                finally:c.atomic(run/name,original)
+        self.assertEqual(self.m.list_backups()[0]['phase'],'verified');self.assert_protected()
+
+    def export_fixture(self):
+        self.verified();run=self.m.run('test-release')
+        key=self.home/'recipient.key';cert=self.home/'recipient.crt'
+        subprocess.run(['openssl','req','-x509','-newkey','rsa:2048','-nodes','-keyout',str(key),'-out',str(cert),'-days','1','-subj','/CN=synthetic backup recipient'],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        backup_sha=self.m.receipt(run)['backup_sha256'];destination=str(self.home/'approved.cms')
+        review=self.m.export_plan(run.name,backup_sha,cert.read_bytes(),destination)
+        return run,backup_sha,cert,key,destination,review
+
+    def test_export_rejects_missing_wrong_or_substituted_go_before_archive_read(self):
+        run,backup_sha,cert,key,destination,review=self.export_fixture()
+        other=self.home/'other.crt'
+        subprocess.run(['openssl','req','-x509','-newkey','rsa:2048','-nodes','-keyout',str(self.home/'other.key'),'-out',str(other),'-days','1','-subj','/CN=other synthetic recipient'],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        base=(run.name,backup_sha,cert.read_bytes(),destination,review['plan'],review['go'])
+        invalid=[base[:-1]+('',),base[:-1]+('GO APPLY '+c.DOMAIN,),
+                 ('other-release',)+base[1:],(base[0],'0'*64)+base[2:],
+                 base[:2]+(other.read_bytes(),)+base[3:],base[:3]+(str(self.home/'elsewhere.cms'),)+base[4:]]
+        for args in invalid:
+            with self.subTest(change=args[-1][:12]):
+                with patch('release_core.regular',side_effect=AssertionError('Unauthorized backup read')), patch.object(self.m,'verify_record') as verify:
+                    with self.assertRaises(RuntimeError):self.m.encrypted_backup(*args)
+                    verify.assert_not_called()
+                import release_manager as cli
+                supplied=self.home/'supplied.crt';supplied.write_bytes(args[2])
+                with patch.object(cli,'remote') as remote:
+                    with self.assertRaises(RuntimeError):cli.export_command(self.policy,args[0],args[1],str(supplied),args[3],args[4],args[5])
+                    remote.assert_not_called()
+        self.assert_protected()
+
+    def test_export_plan_reads_metadata_without_archive_extraction(self):
+        run,backup_sha,cert,key,destination,review=self.export_fixture();actual=c.regular
+        def read(path):
+            self.assertIn(path.name,['receipt.json','backup.json'],'No archive/payload access while planning')
+            return actual(path)
+        with patch('release_core.regular',side_effect=read):
+            self.assertEqual(self.m.export_plan(run.name,backup_sha,cert.read_bytes(),destination),review)
+        # The fingerprint identifies DER, so harmless PEM surrounding whitespace is canonical.
+        self.assertEqual(c.certificate_sha256(cert.read_bytes()),c.certificate_sha256(b'\n'+cert.read_bytes()+b'\n'))
+        with self.assertRaises(RuntimeError):c.certificate_sha256(cert.read_bytes()+key.read_bytes())
+        self.assert_protected()
+
+    def test_export_cli_requires_go_before_ssh_and_writes_only_approved_ciphertext(self):
+        import release_manager as cli
+        run,backup_sha,cert,key,destination,review=self.export_fixture()
+        with patch.object(cli,'remote') as remote:
+            for go in ['',review['go'].replace('EXPORT','APPLY')]:
+                with self.assertRaises(RuntimeError):cli.export_command(self.policy,run.name,backup_sha,str(cert),destination,review['plan'],go)
+            remote.assert_not_called()
+        plan_path=self.home/'export-plan.json';plan_path.write_bytes(c.canonical(review))
+        policy=self.home/'policy.json';policy.write_bytes(c.canonical(self.policy))
+        argv=['release_manager.py','backup','export','--release-id',run.name,'--sha',backup_sha,'--certificate',str(cert),'--output',destination,'--plan',str(plan_path),'--policy',str(policy)]
+        with patch.object(sys,'argv',argv),patch.object(cli,'remote') as remote:
+            with self.assertRaisesRegex(RuntimeError,'separate exact --go'):cli.main()
+            remote.assert_not_called()
+        def local(op,policy,**request):
+            self.assertEqual(op,'export')
+            return self.m.encrypted_backup(request['release_id'],request['backup_sha256'],base64.b64decode(request['certificate']),request['destination'],request['plan'],request['go'])
+        with patch.object(cli,'remote',side_effect=local) as remote:
+            receipt=cli.export_command(self.policy,run.name,backup_sha,str(cert),destination,review['plan'],review['go'])
+            self.assertEqual(remote.call_count,1)
+        self.assertEqual(receipt['export_plan_sha256'],review['plan']['sha256'])
+        cipher=Path(destination).read_bytes();self.assertEqual(c.sha(cipher),receipt['sha256'])
+        self.assertEqual(stat.S_IMODE(Path(destination).stat().st_mode),0o600)
+        decoded=subprocess.run(['openssl','cms','-decrypt','-binary','-inform','DER','-recip',str(cert),'-inkey',str(key)],input=cipher,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True).stdout
+        self.assertEqual(c.sha(decoded),backup_sha);self.assert_protected()
+
+    def test_export_plan_cli_never_uploads_a_private_key_bundle(self):
+        import release_manager as cli
+        run,backup_sha,cert,key,destination,review=self.export_fixture()
+        cert.write_bytes(cert.read_bytes()+key.read_bytes())
+        policy=self.home/'policy.json';policy.write_bytes(c.canonical(self.policy))
+        argv=['release_manager.py','backup','export-plan','--release-id',run.name,'--sha',backup_sha,'--certificate',str(cert),'--destination',destination,'--policy',str(policy)]
+        with patch.object(sys,'argv',argv),patch.object(cli,'remote') as remote:
+            with self.assertRaisesRegex(RuntimeError,'public X.509'):cli.main()
+            remote.assert_not_called()
+        self.assert_protected()
+
     def test_encrypted_export_roundtrip(self):
         self.verified();run=self.m.run('test-release')
         key=self.home/'export.key';cert=self.home/'export.crt'
         subprocess.run(['openssl','req','-x509','-newkey','rsa:2048','-nodes','-keyout',str(key),'-out',str(cert),'-days','1','-subj','/CN=synthetic backup recipient'],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-        encrypted=self.m.encrypted_backup(run,cert.read_bytes());cipher=base64.b64decode(encrypted['ciphertext'])
+        backup_sha=self.m.receipt(run)['backup_sha256'];destination=str(self.home/'approved.cms')
+        approval=self.m.export_plan(run.name,backup_sha,cert.read_bytes(),destination)
+        encrypted=self.m.encrypted_backup(run.name,backup_sha,cert.read_bytes(),destination,approval['plan'],approval['go']);cipher=base64.b64decode(encrypted['ciphertext'])
         self.assertNotIn(b'fixture secret',cipher)
         decoded=subprocess.run(['openssl','cms','-decrypt','-binary','-inform','DER','-recip',str(cert),'-inkey',str(key)],input=cipher,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True).stdout
         self.assertEqual(c.sha(decoded),encrypted['backup_sha256'])

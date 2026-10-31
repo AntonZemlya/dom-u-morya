@@ -26,6 +26,11 @@ TERMINAL = ['verified', 'rolled_back']
 MAX_ARCHIVE = 128 * 1024 * 1024
 MAX_EXPANDED = 256 * 1024 * 1024
 GUARD = b'# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1'
+# Exact accepted public policy. Ordinary releases cannot change Apache access rules.
+APPROVED_HTACCESS_SHA256 = '652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5'
+RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json'}
+BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
+                    'needs_rollback','rolling_back','rolled_back','recovery_required'}
 
 
 def ensure(ok, message):
@@ -182,12 +187,59 @@ def verify_package(raw, expected_sha):
     expected = set('public/' + n for n in names) | set('private/smtp-runtime/' + identity + '/' + n for n in RUNTIME_FILES)
     ensure(set(files) == set(m['files']) == expected, 'Package allowlist mismatch')
     ensure(all(sha(b) == m['files'][n] for n, b in files.items()), 'Package member SHA mismatch')
-    ensure(GUARD in files.get('public/.htaccess', b'') and b'Require all denied' in files['public/.htaccess'], 'Permanent guard missing')
+    approved_htaccess(files.get('public/.htaccess', b''))
     upstream = json.loads(files['private/smtp-runtime/' + identity + '/manifest.json'])
     ensure(upstream['identity'] == identity and set(upstream['files']) == set(RUNTIME_FILES)-{'manifest.json'}, 'Runtime manifest mismatch')
     ensure(sha(json.dumps(upstream['files'], separators=(',', ':')).encode()) == identity, 'Runtime identity mismatch')
     ensure(all(sha(files['private/smtp-runtime/' + identity + '/' + n]) == h for n, h in upstream['files'].items()), 'Runtime source mismatch')
     return m, files
+
+
+def approved_htaccess(data):
+    ensure(sha(data) == APPROVED_HTACCESS_SHA256,
+           'Apache policy differs from the accepted exact revision; separate security scope required')
+
+
+def certificate_sha256(certificate):
+    ensure(isinstance(certificate,bytes) and len(certificate) <= 4096
+           and re.fullmatch(rb'\s*-----BEGIN CERTIFICATE-----\r?\n[A-Za-z0-9+/=\r\n]+-----END CERTIFICATE-----\s*',certificate),
+           'Exactly one public X.509 certificate required')
+    result = subprocess.run(['openssl','x509','-inform','PEM','-outform','DER'],
+                            input=certificate,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=15)
+    ensure(result.returncode == 0 and result.stdout, 'Invalid recipient certificate')
+    return sha(result.stdout)
+
+
+def export_destination(destination):
+    ensure(isinstance(destination,str) and destination.startswith('/')
+           and not any(c in destination for c in ['\\','\x00','\n','\r'])
+           and str(PurePosixPath(destination)) == destination
+           and '..' not in PurePosixPath(destination).parts
+           and destination.endswith('.cms'), 'Canonical absolute .cms destination required')
+    return destination
+
+
+def export_go(plan):
+    return ('GO EXPORT '+DOMAIN+' '+plan['release_id']+' BACKUP '+plan['backup_sha256']
+            +' CERT '+plan['certificate_sha256']+' DEST '+sha(plan['destination'].encode())
+            +' PLAN '+plan['sha256'])
+
+
+def check_export_go(plan, go, release_id, backup_sha, certificate, destination):
+    # This gate is shared by CLI and worker and runs before opening the backup.
+    ensure(isinstance(plan,dict), 'Reviewed export plan required')
+    expected_keys={'schema','action','domain','release_id','backup_sha256',
+                   'certificate_sha256','destination','sha256'}
+    ensure(set(plan)==expected_keys, 'Export plan schema mismatch')
+    unsigned=dict(plan); supplied=unsigned.pop('sha256')
+    ensure(supplied==digest(unsigned) and plan['schema']=='dom-export/v1'
+           and plan['action']=='export' and plan['domain']==DOMAIN, 'Export plan identity mismatch')
+    ensure(validate_id(release_id)==plan['release_id']
+           and re.fullmatch('[a-f0-9]{64}',backup_sha or '')
+           and backup_sha==plan['backup_sha256'], 'Export backup identity mismatch')
+    ensure(export_destination(destination)==plan['destination'], 'Export destination differs from approved plan')
+    ensure(go==export_go(plan), 'Separate exact owner EXPORT GO required')
+    ensure(certificate_sha256(certificate)==plan['certificate_sha256'], 'Export recipient differs from approved plan')
 
 
 def validate_id(value):
@@ -219,7 +271,7 @@ class Manager:
             else:
                 public[name] = meta(path)
         ensure(all(n in public for n in ['.envrc', '.htaccess', 'index.html']), 'Protected baseline required')
-        ensure(GUARD in regular(self.doc / '.htaccess'), 'Baseline permanent guard missing')
+        approved_htaccess(regular(self.doc / '.htaccess'))
         config = meta(self.private / 'config.php')
         ensure(config['mode'] == 0o600, 'Config must be 0600')
         runtime = {n: meta(self.runtime(identity) / n) for n in RUNTIME_FILES}
@@ -269,6 +321,7 @@ class Manager:
             os.close(fd)
 
     def preflight(self, manifest, package_bytes=0):
+        ensure(manifest['files'].get('public/.htaccess')==APPROVED_HTACCESS_SHA256, 'Package Apache policy changed: STOP')
         identity=manifest['runtime_identity']; snapshot=self.snapshot(identity)
         # SMTP upgrades require a separate config migration; ordinary releases preserve config.
         ensure(snapshot['public']['api/smtp-manifest.php']['sha256'] == manifest['files']['public/api/smtp-manifest.php'], 'SMTP runtime migration requires separate reviewed scope')
@@ -341,6 +394,7 @@ class Manager:
         expected['private/config.php']=m['baseline']['config']['sha256']
         expected.update({'private/smtp-runtime/'+m['baseline']['runtime_identity']+'/'+n:v['sha256'] for n,v in m['baseline']['runtime'].items()})
         ensure(m['files']==expected, 'Backup scope mismatch')
+        approved_htaccess(files.get('public/.htaccess',b''))
         with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
             for member in archive.getmembers():
                 old=m['baseline']['public'].get(member.name[7:]) if member.name.startswith('public/') else None
@@ -367,11 +421,26 @@ class Manager:
             shutil.rmtree(str(rehearsal))
         return dict(files=len(files), isolated_rehearsal=True, production_restore=False)
 
-    def encrypted_backup(self, run, certificate):
-        # OpenSSL is already available on Jino; only ciphertext leaves the server.
-        ensure(len(certificate) <= 4096 and b'BEGIN CERTIFICATE' in certificate, 'Public X.509 certificate required')
-        self.verify_backup(run)
-        raw = regular(run/'backup.tar.gz')
+    def export_plan(self, release_id, backup_sha, certificate, destination):
+        # Read metadata only. No archive reads or ciphertext without a separate GO.
+        validate_id(release_id); export_destination(destination)
+        ensure(re.fullmatch('[a-f0-9]{64}',backup_sha or ''), 'Exact backup SHA required')
+        fingerprint=certificate_sha256(certificate)
+        run=self.run(release_id);metadata=json.loads(regular(run/'backup.json'));receipt=self.receipt(run)
+        ensure(metadata['sha256']==backup_sha==receipt.get('backup_sha256')
+               and receipt['release_id']==release_id, 'Export backup metadata mismatch')
+        plan=dict(schema='dom-export/v1',action='export',domain=DOMAIN,release_id=release_id,
+                  backup_sha256=backup_sha,certificate_sha256=fingerprint,destination=destination)
+        plan['sha256']=digest(plan)
+        return dict(plan=plan,go=export_go(plan))
+
+    def encrypted_backup(self, release_id, backup_sha, certificate, destination, plan, go):
+        check_export_go(plan,go,release_id,backup_sha,certificate,destination)
+        run=self.run(release_id)
+        self.verify_record(run) # Complete inventory + archive checks only AFTER the authorization gate.
+        ensure(self.receipt(run)['backup_sha256']==backup_sha, 'Approved export backup changed')
+        raw=regular(run/'backup.tar.gz')
+        ensure(sha(raw)==backup_sha, 'Approved export backup SHA mismatch')
         read_fd, write_fd = os.pipe()
         try:
             os.write(write_fd, certificate); os.close(write_fd); write_fd = None
@@ -383,7 +452,9 @@ class Manager:
             if write_fd is not None: os.close(write_fd)
         ensure(regular(run/'backup.tar.gz') == raw, 'Backup changed during encrypted export')
         return dict(status='EXPORTED_ENCRYPTED',ciphertext=base64.b64encode(result.stdout).decode(),
-                    sha256=sha(result.stdout),backup_sha256=sha(raw),restore_verified=False)
+                    sha256=sha(result.stdout),backup_sha256=backup_sha,restore_verified=False,
+                    certificate_sha256=plan['certificate_sha256'],destination=destination,
+                    export_plan_sha256=plan['sha256'],go_sha256=sha(go.encode()))
 
     def protect_unchanged(self, baseline, current):
         ensure(current['config']==baseline['config'] and current['runtime']==baseline['runtime']
@@ -420,7 +491,7 @@ class Manager:
         receipt['phase']='rolling_back';self.save(run,receipt)
         for name in sorted(changed,key=lambda n:(n=='index.html',n)):
             if name in baseline['public']:
-                ensure(GUARD in files['public/.htaccess'], 'Unsafe baseline guard')
+                approved_htaccess(files['public/.htaccess'])
                 path=real(self.doc/name)
                 if not path.parent.exists():path.parent.mkdir(parents=True,mode=0o755)
                 atomic(path,files['public/'+name],baseline['public'][name]['mode'],baseline['public'][name])
@@ -503,6 +574,7 @@ class Manager:
         result={k:r[k] for k in ['schema','release_id','package_sha256','phase','created_unix','backup_sha256'] if k in r}
         if (run/'pruned.json').exists():
             result['phase']='pruned';result['receipt_phase']=r['phase'];return result
+        if r['phase']=='verified':self.verify_record(run)
         current=json.loads(regular(self.root/'current.json')) if (self.root/'current.json').exists() else None
         result['is_current']=bool(current and current['release_id']==release_id)
         if result['is_current'] and r['phase'] in ['verified','awaiting_http_verify']:
@@ -511,6 +583,42 @@ class Manager:
             result['current_files_match_receipt']=matches
             if not matches:result['receipt_phase']=r['phase'];result['phase']='drifted'
         return result
+
+    def verify_record(self, run):
+        # A terminal/verified label is never sufficient evidence of a restore point.
+        real(run);ensure(run.is_dir() and stat.S_IMODE(run.stat().st_mode)==0o700, 'Unsafe run directory')
+        present={path.name for path in run.iterdir()}
+        ensure(present<=RUN_FILES, 'Unknown run member: STOP')
+        for path in run.iterdir():
+            ensure(meta(path)['mode']==0o600, 'Run files must be regular private 0600 files')
+        ensure({'receipt.json','package.tar.gz','manifest.json','plan.json'}<=present, 'Incomplete release record: STOP')
+        receipt=self.receipt(run)
+        phase=receipt['phase']
+        ensure(receipt['schema']==1 and receipt['release_id']==run.name
+               and phase in BACKED_UP_PHASES|{'reserved'}, 'Receipt identity/phase mismatch')
+        raw=regular(run/'package.tar.gz');manifest,_=verify_package(raw,receipt['package_sha256'])
+        ensure(json.loads(regular(run/'manifest.json'))==manifest, 'Stored manifest differs from package')
+        plan=json.loads(regular(run/'plan.json'));unsigned=dict(plan);supplied=unsigned.pop('sha256')
+        ensure(supplied==digest(unsigned) and plan['schema']=='dom-plan/v1'
+               and plan['action']=='apply' and plan['domain']==DOMAIN
+               and plan['release_id']==run.name and plan['package_sha256']==receipt['package_sha256']
+               and plan['commit']==manifest['commit'] and plan['package_bytes']==len(raw)
+               and plan['snapshot_sha256']==digest(plan['snapshot'])
+               and plan['snapshot']['runtime_identity']==manifest['runtime_identity']
+               and receipt['go_sha256']==sha(self.go(plan).encode()), 'Receipt/plan/package mismatch')
+        if phase in BACKED_UP_PHASES or {'backup.json','backup.tar.gz'} & present:
+            ensure(RUN_FILES<=present, 'Incomplete backup record: STOP')
+            backup,files=self.verify_backup(run)
+            ensure(json.loads(regular(run/'backup.json'))['sha256']==receipt.get('backup_sha256'), 'Receipt backup SHA mismatch')
+        else:backup=files=None
+        if phase in ['verified','awaiting_http_verify']:
+            after=receipt['after'];wanted={n:manifest['files']['public/'+n] for n in manifest['public_allowlist']}
+            ensure({n:v['sha256'] for n,v in after['public'].items() if n!='.envrc'}==wanted, 'Receipt after-state differs from manifest')
+            ensure(after['runtime_identity']==manifest['runtime_identity'], 'Receipt runtime identity mismatch')
+            self.protect_unchanged(plan['snapshot'],after)
+        if phase=='verified':
+            ensure(receipt['http']['status']=='PASS' and receipt['http']['package_sha256']==receipt['package_sha256'], 'Verified HTTP evidence mismatch')
+        return backup,files
 
     def list_backups(self):
         if not self.root.exists():return []
@@ -521,17 +629,15 @@ class Manager:
             ensure(run.is_dir(),'Unknown manager entry: STOP');validate_id(run.name)
             r=self.receipt(run)
             ensure(r['release_id']==run.name,'Receipt identity mismatch')
-            allowed={'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json','pruned.json'}
-            ensure({p.name for p in run.iterdir()}<=allowed, 'Unknown run member: STOP')
-            size=sum(p.stat().st_size for p in run.iterdir())
             if (run/'pruned.json').exists():
-                ensure(set(p.name for p in run.iterdir())=={'receipt.json','pruned.json'}, 'Pruned tombstone mismatch')
+                ensure({p.name for p in run.iterdir()}=={'receipt.json','pruned.json'}, 'Pruned tombstone mismatch')
+                tombstone=json.loads(regular(run/'pruned.json'))
+                ensure(tombstone['package_sha256']==r['package_sha256']
+                       and re.fullmatch('[a-f0-9]{64}',tombstone['plan_sha256']), 'Pruned receipt mismatch')
                 continue
-            config_fingerprint=None
-            if (run/'backup.json').exists():
-                backup,_=self.verify_backup(run)
-                config_fingerprint=digest(dict(config=backup['baseline']['config']['sha256'],runtime={n:v['sha256'] for n,v in backup['baseline']['runtime'].items()}))
-            rows.append(dict(release_id=run.name,path=str(run),bytes=size,phase=r['phase'],pinned=r['pinned'],
+            backup,_=self.verify_record(run)
+            config_fingerprint=None if backup is None else digest(dict(config=backup['baseline']['config']['sha256'],runtime={n:v['sha256'] for n,v in backup['baseline']['runtime'].items()}))
+            rows.append(dict(release_id=run.name,path=str(run),bytes=sum(p.stat().st_size for p in run.iterdir()),phase=r['phase'],pinned=r['pinned'],
                              created_unix=r['created_unix'],config_fingerprint=config_fingerprint,inventory_sha256=digest({p.name:meta(p) for p in sorted(run.iterdir())})))
         return rows
 
@@ -607,9 +713,11 @@ def dispatch(request):
     if op=='rollback':return manager.rollback(p,request['go'])
     if op=='list':return dict(managed=manager.list_backups(),legacy=manager.historical_backups())
     if op=='verify-backup':
-        run=manager.run(request['release_id']);m,_=manager.verify_backup(run)
-        return dict(status='PASS',release_id=run.name,files=len(m['files']),production_restore_performed=False)
-    if op=='export':return manager.encrypted_backup(manager.run(request['release_id']),base64.b64decode(request['certificate']))
+        run=manager.run(request['release_id']);m,_=manager.verify_record(run)
+        ensure(m is not None,'No verified backup available')
+        return dict(status='PASS',release_id=run.name,backup_sha256=manager.receipt(run)['backup_sha256'],files=len(m['files']),production_restore_performed=False)
+    if op=='export-plan':return manager.export_plan(request['release_id'],request['backup_sha256'],base64.b64decode(request['certificate']),request['destination'])
+    if op=='export':return manager.encrypted_backup(request['release_id'],request['backup_sha256'],base64.b64decode(request['certificate']),request['destination'],p,request.get('go'))
     if op=='prune-plan':return manager.prune_plan()
     if op=='prune':return manager.prune(p,request['go'])
     raise RuntimeError('Unknown operation')

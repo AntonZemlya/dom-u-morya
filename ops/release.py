@@ -184,6 +184,7 @@ def main():
     print(json.dumps(result,indent=2,ensure_ascii=False))
 
 if __name__=='__main__':
+    raise SystemExit('Archived rollout CLI; use ops/release_manager.py and ops/RELEASE-RUNBOOK.md. No remote operation performed.')
     try:
         main()
     except Exception as error:

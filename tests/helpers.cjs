@@ -2,6 +2,8 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
+const previewURL=process.env.CI_PREVIEW_URL||'http://127.0.0.1:4183';
+if(!/^http:\/\/127\.0\.0\.1:\d+$/.test(previewURL))throw Error('CI preview must be loopback');
 const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json','.webp':'image/webp','.png':'image/png','.woff2':'font/woff2','.ttf':'font/ttf','.pdf':'application/pdf'};
 function server(directory = root, port = 0) {
   if (process.env.QA_BASE_URL) {
@@ -28,4 +30,4 @@ async function maskMap(page){
   // Third-party tiles change independently of the design. Keep the iframe dimensions.
   await page.route('https://www.openstreetmap.org/**', route=>route.fulfill({contentType:'text/html',body:'<!doctype html><html><body style="margin:0;background:#EEE8DC"></body></html>'}));
 }
-module.exports={root,server,browser,stable,maskMap};
+module.exports={root,server,browser,stable,maskMap,previewURL};

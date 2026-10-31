@@ -1,0 +1,327 @@
+{
+  "schema": 1,
+  "mode": "full",
+  "complete": true,
+  "node": "v22.23.2",
+  "platform": "darwin",
+  "started_at": "2026-10-31T22:02:05.494Z",
+  "status": "PASS",
+  "seconds": 169.271,
+  "checks": [
+    {
+      "id": "toolchain",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.027,
+      "command": [
+        "node",
+        "-e",
+        "if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"
+      ]
+    },
+    {
+      "id": "source",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.441,
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ]
+    },
+    {
+      "id": "syntax",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.044,
+      "command": [
+        "node",
+        "scripts/ci-static.mjs"
+      ]
+    },
+    {
+      "id": "release-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.773,
+      "command": [
+        "node",
+        "tests/release.cjs"
+      ]
+    },
+    {
+      "id": "production-build",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.467,
+      "command": [
+        "npm",
+        "run",
+        "build:production"
+      ]
+    },
+    {
+      "id": "offline-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.292,
+      "command": [
+        "node",
+        "tests/ci-contract.mjs"
+      ]
+    },
+    {
+      "id": "seo",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.142,
+      "command": [
+        "node",
+        "tests/seo.mjs"
+      ]
+    },
+    {
+      "id": "legal",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.061,
+      "command": [
+        "node",
+        "-e",
+        "require('./tests/legal-contract.cjs')(process.cwd())"
+      ]
+    },
+    {
+      "id": "release-manager",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.154,
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "ops",
+        "-p",
+        "test_release_manager.py"
+      ]
+    },
+    {
+      "id": "php84",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.008,
+      "command": [
+        "PHP84_BIN",
+        "-n",
+        "-r",
+        "if(PHP_MAJOR_VERSION!==8||PHP_MINOR_VERSION!==4||!extension_loaded('openssl')||!extension_loaded('ctype'))exit(1);echo PHP_VERSION;"
+      ]
+    },
+    {
+      "id": "composer",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.324,
+      "command": [
+        "composer",
+        "validate",
+        "--strict",
+        "--no-check-all",
+        "--no-interaction"
+      ]
+    },
+    {
+      "id": "composer-audit",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.979,
+      "command": [
+        "composer",
+        "audit",
+        "--locked",
+        "--no-interaction"
+      ]
+    },
+    {
+      "id": "smtp-runtime",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.035,
+      "command": [
+        "node",
+        "scripts/smtp-runtime.mjs"
+      ]
+    },
+    {
+      "id": "form-smtp",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 24.52,
+      "command": [
+        "npm",
+        "run",
+        "test:form"
+      ]
+    },
+    {
+      "id": "chromium",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.277,
+      "command": [
+        "node",
+        "tests/ci-browser-dependency.cjs"
+      ]
+    },
+    {
+      "id": "ui",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 12.725,
+      "command": [
+        "node",
+        "tests/ui.cjs",
+        "--root",
+        "dist"
+      ]
+    },
+    {
+      "id": "catalog-pdf",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 20.091,
+      "command": [
+        "node",
+        "tests/catalog.cjs",
+        "--root",
+        "dist"
+      ]
+    },
+    {
+      "id": "catalog-transfer",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 5.995,
+      "command": [
+        "node",
+        "tests/catalog-transfer.cjs"
+      ]
+    },
+    {
+      "id": "previews",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 12.119,
+      "command": [
+        "node",
+        "tests/plan-previews.cjs"
+      ]
+    },
+    {
+      "id": "seo-browser",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.906,
+      "command": [
+        "node",
+        "tests/seo-browser.cjs"
+      ]
+    },
+    {
+      "id": "performance",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 63.402,
+      "command": [
+        "node",
+        "tests/performance.cjs",
+        "ci"
+      ]
+    },
+    {
+      "id": "legacy-fixtures",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.246,
+      "command": [
+        "python3",
+        "-B",
+        "scripts/ci-legacy-fixtures.py"
+      ]
+    },
+    {
+      "id": "legacy-security",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.885,
+      "command": [
+        "npm",
+        "run",
+        "test:security"
+      ]
+    },
+    {
+      "id": "legacy-form-release",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 4.143,
+      "command": [
+        "npm",
+        "run",
+        "test:form-release"
+      ]
+    },
+    {
+      "id": "smtp-package",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.278,
+      "command": [
+        "npm",
+        "run",
+        "test:smtp-package"
+      ]
+    },
+    {
+      "id": "smtp-e2e",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 11.889,
+      "command": [
+        "npm",
+        "run",
+        "test:smtp-e2e"
+      ]
+    }
+  ]
+}

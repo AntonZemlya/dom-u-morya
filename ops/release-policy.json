@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "keep_verified": 2,
+  "protect_days": 14,
+  "reserve_bytes": 67108864,
+  "quota_max_age_hours": 24,
+  "quota_evidence": {},
+  "external_copy": "READY_NOT_CONFIGURED"
+}

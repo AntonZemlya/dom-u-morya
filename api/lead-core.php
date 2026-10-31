@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DomLead;
 
 const CONSENT_VERSION = '2026-10-30';
-const MAILBOX = 'sales@zhk-dom-umorya.ru';
+const MAIL_FROM = 'sales@zhk-dom-umorya.ru';
 const ORIGIN = 'https://zhk-dom-umorya.ru';
 const MAX_BODY = 8192;
 
@@ -18,7 +18,8 @@ function localTest(): bool { return in_array(PHP_SAPI, ['cli', 'cli-server'], tr
 function config(): array {
     $path = dirname(__DIR__, 3) . '/.dom-u-morya/config.php';
     if (localTest() && getenv('LEAD_CONFIG')) $path = getenv('LEAD_CONFIG');
-    if (!is_file($path) || is_link($path)) return [];
+    if (!is_file($path) || is_link($path) || (fileperms($path) & 0777) !== 0600
+        || (fileperms(dirname($path)) & 0777) !== 0700) return [];
     $real = realpath($path);
     $root = realpath(dirname(__DIR__));
     if (!$real || str_starts_with($real, $root . DIRECTORY_SEPARATOR)) return [];
@@ -29,7 +30,10 @@ function config(): array {
 function enabled(array $config): bool {
     return ($config['FORM_ENABLED'] ?? false) === true
         && ($config['DELIVERY_VERIFIED'] ?? false) === true
-        && ($config['LEGAL_APPROVED'] ?? '') === CONSENT_VERSION;
+        && ($config['LEGAL_APPROVED'] ?? '') === CONSENT_VERSION
+        && in_array($config['MAIL_TO'] ?? '', ['azm1982@yandex.ru','info@anyara.ru'], true)
+        && ($config['DELIVERY_VERIFIED_TO'] ?? '') === $config['MAIL_TO']
+        && ($config['LEGAL_MAIL_TO'] ?? '') === $config['MAIL_TO'];
 }
 
 function text(mixed $value, int $max, bool $required = false): string {
@@ -58,7 +62,7 @@ function validate(string $raw): array {
     }
     $v['lot'] = null;
     if ($v['lotId'] !== '') {
-        $catalog = json_decode(file_get_contents(dirname(__DIR__) . '/data/apartments.json'), true, 32, JSON_THROW_ON_ERROR);
+        $catalog = require __DIR__.'/lead-catalog.php';
         foreach ($catalog as $lot) if ($lot['id'] === $v['lotId']) $v['lot'] = $lot;
         if (!$v['lot']) reject(422, 'unknown_lot');
         $category = ['studio','1k','2k','3k'][$v['lot']['bedrooms']];
@@ -73,20 +77,26 @@ function validate(string $raw): array {
         foreach (['price'=>[6978183,20000000], 'downPct'=>[10,70], 'term'=>[3,30], 'rate'=>[2,20]] as $key=>[$min,$max]) {
             if ((!is_int($c[$key] ?? null) && !is_float($c[$key] ?? null)) || !is_finite((float)$c[$key]) || $c[$key] < $min || $c[$key] > $max) reject(422, 'invalid_fields');
         }
-        if (!is_int($c['price']) || !is_int($c['term']) || !is_int($c['downPct']) || !in_array($c['program'], ['regional','family','custom'], true)) reject(422, 'invalid_fields');
+        if (!is_int($c['price']) || !is_int($c['term']) || !is_int($c['downPct']) || !in_array($c['program'], ['regional','family','custom',null], true)) reject(422, 'invalid_fields');
+        $c['program'] ??= 'custom'; // The existing manual-rate UI sends null.
         if ($v['lot'] && $c['price'] !== $v['lot']['price_rub']) reject(422, 'price_mismatch');
         $v['calculation'] = $c;
     }
     return $v;
 }
 
-/** Body is plain text; every header and envelope address is controlled by the application. */
+/** Plain text only; optional fields are omitted and visitor strings never become From/To/Subject. */
 function message(array $v, string $id, int $now): array {
     $lines = ['ЖК «Дом у моря» — запрос на обработку', 'ID: '.$id, 'Время UTC: '.gmdate('c', $now),
         'Оператор: ИП Саврасова Елена Анатольевна', 'Имя: '.$v['name'], 'Телефон: '.$v['phone'],
-        'E-mail: '.($v['email'] ?: 'не указан'), 'Связь: '.($v['channel'] ?: 'не указана'), 'Время связи: '.($v['callTime'] ?: 'любое'),
-        'Категория: '.($v['category'] ?: 'не выбрана'), 'Тип запроса: '.($v['requestKind'] === 'full' ? '100% оплата, актуальный прайс и условия' : ($v['requestKind'] ?: 'общий')),
-        'Вид планировки: '.($v['planView'] ?: 'не выбран')];
+        'Источник: '.ORIGIN.'/#contact'];
+    $labels = [
+        'email'=>['E-mail', []], 'channel'=>['Способ связи', []], 'callTime'=>['Время связи', []],
+        'category'=>['Категория', ['studio'=>'Студия','1k'=>'1 спальня','2k'=>'2 спальни','3k'=>'3 спальни','unsure'=>'Не определена']],
+        'requestKind'=>['Тип запроса', ['general'=>'Обращение с сайта','plan'=>'Выбранная квартира','calc'=>'Ипотечный расчёт','full'=>'100% оплата, актуальный прайс и условия']],
+        'planView'=>['Вид планировки', ['furnished'=>'С мебелью','unfurnished'=>'Без мебели','floor'=>'На этаже']],
+    ];
+    foreach ($labels as $key=>[$label, $values]) if ($v[$key] !== '') $lines[] = $label.': '.($values[$v[$key]] ?? $v[$key]);
     if ($v['lot']) {
         $lot = $v['lot'];
         $lines[] = 'Каталог от '.$lot['snapshot_date'].'; наличие и цена требуют подтверждения агентством.';
@@ -99,17 +109,8 @@ function message(array $v, string $id, int $now): array {
     }
     $lines[] = 'Самостоятельное согласие: true; редакция '.CONSENT_VERSION.'; получено UTC '.gmdate('c', $now);
     $lines[] = ORIGIN.'/consent-personal-data.html';
-    return ['to'=>MAILBOX, 'subject'=>'=?UTF-8?B?'.base64_encode('Дом у моря — заявка').'?=',
-        'body'=>implode("\r\n", $lines), 'id'=>$id];
-}
-
-function mailTransport(array $m): bool {
-    // No visitor input in headers, envelope flags or a shell command. No PHP mail.log.
-    ini_set('mail.log', '');
-    return @mail(MAILBOX, $m['subject'], chunk_split(base64_encode($m['body']), 76, "\r\n"), [
-        'From'=>MAILBOX, 'MIME-Version'=>'1.0', 'Content-Type'=>'text/plain; charset=UTF-8',
-        'Content-Transfer-Encoding'=>'base64', 'Message-ID'=>'<'.$m['id'].'@zhk-dom-umorya.ru>',
-    ], '-fsales@zhk-dom-umorya.ru');
+    return ['subject'=>'ЖК Дом у моря — новая заявка №'.$id,
+        'body'=>implode("\r\n", $lines), 'id'=>$id, 'replyTo'=>$v['email']];
 }
 
 /** Single bounded state file contains HMACs and delivery metadata only; never raw IP or payload. */
@@ -122,6 +123,7 @@ function accept(array $v, string $key, string $ip, array $cfg, callable $mailer,
         || str_starts_with($real.'/', $root.'/') || !is_writable($real) || (fileperms($real) & 0077)) reject(503, 'unavailable');
     $path = $real.'/state.json';
     if (is_link($path)) reject(503, 'unavailable');
+    $existed = is_file($path);
     $handle = fopen($path, 'c+');
     if (!$handle) reject(503, 'unavailable');
     chmod($path, 0600);
@@ -133,13 +135,14 @@ function accept(array $v, string $key, string $ip, array $cfg, callable $mailer,
     try {
         $raw = stream_get_contents($handle, 2097153);
         if (strlen($raw) > 2097152) reject(503, 'unavailable');
+        if ($raw === '' && $existed) reject(503, 'unavailable'); // Never reset truncated delivery history.
         $s = $raw === '' ? ['items'=>[], 'rates'=>[]] : json_decode($raw, true, 12, JSON_THROW_ON_ERROR);
         if (!is_array($s['items'] ?? null) || !is_array($s['rates'] ?? null)) reject(503, 'unavailable');
         $save = static function () use ($handle, &$s): void {
             $data = json_encode($s, JSON_THROW_ON_ERROR);
             rewind($handle);
             if (!ftruncate($handle, 0) || fwrite($handle, $data) !== strlen($data) || !fflush($handle)) reject(503, 'unavailable');
-            if (function_exists('fsync')) fsync($handle);
+            if (function_exists('fsync') && !fsync($handle)) reject(503, 'unavailable');
         };
         $count = count($s['items']) + count($s['rates']);
         foreach ($s['items'] as $k=>$item) if ($item['expires'] <= $now) unset($s['items'][$k]);
@@ -147,7 +150,7 @@ function accept(array $v, string $key, string $ip, array $cfg, callable $mailer,
         if (count($s['items']) + count($s['rates']) !== $count) $save();
         $hash = fn(string $value): string => hash_hmac('sha256', $value, $secret);
         $k = $hash('key:'.$key);
-        $fingerprint = $hash('body:'.json_encode($v, JSON_THROW_ON_ERROR));
+        $fingerprint = $hash('body:'.$cfg['MAIL_TO'].':'.json_encode($v, JSON_THROW_ON_ERROR));
         if (isset($s['items'][$k])) {
             $item = $s['items'][$k];
             if (!hash_equals($item['fingerprint'], $fingerprint)) reject(409, 'idempotency_conflict');
@@ -166,10 +169,11 @@ function accept(array $v, string $key, string $ip, array $cfg, callable $mailer,
             $s['rates'][$r] = ['count'=>$rate['count']+1,'until'=>$rate['until']];
         }
         $id = gmdate('Ymd', $now).'-'.bin2hex(random_bytes(8));
-        $s['items'][$k] = ['id'=>$id,'fingerprint'=>$fingerprint,'created'=>$now,'expires'=>$now+86400,'status'=>'pending','consentVersion'=>CONSENT_VERSION];
+        $s['items'][$k] = ['id'=>$id,'fingerprint'=>$fingerprint,'created'=>$now,'expires'=>$now+604800,'status'=>'pending','consentVersion'=>CONSENT_VERSION];
         $save(); // A crash or timeout leaves pending: never silently retry an uncertain mail.
         $sent = $mailer(message($v, $id, $now));
         $s['items'][$k]['status'] = $sent === true ? 'accepted' : 'failed';
+        if ($sent === true) $s['items'][$k]['expires'] = $now + 86400;
         $save();
         if ($sent !== true) reject(502, 'mail_unavailable');
         return ['id'=>$id];
@@ -206,13 +210,15 @@ function serve(bool $statusOnly = false): never {
     ini_set('log_errors', '0'); // Errors must never serialize visitor data/paths to shared logs.
     set_time_limit(10);
     try {
+        require_once __DIR__.'/lead-smtp.php';
         $cfg = config();
         if ($statusOnly) {
             if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') reject(405, 'method_not_allowed');
-            response(200, ['enabled'=>enabled($cfg), 'consentVersion'=>CONSENT_VERSION]);
+            response(200, ['enabled'=>enabled($cfg) && smtpReady($cfg), 'consentVersion'=>CONSENT_VERSION]);
         }
+        if (enabled($cfg) && !smtpReady($cfg)) reject(503, 'unavailable');
         $raw = file_get_contents('php://input', false, null, 0, MAX_BODY + 1);
-        $result = handle($_SERVER, $raw === false ? '' : $raw, $cfg, __NAMESPACE__.'\\mailTransport');
+        $result = handle($_SERVER, $raw === false ? '' : $raw, $cfg, static fn(array $m): bool => smtpTransport($m, $cfg));
         response(202, ['ok'=>true] + $result);
     } catch (Rejection $e) { response($e->status, ['ok'=>false,'error'=>$e->reason]); }
     catch (\Throwable) { response(503, ['ok'=>false,'error'=>'unavailable']); }

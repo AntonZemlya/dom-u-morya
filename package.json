@@ -16,6 +16,8 @@
     "test:previews": "node tests/plan-previews.cjs",
     "test:catalog-transfer": "node tests/catalog-transfer.cjs",
     "test:form": "node scripts/test-form.mjs",
+    "check:smtp": "node scripts/smtp-runtime.mjs && composer validate --strict --no-check-all && composer audit --locked --no-interaction",
+    "test:smtp-package": "python3 -B ops/test_smtp_package.py",
     "test:legal": "node scripts/check-rec003-integration.mjs",
     "test:security": "python3 -B ops/test_release.py && python3 -B ops/test_security_http.py"
   },

@@ -1,6 +1,8 @@
 # FORM-002 / SMTP-001: независимая приёмка и отдельные GO
 
-Статус: **LOCAL QA, DRAFT; production не изменён, реальные письма не отправлялись.**
+Статус: **LOCAL PASS принят Control Plane; исполняемый GO A harness подготовлен для повторной приёмки.**
+Production не изменён, реальные письма не отправлялись; owner GO A ещё не получен.
+Основание дополнения: [Control Plane в PR #17](https://github.com/AntonZemlya/dom-u-morya/pull/17#issuecomment-6542206436).
 Основание — [последний комментарий Issue #7](https://github.com/AntonZemlya/dom-u-morya/issues/7#issuecomment-6541887257), заменяющий PHP `mail()`.
 База — опубликованный `c1a32fa85c16d9e2c2b40588de8be5daa92d7801`, прежний пакет
 `045fc7e11ffc55b4b19f10e895c50ce82f409608f6dd798dbd37d1d8b0059e7d`.
@@ -95,34 +97,139 @@ Manifest задаёт base, reviewed commit, runtime identity и SHA каждо�
 Старая `ops/release.py` — скрипт первоначального FORM-001 rollout; package/prepare/
 deploy/probe/enable намеренно останавливаются для SMTP-ветки до любых remote вызовов.
 Она не умеет миграцию текущего сайта и приватного SMTP runtime. Не обходить блокировку.
-Ни постоянный тестовый маршрут, ни новый автоматический deploy runner в PR не добавлены.
+Постоянного тестового маршрута и автоматического включения формы нет.
 
 ## GO A: один SMTP E2E на Jino при выключенной форме
 
-Это **план**, он ещё не исполнялся. До любых правок Jino/отправки владелец отдельно
-разрешает точный commit/хеш пакета и **одно** письмо `sales@...` → `azm1982@yandex.ru`.
-Подготовить/просмотреть текст временного wrapper перед этим GO. Предлагаемая формулировка:
-«GO SMTP E2E <commit> <archive-sha256>: разрешаю приватную загрузку кандидата,
-временный защищённый веб wrapper на 120 секунд, ровно одно синтетическое письмо
-на azm1982@yandex.ru и обязательный cleanup; публичная форма остаётся выключенной».
+Механизм представлен исходниками **до GO**, локально проверен; на Jino не исполнялся.
+Контроллер `ops/smtp_e2e.py`, worker `ops/smtp_e2e_remote.py` (Python 3.6 совместим с Jino),
+шаблон `ops/smtp_e2e_wrapper.php`, тесты `ops/test_smtp_e2e.py`. В `RELEASE_FILES`
+wrapper не входит. Источники PHP формы остаются как в принятом `edbd496`.
+
+До любых Jino writes/отправки владелец отдельно разрешает точные **commit + SMTP SHA +
+harness SHA + mode + recipient + AUTH identity**. Старый принятый SMTP SHA
+`3ec66fa93ade03694c3fc98313c9e39c6fbec0c3277080b54d1158845d5e27c4` не является GO для
+нового механизма. Актуальные полные идентификаторы и буквальные строки разрешения
+формируются после коммита в `.release-output/form-002/go-a.json` и приводятся в PR.
+
+### Воспроизводимая подготовка и точные команды
+
+Следующие команды выполняются **локально**, не обращаются к Jino:
+
+```sh
+PHP84_BIN=/path/to/php84 PHP84_CGI_BIN=/path/to/php84-cgi npm run test:smtp-e2e
+python3 -B ops/smtp_package.py
+python3 -B ops/smtp_e2e.py package
+python3 -B ops/smtp_e2e.py plan --harness-sha <harness_sha256>
+```
+
+CLI и CGI должны быть PHP 8.4 с openssl/ctype/filter; HTTPD_BIN задаёт Apache.
+Тесты используют отдельные случайные loopback-порты и не трогают 4183.
+Результаты и хеши исходников: `.test-output/e2e/results.json`; фактически исполненный
+no-send wrapper: `.test-output/e2e/wrapper.no-send.rendered.php` (только token hash,
+тестовые пути/публичные метаданные, без credentials). Оба файла локальные и игнорируются Git.
+
+Новый **отдельный** `smtp-e2e-harness.tar.gz` содержит пять regular members: три
+reviewable исходника, `published.json`, manifest. Контрольный manifest связывает его
+с commit и точным SMTP SHA; SHA всех members проверяются. `published.json` получен
+офлайн-сборкой именно deployed `c1a32fa`, с production origin; это allowlist всех
+прежних public SHA. SMTP update остаётся отдельным 10-member архивом без секретов.
+Оба архива воспроизводимы. `plan` выводит только план и требуемую строку GO, remote calls=0.
+
+**Ни одна из следующих Jino-команд сейчас не выполнялась.** После повторной приёмки:
+
+1. Пользователь непосредственно в защищённом Jino config настраивает SMTP, сохраняя
+   HMAC/state и все флаги выключенными. Пароля/username нет в CLI, SSH argv, stdout,
+   `go-a.json` или пакете; инструмент не редактирует config и не сбрасывает пароль.
+2. Read-only snapshot (должен предшествовать утверждённому запуску):
+
+   ```sh
+   python3 -B ops/smtp_e2e.py snapshot --harness-sha <harness_sha256> --baseline /private/tmp/dom-e2e-baseline.json
+   ```
+
+   Сверяет весь public file set/SHA с c1a32fa, public modes 0644 и config 0600/
+   private dir 0700. Сохраняет baseline 0600 с SHA/mtime_ns/mode/uid/gid/size,
+   включая .envrc и fingerprint config, без содержимого config. Не пишет на Jino.
+   После snapshot config/файлы не менять: drift блокирует install и verification.
+3. **Только после точного owner GO** передать его буквальную строку в `--go`:
+
+   ```sh
+   python3 -B ops/smtp_e2e.py run --harness-sha <harness_sha256> --baseline /private/tmp/dom-e2e-baseline.json --mode send-once --go '<go_send_once из go-a.json>'
+   ```
+
+   `go_send_once` имеет формат `GO A <commit> <smtp_sha> <harness_sha> send-once
+   azm1982@yandex.ru AUTH <128-bit identity>`. AUTH — публичная идентичность разрешения,
+   **не** HTTP-token или mailbox secret. Разрешение включает приватный install, wrapper
+   на 120 секунд, no-send web preflight, одну синтетическую SMTP-попытку и cleanup.
+   Неизвестный/старый GO отклоняется до SSH/HTTP. CLI проверяет собственные три исходника
+   против harness archive, а SMTP archive — против разрешённого SHA.
+   Для Jino **no-send** есть отдельный `--mode no-send` + `go_no_send`; даже он требует
+   отдельного GO, поскольку установка временного wrapper меняет production filesystem.
+4. Run ID возвращается даже при ошибке/неопределённом результате. Если `cleanup_required`
+   true, до любых дальнейших действий выполнить **только восстановление очистки**:
+
+   ```sh
+   python3 -B ops/smtp_e2e.py cleanup --harness-sha <harness_sha256> --baseline /private/tmp/dom-e2e-baseline.json --run-id <run_id>
+   ```
+
+   Это удаление уже установленного собственного wrapper, без отправки, отдельного
+   разрешения на новое письмо не создаёт. Изменённый/чужой wrapper не удаляется автоматически:
+   STOP и ручная проверка владельцем. SIGINT/SIGTERM и HTTP/SSH exception ведут в finally;
+   kill -9/потеря связи могут потребовать эту recovery-команду. TTL запрещает SMTP,
+   но не заменяет физическое удаление файла.
+
+### Инварианты исполняемого механизма
+
+- Фиксированы SSH alias и единственный HOME/docroot Jino; нет параметров другого сайта.
+  Проверка baseline выполняется до install, непосредственно перед единственной public
+  записью и после удаления. Любой hash/mtime/mode drift → STOP. Сверяются также uid/gid/size.
+- Только allowlisted regular tar members с проверенными SHA; запрет symlink/hardlink/
+  duplicate/../absolute/unlisted. Приватные каталоги 0700, candidate/runtime/state/receipt
+  0600. Public файл появляется атомарно через exclusive hardlink приватного non-secret
+  rendered source (0644 внутри 0700 run dir); требуется та же файловая система.
+  Ни public handler, ни config, ни .envrc не перезаписываются. При неизвестном исходе
+  install finally также проверяет отсутствие wrapper и исходные метаданные.
+- Header-only 256-bit token живёт в памяти контроллера; PHP получает только hash(token)
+  в коде, constant-time comparison. HTTPS/Origin/Host, POST-only, пустое тело, no-store/
+  noindex. Разрешены только preflight/attempt, fixture нельзя заменить входящим JSON.
+- Runtime preflight не открывает SMTP: web PHP 8.4, openssl/ctype/filter, trust-store
+  presence, file hashes/permissions, точный MAIL_TO и false/empty approval flags.
+  Наличие trust store не доказывает пригодность сертификата Jino; это проверяет реальный TLS.
+- Общая цепочка `validate → accept → message → smtpTransport`; config загружается по
+  фиксированному абсолютному пути. В persisted config/state нет изменений: E2E state
+  изолирован в private run dir. В no-send callback возвращает dry_run **без вызова SMTP**.
+- Два долговечных барьера: private approval reservation блокирует повтор **целой команды**
+  с тем же GO, attempt marker через exclusive create + fsync блокирует повтор HTTP.
+  Оба создаются до SMTP. Callback invocation также фиксируется до transport, без payload.
+  Даже неизвестный исход/провал preflight не разрешает повторное использование GO.
+  Новый AUTH identity допускается только отдельным явным разрешением владельца;
+  агент не должен придумывать новое разрешение после timeout. Cleanup барьеры не удаляет.
+- Finally удаляет только публичный wrapper с ожидаемым SHA, сохраняет receipt/markers/
+  candidate/runtime для аудита, проверяет filesystem/config и fresh HTTP 404 + status false
+  + lead POST 503. Нет retries SMTP, downgrade, альтернативного порта или попытки включить форму.
+
+### Последовательность GO A
 
 1. Только read-only preflight целевого домена: baseline inventory/hashes/modes,
    form-status enabled:false, наличие защищённой .envrc и постоянного dotfile guard,
    HTTPS, MX/SPF/DKIM, свободное место, отсутствие неожиданных изменений. Другие сайты,
    PHP CLI 8.1, DNS, .envrc, панель SMTP и пароль существующего ящика не изменять.
    При расхождении baseline остановиться и пересмотреть diff, не перезаписывать.
-2. Сделать приватный backup текущих public файлов и конфига с mode/uid/gid/hash;
-   содержимое config не печатать и не переносить в Git, чат или общие логи.
-   Распаковать проверенный tar вручную по allowlist: запрет absolute/../symlink/
+2. Зафиксировать неизменяемый baseline public/config метаданных в приватном receipt.
+   GO A сохраняет существующие файлы и config; дополнительные копии credentials
+   не создаёт. Полный backup перед их заменой относится к GO C.
+   Содержимое config не печатать и не переносить в Git, чат или общие логи.
+   Проверенный worker распаковывает tar по allowlist: запрет absolute/../symlink/
    duplicate/unlisted members, проверка всех SHA перед копированием, umask 077.
    Сначала **весь кандидат**, включая public PHP, положить в приватный
-   `.dom-u-morya/candidates/<archive-sha>/api/`; public handlers пока не заменять.
+   `.dom-u-morya/candidates/<smtp-archive-sha>/api/`; public handlers пока не заменять.
    PHPMailer положить в `.dom-u-morya/smtp-runtime/<identity>`; dirs 0700, files 0600.
-3. Пользователь сам вводит SMTP_USERNAME/SMTP_PASSWORD непосредственно в защищённый
+3. **До baseline snapshot** пользователь сам вводит SMTP_USERNAME/SMTP_PASSWORD непосредственно в защищённый
    `.dom-u-morya/config.php` (0600). Не передавать пароль аргументом shell, токеном URL,
    в GitHub или чат; не сбрасывать mailbox password. MAIL_FROM фиксирован;
    MAIL_TO=azm1982@yandex.ru; FORM_ENABLED=false, DELIVERY_VERIFIED=false,
    LEGAL_APPROVED='', DELIVERY_VERIFIED_TO='', LEGAL_MAIL_TO=''. Сохранить HMAC/state.
+   После snapshot эти байты/права/mtime не менять; worker их не редактирует.
 4. Однократный случайный wrapper в webroot разрешён **только этим GO**:
    случайное имя ≥96 бит, независимый token ≥256 бит только в HTTP-заголовке,
    в коде только hash(token), constant-time comparison, TTL 120 сек, POST-only,
@@ -141,7 +248,8 @@ deploy/probe/enable намеренно останавливаются для SMT
    fixture зашит в проверенный wrapper (вымышленное имя/телефон, synthetic@example.invalid,
    lot 22825/studio/furnished/calc, family 6978183/20/20/6, Telegram, 12–15,
    consent true/2026-10-30). Ответ: id/status/runtime, без конфига, полей и SMTP error.
-6. Сделать ровно **один** авторизованный POST. Transport ACK означает только приём SMTP,
+6. Сделать ровно **один** авторизованный POST `action=attempt`; отдельный POST preflight
+   не вызывает transport. Transport ACK означает только приём SMTP,
    не Inbox и не DKIM. При timeout/неизвестном результате не повторять и не удалять
    marker; сверить Яндекс и обсуждать новый GO. Порт 465 автоматически не пробовать.
 7. В finally немедленно удалить wrapper и токен из памяти/временных файлов. По свежему
@@ -169,7 +277,9 @@ SPF/DKIM). Обновить согласованные privacy/consent **пер�
 
 Отдельный GO с **финальным** commit/package SHA, конечным MAIL_TO, согласованной
 legal редакцией и приёмкой доставки. Приватный runtime уже проверен, а public endpoint
-до включения остаётся закрыт флагами. Процедура публикует только четыре public файла
+до включения остаётся закрыт флагами. Перед заменой файлов нужен полный приватный backup
+публичного релиза и config с mode/uid/gid/hash и ограниченным доступом; GO A их не заменяет.
+Процедура публикует только четыре public файла
 из scoped manifest (и отдельно утверждённый legal diff, если он готов): сначала новые
 файлы, затем atomic rename `lead-core.php` последним. Никаких root rsync --delete.
 Сохранять .envrc, dotfile guard, владельцев/права и все посторонние файлы. Проверить

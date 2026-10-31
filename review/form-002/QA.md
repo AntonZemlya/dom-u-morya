@@ -1,5 +1,8 @@
 # FORM-002 / SMTP-001 — локальная приёмка 31.10.2026
 
+Дополнение после LOCAL PASS Control Plane: [исполняемый GO A harness и повторная
+локальная приёмка](HARNESS-QA.md). Действующий backend из этой приёмки не менялся.
+
 Результат: **LOCAL PASS; Jino SMTP/DKIM E2E и публичное включение — PENDING отдельного GO.**
 Реальные письма и visitor PII не использовались. Production, DNS, Jino-панель,
 другие домены и mailbox credentials не читались и не менялись.

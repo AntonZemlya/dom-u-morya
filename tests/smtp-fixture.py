@@ -23,6 +23,9 @@ def context():
     return ctx
 
 def audit(event):
+    if len(sys.argv) > 2:
+        markers = Path(sys.argv[2])
+        event['one_shot_before_smtp'] = any((p/'attempt.json').is_file() and (p/'invocation.json').is_file() for p in markers.glob('*'))
     with LOCK:
         with (ROOT/'smtp-audit.jsonl').open('a') as out:
             out.write(json.dumps(event)+'\n')

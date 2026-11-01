@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "realVendor": true,
+  "externalRequestsSent": 0,
+  "summaries": [
+    {
+      "scenario": "allow/deny/reload/legal/cross-tab/withdraw/retry/goals",
+      "width": 320,
+      "status": "PASS"
+    },
+    {
+      "scenario": "allow/deny/reload/legal/cross-tab/withdraw/retry/goals",
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "scenario": "allow/deny/reload/legal/cross-tab/withdraw/retry/goals",
+      "width": 768,
+      "status": "PASS"
+    },
+    {
+      "scenario": "allow/deny/reload/legal/cross-tab/withdraw/retry/goals",
+      "width": 1440,
+      "status": "PASS"
+    },
+    {
+      "scenario": "actual-vendor-intercepted",
+      "vendorSha256": "4f9e17b24d50336d535ff25a67196c174b60e394e715602c71b01c7956b772b3",
+      "watchRequests": 2,
+      "status": "PASS"
+    }
+  ],
+  "checked_at_moscow": "2026-11-02",
+  "vendor": {
+    "source": "https://mc.yandex.ru/metrika/tag.js",
+    "sha256": "4f9e17b24d50336d535ff25a67196c174b60e394e715602c71b01c7956b772b3",
+    "bytes": 223597,
+    "last_modified_utc": "2026-10-30T12:13:39Z",
+    "response_date_utc": "2026-11-01T22:06:49Z",
+    "access_control_allow_origin": "*",
+    "credentials": "omit",
+    "referrer_policy": "no-referrer",
+    "production_counter_used": false,
+    "raw_payloads_and_headers_committed": false
+  },
+  "production_header_read": {
+    "method": "HEAD",
+    "url": "https://zhk-dom-umorya.ru/",
+    "checked_at_moscow": "2026-11-02",
+    "status": 200,
+    "csp_header_present": false,
+    "javascript_executed": false,
+    "metrica_visits_or_goals_sent": false
+  }
+}

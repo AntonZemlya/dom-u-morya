@@ -214,12 +214,21 @@ class Lifecycle(unittest.TestCase):
 
     def test_roundtrip_bytes_permissions_and_scope(self):
         (self.doc/'script.js').chmod(0o640);self.baseline=self.m.snapshot(self.identity)
+        # Analytics mutable state is outside public/runtime release snapshots.
+        import sqlite3
+        analytics=self.private/'analytics/state';analytics.mkdir(parents=True,mode=0o700)
+        consent=sqlite3.connect(str(analytics/'metrica-consent.sqlite3'))
+        consent.execute('CREATE TABLE receipts (withdrawn INTEGER)');consent.execute('INSERT INTO receipts VALUES (0)');consent.commit()
         raw,m,result=self.verified(extra={'assets/new/a.js':b'new asset'})
+        consent.execute('UPDATE receipts SET withdrawn=1');consent.commit();consent.close()
+        analytics_bytes=(analytics/'metrica-consent.sqlite3').read_bytes()
         run=self.m.run('test-release');self.m.verify_backup(run)
         (self.private/'state/state.json').write_bytes(b'new request remains')
         p=self.m.rollback_plan('test-release');self.m.rollback(p['plan'],p['go'])
         self.assertEqual(self.m.snapshot(self.identity),self.baseline)
         self.assertEqual((self.private/'state/state.json').read_bytes(),b'new request remains')
+        self.assertEqual((analytics/'metrica-consent.sqlite3').read_bytes(),analytics_bytes)
+        with tarfile.open(run/'backup.tar.gz') as archive:self.assertFalse(any('analytics' in n for n in archive.getnames()))
         self.assertFalse((self.doc/'assets').exists())
         self.assertEqual(stat.S_IMODE((run/'backup.tar.gz').stat().st_mode),0o600)
         self.assertEqual((self.other/'index.html').read_bytes(),b'untouched')

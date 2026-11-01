@@ -18,6 +18,9 @@
 <link rel="stylesheet" href="styles.css">
 <script src="content-model.js" defer></script>
 <script src="script.js" defer></script>
+<!-- METRICA-001 shared privacy -->
+<link rel="stylesheet" href="privacy/privacy.css">
+<script type="module" src="privacy/privacy.js"></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Перейти к содержимому</a>
@@ -711,22 +714,15 @@
     </div>
     <div class="footer-bottom">
       <p class="footer-role">Сайт агентства недвижимости.<br>Агентство не является застройщиком.<br>Застройщик ЖК — ГК «Садовое кольцо».</p>
-      <nav class="footer-legal" aria-label="Правовые документы"><a href="privacy.html" target="_blank" rel="noopener">Политика обработки<br>персональных данных<span class="sr-only"> (в новой вкладке)</span></a><a href="consent-personal-data.html" target="_blank" rel="noopener">Согласие на обработку<br>персональных данных<span class="sr-only"> (в новой вкладке)</span></a></nav>
+      <nav class="footer-legal" aria-label="Конфиденциальность">
+      <a href="privacy.html" target="_blank" rel="noopener">Политика обработки персональных данных<span class="sr-only"> (в новой вкладке)</span></a>
+      <button type="button" data-privacy-settings>Настройки аналитики</button>
+    </nav>
     </div>
     <p class="footer-operator">Оператор сайта — ИП Саврасова Елена Анатольевна · ИНН 366210396814 · ОГРНИП 318366800035941</p>
-    <details class="footer-disclosure"><summary>Информация о проекте</summary><p>ЖК «Дом у моря», Мариуполь, пр. Адмирала Лунина, 25. Информация о проекте: <a href="https://наш.дом.рф/сервисы/каталог-новостроек/объект/69398" target="_blank" rel="noopener nofollow">наш.дом.рф, объект 69398</a>. Планировки и визуализации ориентировочны.</p></details>
     <div class="footer-fineprint"><span>© 2026 · Дом у моря</span><span>Информация не является публичной офертой</span></div>
   </div>
 </footer>
-  <div class="cookie-banner" id="cookie-banner">
-  <div class="cookie-banner-inner">
-    <p class="cookie-text">Сохраняем выбор в этом уведомлении в localStorage вашего браузера. Аналитика не подключена. <a href="privacy.html#technical" target="_blank" rel="noopener">О технических данных и внешней карте<span class="sr-only"> (в новой вкладке)</span></a>.</p>
-    <div class="cookie-actions">
-      <button type="button" id="cookie-decline" class="cookie-btn cookie-btn-outline">Закрыть</button>
-      <button type="button" id="cookie-accept" class="cookie-btn cookie-btn-solid">Понятно</button>
-    </div>
-  </div>
-</div>
 <div class="lightbox" id="lightbox" hidden="" role="dialog" aria-modal="true" aria-labelledby="lightbox-title-text">
   <div class="lightbox-inner" id="lightbox-inner">
     <div class="lightbox-head">

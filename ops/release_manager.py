@@ -2,10 +2,13 @@
 """Universal domain-scoped release CLI. No SMTP client, no valid POST, no implicit GO."""
 import argparse
 import base64
+import errno
+import http.client
 import json
 import os
 from pathlib import Path
 import shlex
+import ssl
 import subprocess
 import sys
 import tarfile
@@ -19,6 +22,52 @@ from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, Manager, canonical, dig
 ROOT=Path(__file__).resolve().parent.parent
 CORE=ROOT/'ops/release_core.py'
 HOST='rehab-profi-jino'
+HTTP_RETRY_DELAYS=(0.25,0.5,1.0)
+
+
+def transient_connection_error(error):
+    # Only typed transport failures; never infer retryability from error text.
+    while isinstance(error,urllib.error.URLError) and not isinstance(error,urllib.error.HTTPError):
+        error=error.reason
+    if isinstance(error,ssl.SSLError) and not isinstance(error,ssl.SSLEOFError):return None
+    for kind in (http.client.RemoteDisconnected,http.client.IncompleteRead,ssl.SSLEOFError):
+        if isinstance(error,kind):return kind.__name__
+    if isinstance(error,TimeoutError):return 'ETIMEDOUT'
+    if isinstance(error,OSError) and error.errno in (errno.ECONNRESET,errno.ETIMEDOUT,errno.ECONNABORTED,errno.EPIPE):
+        return errno.errorcode[error.errno]
+    return None
+
+
+class HTTPSGet:
+    """Per-verification GET transport; no retry wrapper around CLI/SSH operations."""
+    def __init__(self):
+        self.statistics=dict(request_count=0,retry_count=0,transient_errors={})
+
+    def get(self,path,expected=(200,)):
+        request=urllib.request.Request(ORIGIN+path,headers={'Cache-Control':'no-cache'},method='GET')
+        for attempt in range(len(HTTP_RETRY_DELAYS)+1):
+            self.statistics['request_count']+=1
+            self.statistics['retry_count']+=int(attempt>0)
+            try:
+                # urlopen uses the default verifying TLS context on every attempt.
+                with urllib.request.urlopen(request,timeout=25) as response:
+                    ensure(response.status in expected,'Unexpected HTTP status: '+path+' ('+str(response.status)+')')
+                    return response.status,response.headers,response.read()
+            except urllib.error.HTTPError as error:
+                # Status is a contract decision, including expected 403/404/405.
+                # Even a body read failure here must not retry an HTTP error.
+                with error:
+                    ensure(error.code in expected,'Unexpected HTTP status: '+path+' ('+str(error.code)+')')
+                    return error.code,error.headers,error.read()
+            except (OSError,urllib.error.URLError,http.client.HTTPException) as error:
+                kind=transient_connection_error(error)
+                if kind is None:raise
+                counts=self.statistics['transient_errors'];counts[kind]=counts.get(kind,0)+1
+                if attempt==len(HTTP_RETRY_DELAYS):
+                    raise RuntimeError('HTTPS GET retries exhausted: '+path+
+                                       '; STOP; inspect release status or use finalize; '+
+                                       json.dumps(self.statistics,sort_keys=True)) from error
+                time.sleep(HTTP_RETRY_DELAYS[attempt])
 
 
 def git(*args):
@@ -71,22 +120,17 @@ def remote(operation, policy, **kwargs):
 
 
 def http_verify(manifest, package_sha):
-    # GET only. TLS and DNS failures remain failures; no insecure fallback.
-    def get(path):
-        request=urllib.request.Request(ORIGIN+path,headers={'Cache-Control':'no-cache'})
-        try:
-            with urllib.request.urlopen(request,timeout=25) as response:return response.status,response.headers,response.read()
-        except urllib.error.HTTPError as e:return e.code,e.headers,e.read()
+    client=HTTPSGet();get=client.get
     for path in ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']:
-        ensure(get(path)[0] in [403,404], 'HTTP protected path failure')
-    ensure(get('/api/lead.php')[0]==405, 'API GET guard failed')
+        ensure(get(path,(403,404))[0] in [403,404], 'HTTP protected path failure')
+    ensure(get('/api/lead.php',(405,))[0]==405, 'API GET guard failed')
     code,headers,body=get('/api/form-status.php');status=json.loads(body)
     ensure(code==200 and status.get('enabled') is True and status.get('ready') is True and 'no-store' in headers.get('Cache-Control',''), 'Form readiness failed; inspect status, do not retry deploy')
     for name in manifest['public_allowlist']:
         if name.startswith('.') or name.endswith('.php'):continue
         code,_,body=get('/'+('' if name=='index.html' else name))
         ensure(code==200 and sha(body)==manifest['files']['public/'+name], 'HTTP public SHA mismatch: '+name)
-    return dict(status='PASS',package_sha256=package_sha,public_static_files_verified=True,form_status=status,no_post=True)
+    return dict(status='PASS',package_sha256=package_sha,public_static_files_verified=True,form_status=status,no_post=True,**client.statistics)
 
 
 def http_preflight(snapshot):

@@ -1,0 +1,51 @@
+{
+  "task": "CI-CD-002",
+  "date": "2026-11-01",
+  "base_commit": "1f8a1a43ee4ecc6d9474fb3ccf1cccf4b5eb7f54",
+  "branch": "codex/ci-cd-002-http-retry",
+  "acceptance": "Pending independent Control Plane review",
+  "retry_policy": {
+    "method": "GET",
+    "maximum_additional_attempts_per_request": 3,
+    "delays_seconds": [0.25, 0.5, 1.0],
+    "transient_errors": ["ECONNRESET", "ETIMEDOUT", "ECONNABORTED", "EPIPE", "RemoteDisconnected", "IncompleteRead", "SSLEOFError"],
+    "tls_certificate_verification": "Default verified urllib TLS context on every attempt",
+    "unexpected_http_status": "Fail before body read; no retry",
+    "certificate_sha_and_business_contract_failures": "No retry",
+    "exhausted_after_publication": "awaiting_http_verify; inspect status or use finalize; no replay of apply"
+  },
+  "validation": {
+    "ci_fast": {"status": "PASS", "checks": 9, "seconds": 4.616, "report": ".test-output/ci/fast/report.json"},
+    "ci_full": {"status": "PASS", "checks": 27, "seconds": 167.25, "report": ".test-output/ci/full/report.json"},
+    "release_manager_regressions": {"status": "PASS", "tests": 48},
+    "targeted_retry_and_lifecycle_regressions": {
+      "status": "PASS",
+      "tests": 13,
+      "command": "PYTHONPATH=ops python3 -B -m unittest -v test_release_manager.HTTPRetry test_release_manager.Lifecycle.test_http_exhaustion_after_publication_never_reapplies test_release_manager.Lifecycle.test_finalize_uses_shared_get_retries_and_only_attests test_release_manager.Lifecycle.test_ssh_uncertain_response_has_no_retry",
+      "coverage": ["first reset then success", "three failures then success", "per-request retry limit", "four failures stop", "direct and wrapped certificate failures without retry", "truncated response discarded", "SHA mismatch without retry", "unexpected 201/204/304/403/404/500 without retry", "unexpected status checked before failing body read", "form contract and JSON failures without retry", "one apply and one backup after HTTP exhaustion", "finalize retries GET and only attests", "SSH operations never replayed"]
+    },
+    "git_diff_check": "PASS"
+  },
+  "jino_read_only_preflight": {
+    "status": "PASS",
+    "package_commit": "1f8a1a43ee4ecc6d9474fb3ccf1cccf4b5eb7f54",
+    "package_sha256": "58125bc432dd557fd9f631182a0dd90d25dd87f10fd526436d7cdff331da5817",
+    "snapshot_sha256": "dd6f87aeda191d3f48c9fb4a98ae5427e8209f2c11cb0962219fdb5e1712a5dc",
+    "public_inventory_files": 250,
+    "release_id": "favicon-a-prod-20261101",
+    "release_phase": "verified",
+    "quota_confirmed": true,
+    "capacity_ready": true,
+    "form_enabled": true,
+    "form_ready": true,
+    "http_request_count": 9,
+    "http_retry_count": 0,
+    "http_transient_errors": {},
+    "scope": "SSH inventory/runtime/backup metadata and quota; HTTPS protected paths, API GET guard, form readiness and index.html/script.js SHA",
+    "local_report": ".release-output/ci-cd-002-preflight.json"
+  },
+  "production_mutations": 0,
+  "real_smtp_sends": 0,
+  "merge_performed": false,
+  "production_deploy_performed": false
+}

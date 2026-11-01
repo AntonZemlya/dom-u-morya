@@ -89,7 +89,18 @@ State заявок не читается и не резервируется. Н�
 npm run release -- status --release-id RELEASE_ID
 ```
 
-При потере SSH/HTTPS ответа STOP. Не повторять apply: release ID навсегда занят,
+HTTPS GET повторяется только при подтверждённом временном обрыве соединения
+(`ECONNRESET`, `ETIMEDOUT`, `ECONNABORTED`, `EPIPE`, `RemoteDisconnected`,
+`IncompleteRead`, `SSLEOFError`): максимум три дополнительные попытки с задержками
+0,25 / 0,5 / 1 с, каждый раз с обязательной проверкой TLS. Неожиданный HTTP-статус
+проверяется до чтения тела; ошибки сертификата, SHA, JSON и контракта формы не
+повторяются. Обычные DNS/прочие TLS-ошибки также останавливают проверку.
+HTTP evidence содержит `request_count` (все попытки GET), `retry_count`
+(дополнительные попытки) и `transient_errors` (число ошибок по типам, включая
+последнюю при исчерпании попыток). При исчерпании этот счёт выводится в диагностике.
+SSH, apply, backup, rollback, prune, export, SMTP и POST автоматически не повторяются.
+
+После исчерпания HTTPS-попыток или потери SSH-ответа STOP. Не повторять apply: release ID навсегда занят,
 включая rolled_back/pruned. Для `awaiting_http_verify` после восстановления доступа
 можно тем же разрешением завершить только проверку/attestation:
 

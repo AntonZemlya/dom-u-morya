@@ -1,20 +1,25 @@
 """Synthetic domain only. No SSH, real SMTP, real config or production restore."""
 import base64
 import copy
+import errno
+import http.client
 import io
 import json
 import os
 from pathlib import Path
 import shutil
 import stat
+import ssl
 import subprocess
 import sys
 import tarfile
 import tempfile
 import time
 import unittest
+import urllib.error
 from unittest.mock import patch
 import release_core as c
+import release_manager as cli
 
 
 def deny_external(event,args):
@@ -23,6 +28,135 @@ def deny_external(event,args):
     if event=='subprocess.Popen' and Path(str(args[0])).name in ['ssh','scp']:
         raise RuntimeError('SSH forbidden in release fixture')
 sys.addaudithook(deny_external)
+
+
+class HTTPSResponse(io.BytesIO):
+    def __init__(self,code,headers,body):
+        super().__init__(body if isinstance(body,bytes) else b'')
+        self.status=code;self.headers=headers;self.body=body
+
+    def read(self,*args):
+        if isinstance(self.body,Exception):raise self.body
+        return super().read(*args)
+
+
+class HTTPSFixture:
+    """urlopen replacement: every request is synthetic, including error bodies."""
+    def __init__(self,public=None):
+        self.public=public or {'index.html':b'index new','script.js':b'script new'}
+        self.failures={};self.responses={};self.requests=[];self.opened=[]
+
+    def __call__(self,request,timeout):
+        assert request.get_method()=='GET' and request.data is None
+        assert request.full_url.startswith(c.ORIGIN+'/') and timeout==25
+        path=request.full_url[len(c.ORIGIN):];self.requests.append(path)
+        if self.failures.get(path):raise self.failures[path].pop(0)
+        if path in self.responses:code,headers,body=self.responses[path]
+        elif path in ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']:
+            code,headers,body=404,{},b'protected'
+        elif path=='/api/lead.php':code,headers,body=405,{},b'GET denied'
+        elif path=='/api/form-status.php':
+            code,headers,body=200,{'Cache-Control':'no-store'},b'{"enabled":true,"ready":true}'
+        else:code,headers,body=200,{},self.public['index.html' if path=='/' else path[1:]]
+        if code>=400:
+            response=HTTPSResponse(code,headers,body);self.opened.append(response)
+            raise urllib.error.HTTPError(request.full_url,code,'synthetic status',headers,response)
+        response=HTTPSResponse(code,headers,body);self.opened.append(response);return response
+
+    def manifest(self):
+        return dict(public_allowlist=list(self.public),files={'public/'+n:c.sha(b) for n,b in self.public.items()})
+
+
+class HTTPRetry(unittest.TestCase):
+    def setUp(self):
+        self.network=HTTPSFixture()
+        self.opener=patch.object(cli.urllib.request,'urlopen',side_effect=self.network).start()
+        self.sleep=patch.object(cli.time,'sleep').start()
+        self.addCleanup(patch.stopall)
+
+    def verify(self):return cli.http_verify(self.network.manifest(),'synthetic-package-sha')
+
+    def test_first_connection_reset_then_success(self):
+        self.network.failures['/']=[urllib.error.URLError(ConnectionResetError(errno.ECONNRESET,'synthetic reset'))]
+        result=self.verify()
+        self.assertEqual(result['status'],'PASS');self.assertEqual(result['request_count'],10)
+        self.assertEqual(result['retry_count'],1);self.assertEqual(result['transient_errors'],{'ECONNRESET':1})
+        self.sleep.assert_called_once_with(0.25)
+
+    def test_three_transient_failures_then_success_and_statistics(self):
+        self.network.failures['/']=[http.client.RemoteDisconnected('synthetic close'),
+                                   urllib.error.URLError(TimeoutError('synthetic timeout')),
+                                   ConnectionAbortedError(errno.ECONNABORTED,'synthetic abort')]
+        result=self.verify()
+        self.assertEqual(result['request_count'],12);self.assertEqual(result['retry_count'],3)
+        self.assertEqual(result['transient_errors'],{'RemoteDisconnected':1,'ETIMEDOUT':1,'ECONNABORTED':1})
+        self.assertEqual([call.args[0] for call in self.sleep.call_args_list],[0.25,0.5,1.0])
+
+    def test_retry_budget_is_per_get(self):
+        self.network.failures={p:[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(3)]
+                               for p in ['/','/script.js']}
+        result=self.verify()
+        self.assertEqual(result['request_count'],15);self.assertEqual(result['retry_count'],6)
+        self.assertEqual(result['transient_errors'],{'ECONNRESET':6})
+
+    def test_exhausted_four_attempts_fail(self):
+        self.network.failures['/.envrc']=[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(5)]
+        with self.assertRaisesRegex(RuntimeError,'retries exhausted.*finalize.*"request_count": 4.*"retry_count": 3.*"ECONNRESET": 4'):
+            self.verify()
+        self.assertEqual(self.opener.call_count,4);self.assertEqual(self.sleep.call_count,3)
+        self.assertEqual(len(self.network.failures['/.envrc']),1)
+
+    def test_certificate_and_other_unconfirmed_errors_never_retry(self):
+        cert=ssl.SSLCertVerificationError(1,'synthetic certificate verification failed')
+        errors=[cert,urllib.error.URLError(cert),ssl.SSLError(1,'synthetic TLS protocol error'),
+                urllib.error.URLError('Connection reset by peer'),OSError(errno.EACCES,'synthetic access denied'),
+                urllib.error.URLError(OSError(-2,'synthetic DNS failure')),ValueError('synthetic contract error')]
+        for error in errors:
+            with self.subTest(error=repr(error)):
+                self.opener.reset_mock();self.sleep.reset_mock();self.network.failures['/.envrc']=[error]
+                with self.assertRaises(type(error)):self.verify()
+                self.assertEqual(self.opener.call_count,1);self.sleep.assert_not_called()
+
+    def test_partial_200_body_is_discarded_and_retried(self):
+        for error in [http.client.IncompleteRead(b'partial',100),ssl.SSLEOFError(8,'synthetic EOF'),
+                      BrokenPipeError(errno.EPIPE,'synthetic pipe')]:
+            with self.subTest(error=type(error).__name__):
+                self.network.responses['/']=(200,{},error)
+                # A fresh connection supplies the complete body on the next attempt.
+                self.sleep.side_effect=lambda delay:self.network.responses.pop('/')
+                result=self.verify();self.assertEqual(result['retry_count'],1)
+                self.assertTrue(all(response.closed for response in self.network.opened))
+
+    def test_sha_mismatch_never_retries(self):
+        self.network.responses['/']=(200,{},b'wrong content')
+        with self.assertRaisesRegex(RuntimeError,'HTTP public SHA mismatch'):self.verify()
+        self.assertEqual(self.network.requests.count('/'),1);self.sleep.assert_not_called()
+
+    def test_unexpected_http_status_never_retries(self):
+        for path,codes in [('/.envrc',[200,500]),('/api/lead.php',[403,404,500]),
+                           ('/api/form-status.php',[403,404,500]),('/',[201,204,304,403,404,500])]:
+            for code in codes:
+                with self.subTest(path=path,code=code):
+                    self.network.responses={path:(code,{},b'{}')};self.network.requests=[]
+                    with self.assertRaises(RuntimeError):self.verify()
+                    self.assertEqual(self.network.requests.count(path),1);self.sleep.assert_not_called()
+                    self.assertTrue(all(response.closed for response in self.network.opened))
+
+    def test_http_error_body_network_failure_never_retries(self):
+        for code in [201,500]:
+            with self.subTest(code=code):
+                self.network.responses['/']=(code,{},ConnectionResetError(errno.ECONNRESET,'synthetic reset'))
+                self.network.requests=[]
+                with self.assertRaisesRegex(RuntimeError,'Unexpected HTTP status'):self.verify()
+                self.assertEqual(self.network.requests.count('/'),1);self.sleep.assert_not_called()
+
+    def test_business_contract_and_invalid_json_never_retry(self):
+        for headers,body in [({'Cache-Control':'no-store'},b'{"enabled":false,"ready":true}'),
+                             ({},b'{"enabled":true,"ready":true}'),({},b'invalid json')]:
+            with self.subTest(body=body,headers=headers):
+                self.network.responses['/api/form-status.php']=(200,headers,body);self.network.requests=[]
+                with self.assertRaises((RuntimeError,ValueError)):self.verify()
+                self.assertEqual(self.network.requests.count('/api/form-status.php'),1);self.sleep.assert_not_called()
 
 
 class Lifecycle(unittest.TestCase):
@@ -394,8 +528,52 @@ class Lifecycle(unittest.TestCase):
         import release_manager as cli
         from types import SimpleNamespace
         with patch.object(cli.subprocess,'run',return_value=SimpleNamespace(returncode=255,stdout=b'',stderr=b'connection lost')) as run:
-            with self.assertRaisesRegex(RuntimeError,'outcome unknown'):cli.remote('status',self.policy,release_id='test-release')
-            self.assertEqual(run.call_count,1)
+            for operation in ['apply','rollback','prune','export','verify-backup','status']:
+                with self.subTest(operation=operation):
+                    run.reset_mock()
+                    with self.assertRaisesRegex(RuntimeError,'outcome unknown'):cli.remote(operation,self.policy,release_id='test-release')
+                    self.assertEqual(run.call_count,1)
+
+    def http_cli_args(self,command,raw,review):
+        archive=self.home/'package.tar.gz';archive.write_bytes(raw)
+        plan=self.home/'plan.json';plan.write_bytes(c.canonical(review))
+        policy=self.home/'policy.json';policy.write_bytes(c.canonical(self.policy))
+        return ['release_manager.py','release',command,'--archive',str(archive),'--sha',c.sha(raw),
+                '--plan',str(plan),'--policy',str(policy),'--go',review['go']]
+
+    def test_http_exhaustion_after_publication_never_reapplies(self):
+        raw,m,review=self.plan();network=HTTPSFixture({'index.html':b'old index','script.js':b'old script'})
+        def local(operation,policy,**request):
+            self.assertEqual(operation,'apply')
+            result=self.m.apply(base64.b64decode(request['payload']),request['plan'],request['go'])
+            network.public={'index.html':b'index new','script.js':b'script new'}
+            network.failures['/']=[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(4)]
+            return result
+        with patch.object(sys,'argv',self.http_cli_args('apply',raw,review)),patch.object(cli,'remote',side_effect=local) as remote, \
+             patch.object(cli.urllib.request,'urlopen',side_effect=network),patch.object(cli.time,'sleep') as sleep:
+            with self.assertRaisesRegex(RuntimeError,'retries exhausted'):cli.main()
+        self.assertEqual([call.args[0] for call in remote.call_args_list],['apply'])
+        self.assertEqual(sleep.call_count,3)
+        self.assertEqual(self.m.status('test-release')['phase'],'awaiting_http_verify')
+        self.assertEqual(len(list(self.m.root.glob('*/backup.tar.gz'))),1)
+        self.assertEqual((self.doc/'index.html').read_bytes(),b'index new');self.assert_protected()
+
+    def test_finalize_uses_shared_get_retries_and_only_attests(self):
+        raw,m,review=self.apply();network=HTTPSFixture()
+        network.failures['/']=[http.client.RemoteDisconnected('synthetic close'),TimeoutError('synthetic timeout')]
+        def local(operation,policy,**request):
+            self.assertEqual(operation,'attest')
+            return self.m.attest(request['release_id'],request['plan'],request['go'],request['evidence'])
+        with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)),patch.object(cli,'remote',side_effect=local) as remote, \
+             patch.object(cli.urllib.request,'urlopen',side_effect=network),patch.object(cli.time,'sleep'), \
+             patch('sys.stdout',new_callable=io.StringIO) as stdout:
+            cli.main()
+        self.assertEqual(json.loads(stdout.getvalue())['phase'],'verified')
+        self.assertEqual([call.args[0] for call in remote.call_args_list],['attest'])
+        evidence=self.m.receipt(self.m.run('test-release'))['http']
+        self.assertEqual(evidence['request_count'],11);self.assertEqual(evidence['retry_count'],2)
+        self.assertEqual(evidence['transient_errors'],{'RemoteDisconnected':1,'ETIMEDOUT':1})
+        self.assertEqual(evidence['package_sha256'],c.sha(raw));self.assert_protected()
 
     def test_archived_entrypoints_cannot_contact_production(self):
         for name in ['release.py','form_release.py','smtp_e2e.py','smtp_package.py']:

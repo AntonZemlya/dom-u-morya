@@ -38,7 +38,10 @@ no rows. Tombstones expire after 30 days; an old issuance replay then fails fres
 ## Choice, retention and retry
 
 Independent key: `domUMorya_analyticsConsent_v1`. No old banner compatibility. The browser
-stores choice/version/purpose/time/expiry, plus only capability/operation when needed.
+stores choice/version/purpose/time/expiry, plus capability/operation and a boolean
+`receiptRequested` when needed. A new explicit choice starts with this flag false;
+the controller must persist true **before** sending allow, since an aborted/lost reply
+can still mean the server issued a receipt. Confirmed receipts retain true.
 Server replies supply original date and expiry. Choice/consent: 180 days maximum.
 Proposed evidence retention: until expiry +30 days, or withdrawal +30 days. Those 30 days
 are an operator policy proposal, **not a universal statutory rule**. Yandex cookie/data
@@ -50,7 +53,14 @@ Immutable text: `ops/analytics/consent-analytics-2026-11-02-v1.txt`, version
 Server nowdoc is checked against these exact bytes. New purposes/text require a new
 revision and approval. Form consent stays `2026-10-31` with its existing SMTP evidence.
 
-A failed withdrawal stays withdrawn with its capability for retry on online/pageshow/
+A choice that never sent allow is withdrawn locally, without a server row/request;
+it can be explicitly granted again immediately, including while deployment is OFF.
+The prior candidate's legacy pending withdrawal (no marker) is repaired locally only
+on an unapproved loopback preview host. Unknown receipts on production/other hosts,
+and any marker=true receipt even on loopback, still require server acknowledgment.
+Turning deployment OFF alone never discards an outstanding remote withdrawal.
+
+A failed remote withdrawal stays withdrawn with its capability for retry on online/pageshow/
 visibility and reopening settings. New allow is blocked until acknowledgment. In-flight
 retry and online overlap is handled without reactivation. If browser storage refuses
 writes, stop remains in effect in the current document and withdrawal is attempted from

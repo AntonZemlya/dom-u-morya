@@ -28,7 +28,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
   const relay=(body,h=headers)=>new Promise((resolve,reject)=>{const req=http.request(local,{method:'POST',headers:{...h,'Content-Length':Buffer.byteLength(body)}},res=>{let text='';res.on('data',b=>text+=b);res.on('end',()=>resolve({status:res.statusCode,text:async()=>text}));});req.on('error',reject);req.end(body);});
   for(const patch of [{'Origin':'https://other.invalid'},{'Host':'other.invalid'},{'X-Forwarded-Protocol':'http'},{'Sec-Fetch-Site':'cross-site'}])assert.equal((await relay('{}',{...headers,...patch})).status,403);
   browser=await chromium.launch();
-  async function fixture({width=390,real=false,enabled=true,race=null,noJS=false}={}){
+  async function fixture({width=390,real=false,enabled=true,race=null,noJS=false,site=origin,approved=true}={}){
    const context=await browser.newContext({viewport:{width,height:900},javaScriptEnabled:!noJS,serviceWorkers:'block'});
    const requests=[],operations=[],errors=[],controls={leadStatus:202,leadBody:{ok:true,id:'20261102-1234567890abcdef'},failWithdraw:false,apiStatus:[]};let releaseTag,tagStarted;
    const tagReady=new Promise(r=>tagStarted=r);
@@ -38,7 +38,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
    };});
    await context.route('**/*',async route=>{
     const req=route.request(),u=new URL(req.url());
-    if(u.origin===origin){
+    if(u.origin===site){
      if(u.pathname==='/api/analytics-consent.php'){
       const body=req.postDataJSON();operations.push(body.action);
       if(body.action==='withdraw'&&controls.failWithdraw)return route.fulfill({status:503,body:'{}',contentType:'application/json'});
@@ -50,7 +50,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
      const relative=u.pathname==='/'?'index.html':decodeURIComponent(u.pathname.slice(1));
      const file=path.resolve(root,relative);if(!file.startsWith(root+path.sep)||!fs.existsSync(file))return route.fulfill({status:404,body:''});
      let body=fs.readFileSync(file);
-     if(relative==='privacy/config.js')body=Buffer.from(body.toString().replace('analyticsEnabled:false','analyticsEnabled:'+enabled).replace('operatorPolicyApproved:false','operatorPolicyApproved:true').replace('vendorPayloadReviewApproved:false','vendorPayloadReviewApproved:true').replace("['zhk-dom-umorya.ru']","['qa.invalid']").replace('https://zhk-dom-umorya.ru',origin).replace('113992596','123456789'));
+     if(relative==='privacy/config.js')body=Buffer.from(body.toString().replace('analyticsEnabled:false','analyticsEnabled:'+enabled).replace('operatorPolicyApproved:false','operatorPolicyApproved:'+enabled).replace('vendorPayloadReviewApproved:false','vendorPayloadReviewApproved:'+enabled).replace("['zhk-dom-umorya.ru']",approved?JSON.stringify([new URL(site).hostname]):"['zhk-dom-umorya.ru']").replace('https://zhk-dom-umorya.ru',site).replace('113992596','123456789'));
      return route.fulfill({contentType:types[path.extname(relative)]||'application/octet-stream',body});
     }
     if(u.hostname==='mc.yandex.ru'&&u.pathname==='/metrika/tag.js'){
@@ -59,7 +59,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
     }
     if(/(?:^|\.)(?:yandex\.(?:ru|com)|yastatic\.net|webvisor\.com|yandexadexchange\.net)$/.test(u.hostname)){
      requests.push({kind:'vendor',url:req.url(),body:req.postData()||''});
-     return route.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':origin,'Access-Control-Allow-Credentials':'true'},body:JSON.stringify({settings:{webvisor:{recp:'0'},form_goals:false}})}).catch(()=>{});
+     return route.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':site,'Access-Control-Allow-Credentials':'true'},body:JSON.stringify({settings:{webvisor:{recp:'0'},form_goals:false}})}).catch(()=>{});
     }
     if(u.hostname==='www.openstreetmap.org')return route.fulfill({contentType:'text/html',body:'<html></html>'});
     leaked++;return route.abort();
@@ -94,13 +94,32 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
    const second=await f.context.newPage();await second.goto(origin+'/consent-analytics.html');await second.waitForFunction(()=>window.__calls.some(a=>a[1]==='hit'));
    await p.locator('[data-privacy-settings]').first().click();f.controls.failWithdraw=true;await p.locator('[data-privacy-withdraw]').click();
    await second.waitForFunction(()=>window.disableYaCounter123456789===true);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('domUMorya_analyticsConsent_v1')).choice),'withdrawn');
+   await p.locator('[data-privacy-settings]').first().click();assert.equal(await p.locator('#privacy-analytics').isEnabled(),false);assert.equal(await p.locator('[data-privacy-save]').isEnabled(),false);await p.keyboard.press('Escape');
    f.controls.failWithdraw=false;await p.evaluate(()=>dispatchEvent(new Event('online')));await p.waitForFunction(()=>!JSON.parse(localStorage.getItem('domUMorya_analyticsConsent_v1')).token);
    assert.ok(!JSON.stringify(await p.evaluate(()=>window.__calls)).includes('PRIVATE_NAME_SENTINEL'));
-   await p.locator('[data-privacy-settings]').first().click();await p.keyboard.press('Escape');assert.equal(await p.locator('#privacy-settings').isVisible(),false);
+   await p.locator('[data-privacy-settings]').first().click();assert.equal(await p.locator('#privacy-analytics').isEnabled(),true);assert.equal(await p.locator('[data-privacy-save]').isEnabled(),true);await p.keyboard.press('Escape');assert.equal(await p.locator('#privacy-settings').isVisible(),false);
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    await p.screenshot({path:path.join(output,'privacy-'+width+'.png')});console.log('PASS analytics viewport '+width);assert.deepEqual(f.errors,[]);
    summaries.push({scenario:'allow/deny/reload/legal/cross-tab/withdraw/retry/goals',width,status:'PASS'});await f.context.close();
   }
+  // Exact shipped OFF-mode regression, isolated from the owner's live preview/browser.
+  const preview='http://127.0.0.1:4183',off=await fixture({enabled:false,approved:false,site:preview}),p=off.p;
+  for(const route of ['/','/privacy.html','/consent-personal-data.html','/consent-analytics.html']){
+   await p.goto(preview+route);if(await p.locator('#cookie-banner').isVisible())await p.locator('#cookie-decline').click();await p.locator('[data-privacy-settings]').first().click();
+   assert.equal(await p.locator('footer .footer-legal a').count(),1);assert.equal(await p.locator('footer [data-privacy-settings]').count(),1);
+   assert.equal(await p.locator('#privacy-settings a').count(),2);assert.equal(await p.locator('.privacy-documents a[href="/consent-personal-data.html"]').count(),1);assert.equal(await p.locator('.privacy-documents a[href="/consent-analytics.html"]').count(),1);
+   await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();await p.reload();
+   await p.locator('[data-privacy-settings]').first().click();assert.equal(await p.locator('#privacy-analytics').isChecked(),true);
+   await p.locator('[data-privacy-withdraw]').click();await p.locator('[data-privacy-settings]').first().click();
+   assert.equal(await p.locator('#privacy-analytics').isEnabled(),true);assert.equal(await p.locator('[data-privacy-save]').isEnabled(),true);
+   await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();assert.equal(await p.locator('#privacy-settings').isVisible(),false);
+   await p.reload();await p.locator('[data-privacy-settings]').first().click();assert.equal(await p.locator('#privacy-analytics').isChecked(),true);await p.keyboard.press('Escape');
+  }
+  // The already-stuck record from the previous candidate recovers on reload too.
+  await p.evaluate(()=>{const k='domUMorya_analyticsConsent_v1',r=JSON.parse(localStorage.getItem(k));r.choice='withdrawn';r.operation='withdraw';delete r.receiptRequested;localStorage.setItem(k,JSON.stringify(r));});
+  await p.reload();await p.locator('[data-privacy-settings]').first().click();await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();
+  assert.equal(await p.locator('#privacy-settings').isVisible(),false);assert.equal(off.requests.length,0);assert.equal(off.operations.length,0);assert.deepEqual(off.errors,[]);
+  summaries.push({scenario:'preview OFF allow/withdraw/re-grant/reload + legacy pending recovery on all four documents',status:'PASS',serverRequests:0});console.log('PASS preview OFF re-grant and document links');await off.context.close();
   for(const target of [origin+'/?phone=70000000000',origin+'/?utm_campaign=private_name',origin+'/#PRIVATE_TOKEN']){
    const f=await fixture();await f.p.goto(target);await f.p.locator('#cookie-accept').click();await f.p.waitForTimeout(70);assert.equal(f.requests.length,0);assert.equal(f.operations.length,0);await f.context.close();
   }

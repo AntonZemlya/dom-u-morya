@@ -12,12 +12,30 @@ test('versioned independent choice, damaged/storage failure, expiry and unconfir
  const f=setup();f.storage.setItem('domUMorya_cookieChoice','accepted');f.controller.refresh();assert.equal(f.controller.state,'unknown');
  f.controller.choose('denied');assert.ok(!('token' in f.controller.record));f.controller.choose('granted');const token=f.controller.record.token;
  assert.equal(token.length,64);assert.equal(f.controller.record.operation,'allow');f.controller.choose('granted');assert.equal(f.controller.record.token,token);
+ assert.equal(f.controller.record.receiptRequested,false);f.controller.requested(token);
  f.controller.choose('withdrawn');assert.equal(f.controller.state,'withdrawn');assert.equal(f.controller.choose('granted'),false);
  f.controller.withdrawn(token);assert.equal(f.controller.choose('granted'),true);
  assert.equal(validRecord(JSON.stringify(f.controller.record),{...c,analyticsConsentVersion:'new'}),null);
  f.setTime(f.now+181*DAY);assert.equal(f.controller.state,'unknown');
  const broken=createConsentController({config:c,storage:{getItem(){throw Error()},setItem(){throw Error()}}});assert.equal(broken.choose('granted'),false);assert.equal(broken.state,'unknown');
  assert.equal(validRecord('{broken',c),null);
+});
+test('unissued local choices can be withdrawn/re-granted; only legacy unapproved loopback withdrawal is repaired',async()=>{
+ const f=setup();let requests=0;const adapter={start:async()=>assert.fail('preview start'),stop(){},event(){},pageview(){}};
+ const lifecycle=(config,host,controller=f.controller)=>createAnalyticsLifecycle({config,host,controller,adapter,evidence:async()=>{requests++;throw Error('offline');},page:()=>({})});
+ const local=lifecycle(prod,'127.0.0.1');
+ for(let i=0;i<2;i++){f.controller.choose('granted');await local.sync();f.controller.choose('withdrawn');await local.sync();assert.equal(f.controller.record.operation,undefined);assert.equal(f.controller.record.token,undefined);}
+ assert.equal(f.controller.choose('granted'),true);assert.equal(requests,0);
+ const legacy={...f.controller.record,choice:'withdrawn',operation:'withdraw'};delete legacy.receiptRequested;
+ f.storage.setItem(c.preferenceKey,JSON.stringify(legacy));f.controller.refresh();await local.sync();assert.equal(f.controller.choose('granted'),true);assert.equal(requests,0);
+ for(const [host,marker] of [['test.invalid',undefined],['other.invalid',undefined],['127.0.0.1',true]]){
+  const remote={...legacy};if(marker!==undefined)remote.receiptRequested=marker;
+  f.storage.setItem(c.preferenceKey,JSON.stringify(remote));f.controller.refresh();await lifecycle(prod,host).sync();assert.equal(f.controller.record.operation,'withdraw');assert.equal(f.controller.choose('granted'),false);
+ }
+ assert.equal(requests,3);assert.equal(validRecord(JSON.stringify({...legacy,receiptRequested:'false'}),c),null);
+ // If the pre-request marker cannot persist, no allow request may leave the page.
+ const broken=memory(),b=createConsentController({config:c,storage:broken});b.choose('granted');broken.setItem=()=>{throw Error('full');};
+ await lifecycle(c,'test.invalid',b).sync();assert.equal(requests,3);assert.equal(b.state,'unknown');
 });
 test('allow once then validate at 25h/48h without changing original time; expiry stops',async()=>{
  const f=setup(),calls=[],adapter={start:async()=>calls.push('start'),pageview:()=>calls.push('hit'),event:n=>calls.push(n),stop:()=>{}};
@@ -70,6 +88,8 @@ test('receipt adapter checks operation/expiry and immutable server document matc
  const text=fs.readFileSync('ops/analytics/consent-analytics-2026-11-02-v1.txt','utf8');const php=fs.readFileSync('api/analytics-document.php','utf8');assert.ok(php.includes(text));
  for(const paragraph of text.trim().split('\n\n'))assert.ok(fs.readFileSync('consent-analytics.html','utf8').includes('<p>'+paragraph.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\n','<br>')+'</p>'));
  const digest=createHash('sha256').update(text).digest('hex');assert.equal(digest.length,64);
- for(const name of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const html=fs.readFileSync(name,'utf8');assert.ok(html.includes('data-privacy-settings'));assert.ok(html.includes('privacy/privacy.js'));assert.ok(!html.includes('mc.yandex.ru'));}
+ for(const name of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const html=fs.readFileSync(name,'utf8');assert.ok(html.includes('data-privacy-settings'));assert.ok(html.includes('privacy/privacy.js'));assert.ok(!html.includes('mc.yandex.ru'));
+  const footer=html.match(/<footer[\s\S]*?<\/footer>/)[0];assert.equal((footer.match(/href="privacy.html"/g)||[]).length,1);assert.equal((footer.match(/data-privacy-settings/g)||[]).length,1);assert.doesNotMatch(footer,/href="consent-|Информация о проекте|footer-disclosure/);assert.ok(footer.includes('ИП Саврасова'));assert.ok(footer.includes('не является застройщиком'));assert.ok(footer.includes('оферт'));
+ }
  assert.ok(!fs.readFileSync('script.js','utf8').includes('domUMorya_cookieChoice'));
 });

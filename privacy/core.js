@@ -7,6 +7,7 @@ export function validRecord(raw,c,now=Date.now()){
    ||r.time>now+300000||r.expiry<=now||r.expiry-r.time>c.preferenceTtlDays*DAY)return null;
   if(r.choice==='granted'&&(!tokenPattern.test(r.token)||!['allow','validate'].includes(r.operation)))return null;
   if(r.token&&!tokenPattern.test(r.token))return null;
+  if('receiptRequested' in r&&typeof r.receiptRequested!=='boolean')return null;
   return r;
  }catch{return null;}
 }
@@ -29,13 +30,16 @@ export function createConsentController({config:c,storage,clock=Date.now,onChang
    if(choice==='granted'&&record?.operation==='withdraw')return false;
    if(choice==='granted'&&this.state==='granted'){if(record.operation==='allow'){const now=clock();save({...record,time:now,expiry:now+c.preferenceTtlDays*DAY});}explicitAllow=true;onChange();return true;}
    const time=clock(),next={schemaVersion:c.schemaVersion,consentVersion:c.analyticsConsentVersion,purpose:c.purpose,choice,time,expiry:time+c.preferenceTtlDays*DAY};
-   if(choice==='granted'){next.token=randomToken();next.operation='allow';}
-   else if(record?.token&&(record.choice==='granted'||record.operation==='withdraw')){next.choice='withdrawn';next.token=record.token;next.operation='withdraw';}
+   if(choice==='granted'){next.token=randomToken();next.operation='allow';next.receiptRequested=false;}
+   else if(record?.token&&(record.choice==='granted'||record.operation==='withdraw')&&(record.receiptRequested!==false||record.operation==='validate')){next.choice='withdrawn';next.token=record.token;next.operation='withdraw';if('receiptRequested' in record)next.receiptRequested=record.receiptRequested;}
    explicitAllow=choice==='granted';const ok=save(next);if(!ok&&next.operation==='withdraw')record=next;onChange();return ok;
   },
+  requested(token){if(this.state!=='granted'||record.token!==token)return false;
+   // Persist BEFORE sending allow: even an aborted/lost response may have issued a receipt.
+   return save({...record,receiptRequested:true});},
   confirm(token,r){if(this.state!=='granted'||record.token!==token)return false;
    // The server owns the original date and expiry; validation never extends them.
-   explicitAllow=false;return save({...record,operation:'validate',time:r.receivedAt,expiry:r.expiresAt});},
+   explicitAllow=false;return save({...record,operation:'validate',receiptRequested:true,time:r.receivedAt,expiry:r.expiresAt});},
   withdrawn(token){if(record?.token!==token||record.operation!=='withdraw')return;const {token:_,operation:__,...next}=record;save(next);}
  };
 }
@@ -112,7 +116,11 @@ export function createAnalyticsLifecycle({config:c,host,controller,adapter,evide
  return {async sync(){
    const r=controller.record;
    if(r?.operation==='withdraw'){
-    stop();if(withdrawPending){await withdrawPending;return controller.record?.operation==='withdraw'?this.sync():undefined;}
+    stop();
+    // Repair the previous local-preview record, which could never send allow on
+    // an unapproved loopback host. Unknown production receipts still need revocation.
+    if(r.receiptRequested===false||(!('receiptRequested' in r)&&['localhost','127.0.0.1','[::1]'].includes(host)&&!c.approvedProductionHosts.includes(host))){controller.withdrawn(r.token);return;}
+    if(withdrawPending){await withdrawPending;return controller.record?.operation==='withdraw'?this.sync():undefined;}
     withdrawPending=Promise.resolve().then(()=>evidence({action:'withdraw',token:r.token,purpose:c.purpose,consentVersion:c.analyticsConsentVersion}))
      .then(()=>controller.withdrawn(r.token)).catch(()=>{}).finally(()=>{withdrawPending=null;});return withdrawPending;
    }
@@ -122,7 +130,7 @@ export function createAnalyticsLifecycle({config:c,host,controller,adapter,evide
    const ticket=++epoch,abort=new AbortController();pending=abort;
    try{
     const payload={purpose:c.purpose,consentVersion:c.analyticsConsentVersion,action:r.operation==='allow'&&controller.mayAllow?'allow':'validate',token:r.token};
-    if(payload.action==='allow')payload.clientTime=r.time;
+    if(payload.action==='allow'){if(!controller.requested(r.token)){stop();return;}payload.clientTime=r.time;}
     const receipt=await evidence(payload,abort.signal);
     if(ticket!==epoch||abort.signal.aborted||!eligible()||!controller.confirm(r.token,receipt))return;
     await adapter.start(abort.signal);

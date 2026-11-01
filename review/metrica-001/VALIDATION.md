@@ -1,12 +1,15 @@
 # METRICA-001 — validation, 02.11.2026 (МСК)
 
-Base: `44bd83f87e5ff7c184c15f24ac300fc285842156`. Final head is the Draft PR commit.
+Base: `44bd83f87e5ff7c184c15f24ac300fc285842156`. Executable candidate: `6c7958a08b421e25644b8534ae3c89d302e7ae3f`.
+Subsequent cabinet read-back changes only review reports; executable sources are unchanged.
+Follow-up `ci:fast`: **10/10 PASS, 4.80s**. Full local gate above belongs to the unchanged executable candidate; report-only follow-up does not rerun full PHP/browser suites.
 
 | Gate | Result |
 | --- | --- |
 | `npm run ci:fast` | **PASS**, 10 required checks, 5.38s |
 | `PHP84_BIN=… PHP84_CGI_BIN=… npm run ci:full` | **PASS**, 30 required checks, 195.59s |
 | `git diff --check` | **PASS** |
+| Cabinet follow-up | Required R3 settings + owner-requested market reports OFF saved/read back; no site activation |
 | Privacy unit/contracts | **8 tests PASS**, malformed/storage/expiry/version, no forged startup issuance, lifecycle/late response, URL/referrer, immutable text |
 | Real PHP SQLite | **35 assertions PASS**, 25h/48h/expiry, original date, no renewal/duplicate allow, two concurrent grants, withdrawal/tombstone, invalid token/version/purpose, busy/corrupt/permissions/symlinks, actual CLI |
 | Chromium | **320/390/768/1440 PASS**, initial deny/no server record, one init/hit, actual internal tagged legal navigation, reload/second page/tab, withdraw/failed-write retry, keyboard/dialog, five goals, genuine PDF issuance and mocked lead202/503 |
@@ -37,9 +40,11 @@ Only the exact new public paths/endpoints were added; the protection suite passe
 the final full run above is green. Earlier intermediate runs are not the final floor.
 
 Raw test logs, screenshots and vendor fixture remain in ignored `.test-output/`.
-Counter/goals were actually created/read back; general settings are **not verified**
-(SETTINGS_UI_UNAVAILABLE, see COUNTER-SETUP). That blocker, legal approval, provisioning,
-real post-release visits and verified provider cleanup schedule remain open. No claim
+Counter/goals and required general settings are **saved and verified** in the owner’s
+loaded Chrome tab; the initial SETTINGS_UI_UNAVAILABLE is resolved (COUNTER-SETUP and
+COUNTER-READBACK-2026-11-02.json). Market reports were also disabled after the owner’s
+explicit instruction. Legal approval, provisioning, real post-release visits and verified provider
+cleanup schedule remain open. No claim
 of production readiness is made. `analyticsEnabled=false`, policy/vendor flags=false.
 
 Context / knowledge preservation: #4/#18 and PR17/20 determined operator/form/SMTP

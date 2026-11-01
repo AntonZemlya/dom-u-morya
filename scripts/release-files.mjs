@@ -6,6 +6,7 @@ export const RELEASE_FILES = Object.freeze([
   'api/lead.php', 'api/lead-core.php', 'api/form-status.php',
   'api/lead-smtp.php', 'api/smtp-manifest.php', 'api/lead-catalog.php',
   'privacy.html', 'consent-personal-data.html', 'index.html', 'styles.css', 'script.js', 'content-model.js', 'favicon.png',
+  'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'apple-touch-icon.png',
   ...CONTENT_FILES, ...PREVIEW_FILES,
   'assets/og-project.jpg', 'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',

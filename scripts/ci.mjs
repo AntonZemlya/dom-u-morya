@@ -30,6 +30,7 @@ try{
  run('toolchain',process.execPath,['-e',"if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"]);
  run('source','npm',['run','check'],['toolchain']);
  n('syntax','scripts/ci-static.mjs',['toolchain']);
+ n('analytics-unit','tests/analytics.test.mjs',['toolchain']);
  run('release-contract',process.execPath,['tests/release.cjs'],['source'],{BUILD_TARGET:'preview',SITE_URL:''});
  run('production-build','npm',['run','build:production'],['source']);
  n('offline-contract','tests/ci-contract.mjs',['production-build']);
@@ -38,6 +39,8 @@ try{
  run('release-manager','python3',['-B','-m','unittest','discover','-s','ops','-p','test_release_manager.py']);
  if(mode==='full'){
   run('php84',env.PHP84_BIN||'php',['-n','-r',"if(PHP_MAJOR_VERSION!==8||PHP_MINOR_VERSION!==4||!extension_loaded('openssl')||!extension_loaded('ctype'))exit(1);echo PHP_VERSION;"]);
+  run('analytics-sqlite',env.PHP84_BIN||'php',['-n','tests/analytics.test.php'],['php84']);
+  run('analytics-browser',process.execPath,['tests/analytics-browser.cjs'],['analytics-sqlite','production-build'],{ANALYTICS_REQUIRE_VENDOR_FIXTURE:'1'});
   run('composer','composer',['validate','--strict','--no-check-all','--no-interaction']);
   run('composer-audit','composer',['audit','--locked','--no-interaction'],['composer']);
   n('smtp-runtime','scripts/smtp-runtime.mjs',['composer']);

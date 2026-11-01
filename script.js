@@ -163,6 +163,7 @@ async function makeCalcPdf(html, filename){
     const a = document.createElement('a');
     a.href = url; a.download = filename;
     document.body.appendChild(a); a.click(); a.remove();
+    document.dispatchEvent(new Event('dom:pdf-download'));
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   } finally {
     frame.remove();
@@ -183,7 +184,6 @@ const state = {
   opts: [],
   blurred: {},
   pdfBusy: false,
-  cookieChoice: null,
   menuOpen: false,
   scrolled: false,
   headerHidden: false,
@@ -236,7 +236,7 @@ function onScroll(){
 
   const scrollBtn = document.getElementById('scroll-top-btn');
   scrollBtn.classList.toggle('visible', state.scrolled);
-  scrollBtn.classList.toggle('no-cookie-banner', !!state.cookieChoice);
+  scrollBtn.classList.toggle('no-cookie-banner', document.getElementById('cookie-banner')?.hidden !== false);
 }
 
 function applyMenuState(){
@@ -286,25 +286,6 @@ function setupRevealObserver(){
 }
 
 /* ================= cookie banner / scroll-top ================= */
-function applyCookieBanner(){
-  document.getElementById('cookie-banner').classList.toggle('open', !state.cookieChoice);
-  document.getElementById('cookie-banner').hidden = !!state.cookieChoice;
-  document.getElementById('scroll-top-btn').classList.toggle('no-cookie-banner', !!state.cookieChoice);
-}
-function wireCookieBanner(){
-  try {
-    const saved = localStorage.getItem('domUMorya_cookieChoice');
-    if (['accepted', 'declined'].includes(saved)) state.cookieChoice = saved;
-  } catch (e) {}
-  document.getElementById('cookie-accept').addEventListener('click', () => {
-    try { localStorage.setItem('domUMorya_cookieChoice', 'accepted'); } catch (e) {}
-    state.cookieChoice = 'accepted'; applyCookieBanner();
-  });
-  document.getElementById('cookie-decline').addEventListener('click', () => {
-    try { localStorage.setItem('domUMorya_cookieChoice', 'declined'); } catch (e) {}
-    state.cookieChoice = 'declined'; applyCookieBanner();
-  });
-}
 function wireScrollTopBtn(){
   document.getElementById('scroll-top-btn').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -411,6 +392,7 @@ function openLightbox(mode,index,id){
   const overlay=document.getElementById('lightbox');overlay.hidden=false;overlay.classList.add('open');
   lb.background=[...document.body.children].filter(el=>el!==overlay&&el.tagName!=='SCRIPT').map(el=>[el,el.inert]);lb.background.forEach(([el])=>el.inert=true);
   lb.overflow=document.body.style.overflow;document.body.style.overflow='hidden';renderLightbox();document.getElementById('lightbox-close').focus();
+  if(mode==='plan')document.dispatchEvent(new Event('dom:plan-open'));
 }
 function closeLightbox(){
   const overlay=document.getElementById('lightbox');overlay.classList.remove('open');overlay.hidden=true;
@@ -838,6 +820,7 @@ async function handleSubmit(){
       throw new Error('rejected');
     }
     status.textContent = 'Запрос принят на обработку. Номер: ' + result.id + '. Агентство свяжется с вами по указанным контактам.';
+    if(!attempt.analyticsEmitted){attempt.analyticsEmitted=true;document.dispatchEvent(new Event('dom:lead-accepted'));}
     state.consent = false;
     state.blurred.consent = false; // The post-success reset must not show a new consent error.
     document.getElementById('consent-input').checked = false;
@@ -919,7 +902,6 @@ function init(){
   renderContactArea();
   wireHeaderEvents(); applyMenuState();
   wireLightboxEvents();
-  wireCookieBanner(); applyCookieBanner();
   wireScrollTopBtn();
   wirePricingCtas();
   setupRevealObserver();

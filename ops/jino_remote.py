@@ -101,7 +101,8 @@ def safe_name(name):
     p = Path(name)
     ensure(not p.is_absolute() and '..' not in p.parts and name == p.as_posix(), 'Unsafe release member')
     ensure(name=='.htaccess' or all(not part.startswith('.') for part in p.parts), 'Hidden files are forbidden')
-    ensure(name in ['.htaccess','index.html','privacy.html','consent-personal-data.html','styles.css','script.js','content-model.js','favicon.png','robots.txt','sitemap.xml']
+    ensure(name in ['.htaccess','index.html','privacy.html','consent-personal-data.html','styles.css','script.js','content-model.js','favicon.png',
+                       'favicon.ico','favicon-16x16.png','favicon-32x32.png','apple-touch-icon.png','robots.txt','sitemap.xml']
            or (len(p.parts) > 1 and p.parts[0] in ['api','assets','data']), 'Unapproved public path')
     if p.parts[0] == 'api':
         ensure(name in ['api/lead.php','api/lead-core.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php'], 'Unapproved endpoint')

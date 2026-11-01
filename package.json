@@ -21,7 +21,11 @@
     "test:smtp-e2e": "python3 -B ops/test_smtp_e2e.py",
     "test:legal": "node scripts/check-rec003-integration.mjs",
     "test:security": "python3 -B ops/test_release.py && python3 -B ops/test_security_http.py",
-    "test:form-release": "python3 -B ops/test_form_release.py"
+    "test:form-release": "python3 -B ops/test_form_release.py",
+    "ci:fast": "node scripts/ci.mjs fast",
+    "ci:full": "node scripts/ci.mjs full",
+    "release": "python3 -B ops/release_manager.py release",
+    "backup": "python3 -B ops/release_manager.py backup"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

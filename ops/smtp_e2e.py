@@ -195,6 +195,7 @@ def main():
     if result.get('cleanup_required') or result.get('operation_failed'): sys.exit(1)
 
 if __name__=='__main__':
+    raise SystemExit('Archived rollout CLI; use ops/release_manager.py and ops/RELEASE-RUNBOOK.md. No remote operation performed.')
     def stop(*args): raise RuntimeError('Interrupted; cleanup required')
     signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
     try: main()

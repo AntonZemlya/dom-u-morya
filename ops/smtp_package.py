@@ -74,4 +74,5 @@ def main():
     (output/'package.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    raise SystemExit('Archived rollout CLI; use ops/release_manager.py and ops/RELEASE-RUNBOOK.md. No remote operation performed.')

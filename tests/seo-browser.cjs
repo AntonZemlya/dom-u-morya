@@ -1,6 +1,7 @@
+const {previewURL}=require('./helpers.cjs');
 const assert=require('node:assert/strict'),fs=require('fs'),path=require('path');
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
-(async()=>{const site={url:'http://127.0.0.1:4183'},b=await browser();try{
+(async()=>{const site={url:previewURL},b=await browser();try{
 for(const width of [1440,768,390,320])for(const js of [true,false]){
  const c=await b.newContext({viewport:{width,height:844},javaScriptEnabled:js,reducedMotion:'reduce'}),p=await c.newPage();await maskMap(p);await p.goto(site.url);if(js)await stable(p);else await p.waitForFunction(()=>document.fonts.status==='loaded');
  assert.equal(await p.locator('h1').count(),1);assert.equal(await p.locator('h1').textContent(),'ЖК «Дом у моря» — Мариуполь, первая береговая линия');assert.equal(await p.locator('h1').isVisible(),true);assert.equal(await p.locator('#hero-section').getAttribute('aria-labelledby'),await p.locator('h1').getAttribute('id'));

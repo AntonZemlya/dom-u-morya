@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "path": ".envrc",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": ".envrc",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": ".env",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": ".env",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": ".git/config",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": ".git/config",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": "assets/.env",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "assets/.env",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": ".well-known/acme-challenge/.env",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": ".well-known/acme-challenge/.env",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": ".htaccess",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": ".htaccess",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": "%2eenvrc",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "%2eenvrc",
+      "method": "HEAD",
+      "status": 403
+    },
+    {
+      "path": ".git%2fconfig",
+      "method": "GET",
+      "status": 404
+    },
+    {
+      "path": ".git%2fconfig",
+      "method": "HEAD",
+      "status": 404
+    }
+  ],
+  "acme": 200,
+  "permissive_fixture_exposure_detected": true,
+  "permissive_policy_rejected": true,
+  "process_stopped": true,
+  "production_accessed": false
+}

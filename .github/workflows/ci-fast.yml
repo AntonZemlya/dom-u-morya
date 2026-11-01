@@ -1,0 +1,31 @@
+name: CI fast
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-fast-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  fast:
+    # Public repository + standard Linux runner: no paid runner/cache/artifact storage.
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0 # Existing frozen-source contracts read historical commits.
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run ci:fast
+      - if: always()
+        shell: bash
+        run: |
+          if test -f .test-output/ci/fast/summary.md; then
+            cat .test-output/ci/fast/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi

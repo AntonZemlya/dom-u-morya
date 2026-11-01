@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "mode": "fast",
+  "complete": true,
+  "node": "v22.23.2",
+  "platform": "darwin",
+  "started_at": "2026-10-31T23:05:54.996Z",
+  "status": "PASS",
+  "seconds": 4.522,
+  "checks": [
+    {
+      "id": "toolchain",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.023,
+      "command": [
+        "node",
+        "-e",
+        "if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"
+      ]
+    },
+    {
+      "id": "source",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.385,
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ]
+    },
+    {
+      "id": "syntax",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.848,
+      "command": [
+        "node",
+        "scripts/ci-static.mjs"
+      ]
+    },
+    {
+      "id": "release-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.834,
+      "command": [
+        "node",
+        "tests/release.cjs"
+      ]
+    },
+    {
+      "id": "production-build",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.387,
+      "command": [
+        "npm",
+        "run",
+        "build:production"
+      ]
+    },
+    {
+      "id": "offline-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.25,
+      "command": [
+        "node",
+        "tests/ci-contract.mjs"
+      ]
+    },
+    {
+      "id": "seo",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.169,
+      "command": [
+        "node",
+        "tests/seo.mjs"
+      ]
+    },
+    {
+      "id": "legal",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.055,
+      "command": [
+        "node",
+        "-e",
+        "require('./tests/legal-contract.cjs')(process.cwd())"
+      ]
+    },
+    {
+      "id": "release-manager",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.567,
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "ops",
+        "-p",
+        "test_release_manager.py"
+      ]
+    }
+  ]
+}

@@ -47,9 +47,9 @@ Proposed evidence retention: until expiry +30 days, or withdrawal +30 days. Thos
 are an operator policy proposal, **not a universal statutory rule**. Yandex cookie/data
 and provider backup lifetimes are separate; operator approval is a release gate.
 
-Immutable text: `ops/analytics/consent-analytics-2026-11-02-v1.txt`, version
-`analytics-2026-11-02-v1`; SHA-256
-`326b9cbfd650e78ff95fe4761e78e0790dd6af00e858b661471e5cbbddddbcbc`.
+Immutable text: `ops/analytics/consent-analytics-2026-11-03-v2.txt`, version
+`analytics-2026-11-03-v2`; SHA-256
+`ee990516bed3d7e63fb26c6a8593d1fbd2180e652abc423f2272c103e3a3c809`.
 Server nowdoc is checked against these exact bytes. New purposes/text require a new
 revision and approval. Form consent stays `2026-10-31` with its existing SMTP evidence.
 

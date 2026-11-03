@@ -80,3 +80,6 @@ clickmap/trackLinks; стандартный генерируемый snippet в�
 [настройки и дополнительные контакты](https://yandex.ru/support/metrica/ru/general/counter-general),
 [маскирование IP](https://yandex.ru/support/metrica/ru/general/ip-masking),
 [JS-цель](https://yandex.ru/support/metrica/ru/general/goal-js-event).
+
+
+**R4 03.11:** после отдельного решения владельца в *исходном коде кандидата* разрешена аналитика на точном production-домене, по отдельному consent и SQLite receipt. Это не изменение кабинета Яндекса, где настроенный счётчик 113992596 и пять целей не тронуты. Скриншоты от 02.11 относятся к более раннему client config OFF; реальный новый релиз требует своей проверки.

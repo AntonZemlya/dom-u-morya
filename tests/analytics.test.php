@@ -15,7 +15,7 @@ try{
  $r=analytics_store($dir,$payload,$now);$db=analytics_db($dir);
  check($db->querySingle('SELECT COUNT(*) FROM analytics_receipts')===1,'Single grant');
  check((fileperms($dir.'/metrica-consent.sqlite3')&0077)===0,'Owner only');
- check($r['documentSha256']===hash_file('sha256',__DIR__.'/../ops/analytics/consent-analytics-2026-11-02-v1.txt'),'Immutable text SHA');
+ check($r['documentSha256']===hash_file('sha256',__DIR__.'/../ops/analytics/consent-analytics-2026-11-03-v2.txt'),'Immutable text SHA');
  check($r===analytics_store($dir,$payload,$now+1),'Idempotent double allow');
  $validate=$payload;unset($validate['clientTime']);$validate['action']='validate';
  foreach([25,48] as $hour){$v=analytics_store($dir,$validate,$now+$hour*3600000);check($v['receivedAt']===$now&&$v['expiresAt']===$now+ANALYTICS_TTL,'25/48h original date');}

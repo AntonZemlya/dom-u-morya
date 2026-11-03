@@ -45,8 +45,8 @@ test('allow once then validate at 25h/48h without changing original time; expiry
  for(const hours of [25,48]){f.setTime(f.now+hours*3600000);const next=life();await next.sync();assert.equal(requests.at(-1).action,'validate');assert.ok(!('clientTime' in requests.at(-1)));assert.equal(f.controller.record.time,f.now);}
  f.setTime(f.now+180*DAY);assert.equal(l.emit('phone_click'),false);await l.sync();assert.equal(l.active,false);
 });
-test('preview OFF and arbitrary local granted never start; no replay of denied goals',async()=>{
- assert.equal(prod.analyticsEnabled,false);assert.equal(prod.metricaCounterId,113992596);assert.ok(deploymentBlockers(prod,'zhk-dom-umorya.ru').length);
+test('preview host blocked and arbitrary local granted never start; no replay of denied goals',async()=>{
+ assert.equal(prod.analyticsEnabled,true);assert.equal(prod.operatorPolicyApproved,true);assert.equal(prod.vendorPayloadReviewApproved,true);assert.equal(prod.metricaCounterId,113992596);assert.deepEqual(deploymentBlockers(prod,'zhk-dom-umorya.ru'),[]);assert.ok(deploymentBlockers(prod,'127.0.0.1').includes('host_unapproved'));
  for(const config of [prod,c]){const f=setup();let starts=0;f.controller.choose('granted');const l=createAnalyticsLifecycle({config,host:'test.invalid',controller:f.controller,
  adapter:{start:async()=>starts++,stop(){},event(){},pageview(){}},evidence:async()=>{throw Error('invalid token');},page:()=>({})});await l.sync();assert.equal(starts,0);assert.equal(l.emit('phone_click'),false);}
 });
@@ -85,11 +85,12 @@ test('receipt adapter checks operation/expiry and immutable server document matc
  const p={action:'validate',purpose:c.purpose,consentVersion:c.analyticsConsentVersion};
  const a=createReceiptAdapter(async()=>({ok:true,json:async()=>receipt(p)}),'/api/analytics-consent.php');assert.ok(await a(p));
  for(const patch of [{action:'allow'},{expiresAt:0},{mode:'mock-only'}])await assert.rejects(createReceiptAdapter(async()=>({ok:true,json:async()=>({...receipt(p),...patch})}),'x')(p));
- const text=fs.readFileSync('ops/analytics/consent-analytics-2026-11-02-v1.txt','utf8');const php=fs.readFileSync('api/analytics-document.php','utf8');assert.ok(php.includes(text));
+ const text=fs.readFileSync('ops/analytics/consent-analytics-2026-11-03-v2.txt','utf8');const php=fs.readFileSync('api/analytics-document.php','utf8');assert.ok(php.includes(text));
  for(const paragraph of text.trim().split('\n\n'))assert.ok(fs.readFileSync('consent-analytics.html','utf8').includes('<p>'+paragraph.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\n','<br>')+'</p>'));
  const digest=createHash('sha256').update(text).digest('hex');assert.equal(digest.length,64);
  for(const name of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const html=fs.readFileSync(name,'utf8');assert.ok(html.includes('data-privacy-settings'));assert.ok(html.includes('privacy/privacy.js'));assert.ok(!html.includes('mc.yandex.ru'));
   const footer=html.match(/<footer[\s\S]*?<\/footer>/)[0];assert.equal(footer,fs.readFileSync('templates/footer.html','utf8').trimEnd(),name+': shared footer');assert.equal((footer.match(/href="privacy.html"/g)||[]).length,1);assert.equal((footer.match(/data-privacy-settings/g)||[]).length,1);assert.doesNotMatch(footer,/href="consent-|Информация о проекте|footer-disclosure|footer-operator|Саврасов|ОГРНИП|ИНН/);assert.ok(footer.includes('не является застройщиком'));assert.ok(footer.includes('оферт'));
  }
  assert.ok(!fs.readFileSync('script.js','utf8').includes('domUMorya_cookieChoice'));
+ const analyticsPage=fs.readFileSync('consent-analytics.html','utf8');assert.match(analyticsPage,/<meta name="robots" content="noindex,follow">/);assert.ok(!fs.readFileSync('scripts/seo.mjs','utf8').includes("'consent-analytics.html'"));
 });

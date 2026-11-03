@@ -50,7 +50,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
      const relative=u.pathname==='/'?'index.html':decodeURIComponent(u.pathname.slice(1));
      const file=path.resolve(root,relative);if(!file.startsWith(root+path.sep)||!fs.existsSync(file))return route.fulfill({status:404,body:''});
      let body=fs.readFileSync(file);
-     if(relative==='privacy/config.js')body=Buffer.from(body.toString().replace('analyticsEnabled:false','analyticsEnabled:'+enabled).replace('operatorPolicyApproved:false','operatorPolicyApproved:'+enabled).replace('vendorPayloadReviewApproved:false','vendorPayloadReviewApproved:'+enabled).replace("['zhk-dom-umorya.ru']",approved?JSON.stringify([new URL(site).hostname]):"['zhk-dom-umorya.ru']").replace('https://zhk-dom-umorya.ru',site).replace('113992596','123456789'));
+     if(relative==='privacy/config.js')body=Buffer.from(body.toString().replace(/\banalyticsEnabled:(?:true|false)\b/,'analyticsEnabled:'+enabled).replace(/\boperatorPolicyApproved:(?:true|false)\b/,'operatorPolicyApproved:'+enabled).replace(/\bvendorPayloadReviewApproved:(?:true|false)\b/,'vendorPayloadReviewApproved:'+enabled).replace("['zhk-dom-umorya.ru']",approved?JSON.stringify([new URL(site).hostname]):"['zhk-dom-umorya.ru']").replace('https://zhk-dom-umorya.ru',site).replace('113992596','123456789'));
      return route.fulfill({contentType:types[path.extname(relative)]||'application/octet-stream',body});
     }
     if(u.hostname==='mc.yandex.ru'&&u.pathname==='/metrika/tag.js'){
@@ -102,7 +102,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
    await p.screenshot({path:path.join(output,'privacy-'+width+'.png')});console.log('PASS analytics viewport '+width);assert.deepEqual(f.errors,[]);
    summaries.push({scenario:'allow/deny/reload/legal/cross-tab/withdraw/retry/goals',width,status:'PASS'});await f.context.close();
   }
-  // Exact shipped OFF-mode regression, isolated from the owner's live preview/browser.
+  // Explicit OFF-mode regression on unapproved preview despite production ON, isolated from the owner's live preview/browser.
   const preview='http://127.0.0.1:4183',off=await fixture({enabled:false,approved:false,site:preview}),p=off.p;
   for(const route of ['/','/privacy.html','/consent-personal-data.html','/consent-analytics.html']){
    await p.goto(preview+route);if(await p.locator('#cookie-banner').isVisible())await p.locator('#cookie-decline').click();await p.locator('[data-privacy-settings]').first().click();

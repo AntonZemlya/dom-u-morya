@@ -120,3 +120,8 @@ Chrome confirms the golden link and identical offer/links left coordinates. Only
 and this existing regression check change executable behavior; template, content, legal
 texts and consent runtime remain unchanged. The original footer implementation/history
 is retained above; these are presentation adjustments within the same owner-assigned PR.
+
+
+## R4 — единый go-live, 03.11.2026
+
+Принято решение владельца: один production package с consent-gated analytics ON, а не два выпуска. Новая редакция `analytics-2026-11-03-v2` и SHA поддерживаются текстом PHP, HTML и JS. `consent-analytics.html` — `noindex,follow`, исключена из sitemap. Оригинальное consent формы `2026-10-31` сохранено. Предыдущие PASS для R3 являются историческими; R4 требует повторного полного CI на точном HEAD. Отдельного production deploy и миграции legacy cookie не выполнялось.

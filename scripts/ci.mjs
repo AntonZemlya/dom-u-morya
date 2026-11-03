@@ -53,6 +53,7 @@ try{
    preview.once('error',reject);preview.once('exit',code=>reject(Error('Preview exited: '+code)));
   });
   n('ui','tests/ui.cjs',['chromium','production-build'],['--root','dist']);
+  n('privacy-banner','tests/privacy-banner.cjs',['chromium','production-build'],['--root','dist']);
   n('shared-footer','tests/eng-001-footer.cjs',['chromium','production-build']);
   n('catalog-pdf','tests/catalog.cjs',['chromium','production-build'],['--root','dist']);
   n('catalog-transfer','tests/catalog-transfer.cjs',['chromium','production-build']);

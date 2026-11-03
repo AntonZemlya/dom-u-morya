@@ -11,7 +11,7 @@ const lifecycle=createAnalyticsLifecycle({config:c,host:location.hostname,contro
 addEventListener('hashchange',()=>{if(!page())lifecycle.stop();});
 const banner=document.createElement('aside');banner.className='privacy-banner';banner.id='cookie-banner';banner.setAttribute('aria-label','Аналитика и конфиденциальность');banner.hidden=true;
 banner.setAttribute('aria-labelledby','privacy-banner-title');
-banner.innerHTML='<div class="privacy-banner-copy"><h2 id="privacy-banner-title">Аналитика — по вашему выбору</h2><p>С вашего разрешения мы сможем использовать Яндекс.Метрику, чтобы понимать, как пользуются сайтом. Без аналитики сайт работает как обычно.</p></div><div class="privacy-actions"><button type="button" class="privacy-action" id="cookie-accept" data-privacy-choice="granted">Разрешить аналитику</button><button type="button" class="privacy-action" id="cookie-decline" data-privacy-choice="denied">Продолжить без аналитики</button></div><div class="privacy-banner-secondary"><p class="privacy-banner-note">Внешняя аналитика отключена. Здесь сохраняется только ваш выбор.</p><nav class="privacy-banner-links" aria-label="Подробности об аналитике"><span><a href="/consent-analytics.html">Условия согласия</a></span><button type="button" class="privacy-configure" data-privacy-settings>Настроить</button></nav></div>';
+banner.innerHTML='<div class="privacy-banner-copy"><div class="privacy-banner-heading"><h2 id="privacy-banner-title">Аналитика</h2><nav class="privacy-banner-links" aria-label="Подробности об аналитике"><a href="/consent-analytics.html">Условия согласия</a><button type="button" class="privacy-configure" data-privacy-settings>Настроить</button></nav></div><p>Яндекс.Метрика — по желанию. Сайт работает и без неё.</p><p class="privacy-banner-note">Внешняя аналитика отключена. Здесь сохраняется только ваш выбор.</p></div><div class="privacy-actions"><button type="button" class="privacy-action" id="cookie-accept" data-privacy-choice="granted">Разрешить аналитику</button><button type="button" class="privacy-action" id="cookie-decline" data-privacy-choice="denied">Продолжить без аналитики</button></div>';
 if(!deploymentOff)banner.querySelector('.privacy-banner-note').hidden=true;
 document.body.append(banner);
 const settings=document.createElement('dialog');settings.id='privacy-settings';settings.className='privacy-settings';settings.setAttribute('data-simple-overlay','');settings.setAttribute('aria-labelledby','privacy-title');
@@ -19,7 +19,19 @@ settings.innerHTML='<div><button type="button" class="privacy-close dialog-close
 if(!deploymentOff)settings.querySelector('.privacy-status').textContent='Аналитика включается только после вашего разрешения и подтверждённого допуска сайта.';
 document.body.append(settings);let opener=null,pageY=0;
 function modalActive(){return !!document.querySelector('dialog[open]:not(#privacy-settings)')||document.querySelector('.menu-toggle')?.getAttribute('aria-expanded')==='true';}
-function updateBanner(){banner.hidden=controller.state!=='unknown'||settings.open||modalActive();document.getElementById('scroll-top-btn')?.classList.toggle('no-cookie-banner',banner.hidden);}
+function updateBannerSpace(){
+ // Keep the space while a dialog hides the banner, preserving the page position.
+ if(controller.state!=='unknown'){
+  document.documentElement.style.setProperty('--privacy-banner-space','0px');
+  document.documentElement.style.setProperty('--privacy-banner-offset','0px');
+ }else if(!banner.hidden){
+  const offset=Math.ceil(banner.getBoundingClientRect().height+parseFloat(getComputedStyle(banner).bottom));
+  document.documentElement.style.setProperty('--privacy-banner-offset',`${offset}px`);
+  document.documentElement.style.setProperty('--privacy-banner-space',`${offset+(document.getElementById('scroll-top-btn')?64:12)}px`);
+ }
+}
+function updateBanner(){banner.hidden=controller.state!=='unknown'||settings.open||modalActive();document.getElementById('scroll-top-btn')?.classList.toggle('no-cookie-banner',banner.hidden);updateBannerSpace();}
+new ResizeObserver(updateBannerSpace).observe(banner);
 let expiryTimer;
 function sync(){clearTimeout(expiryTimer);if(controller.record)expiryTimer=setTimeout(()=>controller.refresh(),Math.min(2147483647,Math.max(1,controller.record.expiry-Date.now())));
  const updateActiveStatus=()=>{if(controller.state==='granted'&&!deploymentOff){settings.querySelector('[data-privacy-status]').textContent=lifecycle.active?'Яндекс.Метрика включена по вашему разрешению.':!page()?'Разрешение сохранено. Аналитика отключена для защиты данных в адресе страницы или источнике перехода.':'Согласие сохранено. Аналитика недоступна или заблокирована; сайт работает как обычно.';}};

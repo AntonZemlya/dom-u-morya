@@ -1,23 +1,41 @@
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+// Shared footer regression: reuse the existing responsive footer check on all pages.
+const assert=require('node:assert/strict'),path=require('node:path');
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
-const out=process.env.QA_OUTPUT_DIR;
+const out=process.env.QA_OUTPUT_DIR,pages=['index.html','privacy.html','consent-personal-data.html','consent-analytics.html'];
 (async()=>{const site=await server(path.join(root,'dist')),b=await browser();try{
  for(const width of [1440,768,390,320]){
-  const p=await b.newPage({viewport:{width,height:width<500?844:1000},reducedMotion:'reduce'});await maskMap(p);await p.goto(site.url);await stable(p);await p.locator('#cookie-decline').click();
-  const footer=p.locator('footer');await footer.scrollIntoViewIfNeeded();
-  assert.equal(await footer.evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(33, 55, 60)');
-  assert.equal(await footer.locator('.footer-agency').count(),0);assert.equal(await footer.locator('.footer-bottom').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(0, 0, 0, 0)');
-  assert.match(await footer.locator('.footer-operator').innerText(),/Саврасова Елена Анатольевна.*366210396814.*318366800035941/);
-  const logo=footer.locator('img');assert.equal(await logo.getAttribute('src'),'assets/logo-cropped.webp');await logo.evaluate(i=>i.decode());assert.ok(await logo.evaluate(i=>i.naturalWidth>0&&getComputedStyle(i).filter.includes('brightness(0)')));
-  assert.equal(await footer.locator('.footer-phone').getAttribute('href'),'tel:+79529568875');assert.equal(await footer.locator('.footer-email').getAttribute('href'),'mailto:info@anyara.ru');
-  for(const doc of ['privacy.html','consent-personal-data.html']){
-   const link=footer.locator(`a[href="${doc}"]`);assert.equal(await link.count(),1);await link.focus();assert.equal(await link.evaluate(e=>e===document.activeElement),true);assert.ok((await link.boundingBox()).height>=44);assert.equal((await p.request.get(site.url+'/'+doc)).status(),200);
+  const context=await b.newContext({viewport:{width,height:width<500?844:1000},reducedMotion:'reduce'}),p=await context.newPage();await maskMap(p);
+  let baseline;
+  for(const name of pages){
+   await p.goto(site.url+'/'+name);await stable(p);if(await p.locator('#cookie-banner').isVisible())await p.locator('#cookie-decline').click();
+   const footer=p.locator('footer');await footer.scrollIntoViewIfNeeded();
+   const layout=await footer.evaluate(e=>{
+    const style=getComputedStyle(e),box=e.getBoundingClientRect();return {background:style.backgroundColor,width:box.width,height:box.height,
+     children:[...e.querySelectorAll('.footer-main,.footer-bottom,.footer-fineprint')].map(c=>{const r=c.getBoundingClientRect();return {x:r.x-box.x,y:r.y-box.y,width:r.width,height:r.height};})};
+   });
+   assert.equal(layout.background,'rgb(33, 55, 60)');if(baseline)assert.deepEqual(layout,baseline,name+': same responsive footer');else baseline=layout;
+   assert.equal(await footer.locator('.footer-agency,.footer-operator').count(),0);assert.doesNotMatch(await footer.innerText(),/Саврасов|ОГРНИП|ИНН/);
+   const logo=footer.locator('img');assert.equal(await logo.getAttribute('src'),'assets/logo-cropped.webp');await logo.evaluate(i=>i.decode());assert.ok(await logo.evaluate(i=>i.naturalWidth>0&&getComputedStyle(i).filter.includes('brightness(0)')));
+   assert.equal(await footer.locator('.footer-brand').getAttribute('href'),'index.html#top');
+   assert.equal(await footer.locator('.footer-phone').getAttribute('href'),'tel:+79529568875');assert.equal(await footer.locator('.footer-email').getAttribute('href'),'mailto:info@anyara.ru');
+   const link=footer.locator('a[href="privacy.html"]'),settings=footer.locator('[data-privacy-settings]');assert.equal(await link.count(),1);
+   const offer=await footer.locator('.footer-fineprint span').last().boundingBox(),legal=await footer.locator('.footer-legal').boundingBox();
+   assert.ok(Math.abs(offer.x-legal.x)<.5,name+': offer aligned with legal column');assert.ok(offer.y>=legal.y+legal.height,name+': offer below legal links');
+   for(const [target,label] of [[link,'policy'],[settings,'settings']]){
+    await p.mouse.move(0,0);const idle=await target.evaluate(e=>getComputedStyle(e).color);await target.hover();
+    const hover=await target.evaluate(e=>({color:getComputedStyle(e).color,underline:getComputedStyle(e).textDecorationColor}));
+    assert.notEqual(hover.color,idle,label+': visible hover');assert.equal(hover.color,'rgb(241, 208, 155)');assert.equal(hover.underline,hover.color);
+    if(out&&width===1440&&name==='privacy.html')await footer.screenshot({path:path.join(out,`footer-hover-${label}-1440.png`)});
+   }
+   await link.focus();assert.equal(await link.evaluate(e=>e===document.activeElement),true);assert.ok((await link.boundingBox()).height>=44);
+   assert.ok((await settings.boundingBox()).height>=44);await settings.click();assert.equal(await p.locator('#privacy-settings').isVisible(),true);await p.keyboard.press('Escape');
+   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' '+width+': no horizontal overflow');
+   if(out)await footer.screenshot({path:path.join(out,`shared-footer-${name.replace('.html','')}-${width}.png`)});
   }
-  await footer.locator('summary').focus();await p.keyboard.press('Enter');assert.equal(await footer.locator('details').evaluate(e=>e.open),true);await p.keyboard.press('Enter');
-  // Local links and all footer targets have a destination; external project link is retained.
-  assert.deepEqual(await footer.locator('a[href^="#"]').evaluateAll(es=>es.filter(e=>!document.getElementById(e.hash.slice(1))).map(e=>e.hash)),[]);
-  assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-  if(out){await p.locator('body').click({position:{x:5,y:5}});await footer.screenshot({path:path.join(out,`footer-after-${width}.png`)});}
-  await p.close();console.log(`PASS ENG-001 footer ${width}: dark background, local contrast logo, compact operator, contacts/legal/keyboard/no overflow`);
+  await context.close();console.log(`PASS shared footer ${width}: four pages, identical layout, contacts/links/keyboard/no overflow`);
  }
+ // The common footer and document link are present before any JavaScript runs.
+ const context=await b.newContext({javaScriptEnabled:false}),p=await context.newPage();await maskMap(p);
+ for(const name of pages){await p.goto(site.url+'/'+name);assert.equal(await p.locator('footer.finale-footer .footer-phone').count(),1);assert.equal(await p.locator('footer a[href="privacy.html"]').count(),1);}
+ await context.close();console.log('PASS shared footer no-JS on four pages');
 }finally{await b.close();await site.close();}})().catch(e=>{console.error(e);process.exitCode=1});

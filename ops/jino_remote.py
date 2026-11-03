@@ -101,11 +101,13 @@ def safe_name(name):
     p = Path(name)
     ensure(not p.is_absolute() and '..' not in p.parts and name == p.as_posix(), 'Unsafe release member')
     ensure(name=='.htaccess' or all(not part.startswith('.') for part in p.parts), 'Hidden files are forbidden')
-    ensure(name in ['.htaccess','index.html','privacy.html','consent-personal-data.html','styles.css','script.js','content-model.js','favicon.png',
+    ensure(name in ['.htaccess','index.html','privacy.html','consent-personal-data.html','consent-analytics.html','styles.css','script.js','content-model.js','favicon.png',
+                       'privacy/config.js','privacy/core.js','privacy/metrica.js','privacy/privacy.js','privacy/privacy.css',
                        'favicon.ico','favicon-16x16.png','favicon-32x32.png','apple-touch-icon.png','robots.txt','sitemap.xml']
            or (len(p.parts) > 1 and p.parts[0] in ['api','assets','data']), 'Unapproved public path')
     if p.parts[0] == 'api':
-        ensure(name in ['api/lead.php','api/lead-core.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php'], 'Unapproved endpoint')
+        ensure(name in ['api/lead.php','api/lead-core.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php',
+                        'api/analytics-consent.php','api/analytics-core.php','api/analytics-document.php'], 'Unapproved endpoint')
 
 def unpack(folder):
     package = folder / 'package.tar.gz'

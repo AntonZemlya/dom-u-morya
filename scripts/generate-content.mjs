@@ -8,6 +8,17 @@ const apartments=read('apartments'),media=read('media'),groups=read('plan-groups
 const list=M.plans(apartments),categories=M.categories(list),min=Math.min(...list.map(a=>a.price));
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const original=html;
+// One authored footer; checked-in HTML stays fully usable without JavaScript.
+const footer=fs.readFileSync(path.join(root,'templates/footer.html'),'utf8').trimEnd();
+const withFooter=(page,name)=>{
+ const region=/<!-- CONTENT:footer:start -->[\s\S]*?<!-- CONTENT:footer:end -->/;
+ if(!region.test(page))throw Error('Missing shared footer region: '+name);
+ return page.replace(region,`<!-- CONTENT:footer:start -->\n${footer}\n<!-- CONTENT:footer:end -->`);
+};
+html=withFooter(html,'index.html');
+const documents=['privacy.html','consent-personal-data.html','consent-analytics.html'].map(name=>{
+ const original=fs.readFileSync(path.join(root,name),'utf8');return {name,original,html:withFooter(original,name)};
+});
 const region=(name,text)=>{const re=new RegExp(`<!-- CONTENT:${name}:start -->[\\s\\S]*?<!-- CONTENT:${name}:end -->`);if(!re.test(html))throw Error('Missing region '+name);html=html.replace(re,`<!-- CONTENT:${name}:start -->\n${text}\n<!-- CONTENT:${name}:end -->`);};
 region('catalog',`<h2 id="plans-heading" class="plans-style-5">Квартира под ваш ритм</h2>
 <p class="plans-style-6">От первого собственного пространства до большой квартиры для семьи. Найдите площадь, этаж и вид, которые подходят именно вам.</p>
@@ -42,6 +53,6 @@ html=html.replace(/(<div class="loc-zoom about-style-4"[^>]*?) style="[^"]*"/,'$
 const paths=[...new Set([...apartments.flatMap(a=>a.plans.map(p=>p.local_path)),...media.gallery.flatMap(m=>m.variants.map(v=>v.src)),...media.construction.flatMap(m=>m.images.flatMap(i=>i.variants.map(v=>v.src)))])].sort();
 const manifest='// Generated from canonical data, never from a recursive directory glob.\nexport const CONTENT_FILES = Object.freeze('+JSON.stringify(paths,null,2)+');\n';
 if(process.argv.includes('--check')){
- if(html!==original||manifest!==fs.readFileSync(path.join(root,'scripts/content-files.mjs'),'utf8'))throw Error('Generated content is stale: npm run content');
- console.log('PASS generated HTML, embedded data, calculator baseline and media allowlist');
-}else{fs.writeFileSync(path.join(root,'index.html'),html);fs.writeFileSync(path.join(root,'scripts/content-files.mjs'),manifest);console.log('Generated 28 lots, categories, media and payload from canonical data');}
+ if(html!==original||documents.some(d=>d.html!==d.original)||manifest!==fs.readFileSync(path.join(root,'scripts/content-files.mjs'),'utf8'))throw Error('Generated content/footer is stale: npm run content');
+ console.log('PASS generated HTML, shared footer on four pages, embedded data, calculator baseline and media allowlist');
+}else{fs.writeFileSync(path.join(root,'index.html'),html);for(const d of documents)fs.writeFileSync(path.join(root,d.name),d.html);fs.writeFileSync(path.join(root,'scripts/content-files.mjs'),manifest);console.log('Generated canonical content and shared footer on four pages');}

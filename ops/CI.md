@@ -50,3 +50,17 @@ Actions закреплены полными upstream SHA. Полная исто�
 frozen-source контрактам. При переводе репозитория в private job автоматически
 пропускается; включать его заново только после проверки бюджета.
 Полный CI и production остаются локальными. Настройки branch protection не меняются.
+
+## METRICA-001
+
+Fast проверяет versioned choice/lifecycle/URL contracts. Full дополнительно проверяет
+настоящий endpoint PHP 8.4/SQLite, приватные пути, конкурентные операции, CLI expiry и
+изолированный Chromium с пятью целями и fresh public vendor fixture. Вся внешняя сеть
+браузера перехватывается; личный Chrome, рабочие счётчики/письма не используются.
+
+Перед full сохранить публичный `https://mc.yandex.ru/metrika/tag.js` без browser credentials
+в локальный файл и задать `METRICA_VENDOR_FIXTURE=/absolute/path/tag.js`; поддержан также
+локальный default `.test-output/metrica/vendor/tag.js`. Отсутствие fixture в full — FAIL,
+а не скрытый пропуск. Не коммитить raw vendor/cookies/headers; обезличенные hash/CORS/
+wire результаты — `review/metrica-001/VALIDATION.md`. Standalone browser script допускает
+mock-only для итераций и явно сообщает, что real vendor не проверялся.

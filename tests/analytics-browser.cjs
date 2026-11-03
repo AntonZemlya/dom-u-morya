@@ -107,7 +107,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
   for(const route of ['/','/privacy.html','/consent-personal-data.html','/consent-analytics.html']){
    await p.goto(preview+route);if(await p.locator('#cookie-banner').isVisible())await p.locator('#cookie-decline').click();await p.locator('[data-privacy-settings]').first().click();
    assert.equal(await p.locator('footer .footer-legal a').count(),1);assert.equal(await p.locator('footer [data-privacy-settings]').count(),1);
-   assert.equal(await p.locator('#privacy-settings a').count(),2);assert.equal(await p.locator('.privacy-documents a[href="/consent-personal-data.html"]').count(),1);assert.equal(await p.locator('.privacy-documents a[href="/consent-analytics.html"]').count(),1);
+   assert.equal(await p.locator('#privacy-settings a').count(),1);assert.equal(await p.locator('#privacy-settings a[href="/consent-personal-data.html"]').count(),0);assert.equal(await p.locator('.privacy-documents a[href="/consent-analytics.html"]').count(),1);
    await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();await p.reload();
    await p.locator('[data-privacy-settings]').first().click();assert.equal(await p.locator('#privacy-analytics').isChecked(),true);
    await p.locator('[data-privacy-withdraw]').click();await p.locator('[data-privacy-settings]').first().click();

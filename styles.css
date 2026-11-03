@@ -963,6 +963,9 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 @media(max-width:900px){.finale-footer .footer-bottom{gap:24px 32px}}
 @media(max-width:600px){.finale-footer .footer-brand{max-width:280px}.finale-footer .footer-bottom{grid-template-columns:1fr;padding:24px 0;gap:20px}}
 
+/* Long document URLs must not widen the page beside the shared footer. */
+.legal-page .legal-text{overflow-wrap:anywhere}
+
 /* ENG-001: PDF download interaction states. */
 #download-calc{cursor:pointer;transition:background .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease}
 #download-calc:enabled:not(.busy):hover{background:#EFE2C4;border-color:#B4915A;box-shadow:0 0 0 3px rgba(200,169,106,.15)}

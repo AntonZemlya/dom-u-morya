@@ -9,10 +9,11 @@ module.exports=function legalContract(root){
   const unchanged=text=>{
    text=text.replace(/<!-- METRICA-001 shared privacy -->[\s\S]*?<\/script>\n/,'')
     .replace(/<!-- METRICA-001 navigation -->[\s\S]*?<!-- \/METRICA-001 navigation -->\n/,'');
-   // Owner's 02 Nov follow-up changes only footer navigation/project duplication.
-   // The legal article and form/SMTP contract remain under the original comparison.
-   text=text.replace(/<nav class="footer-legal"[\s\S]*?<\/nav>/,'')
-    .replace(/<p class="footer-disclaimer">[\s\S]*?<\/p>/,'');
+   // Owner's 03 Nov follow-up shares the main footer on all pages and removes
+   // its operator line. Footer parity is checked by the corpus analytics test;
+   // the legal article and form/SMTP contract retain the original comparison.
+   text=text.replace(/<!-- CONTENT:footer:(?:start|end) -->\n/g,'')
+    .replace(/<footer\b[\s\S]*?<\/footer>/,'');
    for(const id of sections)text=text.replace(new RegExp(`<section id="${id}"[\\s\\S]*?<\\/section>`),'');
    return text.replace(/<p class="legal-date">[\s\S]*?<\/p>/,'');
   };

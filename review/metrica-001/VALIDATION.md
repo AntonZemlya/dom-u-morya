@@ -1,17 +1,18 @@
-# METRICA-001 — validation, 02.11.2026 (МСК)
+# METRICA-001 — validation, 03.11.2026 (МСК)
 
 Base: `44bd83f87e5ff7c184c15f24ac300fc285842156`. Original implementation: `6c7958a08b421e25644b8534ae3c89d302e7ae3f`; cabinet read-back: `d332b4f56545bc7aee4d0d98b3bda93fe26a92e9`.
-The 02 Nov owner follow-up changes the local-choice withdrawal path and footer/settings navigation. The gates below are rerun for this executable follow-up, not borrowed from the previous candidate.
+The 02 Nov follow-up (`386a2c4b78c5461d1af3fbd43aac43785c230f67`) fixed local-choice withdrawal. The current 03 Nov owner follow-up adds one shared footer template and keeps only the analytics document link in settings. The gates below belong to the current candidate; the earlier link placement is superseded by the 03 Nov section.
 
 | Gate | Result |
 | --- | --- |
-| `npm run ci:fast` | **PASS**, 10 required checks, 5.35s |
-| `PHP84_BIN=… PHP84_CGI_BIN=… npm run ci:full` | **PASS**, 30 required checks, 198.85s |
+| `npm run ci:fast` | **PASS**, 10 required checks, 5.08s |
+| `PHP84_BIN=… PHP84_CGI_BIN=… npm run ci:full` | **PASS**, 31 required checks, 196.40s |
 | `git diff --check` | **PASS** |
 | Cabinet follow-up | Required R3 settings + owner-requested market reports OFF saved/read back; no site activation |
 | Privacy unit/contracts | **9 tests PASS**, malformed/storage/expiry/version, no forged startup issuance, lifecycle/late response, URL/referrer, immutable text |
 | Real PHP SQLite | **35 assertions PASS**, 25h/48h/expiry, original date, no renewal/duplicate allow, two concurrent grants, withdrawal/tombstone, invalid token/version/purpose, busy/corrupt/permissions/symlinks, actual CLI |
 | Chromium | **320/390/768/1440 PASS**, initial deny/no server record, one init/hit, actual internal tagged legal navigation, reload/second page/tab, withdraw/failed-write retry, keyboard/dialog, five goals, genuine PDF issuance and mocked lead202/503 |
+| Shared footer | **PASS**, same markup and responsive layout on four pages × 320/390/768/1440, contacts/44px links/keyboard/no overflow; all four footers present without JS. The existing footer check now runs in full CI. |
 | Preview withdrawal regression | **PASS**, all four pages: allow → withdraw → re-grant → reload, existing stuck legacy choice recovers on unapproved loopback; zero receipt/vendor requests. Real pending withdrawal still disables both checkbox/save until acknowledgment. |
 | Public PHP entry | Local hosting-shaped fixture; actual entry/derived private namespace; helpers404, GET405 no DB, foreign Origin/Host/HTTP403, no open CORS |
 | Current vendor | **PASS**, real public tag.js, all network intercepted, one counted pageview excluding `nohit=1`; real UTM/yclid preserved, no form/title/contact/capability markers in captured payload |
@@ -74,3 +75,31 @@ Manual owner-Chrome preview: existing stuck choice recovered on reload, checked
 analytics → Save closed the dialog; withdraw → re-grant → reload preserved the
 choice and enabled controls. The two consent links are visible in the dialog.
 Stable preview stays at `http://127.0.0.1:4183/`, with deployment flags OFF.
+
+## Owner shared-footer follow-up, 03 Nov
+
+`templates/footer.html` is the only authored footer. The existing content generator
+updates its marked region in index, privacy, personal-data consent and analytics
+consent HTML; `--check` rejects a stale copy on any of those pages. Build runs the
+generator first. The public HTML includes the complete footer without a client-side
+include or extra network dependency; the authoring template stays outside the release
+allowlist. README records the edit-once workflow.
+
+The explicit owner request removes the IP/operator/requisites line from every footer
+and uses the main site's dark footer throughout. The legal articles retain the operator
+and all original personal-data/SMTP wording. Only the analytics consent document link
+remains in the settings dialog. The shared logo points to index.html#top, which works
+on every page. Historic #10/#11/#13 supplied footer context; the latest owner instruction
+authorizes this display change. No underlying operator identity, policy purpose, legal
+text version, server protocol or production activation changes.
+
+The responsive check found a pre-existing unbroken document URL overflowing the analytics
+consent page at 390px. A scoped overflow-wrap rule fixes it without editing immutable
+text. The existing footer browser check was updated and reused for the full four-page
+corpus; the consent corpus also checks exact template parity and absence of operator
+text in every footer. The legal contract still compares all content outside the approved
+footer/previous FORM-004 and METRICA-001 article boundaries.
+
+Manual Chrome review confirms the main and policy footers match, with no operator line,
+and the settings dialog contains exactly one analytics consent link. Local preview
+remains at 4183 with analytics OFF; no production writes, mail, visits or goals.

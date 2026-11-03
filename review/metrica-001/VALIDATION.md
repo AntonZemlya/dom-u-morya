@@ -1,12 +1,12 @@
 # METRICA-001 — validation, 03.11.2026 (МСК)
 
 Base: `44bd83f87e5ff7c184c15f24ac300fc285842156`. Original implementation: `6c7958a08b421e25644b8534ae3c89d302e7ae3f`; cabinet read-back: `d332b4f56545bc7aee4d0d98b3bda93fe26a92e9`.
-The 02 Nov follow-up (`386a2c4b78c5461d1af3fbd43aac43785c230f67`) fixed local-choice withdrawal. The current 03 Nov owner follow-up adds one shared footer template and keeps only the analytics document link in settings. The gates below belong to the current candidate; the earlier link placement is superseded by the 03 Nov section.
+The 02 Nov follow-up (`386a2c4b78c5461d1af3fbd43aac43785c230f67`) fixed local-choice withdrawal. The current 03 Nov owner follow-ups add one shared footer template, keep only the analytics document link in settings, restore golden link feedback and align the offer notice below the legal column. The gates below belong to the current candidate; the earlier link placement is superseded by the 03 Nov section.
 
 | Gate | Result |
 | --- | --- |
-| `npm run ci:fast` | **PASS**, 10 required checks, 5.08s |
-| `PHP84_BIN=… PHP84_CGI_BIN=… npm run ci:full` | **PASS**, 31 required checks, 196.40s |
+| `npm run ci:fast` | **PASS**, 10 required checks, 5.26s |
+| `PHP84_BIN=… PHP84_CGI_BIN=… npm run ci:full` | **PASS**, 31 required checks, 202.47s |
 | `git diff --check` | **PASS** |
 | Cabinet follow-up | Required R3 settings + owner-requested market reports OFF saved/read back; no site activation |
 | Privacy unit/contracts | **9 tests PASS**, malformed/storage/expiry/version, no forged startup issuance, lifecycle/late response, URL/referrer, immutable text |
@@ -103,3 +103,20 @@ footer/previous FORM-004 and METRICA-001 article boundaries.
 Manual Chrome review confirms the main and policy footers match, with no operator line,
 and the settings dialog contains exactly one analytics consent link. Local preview
 remains at 4183 with analytics OFF; no production writes, mail, visits or goals.
+
+## Owner footer interaction/alignment follow-up, 03 Nov
+
+The supplied production screenshot is the visual reference; production was not opened
+for test visits. The shared privacy stylesheet's later color:inherit rule masked the
+original anchor hover rule, and the settings button lacked equivalent feedback.
+A scoped rule with sufficient specificity now gives footer links and the settings
+button the same golden text/underline on hover or keyboard focus, without changing size.
+
+The fine-print row uses the legal row's two column widths/gaps, so the offer notice
+begins exactly at the legal column's left edge, below its links. At narrow widths it
+keeps the common single-column stack. The existing footer matrix now checks both hover
+states and offer/links x-position parity across all four pages and widths. Manual
+Chrome confirms the golden link and identical offer/links left coordinates. Only CSS
+and this existing regression check change executable behavior; template, content, legal
+texts and consent runtime remain unchanged. The original footer implementation/history
+is retained above; these are presentation adjustments within the same owner-assigned PR.

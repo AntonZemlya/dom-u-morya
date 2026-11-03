@@ -18,8 +18,17 @@ const out=process.env.QA_OUTPUT_DIR,pages=['index.html','privacy.html','consent-
    const logo=footer.locator('img');assert.equal(await logo.getAttribute('src'),'assets/logo-cropped.webp');await logo.evaluate(i=>i.decode());assert.ok(await logo.evaluate(i=>i.naturalWidth>0&&getComputedStyle(i).filter.includes('brightness(0)')));
    assert.equal(await footer.locator('.footer-brand').getAttribute('href'),'index.html#top');
    assert.equal(await footer.locator('.footer-phone').getAttribute('href'),'tel:+79529568875');assert.equal(await footer.locator('.footer-email').getAttribute('href'),'mailto:info@anyara.ru');
-   const link=footer.locator('a[href="privacy.html"]');assert.equal(await link.count(),1);await link.focus();assert.equal(await link.evaluate(e=>e===document.activeElement),true);assert.ok((await link.boundingBox()).height>=44);
-   const settings=footer.locator('[data-privacy-settings]');assert.ok((await settings.boundingBox()).height>=44);await settings.click();assert.equal(await p.locator('#privacy-settings').isVisible(),true);await p.keyboard.press('Escape');
+   const link=footer.locator('a[href="privacy.html"]'),settings=footer.locator('[data-privacy-settings]');assert.equal(await link.count(),1);
+   const offer=await footer.locator('.footer-fineprint span').last().boundingBox(),legal=await footer.locator('.footer-legal').boundingBox();
+   assert.ok(Math.abs(offer.x-legal.x)<.5,name+': offer aligned with legal column');assert.ok(offer.y>=legal.y+legal.height,name+': offer below legal links');
+   for(const [target,label] of [[link,'policy'],[settings,'settings']]){
+    await p.mouse.move(0,0);const idle=await target.evaluate(e=>getComputedStyle(e).color);await target.hover();
+    const hover=await target.evaluate(e=>({color:getComputedStyle(e).color,underline:getComputedStyle(e).textDecorationColor}));
+    assert.notEqual(hover.color,idle,label+': visible hover');assert.equal(hover.color,'rgb(241, 208, 155)');assert.equal(hover.underline,hover.color);
+    if(out&&width===1440&&name==='privacy.html')await footer.screenshot({path:path.join(out,`footer-hover-${label}-1440.png`)});
+   }
+   await link.focus();assert.equal(await link.evaluate(e=>e===document.activeElement),true);assert.ok((await link.boundingBox()).height>=44);
+   assert.ok((await settings.boundingBox()).height>=44);await settings.click();assert.equal(await p.locator('#privacy-settings').isVisible(),true);await p.keyboard.press('Escape');
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' '+width+': no horizontal overflow');
    if(out)await footer.screenshot({path:path.join(out,`shared-footer-${name.replace('.html','')}-${width}.png`)});
   }

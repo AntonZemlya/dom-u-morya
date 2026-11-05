@@ -115,7 +115,11 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual((remote.DOC/'.htaccess').read_bytes(),remote.SECURITY_POLICY)
 
     def test_security_policy_and_old_hold(self):
-        self.assertEqual((Path(__file__).parent.parent/'.htaccess').read_bytes(),remote.SECURITY_POLICY+remote.HTTPS_REDIRECT)
+        import release_core
+        policy=(Path(__file__).parent.parent/'.htaccess').read_bytes()
+        release_core.approved_htaccess(policy)
+        self.assertTrue(policy.startswith(remote.SECURITY_POLICY))
+        self.assertEqual(release_core.sha(remote.SECURITY_POLICY+remote.HTTPS_REDIRECT),release_core.LEGACY_HTACCESS_SHA256)
         with self.assertRaises(RuntimeError):remote.deploy(remote.REVOKED_SHA)
         with self.assertRaises(RuntimeError):self.prepare({'.htaccess':remote.HTTPS_REDIRECT,'index.html':b'unsafe'})
 

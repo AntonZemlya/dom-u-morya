@@ -26,8 +26,9 @@ TERMINAL = ['verified', 'rolled_back']
 MAX_ARCHIVE = 128 * 1024 * 1024
 MAX_EXPANDED = 256 * 1024 * 1024
 GUARD = b'# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1'
-# Exact accepted public policy. Ordinary releases cannot change Apache access rules.
-APPROVED_HTACCESS_SHA256 = '652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5'
+# Packages accept only v2. The exact v1 policy is a migration/backup baseline only.
+LEGACY_HTACCESS_SHA256 = '652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5'
+APPROVED_HTACCESS_SHA256 = '86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a2c7437f877c7'
 RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json'}
 BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
                     'needs_rollback','rolling_back','rolled_back','recovery_required'}
@@ -170,7 +171,7 @@ def unpack(raw):
     return files
 
 
-def verify_package(raw, expected_sha):
+def verify_package(raw, expected_sha, historical=False):
     ensure(re.fullmatch('[a-f0-9]{64}', expected_sha or '') and sha(raw) == expected_sha, 'Package SHA mismatch')
     files = unpack(raw)
     m = json.loads(files.pop('manifest.json'))
@@ -187,7 +188,7 @@ def verify_package(raw, expected_sha):
     expected = set('public/' + n for n in names) | set('private/smtp-runtime/' + identity + '/' + n for n in RUNTIME_FILES)
     ensure(set(files) == set(m['files']) == expected, 'Package allowlist mismatch')
     ensure(all(sha(b) == m['files'][n] for n, b in files.items()), 'Package member SHA mismatch')
-    approved_htaccess(files.get('public/.htaccess', b''))
+    approved_htaccess(files.get('public/.htaccess', b''), baseline=historical)
     upstream = json.loads(files['private/smtp-runtime/' + identity + '/manifest.json'])
     ensure(upstream['identity'] == identity and set(upstream['files']) == set(RUNTIME_FILES)-{'manifest.json'}, 'Runtime manifest mismatch')
     ensure(sha(json.dumps(upstream['files'], separators=(',', ':')).encode()) == identity, 'Runtime identity mismatch')
@@ -195,8 +196,10 @@ def verify_package(raw, expected_sha):
     return m, files
 
 
-def approved_htaccess(data):
-    ensure(sha(data) == APPROVED_HTACCESS_SHA256,
+def approved_htaccess(data, baseline=False):
+    accepted = [APPROVED_HTACCESS_SHA256]
+    if baseline: accepted.append(LEGACY_HTACCESS_SHA256)
+    ensure(sha(data) in accepted,
            'Apache policy differs from the accepted exact revision; separate security scope required')
 
 
@@ -271,7 +274,7 @@ class Manager:
             else:
                 public[name] = meta(path)
         ensure(all(n in public for n in ['.envrc', '.htaccess', 'index.html']), 'Protected baseline required')
-        approved_htaccess(regular(self.doc / '.htaccess'))
+        approved_htaccess(regular(self.doc / '.htaccess'), baseline=True)
         config = meta(self.private / 'config.php')
         ensure(config['mode'] == 0o600, 'Config must be 0600')
         runtime = {n: meta(self.runtime(identity) / n) for n in RUNTIME_FILES}
@@ -349,10 +352,19 @@ class Manager:
             if (old or {}).get('sha256') != new or (new and old and old['mode'] != 0o644):
                 changes.append(dict(path=name, action='delete' if new is None else 'add' if old is None else 'replace',
                                     before_sha256=(old or {}).get('sha256'), after_sha256=new))
+        migration = None
+        if current['.htaccess']['sha256'] != APPROVED_HTACCESS_SHA256:
+            ensure(current['.htaccess']['sha256'] == LEGACY_HTACCESS_SHA256
+                   and len(changes) == 1 and changes[0]['path'] == '.htaccess'
+                   and changes[0]['action'] == 'replace',
+                   'Apache policy migration permits only the exact .htaccess replacement')
+            migration = dict(scope='SEO-REDIRECT-001', from_sha256=LEGACY_HTACCESS_SHA256,
+                             to_sha256=APPROVED_HTACCESS_SHA256)
         plan=dict(schema='dom-plan/v1', action='apply' if changes else 'noop', domain=DOMAIN, release_id=release_id,
                   commit=manifest['commit'], package_sha256=package_sha, package_bytes=package_bytes,
                   snapshot=before['snapshot'], snapshot_sha256=before['snapshot_sha256'], changes=changes,
-                  policy_sha256=digest(self.policy), inventory_sha256=digest(before['inventory']))
+                  policy_sha256=digest(self.policy), inventory_sha256=digest(before['inventory']),
+                  apache_policy_migration=migration)
         plan['sha256']=digest(plan)
         return dict(plan=plan, capacity=before['capacity'], go=self.go(plan) if changes else None)
 
@@ -394,7 +406,7 @@ class Manager:
         expected['private/config.php']=m['baseline']['config']['sha256']
         expected.update({'private/smtp-runtime/'+m['baseline']['runtime_identity']+'/'+n:v['sha256'] for n,v in m['baseline']['runtime'].items()})
         ensure(m['files']==expected, 'Backup scope mismatch')
-        approved_htaccess(files.get('public/.htaccess',b''))
+        approved_htaccess(files.get('public/.htaccess',b''), baseline=True)
         with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
             for member in archive.getmembers():
                 old=m['baseline']['public'].get(member.name[7:]) if member.name.startswith('public/') else None
@@ -491,7 +503,7 @@ class Manager:
         receipt['phase']='rolling_back';self.save(run,receipt)
         for name in sorted(changed,key=lambda n:(n=='index.html',n)):
             if name in baseline['public']:
-                approved_htaccess(files['public/.htaccess'])
+                approved_htaccess(files['public/.htaccess'], baseline=True)
                 path=real(self.doc/name)
                 if not path.parent.exists():path.parent.mkdir(parents=True,mode=0o755)
                 atomic(path,files['public/'+name],baseline['public'][name]['mode'],baseline['public'][name])
@@ -596,7 +608,9 @@ class Manager:
         phase=receipt['phase']
         ensure(receipt['schema']==1 and receipt['release_id']==run.name
                and phase in BACKED_UP_PHASES|{'reserved'}, 'Receipt identity/phase mismatch')
-        raw=regular(run/'package.tar.gz');manifest,_=verify_package(raw,receipt['package_sha256'])
+        # Existing immutable release records retain their exact v1 policy.
+        # This is never used by build/verify/apply for a new package.
+        raw=regular(run/'package.tar.gz');manifest,_=verify_package(raw,receipt['package_sha256'],historical=True)
         ensure(json.loads(regular(run/'manifest.json'))==manifest, 'Stored manifest differs from package')
         plan=json.loads(regular(run/'plan.json'));unsigned=dict(plan);supplied=unsigned.pop('sha256')
         ensure(supplied==digest(unsigned) and plan['schema']=='dom-plan/v1'

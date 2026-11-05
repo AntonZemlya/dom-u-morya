@@ -1,0 +1,233 @@
+{
+  "fast": {
+    "status": "PASS",
+    "seconds": 4.913,
+    "node": "v22.23.2",
+    "started_at": "2026-11-05T12:23:05.256Z",
+    "checks": [
+      {
+        "id": "toolchain",
+        "status": "PASS",
+        "seconds": 0.023
+      },
+      {
+        "id": "source",
+        "status": "PASS",
+        "seconds": 0.386
+      },
+      {
+        "id": "syntax",
+        "status": "PASS",
+        "seconds": 1.096
+      },
+      {
+        "id": "analytics-unit",
+        "status": "PASS",
+        "seconds": 0.042
+      },
+      {
+        "id": "release-contract",
+        "status": "PASS",
+        "seconds": 0.741
+      },
+      {
+        "id": "production-build",
+        "status": "PASS",
+        "seconds": 0.384
+      },
+      {
+        "id": "offline-contract",
+        "status": "PASS",
+        "seconds": 0.238
+      },
+      {
+        "id": "seo",
+        "status": "PASS",
+        "seconds": 0.139
+      },
+      {
+        "id": "legal",
+        "status": "PASS",
+        "seconds": 0.054
+      },
+      {
+        "id": "release-manager",
+        "status": "PASS",
+        "seconds": 1.804
+      }
+    ]
+  },
+  "full": {
+    "status": "PASS",
+    "seconds": 204.544,
+    "node": "v22.23.2",
+    "started_at": "2026-11-05T12:23:10.277Z",
+    "checks": [
+      {
+        "id": "toolchain",
+        "status": "PASS",
+        "seconds": 0.023
+      },
+      {
+        "id": "source",
+        "status": "PASS",
+        "seconds": 0.355
+      },
+      {
+        "id": "syntax",
+        "status": "PASS",
+        "seconds": 0.982
+      },
+      {
+        "id": "analytics-unit",
+        "status": "PASS",
+        "seconds": 0.041
+      },
+      {
+        "id": "release-contract",
+        "status": "PASS",
+        "seconds": 0.666
+      },
+      {
+        "id": "production-build",
+        "status": "PASS",
+        "seconds": 0.378
+      },
+      {
+        "id": "offline-contract",
+        "status": "PASS",
+        "seconds": 0.238
+      },
+      {
+        "id": "seo",
+        "status": "PASS",
+        "seconds": 0.119
+      },
+      {
+        "id": "legal",
+        "status": "PASS",
+        "seconds": 0.049
+      },
+      {
+        "id": "release-manager",
+        "status": "PASS",
+        "seconds": 1.698
+      },
+      {
+        "id": "php84",
+        "status": "PASS",
+        "seconds": 0.015
+      },
+      {
+        "id": "analytics-sqlite",
+        "status": "PASS",
+        "seconds": 1.966
+      },
+      {
+        "id": "analytics-browser",
+        "status": "PASS",
+        "seconds": 31.796
+      },
+      {
+        "id": "composer",
+        "status": "PASS",
+        "seconds": 0.259
+      },
+      {
+        "id": "composer-audit",
+        "status": "PASS",
+        "seconds": 0.915
+      },
+      {
+        "id": "smtp-runtime",
+        "status": "PASS",
+        "seconds": 0.051
+      },
+      {
+        "id": "form-smtp",
+        "status": "PASS",
+        "seconds": 19.518
+      },
+      {
+        "id": "chromium",
+        "status": "PASS",
+        "seconds": 0.232
+      },
+      {
+        "id": "ui",
+        "status": "PASS",
+        "seconds": 12.539
+      },
+      {
+        "id": "privacy-banner",
+        "status": "PASS",
+        "seconds": 5.172
+      },
+      {
+        "id": "shared-footer",
+        "status": "PASS",
+        "seconds": 3.433
+      },
+      {
+        "id": "catalog-pdf",
+        "status": "PASS",
+        "seconds": 20.998
+      },
+      {
+        "id": "catalog-transfer",
+        "status": "PASS",
+        "seconds": 5.793
+      },
+      {
+        "id": "previews",
+        "status": "PASS",
+        "seconds": 11.333
+      },
+      {
+        "id": "seo-browser",
+        "status": "PASS",
+        "seconds": 2.684
+      },
+      {
+        "id": "performance",
+        "status": "PASS",
+        "seconds": 63.771
+      },
+      {
+        "id": "legacy-fixtures",
+        "status": "PASS",
+        "seconds": 0.199
+      },
+      {
+        "id": "manager-guard-http",
+        "status": "PASS",
+        "seconds": 0.22
+      },
+      {
+        "id": "url-redirects-http",
+        "status": "PASS",
+        "seconds": 0.873
+      },
+      {
+        "id": "legacy-security",
+        "status": "PASS",
+        "seconds": 2.63
+      },
+      {
+        "id": "legacy-form-release",
+        "status": "PASS",
+        "seconds": 3.653
+      },
+      {
+        "id": "smtp-package",
+        "status": "PASS",
+        "seconds": 0.238
+      },
+      {
+        "id": "smtp-e2e",
+        "status": "PASS",
+        "seconds": 11.666
+      }
+    ]
+  }
+}

@@ -45,7 +45,7 @@ def run():
         apache=subprocess.Popen([HTTPD,'-f',str(base/'httpd.conf'),'-DFOREGROUND'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),NoRedirect())
         def get(path,method='GET'):
-            request=urllib.request.Request(origin+path,method=method,headers={'Cache-Control':'no-cache'})
+            request=urllib.request.Request(origin+path,method=method,headers={'Cache-Control':'no-cache','Host':core.DOMAIN})
             try:
                 with opener.open(request,timeout=2) as response:return response.status,response.read()
             except urllib.error.HTTPError as response:return response.code,response.read()

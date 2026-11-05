@@ -62,12 +62,34 @@ Apply получает общий flock, перепроверяет snapshot, in
 State заявок не читается и не резервируется. Неизвестные файлы, symlink/hardlink,
 повреждённые tar, traversal, чужие владельцы и незавершённые релизы блокируют запись.
 
-В обычном релизе `.htaccess` должен побайтно совпадать с принятой редакцией,
+В обычном релизе `.htaccess` должен побайтно совпадать с принятой редакцией v2,
 закреплённой SHA-256 в worker. Наличие маркера или отдельной запрещающей директивы
-не считается доказательством защиты. Изменение policy (включая дописанные директивы)
-блокирует package verify и preflight и требует отдельного security scope/review;
-данный release manager не разрешает такую миграцию. В обычном diff `.htaccess`
-не меняется, его bytes/metadata сохраняются. Index публикуется последним, каждый файл
+не считается доказательством защиты. Произвольное изменение policy блокирует
+package verify и preflight. В обычном diff `.htaccess` не меняется, его bytes/metadata
+сохраняются. Единственное исключение — ограниченная миграция SEO-REDIRECT-001:
+
+- исходный SHA-256 v1: `652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5`;
+- целевой SHA-256 v2: `86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a2c7437f877c7`;
+- единственное изменение production — replace `.htaccess`; любой дополнительный
+  add/replace/delete блокирует план миграции;
+- план содержит оба SHA и scope, связанные общим plan SHA и прежним exact GO;
+- backup/rehearsal сохраняют исходные bytes/metadata; штатный rollback и автоматическое
+  восстановление после ошибки возвращают exact v1;
+- новые пакеты принимают только v2. Exact v1 допускается только при чтении baseline,
+  исторических receipts и backup/rollback; архивный Jino rollout остаётся заблокированным.
+
+Постоянный dotfile guard сохранён побайтно; ACME не перенаправляется. DirectorySlash
+остаётся включённым, listing запрещён. Правило реальных каталогов формирует HTTPS
+раньше mod_dir; `/privacy/` остаётся каталогом, а `/privacy.html` — документом.
+Редиректы www на стороне nginx Jino предшествуют Apache и могут добавлять один hop.
+По решению владельца в SEO-REDIRECT-001 сохранено единственное исключение:
+`http://www.DOMAIN/path?query` → `http://DOMAIN/path?query` → canonical HTTPS,
+оба ответа 301, промежуточный HTTP не отдаёт страницу сайта. Другие HTTP Location,
+любые HTTPS→HTTP и циклы запрещены. Настройки панели и nginx не меняются.
+После публикации CLI проверяет полную GET/HEAD URL-матрицу до attestation `verified`;
+standalone повтор: `python3 -B ops/url_matrix.py --output HTTP_REPORT.json`.
+
+Index публикуется последним, каждый файл
 через fsync + atomic replace. `.envrc`, config, установленный runtime, DNS/SSL
 не изменяются. SMTP dependency migration намеренно требует отдельного review:
 при смене публичного runtime descriptor или установленных runtime bytes STOP.

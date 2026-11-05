@@ -379,6 +379,67 @@ class Lifecycle(unittest.TestCase):
         (self.doc/'.htaccess').write_bytes(self.guard+b'\nRequire all granted\n')
         with self.assertRaisesRegex(RuntimeError,'Apache policy'):self.m.snapshot(self.identity)
 
+    def migration_plan(self, release_id='apache-migration'):
+        import jino_remote
+        legacy=jino_remote.SECURITY_POLICY+jino_remote.HTTPS_REDIRECT
+        (self.doc/'.htaccess').write_bytes(legacy)
+        self.baseline=self.m.snapshot(self.identity)
+        # Migration changes exactly .htaccess, including modes and all other bytes.
+        return self.plan(release_id,extra={'index.html':b'old index','script.js':b'old script'})
+
+    def test_exact_apache_migration_backup_rollback_and_target_only_packages(self):
+        raw,manifest,review=self.migration_plan()
+        p=review['plan']
+        self.assertEqual(p['apache_policy_migration'],dict(scope='SEO-REDIRECT-001',
+            from_sha256=c.LEGACY_HTACCESS_SHA256,to_sha256=c.APPROVED_HTACCESS_SHA256))
+        self.assertEqual([row['path'] for row in p['changes']],['.htaccess'])
+        self.m.apply(raw,p,review['go']);self.assert_protected()
+        self.assertEqual((self.doc/'.htaccess').read_bytes(),self.guard)
+        backup,files=self.m.verify_backup(self.m.run('apache-migration'))
+        self.assertEqual(c.sha(files['public/.htaccess']),c.LEGACY_HTACCESS_SHA256)
+        self.m.attest('apache-migration',p,review['go'],dict(status='PASS',package_sha256=c.sha(raw)))
+        self.assertEqual(self.m.list_backups()[0]['phase'],'verified')
+        # The next ordinary release has no policy change.
+        self.assertIsNone(self.plan('ordinary')[2]['plan']['apache_policy_migration'])
+        rollback=self.m.rollback_plan('apache-migration')
+        self.m.rollback(rollback['plan'],rollback['go'])
+        self.assertEqual(self.m.snapshot(self.identity),self.baseline)
+        old_raw,old_manifest=self.package(extra={'.htaccess':files['public/.htaccess']})
+        with self.assertRaisesRegex(RuntimeError,'Apache policy'):c.verify_package(old_raw,c.sha(old_raw))
+        with self.assertRaisesRegex(RuntimeError,'Apache policy'):self.m.preflight(old_manifest,len(old_raw))
+
+    def test_apache_migration_rejects_other_changes_and_forged_scope(self):
+        raw,manifest,review=self.migration_plan()
+        with self.assertRaisesRegex(RuntimeError,'only the exact .htaccess'):
+            self.plan('too-broad')
+        plan=dict(review['plan']);plan['apache_policy_migration']=None
+        plan.pop('sha256');plan['sha256']=c.digest(plan)
+        with self.assertRaisesRegex(RuntimeError,'Drift'):
+            self.m.apply(raw,plan,self.m.go(plan))
+        self.assertFalse(self.m.run('apache-migration').exists());self.assert_protected()
+
+    def test_apache_migration_failure_restores_old_exact_policy(self):
+        raw,manifest,review=self.migration_plan()
+        original=self.m.publish
+        def fail_after_policy(name,data):
+            original(name,data)
+            raise OSError('synthetic failure after exact policy replacement')
+        with patch.object(self.m,'publish',side_effect=fail_after_policy):
+            with self.assertRaisesRegex(RuntimeError,'Publication failed'):
+                self.m.apply(raw,review['plan'],review['go'])
+        self.assertEqual(self.m.status('apache-migration')['phase'],'rolled_back')
+        self.assertEqual(self.m.snapshot(self.identity),self.baseline);self.assert_protected()
+
+    def test_historical_v1_records_remain_verifiable_but_not_publishable(self):
+        import jino_remote
+        legacy=jino_remote.SECURITY_POLICY+jino_remote.HTTPS_REDIRECT
+        # Generate a historical receipt using the old exact policy and unchanged engine.
+        with patch.object(c,'APPROVED_HTACCESS_SHA256',c.LEGACY_HTACCESS_SHA256):
+            self.guard=legacy;(self.doc/'.htaccess').write_bytes(legacy)
+            raw,manifest,review=self.verified('historical-v1')
+        self.assertEqual(self.m.list_backups()[0]['phase'],'verified')
+        with self.assertRaisesRegex(RuntimeError,'Apache policy'):c.verify_package(raw,c.sha(raw))
+
     def test_verified_inventory_missing_each_required_file_stops_every_prune(self):
         self.verified();run=self.m.run('test-release');review=self.m.prune_plan()
         for name in sorted(c.RUN_FILES):
@@ -575,14 +636,25 @@ class Lifecycle(unittest.TestCase):
             return self.m.attest(request['release_id'],request['plan'],request['go'],request['evidence'])
         with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)),patch.object(cli,'remote',side_effect=local) as remote, \
              patch.object(cli.urllib.request,'urlopen',side_effect=network),patch.object(cli.time,'sleep'), \
+             patch('url_matrix.check',return_value=dict(status='PASS',cases=236,failures=[])) as matrix, \
              patch('sys.stdout',new_callable=io.StringIO) as stdout:
             cli.main()
+        matrix.assert_called_once()
         self.assertEqual(json.loads(stdout.getvalue())['phase'],'verified')
         self.assertEqual([call.args[0] for call in remote.call_args_list],['attest'])
         evidence=self.m.receipt(self.m.run('test-release'))['http']
         self.assertEqual(evidence['request_count'],11);self.assertEqual(evidence['retry_count'],2)
         self.assertEqual(evidence['transient_errors'],{'RemoteDisconnected':1,'ETIMEDOUT':1})
         self.assertEqual(evidence['package_sha256'],c.sha(raw));self.assert_protected()
+
+    def test_finalize_matrix_failure_never_attests_or_reapplies(self):
+        raw,m,review=self.apply();network=HTTPSFixture()
+        with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)),patch.object(cli,'remote') as remote, \
+             patch.object(cli.urllib.request,'urlopen',side_effect=network), \
+             patch('url_matrix.check',return_value=dict(status='FAIL',cases=1,failures=[{'error':'synthetic downgrade'}])):
+            with self.assertRaisesRegex(RuntimeError,'URL redirect matrix failed'):cli.main()
+        remote.assert_not_called()
+        self.assertEqual(self.m.status('test-release')['phase'],'awaiting_http_verify')
 
     def test_archived_entrypoints_cannot_contact_production(self):
         for name in ['release.py','form_release.py','smtp_e2e.py','smtp_package.py']:

@@ -1,0 +1,140 @@
+[
+  {
+    "url": "https://zhk-dom-umorya.ru/",
+    "status": 200,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/index.html",
+    "status": 200,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/index.html/",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/index",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/privacy.html",
+    "status": 200,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/privacy.html/",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/consent-analytics.html/",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/privacy",
+    "status": 301,
+    "location": "http://zhk-dom-umorya.ru/privacy/",
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/privacy/",
+    "status": 403,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/assets",
+    "status": 301,
+    "location": "http://zhk-dom-umorya.ru/assets/",
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/assets/",
+    "status": 403,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/api",
+    "status": 301,
+    "location": "http://zhk-dom-umorya.ru/api/",
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/api/",
+    "status": 403,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "Apache"
+  },
+  {
+    "url": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "Apache"
+  },
+  {
+    "url": "http://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "nginx"
+  },
+  {
+    "url": "http://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "nginx"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 200,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 404,
+    "location": null,
+    "server": "Apache"
+  },
+  {
+    "url": "https://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "nginx"
+  },
+  {
+    "url": "https://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "status": 301,
+    "location": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization&yclid=123",
+    "server": "nginx"
+  }
+]

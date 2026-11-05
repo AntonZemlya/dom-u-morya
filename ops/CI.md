@@ -15,6 +15,12 @@ validate/audit, PHPMailer 7.1.1 по lock/manifest, fake SMTP с TLS/ошибк�
 .htaccess: GET/HEAD 403/404, ACME 200 и чувствительность к permissive marker fixture.
 Engine tests проверяют exact EXPORT GO на CLI/worker до archive read/SSH и STOP
 inventory/rotation при утрате любого обязательного файла или расхождении metadata.
+`url-redirects-http` воспроизводит mod_dir HTTPS→HTTP на старой политике через
+cleartext proxy backend и проверяет новую: 236 GET/HEAD URL cases, все 248 static
+files с исходными SHA, реальные PHP GET/POST статусы, ACME HTTP/HTTPS, закрытый
+listing даже при унаследованном Indexes. Engine tests дополнительно проверяют
+единственный scope миграции `.htaccess`, exact old/new SHA, backup, rollback,
+автовосстановление после ошибки и чтение прежних receipts без приёма старых пакетов.
 Исторические release/security тесты получают синтетические baselines, без серверных
 receipts или секретов. Поднимаются только disposable loopback серверы, системный
 `mail()` отключён. Реальные получатели не вызываются; SMTP sink — `127.0.0.1`.

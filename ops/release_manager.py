@@ -17,7 +17,8 @@ import time
 import urllib.error
 import urllib.request
 from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, Manager, canonical, digest,
-                          ensure, pack, regular, sha, verify_package, check_export_go, export_destination, certificate_sha256, validate_id)
+                          ensure, pack, regular, sha, verify_package, check_export_go, export_destination, certificate_sha256, validate_id,
+                          APPROVED_HTACCESS_SHA256)
 
 ROOT=Path(__file__).resolve().parent.parent
 CORE=ROOT/'ops/release_core.py'
@@ -130,7 +131,14 @@ def http_verify(manifest, package_sha):
         if name.startswith('.') or name.endswith('.php'):continue
         code,_,body=get('/'+('' if name=='index.html' else name))
         ensure(code==200 and sha(body)==manifest['files']['public/'+name], 'HTTP public SHA mismatch: '+name)
-    return dict(status='PASS',package_sha256=package_sha,public_static_files_verified=True,form_status=status,no_post=True,**client.statistics)
+    redirects = None
+    if manifest['files'].get('public/.htaccess') == APPROVED_HTACCESS_SHA256:
+        from url_matrix import check
+        matrix = check()
+        ensure(matrix['status'] == 'PASS', 'URL redirect matrix failed; inspect release status: '+json.dumps(matrix['failures']))
+        redirects = dict(status='PASS', cases=matrix['cases'], evidence_sha256=digest(matrix))
+    return dict(status='PASS',package_sha256=package_sha,public_static_files_verified=True,form_status=status,
+                redirect_matrix=redirects,no_post=True,**client.statistics)
 
 
 def http_preflight(snapshot):

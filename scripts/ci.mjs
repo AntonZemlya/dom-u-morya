@@ -62,6 +62,7 @@ try{
   n('performance','tests/performance.cjs',['chromium','production-build'],['ci']);
   run('legacy-fixtures','python3',['-B','scripts/ci-legacy-fixtures.py'],['smtp-runtime','production-build']);
   run('manager-guard-http','python3',['-B','ops/test_release_guard_http.py'],['production-build']);
+  run('url-redirects-http','python3',['-B','ops/test_url_redirects_http.py'],['php84','production-build']);
   run('legacy-security','npm',['run','test:security']);
   run('legacy-form-release','npm',['run','test:form-release']);
   run('smtp-package','npm',['run','test:smtp-package']);

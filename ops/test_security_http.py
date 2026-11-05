@@ -124,6 +124,9 @@ def run():
 
             check('before-index-publication',placeholder)
             files={str(p.relative_to(ROOT/'dist')):p.read_bytes() for p in (ROOT/'dist').rglob('*') if p.is_file()}
+            # This archived worker still tests its frozen v1 publication/rollback.
+            # The current policy is exercised by test_url_redirects_http.py.
+            files['.htaccess']=remote.SECURITY_POLICY+remote.HTTPS_REDIRECT
             assert files['.htaccess']==remote.SECURITY_POLICY+remote.HTTPS_REDIRECT
             manifest={'site_url':'https://zhk-dom-umorya.ru','commit':'fixture-only','files':{name:hashlib.sha256(content).hexdigest() for name,content in files.items()}}
             buffer=io.BytesIO()

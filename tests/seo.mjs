@@ -15,7 +15,7 @@ try{
  const titles=[],descriptions=[];
  for(const file of SEO_PAGES){const source=fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');titles.push(source.match(/<title>(.*?)<\/title>/s)[1]);descriptions.push(source.match(/<meta name="description" content="(.*?)"/)[1]);
  const built=seoHTML(source,file,origin);assert.ok(built.includes(`href="${pageURL(origin,file)}"`));assert.equal((built.match(/rel="canonical"/g)||[]).length,1);assert.doesNotMatch(seoHTML(source,file,''),/rel="canonical"|property="og:url"|property="og:image"/);
- const ld=JSON.parse(built.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(ld['@graph'].length,5);assert.equal(ld['@graph'][0].taxID,'366210396814');assert.equal(ld['@graph'][4].about['@id'],origin+'/#complex');assert.doesNotMatch(JSON.stringify(ld),/InStock|AggregateRating|Review|Offer|RealEstateAgent/);assert.ok(built.includes('content="image/jpeg"'));}
+ const ld=JSON.parse(built.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(ld['@graph'].length,file==='index.html'?34:5);assert.equal(ld['@graph'][0].taxID,'366210396814');assert.equal(ld['@graph'][4].about['@id'],origin+'/#complex');assert.doesNotMatch(JSON.stringify(ld),/InStock|AggregateRating|Review|Offer|RealEstateAgent|Product|RealEstateListing/);assert.ok(built.includes('content="image/jpeg"'));}
  assert.equal(new Set(titles).size,3);assert.equal(new Set(descriptions).size,3);
  console.log('PASS SEO: HTTPS validation/fail-closed, three self canonicals, robots and parsed XML sitemap; local build has no invented origin');
 }finally{fs.rmSync(tmp,{recursive:true,force:true})}
@@ -25,6 +25,28 @@ const {createHash}=await import('node:crypto');
 const M=(await import('../content-model.js')).default;
 const apartments=JSON.parse(fs.readFileSync(new URL('../data/apartments.json',import.meta.url)));
 assert.equal(Object.keys(originals).length,57);assert.equal(apartments.length,28);assert.equal(apartments.flatMap(a=>a.plans).length,84);
+for (const site of [origin, '']) {
+  const generated = seoHTML(fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8'), 'index.html', site);
+  const nodes = JSON.parse(generated.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
+  const byId = new Map(nodes.map(node => [node['@id'], node]));
+  assert.equal(byId.size, nodes.length);
+  const page = nodes.find(node => node['@type'] === 'WebPage');
+  const list = byId.get(page.mentions['@id']);
+  assert.equal(list['@type'], 'ItemList');
+  assert.equal(list.numberOfItems, apartments.length);
+  const linkedUnits = list.itemListElement.map(ref => byId.get(ref['@id']));
+  assert.deepEqual(linkedUnits.map(unit => unit.identifier), apartments.map(row => row.id));
+  for (const [i, unit] of linkedUnits.entries()) {
+    const row = apartments[i];
+    assert.equal(unit['@type'], 'Apartment');
+    assert.equal(unit.containedInPlace['@id'], page.about['@id']);
+    assert.deepEqual(unit.floorSize, {'@type':'QuantitativeValue', value:row.area_m2, unitCode:'MTK'});
+    assert.equal(unit.floorLevel, String(row.floor));
+    assert.equal(unit.numberOfBedrooms, row.bedrooms);
+    assert.equal(unit.name, M.plans([row])[0].title);
+    assert.doesNotMatch(JSON.stringify(unit), /availability|price|offers|seller|numberOfRooms/);
+  }
+}
 for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
 for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
 console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');

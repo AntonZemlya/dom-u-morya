@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import {catalogGraph} from './realty-schema.mjs';
 import {isIP} from 'node:net';
 export const SEO_PAGES = ['index.html','privacy.html','consent-personal-data.html'];
 export function siteOrigin(value='', target='preview') {
@@ -19,7 +20,12 @@ export function graph(file,origin,title,description) {
   const complex={'@type':'ApartmentComplex',...id('complex'),name:'ЖК «Дом у моря»',description:'Жилой комплекс в Мариуполе. Застройщик — ГК «Садовое кольцо».',address:{'@type':'PostalAddress',addressLocality:'Мариуполь'}};
   const website={'@type':'WebSite',...id('website'),name:'ЖК «Дом у моря»',inLanguage:'ru',publisher:id('operator'),...(origin?{url:origin+'/'}:{})};
   const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:id('webpage')),name:title,description,inLanguage:'ru',isPartOf:id('website'),about:id('complex'),publisher:id('operator')};
-  return {'@context':'https://schema.org','@graph':[operator,developer,complex,website,page]};
+  const nodes = [operator, developer, complex, website, page];
+  if (file === 'index.html') {
+    page.mentions = id('plans');
+    nodes.push(...catalogGraph(id));
+  }
+  return {'@context':'https://schema.org','@graph':nodes};
 }
 export function seoHTML(html,file,origin) {
   const title=html.match(/<title>(.*?)<\/title>/s)[1],description=html.match(/<meta name="description" content="(.*?)"/s)[1];
@@ -51,7 +57,16 @@ export async function validateSEO(directory,origin) {
     const section=html.match(/<!-- SEO:generated -->(.*?)<!-- \/SEO:generated -->/s)?.[1];if(!section)throw Error('Missing SEO metadata: '+file);
     if(/localhost|127\.0\.0\.1|example\.|TODO/.test(origin?section.replaceAll(origin,''):section))throw Error('Placeholder SEO URL');
     const graphs=[...section.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];if(graphs.length!==1)throw Error('Duplicate/missing graph');
-    const data=JSON.parse(graphs[0][1]),nodes=data['@graph'];if(nodes.length!==5)throw Error('Graph shape');
+    const data=JSON.parse(graphs[0][1]),nodes=data['@graph'];const lotIDs = [...html.matchAll(/<article\b[^>]* data-lot-id="([^"]+)"/g)].map(match => match[1]);
+    const expectedNodes = file === 'index.html' ? 6 + lotIDs.length : 5;
+    if (nodes.length !== expectedNodes) throw Error('Graph shape: ' + file);
+    if (file === 'index.html') {
+      const units = nodes.filter(node => node['@type'] === 'Apartment');
+      const identifiers = new Set(units.map(unit => unit.identifier));
+      if (!lotIDs.length || identifiers.size !== lotIDs.length || lotIDs.some(id => !identifiers.has(id))) {
+        throw Error('Apartment graph differs from HTML catalogue');
+      }
+    }
     const ids=nodes.map(x=>x['@id']).filter(Boolean);if(new Set(ids).size!==ids.length)throw Error('Duplicate graph IDs');
     if(origin){if(!section.includes(`property="og:url" content="${pageURL(origin,file)}"`)||!section.includes(`property="og:image" content="${origin}/assets/og-project.jpg"`))throw Error('OG URL mismatch');}
     else if(ids.some(id=>!id.startsWith('_:'))||/property="og:(?:url|image)"/.test(section))throw Error('Preview has public identities');

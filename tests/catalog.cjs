@@ -34,7 +34,7 @@ for(const width of [1440,768,390,320]){
   if(width===1440){
    await page.evaluate(()=>{window.__originalPdf=makeCalcPdf;makeCalcPdf=(html,name)=>{window.__pdfHtml=html;return window.__originalPdf(html,name);};});
    const downloadPromise=page.waitForEvent('download');await page.locator('#download-calc').click();const download=await downloadPromise;const target=path.join(tmp,id+'.pdf');await download.saveAs(target);const pdf=await PDFDocument.load(fs.readFileSync(target));assert.equal(pdf.getPageCount(),1);
-   const pdfHtml=await page.evaluate(()=>window.__pdfHtml);for(const value of ['ID '+id,M.rub(p.price_rub),p.source_url,'На этаже','27.10.2026','+7 (952) 956-88-75','info@anyara.ru'])assert.ok(pdfHtml.includes(value),value);assert.doesNotMatch(pdfHtml,/775-28-92|info@sk-gc/);
+   const pdfHtml=await page.evaluate(()=>window.__pdfHtml);for(const value of ['ID '+id,M.rub(p.price_rub),p.source_url,'На этаже',M.displayDate(p.snapshot_date),'+7 (952) 956-88-75','info@anyara.ru'])assert.ok(pdfHtml.includes(value),value);assert.doesNotMatch(pdfHtml,/775-28-92|info@sk-gc/);
    if(evidence)fs.copyFileSync(target,path.join(evidence,'mortgage-'+id+'.pdf'));
    await page.evaluate(()=>{makeCalcPdf=window.__originalPdf;});
   }

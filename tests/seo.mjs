@@ -1,3 +1,4 @@
+import {developerListing} from '../scripts/realty-schema.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -15,7 +16,7 @@ try{
  const titles=[],descriptions=[];
  for(const file of SEO_PAGES){const source=fs.readFileSync(new URL('../'+file,import.meta.url),'utf8');titles.push(source.match(/<title>(.*?)<\/title>/s)[1]);descriptions.push(source.match(/<meta name="description" content="(.*?)"/)[1]);
  const built=seoHTML(source,file,origin);assert.ok(built.includes(`href="${pageURL(origin,file)}"`));assert.equal((built.match(/rel="canonical"/g)||[]).length,1);assert.doesNotMatch(seoHTML(source,file,''),/rel="canonical"|property="og:url"|property="og:image"/);
- const ld=JSON.parse(built.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(ld['@graph'].length,file==='index.html'?34:5);assert.equal(ld['@graph'][0].taxID,'366210396814');assert.equal(ld['@graph'][4].about['@id'],origin+'/#complex');assert.doesNotMatch(JSON.stringify(ld),/InStock|AggregateRating|Review|Offer|RealEstateAgent|Product|RealEstateListing/);assert.ok(built.includes('content="image/jpeg"'));}
+ const ld=JSON.parse(built.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);assert.equal(ld['@graph'].length,file==='index.html'?34:5);assert.equal(ld['@graph'][0].taxID,'366210396814');assert.equal(ld['@graph'][4].about['@id'],origin+'/#complex');assert.doesNotMatch(JSON.stringify(ld),/AggregateRating|Review|RealEstateAgent|Product/);assert.ok(built.includes('content="image/jpeg"'));}
  assert.equal(new Set(titles).size,3);assert.equal(new Set(descriptions).size,3);
  console.log('PASS SEO: HTTPS validation/fail-closed, three self canonicals, robots and parsed XML sitemap; local build has no invented origin');
 }finally{fs.rmSync(tmp,{recursive:true,force:true})}
@@ -44,9 +45,21 @@ for (const site of [origin, '']) {
     assert.equal(unit.floorLevel, String(row.floor));
     assert.equal(unit.numberOfBedrooms, row.bedrooms);
     assert.equal(unit.name, M.plans([row])[0].title);
-    assert.doesNotMatch(JSON.stringify(unit), /availability|price|offers|seller|numberOfRooms/);
+    if (!row.developer_availability) {
+      assert.equal(unit.subjectOf, undefined);
+      continue;
+    }
+    const listing = unit.subjectOf;
+    assert.equal(listing['@type'], 'RealEstateListing');
+    assert.equal(listing.url, row.source_url);
+    assert.deepEqual(listing.offers, {'@type':'Offer', price:row.price_rub, priceCurrency:'RUB',
+      availability:'https://schema.org/' + row.developer_availability, url:row.source_url});
+    assert.doesNotMatch(JSON.stringify(unit), /seller|numberOfRooms/);
   }
 }
+assert.deepEqual(developerListing({...apartments[0], developer_availability:undefined}), {});
+assert.deepEqual(developerListing({...apartments[0], snapshot_date:undefined}), {});
+assert.equal(developerListing({...apartments[0], developer_availability:'SoldOut'}).subjectOf.offers.availability, 'https://schema.org/SoldOut');
 for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
 for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
 console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');

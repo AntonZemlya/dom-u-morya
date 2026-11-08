@@ -21,12 +21,18 @@ export function graph(file,origin,title,description) {
   const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:id('webpage')),name:title,description,inLanguage:'ru',isPartOf:id('website'),about:id('complex'),publisher:id('operator')};
   return {'@context':'https://schema.org','@graph':[operator,developer,complex,website,page]};
 }
+const socialImagePath = '/assets/og-project.jpg?v=social-og-002';
+const socialImageAlt = 'ЖК «Дом у моря» в Мариуполе. Проектный рендер башни. Квартиры · Планировки · Цены. Первая береговая линия, чистовая отделка, 18 этажей, один корпус.';
+
 export function seoHTML(html,file,origin) {
   const title=html.match(/<title>(.*?)<\/title>/s)[1],description=html.match(/<meta name="description" content="(.*?)"/s)[1];
+  const socialDescription = file === 'index.html'
+    ? 'Сравните площади и планировки квартир с чистовой отделкой. Посмотрите проектные рендеры и фотографии со стройки.'
+    : description;
   const meta=(name,value,property=false)=>`<meta ${property?'property':'name'}="${name}" content="${escape(value)}">`;
   const tags=[...(origin?[`<link rel="canonical" href="${escape(pageURL(origin,file))}">`]:[]),
-    meta('og:type','website',true),meta('og:locale','ru_RU',true),meta('og:site_name','ЖК «Дом у моря»',true),meta('og:title',title,true),meta('og:description',description,true),meta('twitter:card','summary_large_image'),meta('twitter:title',title),meta('twitter:description',description),
-    ...(origin?[meta('og:url',pageURL(origin,file),true),meta('og:image',origin+'/assets/og-project.jpg',true),meta('og:image:width','1200',true),meta('og:image:height','630',true),meta('og:image:type','image/jpeg',true),meta('og:image:alt','ЖК «Дом у моря»: архитектурная визуализация и логотип проекта',true),meta('twitter:image',origin+'/assets/og-project.jpg'),meta('twitter:image:alt','ЖК «Дом у моря»: архитектурная визуализация и логотип проекта')]:[]),
+    meta('og:type','website',true),meta('og:locale','ru_RU',true),meta('og:site_name','ЖК «Дом у моря»',true),meta('og:title',title,true),meta('og:description',socialDescription,true),meta('twitter:card','summary_large_image'),meta('twitter:title',title),meta('twitter:description',socialDescription),
+    ...(origin?[meta('og:url',pageURL(origin,file),true),meta('og:image',origin+socialImagePath,true),meta('og:image:width','1200',true),meta('og:image:height','630',true),meta('og:image:type','image/jpeg',true),meta('og:image:alt',socialImageAlt,true),meta('twitter:image',origin+socialImagePath),meta('twitter:image:alt',socialImageAlt)]:[]),
     '<script type="application/ld+json">'+JSON.stringify(graph(file,origin,title,description)).replaceAll('<','\\u003c')+'</script>'];
   return html.replace('</head>',`<!-- SEO:generated -->\n${tags.join('\n')}\n<!-- /SEO:generated -->\n</head>`);
 }
@@ -53,7 +59,7 @@ export async function validateSEO(directory,origin) {
     const graphs=[...section.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];if(graphs.length!==1)throw Error('Duplicate/missing graph');
     const data=JSON.parse(graphs[0][1]),nodes=data['@graph'];if(nodes.length!==5)throw Error('Graph shape');
     const ids=nodes.map(x=>x['@id']).filter(Boolean);if(new Set(ids).size!==ids.length)throw Error('Duplicate graph IDs');
-    if(origin){if(!section.includes(`property="og:url" content="${pageURL(origin,file)}"`)||!section.includes(`property="og:image" content="${origin}/assets/og-project.jpg"`))throw Error('OG URL mismatch');}
+    if(origin){if(!section.includes(`property="og:url" content="${pageURL(origin,file)}"`)||!section.includes(`property="og:image" content="${origin}${socialImagePath}"`))throw Error('OG URL mismatch');}
     else if(ids.some(id=>!id.startsWith('_:'))||/property="og:(?:url|image)"/.test(section))throw Error('Preview has public identities');
   }
 }

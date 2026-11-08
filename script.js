@@ -336,7 +336,7 @@ function renderPlansGrid(){
 }
 function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||'furnished'];}
 function askPlan(plan){
-  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:SITE_DATA.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
+  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:plan.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
   state.planChoice=plan.category;updateForm();scrollToForm();
 }
 function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;renderCalculator();scrollToEl('calculator',80);}
@@ -518,11 +518,11 @@ function sendToForm(){
   const {title, warning} = mortgageContext();
   state.planChoice = selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure');
   state.snapshot = {
-    kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:SITE_DATA.snapshot_date,
+    kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:selectedPlan?.snapshot_date||SITE_DATA.snapshot_date,
     calculation: {price:s.price, downPct:s.downPct, term:s.term, rate:s.rate, program:s.mortgageProgram},
     planTitle: selectedPlan ? selectedPlan.title : '',
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
-    objectMeta: selectedPlan ? selectedPlan.meta + ' · '+ContentModel.views[s.selectedPlanView]+' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
+    objectMeta: selectedPlan ? selectedPlan.meta + ' · '+ContentModel.views[s.selectedPlanView]+' · данные '+ContentModel.displayDate(selectedPlan.snapshot_date) : 'Планировка не выбрана — расчёт по указанной стоимости',
     rows: [
       { k: 'Программа', v: title },
       { k: 'Стоимость', v: rub(s.price) },
@@ -545,7 +545,7 @@ function downloadCalc(){
     program: mortgageContext().title, warning: mortgageContext().warning,
     custom: !selectedPlan, lotId:selectedPlan?.id||null, sourceUrl:selectedPlan?.source_url||null,
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
-    objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + ContentModel.views[s.selectedPlanView] + ' · данные 27.10.2026' : 'Планировка не выбрана — расчёт по указанной стоимости',
+    objectMeta: selectedPlan ? selectedPlan.meta + ' · ' + ContentModel.views[s.selectedPlanView] + ' · данные '+ContentModel.displayDate(selectedPlan.snapshot_date) : 'Планировка не выбрана — расчёт по указанной стоимости',
     price: rub(s.price), down: s.downPct + '% · ' + rub(downPayment), loan: rub(loanAmount),
     term: s.term + ' лет', rate: s.rate.toFixed(1) + '%',
     income: rub(income) + ' / мес', payment: rub(payment) + ' / мес',

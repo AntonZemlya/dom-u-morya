@@ -9,6 +9,11 @@ for(const width of [1440,768,390,320])for(const js of [true,false]){
  const errors=[];for(const i of document.images){if(i.id==='lightbox-asset')continue;if(!i.hasAttribute('alt'))errors.push('alt '+i.src);if(!i.hasAttribute('width')||!i.hasAttribute('height'))errors.push('size '+i.src)}
  for(const a of document.querySelectorAll('a[href^="#"]'))if(!document.getElementById(a.hash.slice(1)))errors.push(a.hash);
  for(const s of document.querySelectorAll('script[type="application/ld+json"]'))JSON.parse(s.textContent);
+ if (document.querySelector('a[href*="sadovoe-kolco"]')) errors.push('Developer navigation');
+ const catalogue = document.getElementById('plans');
+ if (catalogue && /по данным застройщика|Карточка застройщика/i.test(catalogue.textContent)) errors.push('Catalogue source label');
+ const publicData = document.getElementById('site-data')?.textContent || '';
+ if (/sadovoe-kolco|source_url|origin_page/i.test(publicData)) errors.push('Public source disclosure');
  if(document.documentElement.lang!=='ru')errors.push('lang');if(document.documentElement.scrollWidth>innerWidth)errors.push('overflow');return errors;});assert.deepEqual(issues,[]);
  for(const selector of ['.about-style-4','.location-style-11','.contact-panorama']){const img=p.locator(selector+' > img.deferred-background');await img.scrollIntoViewIfNeeded();await p.waitForFunction(selector=>{const i=document.querySelector(selector+' > img.deferred-background');return i.complete&&i.naturalWidth>0},selector);assert.ok(await img.evaluate(i=>i.naturalWidth===1536));}
  if(!js){assert.equal(await p.locator('[data-lot-id]').count(),28);for(const d of await p.locator('.static-category').all())if(!await d.evaluate(e=>e.open))await d.locator('summary').first().click();for(const a of await p.locator('.plan-thumb').all())assert.ok((await a.getAttribute('href')).endsWith('.svg'));}
@@ -18,6 +23,7 @@ for(const width of [1440,768,390,320])for(const js of [true,false]){
  await c.close();console.log('PASS SEO '+width+' JS='+js+': exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow');
 }
 const c=await b.newContext({javaScriptEnabled:false}),p=await c.newPage();
-for(const file of ['index.html','privacy.html','consent-personal-data.html']){const response=await p.goto(site.url+'/'+file);assert.equal(response.status(),200);const raw=await response.text();assert.doesNotMatch(raw,/https?:\/\/(?:localhost|127\.0\.0\.1|example\.)/);assert.equal(await p.locator('meta[property="og:title"]').getAttribute('content'),await p.title());}
+for(const file of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const response=await p.goto(site.url+'/'+file);assert.equal(response.status(),200);const raw=await response.text();assert.doesNotMatch(raw,/https?:\/\/(?:localhost|127\.0\.0\.1|example\.)/);if (file !== 'consent-analytics.html') assert.equal(await p.locator('meta[property="og:title"]').getAttribute('content'),await p.title());
+ assert.equal(await p.locator('a[href*="sadovoe-kolco"]').count(),0);}
 await c.close();
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

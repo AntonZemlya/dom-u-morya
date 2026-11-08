@@ -8,7 +8,10 @@ const paths=new Set();for(const p of a){assert.equal(p.project_id,'24');assert.e
 assert.equal(paths.size,57);
 assert.equal(media.gallery.length,8);assert.deepEqual(media.construction.map(a=>a.month),['2026-09','2026-08','2026-07','2026-06','2026-05','2026-04']);assert.equal(new Set(media.construction.flatMap(a=>a.images.map(i=>i.sha256))).size,29);
 for(const photo of [...media.gallery,...media.construction.flatMap(m=>m.images)]){assert.equal(photo.rights_status,'permission_not_verified');assert.ok(photo.source_url.startsWith('https://sadovoe-kolco.ru/'));assert.ok(photo.width>0&&photo.height>0);for(const v of photo.variants)assert.ok(fs.existsSync(path.join(root,v.src)));}
-const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),data=JSON.parse(html.match(/<script id="site-data" type="application\/json">(.*?)<\/script>/s)[1]);assert.deepEqual(data.apartments,a);assert.deepEqual(data.media,media);
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),data=JSON.parse(html.match(/<script id="site-data" type="application\/json">(.*?)<\/script>/s)[1]);assert.deepEqual(data.apartments.map(p=>[p.id,p.price_rub,p.developer_availability]),a.map(p=>[p.id,p.price_rub,p.developer_availability]));
+assert.deepEqual(data.media.gallery.map(p=>p.src),media.gallery.map(p=>p.src));
+assert.deepEqual(data.media.construction.map(m=>m.images.map(p=>p.src)),media.construction.map(m=>m.images.map(p=>p.src)));
+assert.doesNotMatch(JSON.stringify(data), /source_url|origin_page|https?:/);
 for(const p of plans){assert.ok(html.includes(`data-lot-id="${p.id}"`));assert.ok(html.includes(M.rub(p.price)));}
 for(const c of M.categories(plans))assert.ok(html.includes(c.price));
 // Frozen hero: exact source and the three image hashes, independent of generated content.

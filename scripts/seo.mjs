@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {catalogGraph} from './realty-schema.mjs';
+import {catalogGraph, catalogOffers} from './realty-schema.mjs';
 import {isIP} from 'node:net';
 export const SEO_PAGES = ['index.html','privacy.html','consent-personal-data.html'];
 export function siteOrigin(value='', target='preview') {
@@ -22,7 +22,9 @@ export function graph(file,origin,title,description) {
   const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:id('webpage')),name:title,description,inLanguage:'ru',isPartOf:id('website'),about:id('complex'),publisher:id('operator')};
   const nodes = [operator, developer, complex, website, page];
   if (file === 'index.html') {
+    page['@type'] = ['WebPage', 'RealEstateListing'];
     page.mentions = id('plans');
+    page.offers = catalogOffers(id);
     nodes.push(...catalogGraph(id));
   }
   return {'@context':'https://schema.org','@graph':nodes};
@@ -61,6 +63,9 @@ export async function validateSEO(directory,origin) {
     const expectedNodes = file === 'index.html' ? 6 + lotIDs.length : 5;
     if (nodes.length !== expectedNodes) throw Error('Graph shape: ' + file);
     if (file === 'index.html') {
+      const definitions = nodes.flatMap(node => [node, ...(node.offers || [])]);
+      const definitionIDs = definitions.map(node => node['@id']);
+      if (new Set(definitionIDs).size !== definitionIDs.length) throw Error('Duplicate graph IDs');
       const units = nodes.filter(node => node['@type'] === 'Apartment');
       const identifiers = new Set(units.map(unit => unit.identifier));
       if (!lotIDs.length || identifiers.size !== lotIDs.length || lotIDs.some(id => !identifiers.has(id))) {

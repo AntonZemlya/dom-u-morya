@@ -30,11 +30,11 @@ for(const width of [1440,768,390,320]){
   if(evidence&&id==='23037')await page.screenshot({path:path.join(evidence,`plan-${width}.png`)});
   await page.keyboard.press('Escape');assert.equal(await opener.evaluate(el=>el===document.activeElement),true);
   await card.locator('[data-action="calc-here"]').click();assert.equal(num(await page.locator('#price-label').textContent()),p.price_rub);assert.equal(Number(await page.locator('#price-range').inputValue()),p.price_rub);assert.match(await page.locator('#calc-plan-meta').textContent(),new RegExp('ID '+id));assert.match(await page.locator('#calc-plan-meta').textContent(),/На этаже/);
-  await page.locator('#send-to-form').click();assert.match(await page.locator('#snapshot-slot').textContent(),new RegExp('ID '+id));assert.equal(await page.evaluate(()=>state.snapshot.lotId),id);assert.equal(await page.evaluate(()=>state.snapshot.planView),'floor');
+  await page.locator('#send-to-form').click();assert.match(await page.locator('#snapshot-slot').textContent(),new RegExp('ID '+id));assert.equal(await page.evaluate(()=>state.snapshot.lotId),id);assert.doesNotMatch(await page.evaluate(()=>JSON.stringify(state.snapshot)),/sadovoe-kolco/);assert.equal(await page.evaluate(()=>state.snapshot.planView),'floor');
   if(width===1440){
    await page.evaluate(()=>{window.__originalPdf=makeCalcPdf;makeCalcPdf=(html,name)=>{window.__pdfHtml=html;return window.__originalPdf(html,name);};});
    const downloadPromise=page.waitForEvent('download');await page.locator('#download-calc').click();const download=await downloadPromise;const target=path.join(tmp,id+'.pdf');await download.saveAs(target);const pdf=await PDFDocument.load(fs.readFileSync(target));assert.equal(pdf.getPageCount(),1);
-   const pdfHtml=await page.evaluate(()=>window.__pdfHtml);for(const value of ['ID '+id,M.rub(p.price_rub),p.source_url,'На этаже',M.displayDate(p.snapshot_date),'+7 (952) 956-88-75','info@anyara.ru'])assert.ok(pdfHtml.includes(value),value);assert.doesNotMatch(pdfHtml,/775-28-92|info@sk-gc/);
+   const pdfHtml=await page.evaluate(()=>window.__pdfHtml);for(const value of ['ID '+id,M.rub(p.price_rub),'На этаже',M.displayDate(p.snapshot_date),'+7 (952) 956-88-75','info@anyara.ru'])assert.ok(pdfHtml.includes(value),value);assert.doesNotMatch(pdfHtml,/775-28-92|info@sk-gc|sadovoe-kolco|Источник:/);
    if(evidence)fs.copyFileSync(target,path.join(evidence,'mortgage-'+id+'.pdf'));
    await page.evaluate(()=>{makeCalcPdf=window.__originalPdf;});
   }

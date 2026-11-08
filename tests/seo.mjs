@@ -1,4 +1,4 @@
-import {developerListing} from '../scripts/realty-schema.mjs';
+import {offerForLot} from '../scripts/realty-schema.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -31,7 +31,11 @@ for (const site of [origin, '']) {
   const nodes = JSON.parse(generated.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
   const byId = new Map(nodes.map(node => [node['@id'], node]));
   assert.equal(byId.size, nodes.length);
-  const page = nodes.find(node => node['@type'] === 'WebPage');
+  const page = nodes.find(node => [node['@type']].flat().includes('WebPage'));
+  assert.equal(page.offers.length, apartments.length);
+  const definitions = [...nodes, ...page.offers];
+  assert.equal(new Set(definitions.map(node => node['@id'])).size, definitions.length);
+  assert.doesNotMatch(JSON.stringify(nodes), /sadovoe-kolco|source_url|subjectOf|"url":"[^"]+apartment-/);
   const list = byId.get(page.mentions['@id']);
   assert.equal(list['@type'], 'ItemList');
   assert.equal(list.numberOfItems, apartments.length);
@@ -45,21 +49,21 @@ for (const site of [origin, '']) {
     assert.equal(unit.floorLevel, String(row.floor));
     assert.equal(unit.numberOfBedrooms, row.bedrooms);
     assert.equal(unit.name, M.plans([row])[0].title);
+    const offer = page.offers.find(offer => offer.itemOffered['@id'] === unit['@id']);
     if (!row.developer_availability) {
-      assert.equal(unit.subjectOf, undefined);
+      assert.equal(offer, undefined);
       continue;
     }
-    const listing = unit.subjectOf;
-    assert.equal(listing['@type'], 'RealEstateListing');
-    assert.equal(listing.url, row.source_url);
-    assert.deepEqual(listing.offers, {'@type':'Offer', price:row.price_rub, priceCurrency:'RUB',
-      availability:'https://schema.org/' + row.developer_availability, url:row.source_url});
+    assert.deepEqual(offer, {'@type':'Offer', '@id':site ? site + '/#offer-' + row.id : '_:offer-' + row.id,
+      itemOffered:{'@id':unit['@id']}, price:row.price_rub, priceCurrency:'RUB',
+      availability:'https://schema.org/' + row.developer_availability});
     assert.doesNotMatch(JSON.stringify(unit), /seller|numberOfRooms/);
   }
 }
-assert.deepEqual(developerListing({...apartments[0], developer_availability:undefined}), {});
-assert.deepEqual(developerListing({...apartments[0], snapshot_date:undefined}), {});
-assert.equal(developerListing({...apartments[0], developer_availability:'SoldOut'}).subjectOf.offers.availability, 'https://schema.org/SoldOut');
+const localId = key => ({'@id':'_:' + key});
+assert.equal(offerForLot({...apartments[0], developer_availability:undefined}, localId), null);
+assert.equal(offerForLot({...apartments[0], snapshot_date:undefined}, localId), null);
+assert.equal(offerForLot({...apartments[0], developer_availability:'SoldOut'}, localId).availability, 'https://schema.org/SoldOut');
 for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
 for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
 console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');

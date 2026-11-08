@@ -1,26 +1,24 @@
 import apartments from '../data/apartments.json' with { type: 'json' };
 import content from '../content-model.js';
 
-// Use the same lot IDs, titles and measurements as the static catalogue.
-export function developerListing(lot) {
+export function offerForLot(lot, id) {
   if (!['InStock', 'SoldOut', 'OutOfStock'].includes(lot.developer_availability)
-      || !lot.source_url || !lot.snapshot_date || !(lot.price_rub > 0)) return {};
+      || !lot.snapshot_date || !(lot.price_rub > 0)) return null;
   return {
-    subjectOf: {
-      '@type': 'RealEstateListing',
-      url: lot.source_url,
-      name: lot.title,
-      offers: {
-        '@type': 'Offer',
-        price: lot.price_rub,
-        priceCurrency: 'RUB',
-        availability: 'https://schema.org/' + lot.developer_availability,
-        url: lot.source_url,
-      },
-    },
+    '@type': 'Offer',
+    ...id('offer-' + lot.id),
+    itemOffered: id('apartment-' + lot.id),
+    price: lot.price_rub,
+    priceCurrency: 'RUB',
+    availability: 'https://schema.org/' + lot.developer_availability,
   };
 }
 
+export function catalogOffers(id) {
+  return apartments.map(lot => offerForLot(lot, id)).filter(Boolean);
+}
+
+// Use the same lot IDs, titles and measurements as the static catalogue.
 export function catalogGraph(id) {
   const units = content.plans(apartments).map(lot => ({
     '@type': 'Apartment',
@@ -35,7 +33,6 @@ export function catalogGraph(id) {
       unitCode: 'MTK',
     },
     numberOfBedrooms: lot.bedrooms,
-    ...developerListing(lot),
   }));
 
   const catalog = {

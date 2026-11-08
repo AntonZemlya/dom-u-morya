@@ -1,9 +1,18 @@
-// Deterministic derivative from local approved hero/logo; no new photo source.
-const sharp=require('sharp'),path=require('path');
-const root=path.resolve(__dirname,'..');
-(async()=>{
- const logo=await sharp(path.join(root,'assets/logo-cropped.webp')).resize({width:360}).png().toBuffer();
- const shade=Buffer.from('<svg width="1200" height="630"><defs><linearGradient id="g"><stop stop-color="#142429" stop-opacity=".8"/><stop offset="1" stop-color="#142429" stop-opacity=".08"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/></svg>');
- await sharp(path.join(root,'assets/hero-desktop.webp')).resize(1200,630,{fit:'cover',position:'centre'}).composite([{input:shade},{input:Buffer.from('<svg width="1200" height="630"><rect x="40" y="30" width="420" height="134" rx="16" fill="#f6f3ed" fill-opacity=".96"/></svg>')},{input:logo,left:70,top:50}]).jpeg({quality:90,mozjpeg:true}).toFile(path.join(root,'assets/og-project.jpg'));
- console.log('Generated OG JPEG 1200×630 from unchanged hero and logo');
-})().catch(e=>{console.error(e);process.exitCode=1});
+// Pass the owner-approved PNG as the only argument. The release ships the JPEG.
+const path = require('node:path');
+const sharp = require('sharp');
+
+async function generate(source) {
+  if (!source) throw new Error('Usage: node scripts/generate-seo-media.cjs <approved-card.png>');
+  const metadata = await sharp(source).metadata();
+  if (metadata.format !== 'png' || metadata.width !== 1731 || metadata.height !== 909) {
+    throw new Error('Expected the approved 1731 × 909 PNG');
+  }
+  // At the target width the full frame rounds to exactly 630 pixels high.
+  await sharp(source)
+    .resize({ width: 1200 })
+    .jpeg({ quality: 93, mozjpeg: true, chromaSubsampling: '4:4:4' })
+    .toFile(path.resolve(__dirname, '../assets/og-project.jpg'));
+}
+
+generate(process.argv[2]).catch(error => { console.error(error); process.exitCode = 1; });

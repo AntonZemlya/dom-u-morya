@@ -21,8 +21,8 @@ export function graph(file,origin,title,description) {
   const page={'@type':'WebPage',...(origin?{'@id':pageURL(origin,file)+'#webpage',url:pageURL(origin,file)}:id('webpage')),name:title,description,inLanguage:'ru',isPartOf:id('website'),about:id('complex'),publisher:id('operator')};
   return {'@context':'https://schema.org','@graph':[operator,developer,complex,website,page]};
 }
-const socialImagePath = '/assets/og-project.jpg?v=social-og-002';
-const socialImageAlt = 'ЖК «Дом у моря» в Мариуполе. Проектный рендер башни. Квартиры · Планировки · Цены. Первая береговая линия, чистовая отделка, 18 этажей, один корпус.';
+const socialImagePath = '/assets/og-project.jpg?v=social-og-002-v2';
+const socialImageAlt = 'ЖК «Дом у моря» в Мариуполе. Художественная ИИ-иллюстрация дома у моря. Квартиры · Планировки · Цены. Первая береговая линия, чистовая отделка, 18 этажей, один корпус.';
 
 export function seoHTML(html,file,origin) {
   const title=html.match(/<title>(.*?)<\/title>/s)[1],description=html.match(/<meta name="description" content="(.*?)"/s)[1];

@@ -1,0 +1,2 @@
+PASS real Apache/PHP URL matrix: 236 cases, 265 static files; old mod_dir downgrade reproduced; ACME and directory denial preserved
+Syntax OK

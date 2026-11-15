@@ -47,7 +47,7 @@ def run():
         http_port, php_port = port(), port()
         origin = 'http://127.0.0.1:' + str(http_port)
         modules = ['mpm_event', 'unixd', 'authz_core', 'authz_host', 'dir', 'autoindex',
-                   'mime', 'log_config', 'rewrite', 'proxy', 'proxy_fcgi']
+                   'mime', 'log_config', 'rewrite', 'proxy', 'proxy_fcgi', 'headers']
         conf = 'ServerRoot "' + str(base) + '"\n'
         conf += ''.join('LoadModule ' + m + '_module /usr/libexec/apache2/mod_' + m + '.so\n' for m in modules)
         conf += 'ServerName ' + core.DOMAIN + '\nDefaultRuntimeDir "' + str(base) + '"\n'
@@ -66,10 +66,10 @@ def run():
                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), url_matrix.NoRedirect())
 
-        def get(url, method='GET'):
+        def get(url, method='GET', headers=None):
             logical = urllib.parse.urlsplit(url)
             request = urllib.request.Request(origin + logical.path + ('?' + logical.query if logical.query else ''),
-                method=method, headers={'Host': logical.netloc, 'X-Forwarded-Protocol': logical.scheme})
+                method=method, headers=dict({'Host': logical.netloc, 'X-Forwarded-Protocol': logical.scheme}, **(headers or {})))
             try:
                 response = opener.open(request, timeout=5)
             except urllib.error.HTTPError as error:
@@ -132,6 +132,27 @@ def run():
                 for host in [core.DOMAIN, 'www.' + core.DOMAIN]:
                     code, _, body = get(scheme + '://' + host + '/.well-known/acme-challenge/fixture-token')
                     assert code == 200 and body == b'isolated-protected-fixture'
+            # Cache policy must work on real Apache, including HEAD, 304 and errors.
+            for name in ['/', '/styles.css', '/script.js', '/assets/location.webp']:
+                for method in ['GET','HEAD']:
+                    code, headers, _ = get(core.ORIGIN + name,method)
+                    assert code == 200 and headers.get('Cache-Control') == 'public, max-age=0, must-revalidate', (name,headers)
+            for p in (doc/'assets/performance').iterdir():
+                code, headers, body = get(core.ORIGIN + '/assets/performance/' + p.name)
+                assert code == 200 and headers.get('Cache-Control') == 'public, max-age=31536000, immutable', headers
+                assert hashlib.sha256(body).hexdigest()[:16] in p.name, p.name
+                code, fresh, _ = get(core.ORIGIN + '/assets/performance/' + p.name,headers={'If-None-Match':headers['ETag']})
+                assert code == 304 and fresh.get('Cache-Control') == headers['Cache-Control'], fresh
+            code, headers, body = get(core.ORIGIN + '/api/form-status.php')
+            assert code == 200 and 'no-store' in headers.get('Cache-Control',''), headers
+            for name in ['/assets/missing.webp','/.envrc','/assets/.env']:
+                code, headers, _ = get(core.ORIGIN + name)
+                assert code in [403,404] and 'immutable' not in headers.get('Cache-Control',''), headers
+            code, old_headers, _ = get(core.ORIGIN + '/styles.css')
+            (doc/'styles.css').write_text('/* synthetic replacement */')
+            code, new_headers, body = get(core.ORIGIN + '/styles.css',headers={'If-None-Match':old_headers['ETag']})
+            assert code == 200 and body == b'/* synthetic replacement */', (code,new_headers)
+            result['cache_policy'] = 'PASS: fixed URL revalidation, content hashes, 304/HEAD, API no-store, errors, replacement'
             # POST is exercised only against disposable local PHP. The method
             # reaches PHP directly, rather than being redirected or changed to GET.
             code, headers, body = get(core.ORIGIN + '/api/lead.php', 'POST')

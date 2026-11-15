@@ -25,7 +25,7 @@ export async function validateReferences(root) {
     const value = reference.trim().replaceAll('&amp;', '&');
     if (!value || value.startsWith('#') || value.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(value)) return;
     const url = new URL(value, `https://release.invalid/${owner}`);
-    const relative = decodeURIComponent(url.pathname).replace(/^\//, '');
+    const relative = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname).replace(/^\//, '');
     if (!allowed.has(relative)) throw new Error(`Unlisted local resource in ${owner}: ${reference}`);
   };
   for (const owner of RELEASE_FILES.filter(name=>name.endsWith('.html'))) {

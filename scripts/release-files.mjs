@@ -1,3 +1,4 @@
+import performanceImages from '../data/performance-assets.json' with {type:'json'};
 import {PREVIEW_FILES} from './preview-files.mjs';
 import {CONTENT_FILES} from './content-files.mjs';
 // Publication is explicit: add resources here when changing asset filenames.
@@ -10,6 +11,7 @@ export const RELEASE_FILES = Object.freeze([
   'privacy.html', 'consent-personal-data.html', 'index.html', 'styles.css', 'script.js', 'content-model.js', 'favicon.png',
   'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'apple-touch-icon.png',
   ...CONTENT_FILES, ...PREVIEW_FILES,
+  ...Object.values(performanceImages).flat().map(image=>image.src),
   'assets/og-project.jpg', 'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
   'assets/location.webp', 'assets/logo-cropped.webp',

@@ -30,6 +30,7 @@ try{
  run('toolchain',process.execPath,['-e',"if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"]);
  run('source','npm',['run','check'],['toolchain']);
  n('syntax','scripts/ci-static.mjs',['toolchain']);
+ n('performance-assets','tests/performance/assets.mjs',['source']);
  n('analytics-unit','tests/analytics.test.mjs',['toolchain']);
  run('release-contract',process.execPath,['tests/release.cjs'],['source'],{BUILD_TARGET:'preview',SITE_URL:''});
  run('production-build','npm',['run','build:production'],['source']);

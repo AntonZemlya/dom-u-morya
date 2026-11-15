@@ -901,6 +901,7 @@ function init(){
   wireCalculatorEvents(); renderCalculator();
   renderContactArea();
   wireHeaderEvents(); applyMenuState();
+  setupHomeLinks();
   wireLightboxEvents();
   wireScrollTopBtn();
   wirePricingCtas();
@@ -973,11 +974,48 @@ function setupPlanViews(){
     else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[]});
   });
 }
+// Canonical links keep native new-tab/download/modifier behaviour.
+function setupHomeLinks(){
+  document.querySelectorAll('.logo-link[href="/"], .footer-brand[href="/"]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.hasAttribute('download') || (link.target && link.target !== '_self') || location.pathname !== '/') return;
+      event.preventDefault();
+      if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+      state.menuOpen = false;
+      applyMenuState();
+      document.getElementById('main-content').focus({preventScroll:true});
+      window.scrollTo({top:0, behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    });
+  });
+}
+
 function setupMap(){
-  const frame = document.getElementById('location-map');
+  const container = document.getElementById('map-container');
+  const template = document.getElementById('location-map-template');
   const button = document.getElementById('map-unlock');
-  const lock = () => { frame.style.pointerEvents = 'none'; frame.tabIndex = -1; button.hidden = false; };
-  button.addEventListener('click', () => { frame.style.pointerEvents = 'auto'; frame.tabIndex = 0; button.hidden = true; frame.focus(); });
-  document.getElementById('map-container').addEventListener('mouseleave', lock);
-  frame.addEventListener('blur', lock);
+  let frame;
+  const load = () => {
+    if (!frame) {
+      frame = template.content.firstElementChild.cloneNode(true);
+      container.prepend(frame);
+      frame.addEventListener('blur', lock);
+    }
+    return frame;
+  };
+  const lock = () => {
+    if (frame) { frame.style.pointerEvents = 'none'; frame.tabIndex = -1; }
+    button.hidden = false;
+  };
+  button.addEventListener('click', () => {
+    const map = load();
+    map.style.pointerEvents = 'auto'; map.tabIndex = 0;
+    button.hidden = true; map.focus();
+  });
+  container.addEventListener('mouseleave', lock);
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { load(); observer.disconnect(); }
+    }, {rootMargin:'200px 0px'});
+    observer.observe(container);
+  } else load();
 }

@@ -1,0 +1,8 @@
+PASS logo/map 1440, JS=true: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 1440, JS=false: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 768, JS=true: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 768, JS=false: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 390, JS=true: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 390, JS=false: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 320, JS=true: canonical, keyboard, query, focus, menu, no-JS
+PASS logo/map 320, JS=false: canonical, keyboard, query, focus, menu, no-JS

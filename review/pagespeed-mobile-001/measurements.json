@@ -1,0 +1,4095 @@
+{
+  "baselineCommit": "47854ca",
+  "phases": {
+    "baseline": {
+      "mobile": {
+        "median": {
+          "performance": 94,
+          "accessibility": 96,
+          "bestPractices": 100,
+          "seo": 100,
+          "fcp": 1204.1385,
+          "lcp": 3083.277,
+          "tbt": 5,
+          "cls": 0.003144705158054653,
+          "bytes": 936226,
+          "requests": 24,
+          "thirdPartyBytes": 311592,
+          "thirdPartyRequests": 3
+        },
+        "runs": [
+          {
+            "run": 1,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:44:54.709Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3673,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 94,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1204.9814,
+            "lcp": 3084.9628000000002,
+            "tbt": 5,
+            "cls": 0.003144705158054653,
+            "bytes": 936226,
+            "requests": 24,
+            "thirdPartyBytes": 311592,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 3.538
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 106.853
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 302
+                },
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 452
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418,
+                  "wastedMs": 152
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.3709999993443489,
+                "end": 3.561999998986721,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 10.256999999284744,
+                "end": 11.666000001132488,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 10.395999997854233,
+                "end": 13.550000004470348,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 10.865000002086163,
+                "end": 13.337000004947186,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 11.729999996721745,
+                "end": 15.835999995470047,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 10.537000000476837,
+                "end": 13.802000001072884,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 10.689000003039837,
+                "end": 14.263999998569489,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 10.759999997913837,
+                "end": 13.847000002861023,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 16.590999998152256,
+                "end": 17.548000000417233,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 50.62000000476837,
+                "end": 54.456999994814396,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 50.69200000166893,
+                "end": 54.83500000089407,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 50.76200000196695,
+                "end": 54.891000002622604,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 50.82599999755621,
+                "end": 54.92400000244379,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 50.890999995172024,
+                "end": 56.90599999576807,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 50.94300000369549,
+                "end": 57.07100000232458,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1190,
+                "start": 52.730000004172325,
+                "end": 813.5069999992847,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 50.097999997437,
+                "end": 55.055999994277954,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 50.20499999821186,
+                "end": 55.25,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 55.52100000530481,
+                "end": 57.619000002741814,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 55.667000003159046,
+                "end": 57.885999999940395,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 55.76300000399351,
+                "end": 57.66799999773502,
+                "priority": "High"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9272,
+                "start": 826.4060000032187,
+                "end": 954.8809999972582,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301130,
+                "start": 826.972000002861,
+                "end": 1180.667000003159,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 1227.7360000014305,
+                "end": 1228.7159999981523,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          },
+          {
+            "run": 2,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:45:10.896Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3923.5,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 94,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1204.1385,
+            "lcp": 3083.277,
+            "tbt": 4,
+            "cls": 0.003144705158054653,
+            "bytes": 936225,
+            "requests": 24,
+            "thirdPartyBytes": 311591,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.924
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 124.14
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 452
+                },
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 302
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418,
+                  "wastedMs": 152
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.36900000274181366,
+                "end": 3.061999998986721,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 26.989000000059605,
+                "end": 29.212000004947186,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 27.11599999666214,
+                "end": 29.707000002264977,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 27.598999999463558,
+                "end": 31.84399999678135,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 29.265000000596046,
+                "end": 31.73200000822544,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 27.279000006616116,
+                "end": 30.332000002264977,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 27.41899999976158,
+                "end": 30.10700000077486,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 27.498999997973442,
+                "end": 30.614999994635582,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 33.1330000013113,
+                "end": 33.77100000530481,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 63.056000001728535,
+                "end": 66.21900000423193,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 63.13499999791384,
+                "end": 66.60800000280142,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 63.20099999755621,
+                "end": 66.41200000047684,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 63.26699999719858,
+                "end": 66.70800000429153,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 63.33600000292063,
+                "end": 69.76399999856949,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 63.395000003278255,
+                "end": 69.83600000292063,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1188,
+                "start": 67.11600000411272,
+                "end": 457.4480000063777,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 62.476000003516674,
+                "end": 65.86999999731779,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 62.58100000023842,
+                "end": 67.5350000038743,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 63.44500000029802,
+                "end": 69.35000000149012,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 63.48600000143051,
+                "end": 70.15800000727177,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 63.532999999821186,
+                "end": 70.01000000536442,
+                "priority": "High"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9321,
+                "start": 470.84600000083447,
+                "end": 564.2569999992847,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301082,
+                "start": 471.6499999985099,
+                "end": 790.1030000001192,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 849.66400000453,
+                "end": 850.2969999983907,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          },
+          {
+            "run": 3,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:45:26.517Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3885.5,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 94,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1204.1371,
+            "lcp": 3083.2742,
+            "tbt": 10,
+            "cls": 0.003144705158054653,
+            "bytes": 936249,
+            "requests": 24,
+            "thirdPartyBytes": 311615,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 3.127
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 107.848
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 452
+                },
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 302
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418,
+                  "wastedMs": 152
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.443000003695488,
+                "end": 3.116999998688698,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 13.331000000238419,
+                "end": 14.202000007033348,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 13.462999999523163,
+                "end": 15.597000002861023,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 13.946000002324581,
+                "end": 16.67400000244379,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 14.245000004768372,
+                "end": 17.800999999046326,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 13.620000004768372,
+                "end": 16.306000001728535,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 13.770000003278255,
+                "end": 16.100000001490116,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 13.843000002205372,
+                "end": 16.535000003874302,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 19.046999998390675,
+                "end": 19.622999995946884,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 50.04500000178814,
+                "end": 52.71999999880791,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 50.11999999731779,
+                "end": 52.99000000208616,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 50.20100000500679,
+                "end": 53.105000004172325,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 50.26800000667572,
+                "end": 53.20600000023842,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 50.34700000286102,
+                "end": 56.409000001847744,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 50.465999998152256,
+                "end": 57.39900000393391,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1188,
+                "start": 51.608999997377396,
+                "end": 411.0180000066757,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 49.78700000047684,
+                "end": 54.03199999779463,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 49.949000000953674,
+                "end": 54.18400000035763,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 50.672000005841255,
+                "end": 56.265999995172024,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 50.721000000834465,
+                "end": 57.278999999165535,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 50.76399999856949,
+                "end": 56.708000004291534,
+                "priority": "High"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9345,
+                "start": 422.9479999989271,
+                "end": 502.86200000345707,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301082,
+                "start": 423.50699999928474,
+                "end": 699.0850000008941,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 766.8770000040531,
+                "end": 767.8940000012517,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "performance": 100,
+          "accessibility": 96,
+          "bestPractices": 100,
+          "seo": 100,
+          "fcp": 323.8331,
+          "lcp": 769.2782500000001,
+          "tbt": 0,
+          "cls": 0,
+          "bytes": 1095926,
+          "requests": 26,
+          "thirdPartyBytes": 311591,
+          "thirdPartyRequests": 3
+        },
+        "runs": [
+          {
+            "run": 1,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:45:02.901Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3944.5,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 323.8331,
+            "lcp": 769.5827499999998,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 1095924,
+            "requests": 26,
+            "thirdPartyBytes": 311589,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 3.024
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 6.58
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 6.556
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 193.807
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"assets/logo-cropped.webp\" alt=\"Дом у моря\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 82
+                },
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 122
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.33500000089406967,
+                "end": 3.178999997675419,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 9.106000006198883,
+                "end": 12.328000001609325,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 9.199999995529652,
+                "end": 12.379000000655651,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 9.318000003695488,
+                "end": 12.413000002503395,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 9.447999998927116,
+                "end": 15.170999996364117,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 9.520999997854233,
+                "end": 15.733999997377396,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 11.527999997138977,
+                "end": 12.826999999582767,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 11.751000002026558,
+                "end": 14.910000003874302,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 14.947000004351139,
+                "end": 16.618000000715256,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 15.133000001311302,
+                "end": 17.998000003397465,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 12.153000004589558,
+                "end": 15.101000003516674,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 12.262000001966953,
+                "end": 16.068000003695488,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 12.859999999403954,
+                "end": 15.77199999988079,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 17.475999996066093,
+                "end": 18.895999997854233,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 17.55000000447035,
+                "end": 18.79399999976158,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 17.653999999165535,
+                "end": 18.355999998748302,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 19.333000004291534,
+                "end": 20.12099999934435,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 56.04899999499321,
+                "end": 58.15899999439716,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1188,
+                "start": 58.98200000077486,
+                "end": 414.6110000014305,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 55.46899999678135,
+                "end": 58.51399999856949,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 55.64599999785423,
+                "end": 58.71999999880791,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 55.88499999791384,
+                "end": 58.324000000953674,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 55.972999997437,
+                "end": 58.61199999600649,
+                "priority": "Low"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9272,
+                "start": 421.2199999988079,
+                "end": 696.6280000060797,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301129,
+                "start": 421.74899999797344,
+                "end": 719.7979999929667,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 782.0090000033379,
+                "end": 782.6659999936819,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          },
+          {
+            "run": 2,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:45:18.572Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3926,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 324.1306,
+            "lcp": 768.2611999999999,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 1095926,
+            "requests": 26,
+            "thirdPartyBytes": 311591,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.771
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 28.93
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 7.127
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 65.907
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"assets/logo-cropped.webp\" alt=\"Дом у моря\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 122
+                },
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 82
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.3580000028014183,
+                "end": 2.8819999992847443,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 31.087000004947186,
+                "end": 34.27100000530481,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 31.195000000298023,
+                "end": 34.31700000166893,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 31.307000003755093,
+                "end": 34.38399999588728,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 31.431000001728535,
+                "end": 37.1059999987483,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 31.509999997913837,
+                "end": 38.041999995708466,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 33.55300000309944,
+                "end": 35.34000000357628,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 33.78199999779463,
+                "end": 37.02100000530481,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 37.056000001728535,
+                "end": 38.53399999439716,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 37.17300000041723,
+                "end": 39.631999999284744,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 34.10999999940395,
+                "end": 37.318999998271465,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 34.17400000244379,
+                "end": 37.99499999731779,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 35.467000000178814,
+                "end": 38.369000002741814,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 41.03999999910593,
+                "end": 41.72800000011921,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 76.65600000321865,
+                "end": 79.66600000113249,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1189,
+                "start": 78.82600000500679,
+                "end": 454.2150000035763,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 76.03899999707937,
+                "end": 79.7930000051856,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 76.14200000464916,
+                "end": 80.42099999636412,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 76.52000000327826,
+                "end": 79.26799999922514,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 76.59000000357628,
+                "end": 80.2419999986887,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 76.94600000232458,
+                "end": 79.14600000530481,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 77.18299999833107,
+                "end": 81.20099999755621,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 77.52499999850988,
+                "end": 81.60399999469519,
+                "priority": "High"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9272,
+                "start": 466.79199999570847,
+                "end": 598.222000002861,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301130,
+                "start": 467.58500000089407,
+                "end": 745.7950000017881,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 808.3259999975562,
+                "end": 809.0879999995232,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          },
+          {
+            "run": 3,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T11:45:34.096Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3914,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 96,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 323.7113,
+            "lcp": 769.2782500000001,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 1095926,
+            "requests": 26,
+            "thirdPartyBytes": 311591,
+            "thirdPartyRequests": 3,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.7589999923706054
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 5.043000007629394
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 7.342
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 67.541
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"assets/logo-cropped.webp\" alt=\"Дом у моря\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4188/styles.css",
+                  "totalBytes": 17358,
+                  "wastedMs": 122
+                },
+                {
+                  "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 82
+                },
+                {
+                  "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                  "totalBytes": 418
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4188/",
+                "bytes": 28093,
+                "start": 0.33899999409914017,
+                "end": 2.8530000001192093,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-4.woff2",
+                "bytes": 42496,
+                "start": 7.23200000077486,
+                "end": 10.314999997615814,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-2.woff2",
+                "bytes": 45780,
+                "start": 7.329999998211861,
+                "end": 10.428000003099442,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-6.woff2",
+                "bytes": 19456,
+                "start": 7.447000004351139,
+                "end": 10.462999999523163,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-7.woff2",
+                "bytes": 19924,
+                "start": 7.56700000166893,
+                "end": 11.520999997854233,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-8.woff2",
+                "bytes": 19928,
+                "start": 7.6400000005960464,
+                "end": 14.078999996185303,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/fonts.css",
+                "bytes": 418,
+                "start": 9.578999996185303,
+                "end": 10.960999995470047,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/styles.css",
+                "bytes": 17358,
+                "start": 9.834000006318092,
+                "end": 13.905000001192093,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/content-model.js",
+                "bytes": 2360,
+                "start": 11.668999999761581,
+                "end": 14.873999997973442,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/script.js",
+                "bytes": 17880,
+                "start": 13.651000000536442,
+                "end": 16.184000000357628,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 10.14699999988079,
+                "end": 13.605999998748302,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 10.211000002920628,
+                "end": 14.384999997913837,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/logo-cropped.webp",
+                "bytes": 29068,
+                "start": 10.99100000411272,
+                "end": 14.690999999642372,
+                "priority": "Medium"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/config.js",
+                "bytes": 744,
+                "start": 15.733999997377396,
+                "end": 16.649999998509884,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/core.js",
+                "bytes": 4296,
+                "start": 15.798000000417233,
+                "end": 16.820000000298023,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 15.983999997377396,
+                "end": 16.91600000113249,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 17.622999995946884,
+                "end": 18.168000005185604,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/fonts/font-3.woff2",
+                "bytes": 39440,
+                "start": 54.29500000178814,
+                "end": 56.22900000214577,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+                "bytes": 1189,
+                "start": 55.29599999636412,
+                "end": 386.91400000452995,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 53.12599999457598,
+                "end": 55.82900000363588,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/location.webp",
+                "bytes": 161399,
+                "start": 53.27200000733137,
+                "end": 56.347999997437,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 53.70000000298023,
+                "end": 56.27099999785423,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4188/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 53.96800000220537,
+                "end": 56.30699999630451,
+                "priority": "Low"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+                "bytes": 9320,
+                "start": 400.6469999998808,
+                "end": 493.7669999971986,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+                "bytes": 301082,
+                "start": 401.5819999948144,
+                "end": 695.9360000044107,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4188/favicon.ico",
+                "bytes": 3906,
+                "start": 758.8509999960661,
+                "end": 759.6279999986291,
+                "priority": "High"
+              }
+            ],
+            "contrast": 0
+          }
+        ]
+      }
+    },
+    "final": {
+      "mobile": {
+        "median": {
+          "performance": 96,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "seo": 100,
+          "fcp": 1052.328,
+          "lcp": 2807.9839999999995,
+          "tbt": 0,
+          "cls": 0.003144705158054653,
+          "bytes": 466991,
+          "requests": 20,
+          "thirdPartyBytes": 0,
+          "thirdPartyRequests": 0
+        },
+        "runs": [
+          {
+            "run": 1,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:04:46.071Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3826,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 96,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1052.328,
+            "lcp": 2807.9839999999995,
+            "tbt": 0,
+            "cls": 0.003144705158054653,
+            "bytes": 466991,
+            "requests": 20,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 3.125
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 107.525
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435,
+                  "wastedMs": 301
+                },
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 301
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.3569999933242798,
+                "end": 3.145999997854233,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 19.074000000953674,
+                "end": 21.69999999552965,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 19.210999995470047,
+                "end": 21.582999996840954,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 19.723999992012978,
+                "end": 23.462999992072582,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 19.366999998688698,
+                "end": 21.92899999767542,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 19.49599999934435,
+                "end": 22.375,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 19.625,
+                "end": 23.498999997973442,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 24.697999998927116,
+                "end": 25.355999998748302,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 57.07499999552965,
+                "end": 58.5789999961853,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 57.130999997258186,
+                "end": 58.98499999940395,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 57.21899999678135,
+                "end": 59.037999995052814,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 57.28999999165535,
+                "end": 59.244000002741814,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 57.461999997496605,
+                "end": 59.342000000178814,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 57.581999994814396,
+                "end": 59.37899999320507,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+                "bytes": 102565,
+                "start": 56.43399999290705,
+                "end": 57.894999995827675,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 56.55499999970198,
+                "end": 57.78899999707937,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 80.56599999219179,
+                "end": 81.91099999845028,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 80.79500000178814,
+                "end": 82.64099999517202,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 81.0869999974966,
+                "end": 82.472999997437,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 100.08099999278784,
+                "end": 100.63099999725819,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          },
+          {
+            "run": 2,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:04:59.373Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3925,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 95,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1262.6902,
+            "lcp": 2898.0706,
+            "tbt": 9,
+            "cls": 0.003144705158054653,
+            "bytes": 466991,
+            "requests": 20,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.909
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 121.608
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435,
+                  "wastedMs": 301
+                },
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 301
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.3740000054240227,
+                "end": 3.011000007390976,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 34.96600001305342,
+                "end": 37.99000000953674,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 35.09800000488758,
+                "end": 36.208000011742115,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 35.556000009179115,
+                "end": 40.22400000691414,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 35.25500000268221,
+                "end": 37.64600000530481,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 35.3740000128746,
+                "end": 38.46900001168251,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 35.45900000631809,
+                "end": 38.60700000822544,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 39.427000008523464,
+                "end": 40.804000005126,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 39.521000012755394,
+                "end": 40.96000000834465,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 39.64300000667572,
+                "end": 40.92500000447035,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 45.185000009834766,
+                "end": 45.87200000882149,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 72.00600000470877,
+                "end": 73.37900000810623,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 72.11400000751019,
+                "end": 73.61200000345707,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 72.22800000756979,
+                "end": 73.64700000733137,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 72.2930000051856,
+                "end": 73.51000000536442,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 72.35500000417233,
+                "end": 73.69100000709295,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 72.41400000452995,
+                "end": 73.72000000625849,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+                "bytes": 102565,
+                "start": 77.13500000536442,
+                "end": 78.46300000697374,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 77.24400000274181,
+                "end": 78.40100000798702,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 114.5160000026226,
+                "end": 115.12300000339746,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          },
+          {
+            "run": 3,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:05:12.555Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "mobile",
+              "throttling": {
+                "rttMs": 150,
+                "throughputKbps": 1638.4,
+                "requestLatencyMs": 562.5,
+                "downloadThroughputKbps": 1474.5600000000002,
+                "uploadThroughputKbps": 675,
+                "cpuSlowdownMultiplier": 4
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": true,
+                "width": 412,
+                "height": 823,
+                "deviceScaleFactor": 1.75,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3928,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 96,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 1051.9216,
+            "lcp": 2804.7648,
+            "tbt": 0,
+            "cls": 0.003144705158054653,
+            "bytes": 466991,
+            "requests": 20,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.995
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 104.607
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-P",
+                  "path": "1,HTML,1,BODY,13,ASIDE,0,DIV,2,P",
+                  "selector": "body > aside#cookie-banner > div.privacy-banner-copy > p.privacy-banner-note",
+                  "boundingRect": {
+                    "top": 720,
+                    "bottom": 754,
+                    "left": 21,
+                    "right": 391,
+                    "width": 370,
+                    "height": 34
+                  },
+                  "snippet": "<p class=\"privacy-banner-note\">",
+                  "nodeLabel": "Внешняя аналитика отключена. Здесь сохраняется только ваш выбор."
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435,
+                  "wastedMs": 301
+                },
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 301
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.3660000041127205,
+                "end": 3.0240000039339066,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 12.89699999988079,
+                "end": 15.378000006079674,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 13.016000002622604,
+                "end": 13.867000006139278,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 13.477000005543232,
+                "end": 17.065999999642372,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 13.157999999821186,
+                "end": 15.486000008881092,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 13.300999999046326,
+                "end": 15.963000006973743,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 13.373000003397465,
+                "end": 16.003000006079674,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-mobile.webp",
+                "bytes": 22992,
+                "start": 18.560000002384186,
+                "end": 19.118000008165836,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 49.53200000524521,
+                "end": 50.775000005960464,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 49.58600000292063,
+                "end": 51.060000009834766,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 49.67000000178814,
+                "end": 51.25900000333786,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 49.73800000548363,
+                "end": 51.09100000560284,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 49.80000000447035,
+                "end": 52.163000002503395,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 49.84800000488758,
+                "end": 52.23300000280142,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+                "bytes": 102565,
+                "start": 49.08799999952316,
+                "end": 50.99000000208616,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 49.215999998152256,
+                "end": 50.83800000697374,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 72.85800000280142,
+                "end": 74.83000000566244,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 73.0109999999404,
+                "end": 75.64600000530481,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 73.21600000560284,
+                "end": 75.49400000274181,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 92.69300001114607,
+                "end": 93.26900000870228,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "performance": 100,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "seo": 100,
+          "fcp": 282.871,
+          "lcp": 747.1775,
+          "tbt": 0,
+          "cls": 0,
+          "bytes": 665270,
+          "requests": 22,
+          "thirdPartyBytes": 0,
+          "thirdPartyRequests": 0
+        },
+        "runs": [
+          {
+            "run": 1,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:04:52.610Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3914,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 283.2716,
+            "lcp": 748.1790000000001,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 665270,
+            "requests": 22,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.693
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 24.145
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 5.757
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 69.087
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp\" alt=\"Дом у моря\" srcset=\"assets/performance/logo-208-9fc30e7ce8dfe9c8.webp 208w, assets/performance…\" sizes=\"(max-width: 369px) 94px, (max-width: 800px) 25.35vw, 203px\" fetchpriority=\"high\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 82
+                },
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.33799999952316284,
+                "end": 2.842000000178814,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 26.381999999284744,
+                "end": 29.515000000596046,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 26.48600000143051,
+                "end": 29.651000000536442,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 26.60199999809265,
+                "end": 29.568000003695488,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 26.72699999809265,
+                "end": 32.09399999678135,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 26.806999996304512,
+                "end": 32.189999997615814,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 28.74499999731779,
+                "end": 31.444000005722046,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 31.488000005483627,
+                "end": 33.04500000178814,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 31.653999999165535,
+                "end": 34.220999993383884,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 28.98200000077486,
+                "end": 31.62900000065565,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 29.34000000357628,
+                "end": 32.92400000244379,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 29.39800000190735,
+                "end": 32.23200000077486,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 34.391000002622604,
+                "end": 35.23699999600649,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 34.47800000756979,
+                "end": 35.347999997437,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 34.58200000226498,
+                "end": 35.498000003397465,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 36.824000000953674,
+                "end": 37.502000004053116,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 72.96299999952316,
+                "end": 74.48600000143051,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 72.22500000149012,
+                "end": 74.33500000089407,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 72.41600000113249,
+                "end": 74.10700000077486,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 72.56100000441074,
+                "end": 74.1490000039339,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 72.63700000196695,
+                "end": 74.38800000399351,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 98.76200000196695,
+                "end": 99.66400000452995,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          },
+          {
+            "run": 2,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:05:05.820Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3942.5,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 282.871,
+            "lcp": 747.1775,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 665270,
+            "requests": 22,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.7200000076293946
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 8.700999992370605
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 6.932
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 65.476
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp\" alt=\"Дом у моря\" srcset=\"assets/performance/logo-208-9fc30e7ce8dfe9c8.webp 208w, assets/performance…\" sizes=\"(max-width: 369px) 94px, (max-width: 800px) 25.35vw, 203px\" fetchpriority=\"high\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 81
+                },
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.3500000014901161,
+                "end": 2.9149999991059303,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 10.902999997138977,
+                "end": 14.185999996960163,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 11.004999995231628,
+                "end": 13.994000002741814,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 11.11599999666214,
+                "end": 14.23200000077486,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 11.24099999666214,
+                "end": 14.842999994754791,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 11.320999994874,
+                "end": 17.30399999767542,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 13.304999999701977,
+                "end": 16.63299999386072,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 15.201999999582767,
+                "end": 17.703999996185303,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 16.67399999499321,
+                "end": 19.342000000178814,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 13.556999996304512,
+                "end": 16.98600000143051,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 13.876999996602535,
+                "end": 17.550999999046326,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 13.943999998271465,
+                "end": 17.96799999475479,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 18.926999993622303,
+                "end": 20.02199999243021,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 19.020999997854233,
+                "end": 19.761999994516373,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 19.087999999523163,
+                "end": 19.865000002086163,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 20.755999997258186,
+                "end": 21.306999996304512,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 56.68699999153614,
+                "end": 57.97200000286102,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 55.96800000220537,
+                "end": 57.864000000059605,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 56.081999994814396,
+                "end": 57.45899999141693,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 56.215999998152256,
+                "end": 57.53899999707937,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 56.29100000113249,
+                "end": 57.903999999165535,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 81.51499999314547,
+                "end": 82.17199999839067,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          },
+          {
+            "run": 3,
+            "version": "13.6.0",
+            "fetchTime": "2026-11-15T12:05:18.921Z",
+            "settings": {
+              "output": "json",
+              "maxWaitForFcp": 30000,
+              "maxWaitForLoad": 45000,
+              "pauseAfterFcpMs": 1000,
+              "pauseAfterLoadMs": 1000,
+              "networkQuietThresholdMs": 1000,
+              "cpuQuietThresholdMs": 1000,
+              "formFactor": "desktop",
+              "throttling": {
+                "rttMs": 40,
+                "throughputKbps": 10240,
+                "requestLatencyMs": 0,
+                "downloadThroughputKbps": 0,
+                "uploadThroughputKbps": 0,
+                "cpuSlowdownMultiplier": 1
+              },
+              "throttlingMethod": "simulate",
+              "screenEmulation": {
+                "mobile": false,
+                "width": 1350,
+                "height": 940,
+                "deviceScaleFactor": 1,
+                "disabled": false
+              },
+              "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+              "auditMode": false,
+              "gatherMode": false,
+              "clearStorageTypes": [
+                "file_systems",
+                "shader_cache",
+                "service_workers",
+                "cache_storage"
+              ],
+              "disableStorageReset": false,
+              "debugNavigation": false,
+              "channel": "node",
+              "usePassiveGathering": false,
+              "disableFullPageScreenshot": false,
+              "skipAboutBlank": false,
+              "blankPage": "about:blank",
+              "ignoreStatusCode": false,
+              "locale": "en-US",
+              "blockedUrlPatterns": null,
+              "additionalTraceCategories": null,
+              "extraHeaders": null,
+              "precomputedLanternData": null,
+              "onlyAudits": null,
+              "onlyCategories": [
+                "performance",
+                "accessibility",
+                "best-practices",
+                "seo"
+              ],
+              "skipAudits": null
+            },
+            "environment": {
+              "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+              "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+              "benchmarkIndex": 3923.5,
+              "credits": {
+                "axe-core": "4.14.0"
+              }
+            },
+            "performance": 100,
+            "accessibility": 100,
+            "bestPractices": 100,
+            "seo": 100,
+            "fcp": 282.7033,
+            "lcp": 746.7582499999999,
+            "tbt": 0,
+            "cls": 0,
+            "bytes": 665270,
+            "requests": 22,
+            "thirdPartyBytes": 0,
+            "thirdPartyRequests": 0,
+            "lcpDetail": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "label",
+                      "valueType": "text",
+                      "label": "Subpart"
+                    },
+                    {
+                      "key": "duration",
+                      "valueType": "ms",
+                      "label": "Duration"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "subpart": "timeToFirstByte",
+                      "label": "Time to first byte",
+                      "duration": 2.705
+                    },
+                    {
+                      "subpart": "resourceLoadDelay",
+                      "label": "Resource load delay",
+                      "duration": 29.316
+                    },
+                    {
+                      "subpart": "resourceLoadDuration",
+                      "label": "Resource load duration",
+                      "duration": 7.104
+                    },
+                    {
+                      "subpart": "elementRenderDelay",
+                      "label": "Element render delay",
+                      "duration": 64.958
+                    }
+                  ]
+                },
+                {
+                  "type": "node",
+                  "lhId": "page-0-IMG",
+                  "path": "1,HTML,1,BODY,3,HEADER,0,DIV,0,A,0,IMG",
+                  "selector": "header#site-header > div.header-bar > a#logo-link > img.logo",
+                  "boundingRect": {
+                    "top": 29,
+                    "bottom": 81,
+                    "left": 57,
+                    "right": 260,
+                    "width": 203,
+                    "height": 52
+                  },
+                  "snippet": "<img src=\"http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp\" alt=\"Дом у моря\" srcset=\"assets/performance/logo-208-9fc30e7ce8dfe9c8.webp 208w, assets/performance…\" sizes=\"(max-width: 369px) 94px, (max-width: 800px) 25.35vw, 203px\" fetchpriority=\"high\" class=\"logo\" width=\"811\" height=\"208\">",
+                  "nodeLabel": "Дом у моря"
+                }
+              ]
+            },
+            "blocking": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Duration"
+                }
+              ],
+              "items": [
+                {
+                  "url": "http://127.0.0.1:4189/styles.css",
+                  "totalBytes": 17435
+                },
+                {
+                  "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                  "totalBytes": 1567,
+                  "wastedMs": 81
+                }
+              ]
+            },
+            "requestsDetail": [
+              {
+                "url": "http://127.0.0.1:4189/",
+                "bytes": 29110,
+                "start": 0.34300000220537186,
+                "end": 2.875,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-4-de8cd81872c5be94.woff2",
+                "bytes": 42496,
+                "start": 31.54399999976158,
+                "end": 34.60400000214577,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-2-ee97755e1627a905.woff2",
+                "bytes": 45780,
+                "start": 31.66099999845028,
+                "end": 34.67999999970198,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-6-ace866d882f7a84b.woff2",
+                "bytes": 19456,
+                "start": 31.777999997138977,
+                "end": 34.71100000292063,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-7-3541516ab4bb29c6.woff2",
+                "bytes": 19924,
+                "start": 31.923000000417233,
+                "end": 38.32900000363588,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-8-04e2549e9df505b6.woff2",
+                "bytes": 19928,
+                "start": 32.00600000470877,
+                "end": 38.08399999886751,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/styles.css",
+                "bytes": 17435,
+                "start": 33.98800000548363,
+                "end": 37.47000000625849,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/content-model.js",
+                "bytes": 2360,
+                "start": 37.519999995827675,
+                "end": 38.71400000154972,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/script.js",
+                "bytes": 18303,
+                "start": 37.96799999475479,
+                "end": 40.22900000214577,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.css",
+                "bytes": 1567,
+                "start": 34.153999999165535,
+                "end": 37.90100000053644,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/privacy.js",
+                "bytes": 4548,
+                "start": 34.467000000178814,
+                "end": 38.22300000488758,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+                "bytes": 5455,
+                "start": 34.55799999833107,
+                "end": 38.75900000333786,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/config.js",
+                "bytes": 744,
+                "start": 39.58500000089407,
+                "end": 40.4370000064373,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/core.js",
+                "bytes": 4296,
+                "start": 39.65100000053644,
+                "end": 40.98200000077486,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/privacy/metrica.js",
+                "bytes": 1838,
+                "start": 39.74500000476837,
+                "end": 40.94500000029802,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/hero-desktop.webp",
+                "bytes": 100573,
+                "start": 41.44999999552965,
+                "end": 42.05299999564886,
+                "priority": "High"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/font-3-16a8472875804598.woff2",
+                "bytes": 39440,
+                "start": 77.42899999767542,
+                "end": 78.53599999845028,
+                "priority": "VeryHigh"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/architecture.webp",
+                "bytes": 141143,
+                "start": 76.67399999499321,
+                "end": 78.4890000000596,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+                "bytes": 64848,
+                "start": 76.84699999541044,
+                "end": 78.12700000405312,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/cac1215e0f091803-640.webp",
+                "bytes": 49544,
+                "start": 77.03199999779463,
+                "end": 78.21299999952316,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/assets/content/gallery/d66bd7970af683c9-640.webp",
+                "bytes": 32576,
+                "start": 77.11500000208616,
+                "end": 78.35700000077486,
+                "priority": "Low"
+              },
+              {
+                "url": "http://127.0.0.1:4189/favicon.ico",
+                "bytes": 3906,
+                "start": 105.24800000339746,
+                "end": 105.88699999451637,
+                "priority": "High"
+              }
+            ],
+            "contrast": 1
+          }
+        ]
+      }
+    }
+  },
+  "delta": {
+    "mobile": {
+      "performance": 2,
+      "accessibility": 4,
+      "bestPractices": 0,
+      "seo": 0,
+      "fcp": -151.81050000000005,
+      "lcp": -275.2930000000006,
+      "tbt": -5,
+      "cls": 0,
+      "bytes": -469235,
+      "requests": -4,
+      "thirdPartyBytes": -311592,
+      "thirdPartyRequests": -3
+    },
+    "desktop": {
+      "performance": 0,
+      "accessibility": 4,
+      "bestPractices": 0,
+      "seo": 0,
+      "fcp": -40.96210000000002,
+      "lcp": -22.100750000000062,
+      "tbt": 0,
+      "cls": 0,
+      "bytes": -430656,
+      "requests": -4,
+      "thirdPartyBytes": -311591,
+      "thirdPartyRequests": -3
+    }
+  }
+}

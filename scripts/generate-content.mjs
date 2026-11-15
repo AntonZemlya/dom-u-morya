@@ -23,6 +23,10 @@ const snapshotDate = apartments.map(lot => lot.snapshot_date).sort().at(-1);
 const list=M.plans(apartments),categories=M.categories(list),min=Math.min(...list.map(a=>a.price));
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const original=html;
+const fonts=fs.readFileSync(path.join(root,'assets/fonts/fonts.css'),'utf8').replace(/url\(([^)]*)\)/g,(_,url)=>'url('+path.posix.normalize('assets/fonts/'+url)+')');
+const fontRegion=/<!-- PERFORMANCE:fonts:start -->[\s\S]*?<!-- PERFORMANCE:fonts:end -->/;
+const withFonts=page=>page.replace(fontRegion,'<!-- PERFORMANCE:fonts:start -->\n<style id="local-fonts">\n'+fonts+'</style>\n<!-- PERFORMANCE:fonts:end -->');
+html=withFonts(html);
 // One authored footer; checked-in HTML stays fully usable without JavaScript.
 const footer=fs.readFileSync(path.join(root,'templates/footer.html'),'utf8').trimEnd();
 const withFooter=(page,name)=>{
@@ -32,7 +36,7 @@ const withFooter=(page,name)=>{
 };
 html=withFooter(html,'index.html');
 const documents=['privacy.html','consent-personal-data.html','consent-analytics.html'].map(name=>{
- const original=fs.readFileSync(path.join(root,name),'utf8');return {name,original,html:withFooter(original,name)};
+ const original=fs.readFileSync(path.join(root,name),'utf8');return {name,original,html:withFonts(withFooter(original,name))};
 });
 const region=(name,text)=>{const re=new RegExp(`<!-- CONTENT:${name}:start -->[\\s\\S]*?<!-- CONTENT:${name}:end -->`);if(!re.test(html))throw Error('Missing region '+name);html=html.replace(re,`<!-- CONTENT:${name}:start -->\n${text}\n<!-- CONTENT:${name}:end -->`);};
 region('catalog',`<h2 id="plans-heading" class="plans-style-5">Квартира под ваш ритм</h2>

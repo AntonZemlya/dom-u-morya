@@ -1,0 +1,8 @@
+PASS SEO 1440 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 1440 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 768 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 768 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 390 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 390 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 320 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 320 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow

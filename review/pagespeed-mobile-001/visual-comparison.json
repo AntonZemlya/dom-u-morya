@@ -1,0 +1,1402 @@
+[
+  {
+    "width": 1440,
+    "js": true,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 203,
+        "height": 51,
+        "box": {
+          "x": 93,
+          "y": -103,
+          "width": 202.75,
+          "height": 52,
+          "top": -103,
+          "right": 295.75,
+          "bottom": -51,
+          "left": 93
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/architecture.webp",
+        "width": 1240,
+        "height": 826,
+        "box": {
+          "x": 100,
+          "y": -10362,
+          "width": 1240,
+          "height": 520,
+          "top": -10362,
+          "right": 1340,
+          "bottom": -9842,
+          "left": 100
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+        "width": 719,
+        "height": 479,
+        "box": {
+          "x": 752,
+          "y": -9064,
+          "width": 588,
+          "height": 463.59375,
+          "top": -9064,
+          "right": 1340,
+          "bottom": -8600.40625,
+          "left": 752
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 360,
+        "height": 92,
+        "box": {
+          "x": 100,
+          "y": 453.234375,
+          "width": 360,
+          "height": 92.328125,
+          "top": 453.234375,
+          "right": 460,
+          "bottom": 545.5625,
+          "left": 100
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/architecture.webp",
+      "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.12588862559241706,
+        "meanAbsoluteError": 0.03755211076004915
+      },
+      {
+        "section": "about",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.3125,
+        "meanAbsoluteError": 0.31981223670352815
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.11535676671932596,
+        "meanAbsoluteError": 0.03998156924697209
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.17879476040021064,
+        "meanAbsoluteError": 0.05620419738458838
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "js": false,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 203,
+        "height": 51,
+        "box": {
+          "x": 93,
+          "y": 29,
+          "width": 202.75,
+          "height": 52,
+          "top": 29,
+          "right": 295.75,
+          "bottom": 81,
+          "left": 93
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/architecture.webp",
+        "width": 1240,
+        "height": 826,
+        "box": {
+          "x": 100,
+          "y": -10744,
+          "width": 1240,
+          "height": 520,
+          "top": -10744,
+          "right": 1340,
+          "bottom": -10224,
+          "left": 100
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+        "width": 719,
+        "height": 479,
+        "box": {
+          "x": 752,
+          "y": -9446.40625,
+          "width": 588,
+          "height": 463.59375,
+          "top": -9446.40625,
+          "right": 1340,
+          "bottom": -8982.8125,
+          "left": 752
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 360,
+        "height": 92,
+        "box": {
+          "x": 100,
+          "y": 454.078125,
+          "width": 360,
+          "height": 92.328125,
+          "top": 454.078125,
+          "right": 460,
+          "bottom": 546.40625,
+          "left": 100
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/architecture.webp",
+      "http://127.0.0.1:4189/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.12588862559241706,
+        "meanAbsoluteError": 0.03755211076004915
+      },
+      {
+        "section": "about",
+        "changedPercent": 0.08960308056872038,
+        "meanAbsoluteError": 0.026429480428295595
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.4058879673512375,
+        "meanAbsoluteError": 0.34598034053010357
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0.08960308056872038,
+        "meanAbsoluteError": 0.026429480428295595
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0.08927395997893628,
+        "meanAbsoluteError": 0.026495578813410567
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0.08935624012638231,
+        "meanAbsoluteError": 0.026429754695453746
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.135926803580832,
+        "meanAbsoluteError": 0.051077595664384766
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0.10605911005792522,
+        "meanAbsoluteError": 0.02944724196945761
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.2747334123222749,
+        "meanAbsoluteError": 0.08156019615587151
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "js": true,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 194,
+        "height": 49,
+        "box": {
+          "x": 54.75,
+          "y": -99.59062194824219,
+          "width": 194.578125,
+          "height": 49.90625,
+          "top": -99.59062194824219,
+          "right": 249.328125,
+          "bottom": -49.68437194824219,
+          "left": 54.75
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-768-785845aa8a1fea81.webp",
+        "width": 691,
+        "height": 460,
+        "box": {
+          "x": 38.390625,
+          "y": -10208.421875,
+          "width": 691.21875,
+          "height": 340,
+          "top": -10208.421875,
+          "right": 729.609375,
+          "bottom": -9868.421875,
+          "left": 38.390625
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-1024-ea0690d29403c94f.webp",
+        "width": 900,
+        "height": 600,
+        "box": {
+          "x": 416,
+          "y": -8790.4375,
+          "width": 313.609375,
+          "height": 557.625,
+          "top": -8790.4375,
+          "right": 729.609375,
+          "bottom": -8232.8125,
+          "left": 416
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 360,
+        "height": 92,
+        "box": {
+          "x": 40,
+          "y": 454.5,
+          "width": 357.8125,
+          "height": 91.765625,
+          "top": 454.5,
+          "right": 397.8125,
+          "bottom": 546.265625,
+          "left": 40
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-768-785845aa8a1fea81.webp",
+      "http://127.0.0.1:4189/assets/performance/location-1024-ea0690d29403c94f.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.14548158570300157,
+        "meanAbsoluteError": 0.047082757372301214
+      },
+      {
+        "section": "about",
+        "changedPercent": 0.3585357424960506,
+        "meanAbsoluteError": 0.47797000477224855
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.4236399091627172,
+        "meanAbsoluteError": 0.41843620408767773
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.21475118483412323,
+        "meanAbsoluteError": 0.07518914148894155
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.3688721860189573,
+        "meanAbsoluteError": 0.10728045599657715
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "js": false,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 194,
+        "height": 49,
+        "box": {
+          "x": 54.75,
+          "y": 28.359375,
+          "width": 194.578125,
+          "height": 49.90625,
+          "top": 28.359375,
+          "right": 249.328125,
+          "bottom": 78.265625,
+          "left": 54.75
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-768-785845aa8a1fea81.webp",
+        "width": 691,
+        "height": 460,
+        "box": {
+          "x": 38.390625,
+          "y": -10489.421875,
+          "width": 691.21875,
+          "height": 340,
+          "top": -10489.421875,
+          "right": 729.609375,
+          "bottom": -10149.421875,
+          "left": 38.390625
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-1024-ea0690d29403c94f.webp",
+        "width": 900,
+        "height": 600,
+        "box": {
+          "x": 416,
+          "y": -9072.25,
+          "width": 313.609375,
+          "height": 557.625,
+          "top": -9072.25,
+          "right": 729.609375,
+          "bottom": -8514.625,
+          "left": 416
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 360,
+        "height": 92,
+        "box": {
+          "x": 40,
+          "y": 453.9375,
+          "width": 357.8125,
+          "height": 91.765625,
+          "top": 453.9375,
+          "right": 397.8125,
+          "bottom": 545.703125,
+          "left": 40
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-768-785845aa8a1fea81.webp",
+      "http://127.0.0.1:4189/assets/performance/location-1024-ea0690d29403c94f.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.14548158570300157,
+        "meanAbsoluteError": 0.047082757372301214
+      },
+      {
+        "section": "about",
+        "changedPercent": 0.4350562796208531,
+        "meanAbsoluteError": 0.49800676342812006
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.5023203001579779,
+        "meanAbsoluteError": 0.44824578725645076
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0.07436068325434439,
+        "meanAbsoluteError": 0.02872091396787783
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0.07497778436018958,
+        "meanAbsoluteError": 0.028823249901263823
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0.07482350908372828,
+        "meanAbsoluteError": 0.028834563421537653
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.15967491113744076,
+        "meanAbsoluteError": 0.07437816778567667
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0.09302799170616113,
+        "meanAbsoluteError": 0.032652876513954716
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.4410730154028436,
+        "meanAbsoluteError": 0.13473374144286465
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "js": true,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 98,
+        "height": 25,
+        "box": {
+          "x": 33,
+          "y": -75.671875,
+          "width": 98.8125,
+          "height": 25.34375,
+          "top": -75.671875,
+          "right": 131.8125,
+          "bottom": -50.328125,
+          "left": 33
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+        "width": 404,
+        "height": 479,
+        "box": {
+          "x": 20,
+          "y": -13509,
+          "width": 350,
+          "height": 480,
+          "top": -13509,
+          "right": 370,
+          "bottom": -13029,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+        "width": 360,
+        "height": 240,
+        "box": {
+          "x": 20,
+          "y": -11737,
+          "width": 350,
+          "height": 240,
+          "top": -11737,
+          "right": 370,
+          "bottom": -11497,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 280,
+        "height": 72,
+        "box": {
+          "x": 20,
+          "y": 188.71875,
+          "width": 280,
+          "height": 71.8125,
+          "top": 188.71875,
+          "right": 300,
+          "bottom": 260.53125,
+          "left": 20
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+      "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.13701543322396403,
+        "meanAbsoluteError": 0.045678899825819255
+      },
+      {
+        "section": "about",
+        "changedPercent": 1.7532506987483292,
+        "meanAbsoluteError": 0.9327591444890023
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.5665937537975453,
+        "meanAbsoluteError": 0.461965811965812
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.28709442216551223,
+        "meanAbsoluteError": 0.11641349698221737
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.4070968525944829,
+        "meanAbsoluteError": 0.13007048244015068
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "js": false,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 98,
+        "height": 25,
+        "box": {
+          "x": 33,
+          "y": 32.328125,
+          "width": 98.8125,
+          "height": 25.34375,
+          "top": 32.328125,
+          "right": 131.8125,
+          "bottom": 57.671875,
+          "left": 33
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+        "width": 404,
+        "height": 479,
+        "box": {
+          "x": 20,
+          "y": -13599,
+          "width": 350,
+          "height": 480,
+          "top": -13599,
+          "right": 370,
+          "bottom": -13119,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+        "width": 360,
+        "height": 240,
+        "box": {
+          "x": 20,
+          "y": -11827.515625,
+          "width": 350,
+          "height": 240,
+          "top": -11827.515625,
+          "right": 370,
+          "bottom": -11587.515625,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 280,
+        "height": 72,
+        "box": {
+          "x": 20,
+          "y": 188.6875,
+          "width": 280,
+          "height": 71.8125,
+          "top": 188.6875,
+          "right": 300,
+          "bottom": 260.5,
+          "left": 20
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+      "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.13701543322396403,
+        "meanAbsoluteError": 0.045678899825819255
+      },
+      {
+        "section": "about",
+        "changedPercent": 1.8109733868027706,
+        "meanAbsoluteError": 0.9473802001053185
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.6534815895005468,
+        "meanAbsoluteError": 0.49044233807266985
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0.07959654879086159,
+        "meanAbsoluteError": 0.027465872726536233
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0.08263458500425325,
+        "meanAbsoluteError": 0.027614736500992425
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0.07959654879086159,
+        "meanAbsoluteError": 0.0276238506096326
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.08658403208166242,
+        "meanAbsoluteError": 0.08404727184348038
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0.13124316441851988,
+        "meanAbsoluteError": 0.04219325961032122
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.49884554623891114,
+        "meanAbsoluteError": 0.15996880949487585
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "js": true,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 94,
+        "height": 23,
+        "box": {
+          "x": 33,
+          "y": -75,
+          "width": 93.5625,
+          "height": 24,
+          "top": -75,
+          "right": 126.5625,
+          "bottom": -51,
+          "left": 33
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+        "width": 404,
+        "height": 479,
+        "box": {
+          "x": 20,
+          "y": -14208,
+          "width": 280,
+          "height": 480,
+          "top": -14208,
+          "right": 300,
+          "bottom": -13728,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+        "width": 360,
+        "height": 240,
+        "box": {
+          "x": 20,
+          "y": -12436,
+          "width": 300,
+          "height": 240,
+          "top": -12436,
+          "right": 320,
+          "bottom": -12196,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 280,
+        "height": 72,
+        "box": {
+          "x": 20,
+          "y": 188,
+          "width": 280,
+          "height": 71.8125,
+          "top": 188,
+          "right": 300,
+          "bottom": 259.8125,
+          "left": 20
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+      "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.12625888625592416,
+        "meanAbsoluteError": 0.04636527448657188
+      },
+      {
+        "section": "about",
+        "changedPercent": 1.823904028436019,
+        "meanAbsoluteError": 0.9194843503159558
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.6005627962085308,
+        "meanAbsoluteError": 0.46980647709320694
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.3169431279620853,
+        "meanAbsoluteError": 0.13336912519747235
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0,
+        "meanAbsoluteError": 0
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.4983708530805687,
+        "meanAbsoluteError": 0.15593157582938388
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "js": false,
+    "geometryDelta": {
+      "#hero-section": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#about": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#location": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#gallery": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#plans": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#pricing": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#progress": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "#contact": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "footer": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "photos": [
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+        "width": 94,
+        "height": 23,
+        "box": {
+          "x": 33,
+          "y": 33,
+          "width": 93.5625,
+          "height": 24,
+          "top": 33,
+          "right": 126.5625,
+          "bottom": 57,
+          "left": 33
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+        "width": 404,
+        "height": 479,
+        "box": {
+          "x": 20,
+          "y": -14468,
+          "width": 280,
+          "height": 480,
+          "top": -14468,
+          "right": 300,
+          "bottom": -13988,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+        "width": 360,
+        "height": 240,
+        "box": {
+          "x": 20,
+          "y": -12696.515625,
+          "width": 300,
+          "height": 240,
+          "top": -12696.515625,
+          "right": 320,
+          "bottom": -12456.515625,
+          "left": 20
+        }
+      },
+      {
+        "src": "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp",
+        "width": 280,
+        "height": 72,
+        "box": {
+          "x": 20,
+          "y": 188.25,
+          "width": 280,
+          "height": 71.8125,
+          "top": 188.25,
+          "right": 300,
+          "bottom": 260.0625,
+          "left": 20
+        }
+      }
+    ],
+    "photoRequests": [
+      "http://127.0.0.1:4189/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:4189/assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+      "http://127.0.0.1:4189/assets/performance/location-480-0e9563b30925ea5e.webp",
+      "http://127.0.0.1:4189/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ],
+    "sections": [
+      {
+        "section": "hero-section",
+        "changedPercent": 0.12625888625592416,
+        "meanAbsoluteError": 0.04636527448657188
+      },
+      {
+        "section": "about",
+        "changedPercent": 1.8672245260663507,
+        "meanAbsoluteError": 0.9363077606635071
+      },
+      {
+        "section": "location",
+        "changedPercent": 0.6735041469194313,
+        "meanAbsoluteError": 0.49875098736176937
+      },
+      {
+        "section": "gallery",
+        "changedPercent": 0.0699792654028436,
+        "meanAbsoluteError": 0.0279843009478673
+      },
+      {
+        "section": "plans",
+        "changedPercent": 0.07109004739336493,
+        "meanAbsoluteError": 0.028016390205371246
+      },
+      {
+        "section": "pricing",
+        "changedPercent": 0.07109004739336493,
+        "meanAbsoluteError": 0.028031200631911533
+      },
+      {
+        "section": "progress",
+        "changedPercent": 0.07701421800947868,
+        "meanAbsoluteError": 0.09477068522906792
+      },
+      {
+        "section": "contact",
+        "changedPercent": 0.11848341232227488,
+        "meanAbsoluteError": 0.04210974526066351
+      },
+      {
+        "section": "footer",
+        "changedPercent": 0.5779768957345972,
+        "meanAbsoluteError": 0.18634108412322276
+      }
+    ]
+  }
+]

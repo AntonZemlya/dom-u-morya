@@ -9,12 +9,79 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="preload" href="assets/fonts/font-4.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
-<link rel="preload" href="assets/fonts/font-2.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
-<link rel="preload" href="assets/fonts/font-6.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
-<link rel="preload" href="assets/fonts/font-7.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
-<link rel="preload" href="assets/fonts/font-8.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
-<link rel="stylesheet" href="assets/fonts/fonts.css">
+<!-- Keep measured desktop font preloads: removing them introduces a hero font-swap shift. -->
+<link rel="preload" href="assets/performance/font-4-de8cd81872c5be94.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/performance/font-2-ee97755e1627a905.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/performance/font-6-ace866d882f7a84b.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/performance/font-7-3541516ab4bb29c6.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<link rel="preload" href="assets/performance/font-8-04e2549e9df505b6.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 1141px)">
+<!-- PERFORMANCE:fonts:start -->
+<style id="local-fonts">
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/performance/font-1-589d5bc540bf8a21.woff2) format('woff2'), url(assets/fonts/font-1.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/performance/font-2-ee97755e1627a905.woff2) format('woff2'), url(assets/fonts/font-2.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/performance/font-3-16a8472875804598.woff2) format('woff2'), url(assets/fonts/font-3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/performance/font-4-de8cd81872c5be94.woff2) format('woff2'), url(assets/fonts/font-4.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/performance/font-5-20b06bae8cd7ad36.woff2) format('woff2'), url(assets/fonts/font-5.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/performance/font-6-ace866d882f7a84b.woff2) format('woff2'), url(assets/fonts/font-6.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/performance/font-7-3541516ab4bb29c6.woff2) format('woff2'), url(assets/fonts/font-7.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/performance/font-8-04e2549e9df505b6.woff2) format('woff2'), url(assets/fonts/font-8.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(assets/performance/font-9-59363a38ffa3bfe4.woff2) format('woff2'), url(assets/fonts/font-9.ttf) format('truetype');
+}
+</style>
+<!-- PERFORMANCE:fonts:end -->
 <link rel="stylesheet" href="styles.css">
 <script src="content-model.js" defer></script>
 <script src="script.js" defer></script>
@@ -30,8 +97,8 @@
 </div>
 <header id="site-header">
   <div class="header-bar">
-    <a href="#top" id="logo-link" class="logo-link">
-      <img src="assets/logo-cropped.webp" alt="Дом у моря" class="logo" width="811" height="208">
+    <a href="/" id="logo-link" class="logo-link">
+      <img src="assets/logo-cropped.webp" alt="Дом у моря" srcset="assets/performance/logo-208-9fc30e7ce8dfe9c8.webp 208w, assets/performance/logo-416-3100ea4cbf9376ca.webp 416w, assets/logo-cropped.webp 811w" sizes="(max-width: 369px) 94px, (max-width: 800px) 25.35vw, 203px" fetchpriority="high" class="logo" width="811" height="208">
     </a>
     <nav class="nav-links" aria-label="Основная навигация">
       <a href="#about" class="page-style-3">О комплексе</a>
@@ -113,7 +180,10 @@
 </div>
   <div class="about-style-3">
     <div class="loc-zoom about-style-4" role="img" aria-label="Архитектурная визуализация комплекса">
-<img class="deferred-background" src="assets/architecture.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+<picture>
+<source media="(max-width: 450px)" srcset="assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp 432w, assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp 864w" sizes="405px">
+<img class="deferred-background" src="assets/architecture.webp" srcset="assets/performance/architecture-768-785845aa8a1fea81.webp 768w, assets/architecture.webp 1536w" sizes="(max-width: 700px) max(90vw, 720px), (max-width: 1100px) 90vw, min(calc(100vw - 160px), 1240px)" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+</picture>
 </div>
     <div class="about-style-5">
 </div>
@@ -238,16 +308,23 @@
       </div>
     </div>
     <div class="loc-zoom loc-photo location-style-11" role="img" aria-label="Побережье рядом с комплексом">
-<img class="deferred-background" src="assets/location.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+<img class="deferred-background" src="assets/location.webp" srcset="assets/performance/location-480-0e9563b30925ea5e.webp 480w, assets/performance/location-768-4d444d254972ec00.webp 768w, assets/performance/location-1024-ea0690d29403c94f.webp 1024w, assets/location.webp 1536w" sizes="(max-width: 700px) max(calc(100vw - 40px), 360px), (max-width: 1100px) 900px, (max-width: 1440px) 720px, 1024px" width="1536" height="1024" loading="lazy" decoding="async" alt="">
       <div class="location-style-12">
 </div>
     </div>
   </div>
   <div class="location-style-13">
     <div class="location-style-14" id="map-container">
+      <template id="location-map-template">
       <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&amp;layer=mapnik&amp;marker=47.067329%2C37.50867" title="Карта: пр. Адмирала Лунина, 25, Мариуполь" loading="lazy" class="location-style-15" id="location-map" tabindex="-1">
 </iframe>
-      <button class="location-style-16 map-unlock" type="button" id="map-unlock" aria-controls="location-map" aria-label="Включить взаимодействие с картой">
+      </template>
+      <noscript>
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&amp;layer=mapnik&amp;marker=47.067329%2C37.50867" title="Карта: пр. Адмирала Лунина, 25, Мариуполь" loading="lazy" class="location-style-15" id="location-map" tabindex="0" style="pointer-events:auto">
+</iframe>
+      <a class="location-style-16 map-unlock" href="https://www.openstreetmap.org/?mlat=47.067329&amp;mlon=37.50867#map=16/47.067329/37.50867" target="_blank" rel="noopener nofollow" aria-label="Открыть карту OpenStreetMap в новой вкладке"><span class="location-style-17">Нажмите, чтобы взаимодействовать с картой</span></a>
+      </noscript>
+      <button class="location-style-16 map-unlock enhanced-only" type="button" id="map-unlock" aria-controls="map-container" aria-label="Включить взаимодействие с картой">
         <span class="location-style-17">Нажмите, чтобы взаимодействовать с картой</span>
       </button>
     </div>
@@ -710,7 +787,7 @@
 <footer class="page-style-9 finale-footer">
   <div class="site-footer">
     <div class="footer-main">
-      <div class="footer-identity"><p class="footer-eyebrow">Мариуполь · Азовское море</p><a class="footer-brand" href="index.html#top" aria-label="Дом у моря — на главную"><img class="footer-logo" src="assets/logo-cropped.webp" alt="Дом у моря — жилой комплекс" width="812" height="212" loading="lazy" decoding="async"></a><p class="footer-tagline">Ваше пространство у горизонта</p></div>
+      <div class="footer-identity"><p class="footer-eyebrow">Мариуполь · Азовское море</p><a class="footer-brand" href="/" aria-label="Дом у моря — на главную"><img class="footer-logo" srcset="assets/performance/logo-208-9fc30e7ce8dfe9c8.webp 208w, assets/performance/logo-416-3100ea4cbf9376ca.webp 416w, assets/logo-cropped.webp 811w" sizes="(max-width: 600px) 280px, 360px" src="assets/logo-cropped.webp" alt="Дом у моря — жилой комплекс" width="811" height="208" loading="lazy" decoding="async"></a><p class="footer-tagline">Ваше пространство у горизонта</p></div>
       <div class="footer-contact"><p class="footer-eyebrow">Телефон агентства</p><a class="footer-phone" href="tel:+79529568875">+7 (952) 956-88-75</a><a class="footer-email" href="mailto:info@anyara.ru">info@anyara.ru</a><span>Консультации и подбор квартир</span></div>
     </div>
     <div class="footer-bottom">

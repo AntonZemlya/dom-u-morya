@@ -1,0 +1,1 @@
+PASS new manager exact Apache policy: GET/HEAD 403/404, ACME 200; permissive marker fixture exposes 200 and is rejected; loopback process stopped

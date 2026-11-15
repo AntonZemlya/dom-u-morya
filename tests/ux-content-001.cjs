@@ -109,7 +109,7 @@ async function touchDriver(p){
       const driver=await touchDriver(page),position=()=>page.locator('#lightbox-position').textContent(),count=await page.evaluate(()=>lb.items.length);
       assert.equal(await position(),`1 из ${count}`);
       for(const id of ['lightbox-prev','lightbox-next']){
-        const r=await page.locator('#'+id).boundingBox(),surface=await driver.box();assert.ok(r.width>=44&&r.height>=44);assert.ok(r.x>=surface.x&&r.x+r.width<=surface.x+surface.width+1&&r.y>=surface.y&&r.y+r.height<=surface.y+surface.height+1);
+        const r=await page.locator('#'+id).boundingBox(),surface=await driver.box();assert.ok(r.width>=44&&r.height>=44);assert.ok(r.x>=0&&r.x+r.width<=width+1&&r.y>=surface.y&&r.y+r.height<=surface.y+surface.height+1);
       }
       await driver.swipe(-18,{steps:4,delay:60,hold:150});assert.equal(await position(),`1 из ${count}`,'short drag returns');
       await driver.swipe(-120,{capture:`swipe-${mode}-${width}.png`});assert.equal(await position(),`2 из ${count}`);

@@ -1005,3 +1005,23 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 .down-setting button{font:500 11px Sora,Arial,sans-serif;min-height:44px;border:0;background:transparent;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 0;color:inherit}
 @media(max-width:600px){#lightbox[data-mode=plan] .lightbox-slide{padding:12px}#lightbox .lightbox-navigation{padding:8px}#lightbox .lightbox-arrow{width:44px;height:44px}}
 @media(prefers-reduced-motion:reduce){#lightbox .lightbox-track.is-settling{transition:none}#lightbox .lightbox-arrow{transition:none}}
+
+/* LIGHTBOX-ARROWS-001: hit areas follow the fitted image, with lighter visible discs. */
+#lightbox .lightbox-slide{padding-inline:var(--lightbox-arrow-inset,0px);background-origin:content-box;background-clip:content-box}
+#lightbox[data-mode=plan] .lightbox-slide{padding-inline:max(24px,var(--lightbox-arrow-inset,0px))}
+#lightbox .lightbox-navigation{position:fixed;inset:0;display:block;padding:0;visibility:hidden}
+#lightbox .lightbox-navigation.is-positioned{visibility:visible}
+#lightbox .lightbox-arrow{position:absolute;inset:auto;transform:translateY(-50%);width:48px;height:48px;padding:0;border:0;border-radius:50%;background:transparent;backdrop-filter:none;color:#eeeae1;transition:left .18s ease,top .18s ease,color .15s ease}
+#lightbox .lightbox-navigation:not(.is-positioned) .lightbox-arrow{transition:none}
+#lightbox .lightbox-arrow::before{content:"";position:absolute;width:38px;height:38px;border-radius:50%;border:1px solid #f0ece024;background:#f5f0e714;backdrop-filter:blur(6px);transition:background .15s ease,border-color .15s ease}
+#lightbox .lightbox-arrow svg{position:relative;width:10px;height:16px}
+#lightbox .lightbox-arrow path{stroke-width:1.25;vector-effect:non-scaling-stroke}
+#lightbox .lightbox-arrow.over-image{color:#48524b}
+#lightbox .lightbox-arrow.over-image::before{background:#f5f0e7ad;border-color:#f5f0e74d}
+#lightbox .lightbox-arrow:hover,#lightbox .lightbox-arrow:focus-visible{background:transparent;color:#fff}
+#lightbox .lightbox-arrow:hover::before,#lightbox .lightbox-arrow:focus-visible::before{background:#f5f0e72e;border-color:#f5f0e754}
+#lightbox .lightbox-arrow.over-image:hover,#lightbox .lightbox-arrow.over-image:focus-visible{color:#27362f}
+#lightbox .lightbox-arrow.over-image:hover::before,#lightbox .lightbox-arrow.over-image:focus-visible::before{background:#f5f0e7eb;border-color:#f5f0e794}
+#lightbox .lightbox-arrow:focus-visible{outline-offset:0}
+@media(max-width:600px){#lightbox[data-mode=plan] .lightbox-slide{padding-inline:12px}#lightbox .lightbox-arrow{width:44px;height:44px}#lightbox .lightbox-arrow::before{width:34px;height:34px}#lightbox .lightbox-arrow svg{width:9px;height:15px}}
+@media(prefers-reduced-motion:reduce){#lightbox .lightbox-arrow,#lightbox .lightbox-arrow::before{transition:none}}

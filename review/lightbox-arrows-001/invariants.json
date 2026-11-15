@@ -1,0 +1,21 @@
+{
+  "baseline": "b883b8bf9a92fbc11ac238f6e0597b11bfea9482",
+  "protected_paths": [
+    "index.html",
+    "content-model.js",
+    "data",
+    "assets",
+    "api",
+    "privacy",
+    "templates",
+    "privacy.html",
+    "consent-personal-data.html",
+    "consent-analytics.html",
+    ".htaccess",
+    "package.json",
+    "package-lock.json"
+  ],
+  "all_protected_paths_unchanged": true,
+  "script_outside_lightbox_byte_identical": true,
+  "approved_stylesheet_preserved_with_scoped_lightbox_additions": true
+}

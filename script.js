@@ -378,7 +378,7 @@ function wireGalleryEvents(){
   select(SITE_DATA.media.construction[0].month);
 }
 /* ================= lightbox ================= */
-const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0,items:[],pointers:new Map(),gesture:null,settling:false,queued:0};
+const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0,items:[],pointers:new Map(),gesture:null,settling:false,queued:0,navigationFrame:0,navigationVersion:0};
 function lightboxItems(){
   if(lb.mode==='plan'){
     const p=PLANS.find(p=>p.id===lb.lotId);
@@ -390,6 +390,50 @@ function lightboxItems(){
 function lightboxCount(){return lb.items.length;}
 function lightboxTrack(offset=0){
   document.getElementById('lightbox-track').style.transform=`translate3d(calc(-100% + ${offset}px),0,0)`;
+}
+// Measure only when a frame has settled. Zoom/pan never moves these anchors.
+function scheduleLightboxNavigation(){
+  if(lb.index==null||lb.navigationFrame)return;
+  lb.navigationFrame=requestAnimationFrame(()=>{lb.navigationFrame=0;positionLightboxNavigation();});
+}
+function positionLightboxNavigation(){
+  if(lb.index==null||lb.settling||lb.pointers.size)return;
+  const image=document.getElementById('lightbox-image'),img=document.getElementById('lightbox-asset');
+  const navigation=document.querySelector('.lightbox-navigation'),item=lb.items[lb.index];
+  const mobile=innerWidth<=600,hit=mobile?44:48,gap=mobile?4:12,safe=mobile?4:8;
+  const stage=image.getBoundingClientRect();
+  // A gutter is needed only when the viewport itself lacks space for an outside button.
+  // It is the same for all three slides, so swiping cannot change their geometry.
+  const inset=mobile?0:Math.max(0,safe+hit+gap-stage.left,stage.right-(innerWidth-safe-hit-gap));
+  image.style.setProperty('--lightbox-arrow-inset',inset+'px');
+  const slide=img.parentElement,box=slide.getBoundingClientRect(),style=getComputedStyle(slide);
+  const left=parseFloat(style.paddingLeft)||0,right=parseFloat(style.paddingRight)||0;
+  const top=parseFloat(style.paddingTop)||0,bottom=parseFloat(style.paddingBottom)||0;
+  const width=img.clientWidth,height=img.clientHeight;
+  const naturalWidth=img.naturalWidth||item.width,naturalHeight=img.naturalHeight||item.height;
+  if(!(width>0&&height>0))return;
+  // SVGs may expose intrinsic dimensions only after loading. A failed/unsized asset
+  // falls back to its laid-out image box, keeping navigation usable and in bounds.
+  if(!(naturalWidth>0&&naturalHeight>0)&&!img.complete){navigation.classList.remove('is-positioned');return;}
+  const fit=naturalWidth>0&&naturalHeight>0?Math.min(width/naturalWidth,height/naturalHeight):1;
+  const paintedWidth=naturalWidth>0&&naturalHeight>0?naturalWidth*fit:width;
+  const paintedHeight=naturalWidth>0&&naturalHeight>0?naturalHeight*fit:height;
+  const cx=box.left+(left+box.width-right)/2,cy=box.top+(top+box.height-bottom)/2;
+  const frame={left:cx-paintedWidth/2,right:cx+paintedWidth/2,top:cy-paintedHeight/2,bottom:cy+paintedHeight/2};
+  const origin=navigation.getBoundingClientRect(),clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+  const y=clamp(cy,safe+hit/2,innerHeight-safe-hit/2),circle=mobile?34:38;
+  for(const [id,x] of [['lightbox-prev',frame.left-gap-hit],['lightbox-next',frame.right+gap]]){
+    const button=document.getElementById(id),bx=clamp(x,safe,innerWidth-safe-hit);
+    button.style.left=bx-origin.left+'px';button.style.top=y-origin.top+'px';
+    const backdrop=lb.mode==='plan'?stage:frame;
+    button.classList.toggle('over-image',bx+hit/2+circle/2>backdrop.left&&bx+hit/2-circle/2<backdrop.right);
+  }
+  navigation.classList.add('is-positioned');
+}
+function resetLightboxNavigation(){
+  cancelAnimationFrame(lb.navigationFrame);lb.navigationFrame=0;lb.navigationVersion++;
+  document.querySelector('.lightbox-navigation').classList.remove('is-positioned');
+  for(const id of ['lightbox-prev','lightbox-next']){const button=document.getElementById(id);button.style.left='';button.style.top='';}
 }
 function resetLightboxGesture(){
   const image=document.getElementById('lightbox-image');
@@ -407,6 +451,7 @@ function cancelLightboxMotion(){
 function openLightbox(mode,index,id){
   lb.opener=document.activeElement;lb.mode=mode;lb.index=index;lb.lotId=mode==='plan'?id:null;lb.month=mode==='construction'?id:null;
   lb.items=lightboxItems();lb.queued=0;
+  resetLightboxNavigation();
   const overlay=document.getElementById('lightbox');overlay.hidden=false;overlay.classList.add('open');
   lb.background=[...document.body.children].filter(el=>el!==overlay&&el.tagName!=='SCRIPT').map(el=>[el,el.inert]);lb.background.forEach(([el])=>el.inert=true);
   lb.overflow=document.body.style.overflow;document.body.style.overflow='hidden';renderLightbox();document.getElementById('lightbox-close').focus();
@@ -415,6 +460,7 @@ function openLightbox(mode,index,id){
 function closeLightbox(){
   if(lb.index==null)return;
   cancelLightboxMotion();
+  resetLightboxNavigation();
   const overlay=document.getElementById('lightbox');overlay.classList.remove('open');overlay.hidden=true;
   lb.background?.forEach(([el,inert])=>el.inert=inert);document.body.style.overflow=lb.overflow||'';
   if(lb.opener?.isConnected)lb.opener.focus({preventScroll:true});lb.mode=null;lb.index=null;lb.items=[];
@@ -463,6 +509,9 @@ function renderLightbox(preserveSlides=false){
     if(card){card.querySelector('img').src=item.preview;card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
   }else variants.replaceChildren();
   lb.zoom=1;lb.x=lb.y=0;applyZoom();
+  const version=++lb.navigationVersion,img=document.getElementById('lightbox-asset');
+  scheduleLightboxNavigation();
+  img.decode?.().then(()=>{if(version===lb.navigationVersion&&img===document.getElementById('lightbox-asset'))scheduleLightboxNavigation();}).catch(()=>{});
 }
 function settleLightbox(dir=0){
   const track=document.getElementById('lightbox-track'),width=document.getElementById('lightbox-image').clientWidth;
@@ -476,6 +525,7 @@ function settleLightbox(dir=0){
       if(dir>0)track.append(track.firstElementChild);else track.prepend(track.lastElementChild);
       lb.index=(lb.index+dir+lightboxCount())%lightboxCount();renderLightbox(true);
     }else lightboxTrack();
+    scheduleLightboxNavigation();
     const next=Math.sign(lb.queued);lb.queued-=next;
     if(next)lightboxNav(next);
   };
@@ -569,8 +619,12 @@ function wireLightboxEvents(){
   image.addEventListener('pointerup',e=>endPointer(e));
   image.addEventListener('pointercancel',e=>endPointer(e,true));
   image.addEventListener('lostpointercapture',e=>{if(lb.pointers.has(e.pointerId))endPointer(e,true);});
+  // Load/decode races are scoped to the current centre node. No pointermove work.
+  for(const event of ['load','error'])document.getElementById('lightbox-track').addEventListener(event,e=>{if(e.target.id==='lightbox-asset')scheduleLightboxNavigation();},true);
+  for(const event of ['pointerup','pointercancel'])image.addEventListener(event,scheduleLightboxNavigation);
+  if('ResizeObserver' in window)new ResizeObserver(scheduleLightboxNavigation).observe(image);
   let resizeFrame;
-  window.addEventListener('resize',()=>{if(lb.index==null)return;cancelLightboxMotion();cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{if(lb.index!=null){document.querySelectorAll('.lightbox-slide img[srcset]').forEach(img=>img.sizes=Math.min(innerWidth,1100)+'px');applyZoom();}});});
+  window.addEventListener('resize',()=>{if(lb.index==null)return;cancelLightboxMotion();cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{if(lb.index!=null){document.querySelectorAll('.lightbox-slide img[srcset]').forEach(img=>img.sizes=Math.min(innerWidth,1100)+'px');applyZoom();scheduleLightboxNavigation();}});});
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&lb.index!=null)cancelLightboxMotion();});
 }
 

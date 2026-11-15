@@ -1,0 +1,16 @@
+
+> dom-u-morya@1.0.0 test:form
+> node scripts/test-form.mjs
+
+PASS PHP 8.4.27; 90 contract assertions; fake mail only; no visitor data logged
+PASS FORM-004 full received MIME: exact human subject/body, Moscow seconds, private consent audit, unchanged Message-ID/Reply-To/TLS/replay
+PASS absent STARTTLS, wrong TLS hostname, AUTH/RCPT/DATA errors, accepted-then-disconnect/timeout: opaque errors and no duplicate sends
+PASS FORM-004 minimal received MIME: only actual contact fields, no empty sections; full/minimal previews saved
+PASS untrusted CA, explicit SMTPS, recipient/approval binding, config permissions, injection/JSON/Origin/size/rate limits and optional-field omission
+PASS PHP HTTP/browser selected lot, consent, UTF-8 mail, replay and accessibility 1440
+PASS PHP HTTP/browser selected lot, consent, UTF-8 mail, replay and accessibility 768
+PASS PHP HTTP/browser selected lot, consent, UTF-8 mail, replay and accessibility 390
+PASS PHP HTTP/browser selected lot, consent, UTF-8 mail, replay and accessibility 320
+PASS lost response retry, full family/manual calc MIME, 4xx/5xx honesty, missing config, no-JS and no real email
+PASS no credentials/PII in technical logs or state; all deliveries captured only in disposable loopback sink
+Local PHP/SMTP stopped; private config, certificates, captured messages and state removed

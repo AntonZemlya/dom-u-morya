@@ -1,0 +1,5 @@
+PASS catalog 1440px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot/PDF, monthly photos, no overflow/errors/hotlinks
+PASS catalog 768px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 390px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS catalog 320px: all 28 lots, filters/groups, 3 plan views, pinch/zoom, IDs/prices in calculation/snapshot, monthly photos, no overflow/errors/hotlinks
+PASS no-JavaScript catalog and six albums at 320px

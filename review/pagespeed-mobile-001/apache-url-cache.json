@@ -1,0 +1,4203 @@
+{
+  "status": "PASS",
+  "cases": 236,
+  "failures": [],
+  "checks": [
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index.html",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index.html/",
+      "target": "https://zhk-dom-umorya.ru/",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/index.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html/",
+      "target": "https://zhk-dom-umorya.ru/privacy.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/privacy.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-personal-data.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-personal-data.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "http://www.zhk-dom-umorya.ru/consent-analytics.html/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/consent-analytics.html?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html",
+      "target": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html/",
+      "target": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/seo-redirect-missing-001.html/",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/missing/index.html",
+      "target": "https://zhk-dom-umorya.ru/missing/index.html",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/missing/index.html",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy.html/extra",
+      "target": "https://zhk-dom-umorya.ru/privacy.html/extra",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy.html/extra",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/index.html/extra",
+      "target": "https://zhk-dom-umorya.ru/index.html/extra",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/index.html/extra",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy",
+      "target": "https://zhk-dom-umorya.ru/privacy/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy/",
+      "target": "https://zhk-dom-umorya.ru/privacy/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy",
+      "target": "https://zhk-dom-umorya.ru/privacy/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy/",
+      "target": "https://zhk-dom-umorya.ru/privacy/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets",
+      "target": "https://zhk-dom-umorya.ru/assets/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/",
+      "target": "https://zhk-dom-umorya.ru/assets/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets",
+      "target": "https://zhk-dom-umorya.ru/assets/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/",
+      "target": "https://zhk-dom-umorya.ru/assets/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api",
+      "target": "https://zhk-dom-umorya.ru/api/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/api/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/api/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/",
+      "target": "https://zhk-dom-umorya.ru/api/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api",
+      "target": "https://zhk-dom-umorya.ru/api/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/api/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/api/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api/",
+      "target": "https://zhk-dom-umorya.ru/api/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/fonts/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/fonts/"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 301,
+          "location": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890"
+        },
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "target": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/assets/fonts/?utm_source=seo001&utm_campaign=normalization%20check&yclid=1234567890",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/.envrc",
+      "target": "https://zhk-dom-umorya.ru/.envrc",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.envrc",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/.envrc",
+      "target": "https://zhk-dom-umorya.ru/.envrc",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.envrc",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/.htaccess",
+      "target": "https://zhk-dom-umorya.ru/.htaccess",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.htaccess",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/.htaccess",
+      "target": "https://zhk-dom-umorya.ru/.htaccess",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.htaccess",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/.git",
+      "target": "https://zhk-dom-umorya.ru/.git",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.git",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/.git",
+      "target": "https://zhk-dom-umorya.ru/.git",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.git",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/.git/config",
+      "target": "https://zhk-dom-umorya.ru/.git/config",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.git/config",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/.git/config",
+      "target": "https://zhk-dom-umorya.ru/.git/config",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.git/config",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/%2eenvrc",
+      "target": "https://zhk-dom-umorya.ru/%2eenvrc",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/%2eenvrc",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/%2eenvrc",
+      "target": "https://zhk-dom-umorya.ru/%2eenvrc",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/%2eenvrc",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/lead-core.php",
+      "target": "https://zhk-dom-umorya.ru/api/lead-core.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/lead-core.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api/lead-core.php",
+      "target": "https://zhk-dom-umorya.ru/api/lead-core.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/lead-core.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+      "target": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+      "target": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/lead-smtp.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+      "target": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+      "target": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/analytics-core.php",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+      "target": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+      "target": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/.dom-u-morya/analytics/state/metrica-consent.sqlite3",
+          "status": 403,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+      "target": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "HEAD",
+      "url": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+      "target": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/privacy/metrica-consent.sqlite3",
+          "status": 404,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/lead.php",
+      "target": "https://zhk-dom-umorya.ru/api/lead.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/lead.php",
+          "status": 405,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/analytics-consent.php",
+      "target": "https://zhk-dom-umorya.ru/api/analytics-consent.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/analytics-consent.php",
+          "status": 405,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "url": "https://zhk-dom-umorya.ru/api/form-status.php",
+      "target": "https://zhk-dom-umorya.ru/api/form-status.php",
+      "chain": [
+        {
+          "url": "https://zhk-dom-umorya.ru/api/form-status.php",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "passed": true,
+      "error": null
+    }
+  ],
+  "no_post": true,
+  "provider_http_www_hops": [],
+  "cache_policy": "PASS: fixed URL revalidation, content hashes, 304/HEAD, API no-store, errors, replacement",
+  "static_files": 265,
+  "acme_http_https": true,
+  "local_post_status": 415,
+  "old_mod_dir_downgrade_reproduced": true,
+  "php": "PHP 8.4.27 (cgi-fcgi) (built: Oct 19 2026 14:38:59) (NTS)",
+  "production_accessed": false,
+  "provider_exception_cases": 44,
+  "unsafe_provider_mutations_rejected": 3,
+  "processes_stopped": true
+}

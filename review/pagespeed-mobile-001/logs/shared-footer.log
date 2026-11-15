@@ -1,0 +1,5 @@
+PASS shared footer 1440: four pages, identical layout, contacts/links/keyboard/no overflow
+PASS shared footer 768: four pages, identical layout, contacts/links/keyboard/no overflow
+PASS shared footer 390: four pages, identical layout, contacts/links/keyboard/no overflow
+PASS shared footer 320: four pages, identical layout, contacts/links/keyboard/no overflow
+PASS shared footer no-JS on four pages

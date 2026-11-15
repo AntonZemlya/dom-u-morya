@@ -1,0 +1,90 @@
+[
+  {
+    "width": 1440,
+    "js": true,
+    "mapRequests": 1,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/architecture.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ]
+  },
+  {
+    "width": 1440,
+    "js": false,
+    "mapRequests": 8,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/architecture.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ]
+  },
+  {
+    "width": 768,
+    "js": true,
+    "mapRequests": 1,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-768-785845aa8a1fea81.webp",
+      "http://127.0.0.1:51740/assets/performance/location-1024-ea0690d29403c94f.webp",
+      "http://127.0.0.1:51740/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ]
+  },
+  {
+    "width": 768,
+    "js": false,
+    "mapRequests": 8,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-768-785845aa8a1fea81.webp",
+      "http://127.0.0.1:51740/assets/performance/location-1024-ea0690d29403c94f.webp",
+      "http://127.0.0.1:51740/assets/performance/logo-416-3100ea4cbf9376ca.webp"
+    ]
+  },
+  {
+    "width": 390,
+    "js": true,
+    "mapRequests": 1,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/logo-cropped.webp"
+    ]
+  },
+  {
+    "width": 390,
+    "js": false,
+    "mapRequests": 8,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/logo-cropped.webp"
+    ]
+  },
+  {
+    "width": 320,
+    "js": true,
+    "mapRequests": 1,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/logo-cropped.webp"
+    ]
+  },
+  {
+    "width": 320,
+    "js": false,
+    "mapRequests": 8,
+    "images": [
+      "http://127.0.0.1:51740/assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "http://127.0.0.1:51740/assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+      "http://127.0.0.1:51740/assets/performance/location-768-4d444d254972ec00.webp",
+      "http://127.0.0.1:51740/assets/logo-cropped.webp"
+    ]
+  }
+]

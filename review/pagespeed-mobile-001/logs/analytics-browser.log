@@ -1,0 +1,6 @@
+PASS analytics viewport 320
+PASS analytics viewport 390
+PASS analytics viewport 768
+PASS analytics viewport 1440
+PASS preview OFF re-grant and document links
+PASS isolated Chromium: 4 widths, consent/SQLite/reload/legal/cross-tab/withdraw/retry/race, PDF/plan/lead goals; actual vendor PASS

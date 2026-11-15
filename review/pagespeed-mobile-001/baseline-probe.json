@@ -1,0 +1,1438 @@
+[
+  {
+    "width": 1440,
+    "fonts": {
+      ".hero-style-7": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 39
+          },
+          {
+            "familyName": "Sora Medium",
+            "postScriptName": "Sora-Medium",
+            "isCustomFont": true,
+            "glyphCount": 12
+          }
+        ]
+      },
+      ".hero-style-8": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Italic",
+            "isCustomFont": false,
+            "glyphCount": 10
+          },
+          {
+            "familyName": "Newsreader Medium",
+            "postScriptName": "Newsreader-Medium",
+            "isCustomFont": true,
+            "glyphCount": 2
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 18
+          }
+        ]
+      },
+      ".hero-style-9": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 98
+          },
+          {
+            "familyName": "Sora",
+            "postScriptName": "Sora-Regular",
+            "isCustomFont": true,
+            "glyphCount": 22
+          }
+        ]
+      },
+      ".header-cta": {
+        "fonts": [
+          {
+            "familyName": "Sora SemiBold",
+            "postScriptName": "Sora-SemiBold",
+            "isCustomFont": true,
+            "glyphCount": 1
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Bold",
+            "isCustomFont": false,
+            "glyphCount": 14
+          }
+        ]
+      }
+    },
+    "req": [
+      "http://127.0.0.1:4186/",
+      "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+      "http://127.0.0.1:4186/assets/fonts/fonts.css",
+      "http://127.0.0.1:4186/styles.css",
+      "http://127.0.0.1:4186/content-model.js",
+      "http://127.0.0.1:4186/script.js",
+      "http://127.0.0.1:4186/privacy/privacy.css",
+      "http://127.0.0.1:4186/privacy/privacy.js",
+      "http://127.0.0.1:4186/assets/logo-cropped.webp",
+      "http://127.0.0.1:4186/assets/hero-desktop.webp",
+      "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+      "http://127.0.0.1:4186/privacy/config.js",
+      "http://127.0.0.1:4186/privacy/core.js",
+      "http://127.0.0.1:4186/privacy/metrica.js",
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "http://127.0.0.1:4186/assets/architecture.webp",
+      "http://127.0.0.1:4186/assets/location.webp",
+      "http://127.0.0.1:4186/assets/content/gallery/cac1215e0f091803-640.webp",
+      "http://127.0.0.1:4186/assets/content/gallery/d66bd7970af683c9-640.webp",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/4523b8d8-7849-4340-b833-8f2badd2751a"
+    ],
+    "info": {
+      "lcp": [
+        {
+          "time": 140,
+          "element": "<img src=\"assets/logo-cropped.webp\" alt=\"Дом у моря\" class=\"logo\" width=\"811\" height=\"208\">",
+          "url": "http://127.0.0.1:4186/assets/logo-cropped.webp"
+        }
+      ],
+      "images": [
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 203,
+          "height": 52,
+          "box": {
+            "x": 93,
+            "y": 29,
+            "width": 202.75,
+            "height": 52,
+            "top": 29,
+            "right": 295.75,
+            "bottom": 81,
+            "left": 93
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/architecture.webp",
+          "width": 1240,
+          "height": 520,
+          "box": {
+            "x": 98.89666748046875,
+            "y": 1189.537353515625,
+            "width": 1242.20654296875,
+            "height": 520.92529296875,
+            "top": 1189.537353515625,
+            "right": 1341.1032104492188,
+            "bottom": 1710.462646484375,
+            "left": 98.89666748046875
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/location.webp",
+          "width": 588,
+          "height": 464,
+          "box": {
+            "x": 751.476806640625,
+            "y": 2487.58740234375,
+            "width": 589.04638671875,
+            "height": 464.4189453125,
+            "top": 2487.58740234375,
+            "right": 1340.523193359375,
+            "bottom": 2952.00634765625,
+            "left": 751.476806640625
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 360,
+          "height": 92,
+          "box": {
+            "x": 100,
+            "y": 11981.234375,
+            "width": 360,
+            "height": 92.328125,
+            "top": 11981.234375,
+            "right": 460,
+            "bottom": 12073.5625,
+            "left": 100
+          }
+        }
+      ],
+      "perf": [
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+          "start": 14.700000002980232,
+          "end": 20.200000002980232,
+          "size": 42644
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+          "start": 15.200000002980232,
+          "end": 21.30000000447035,
+          "size": 45928
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+          "start": 15.300000004470348,
+          "end": 21.80000000447035,
+          "size": 19604
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+          "start": 15.300000004470348,
+          "end": 23.600000001490116,
+          "size": 20072
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+          "start": 15.300000004470348,
+          "end": 24,
+          "size": 20076
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/fonts.css",
+          "start": 15.399999998509884,
+          "end": 21.5,
+          "size": 1726
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.css",
+          "start": 15.399999998509884,
+          "end": 22.100000001490116,
+          "size": 4583
+        },
+        {
+          "name": "http://127.0.0.1:4186/styles.css",
+          "start": 15.399999998509884,
+          "end": 23.30000000447035,
+          "size": 90541
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "start": 15.399999998509884,
+          "end": 24.600000001490116,
+          "size": 29216
+        },
+        {
+          "name": "http://127.0.0.1:4186/content-model.js",
+          "start": 15.399999998509884,
+          "end": 24.700000002980232,
+          "size": 5099
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.js",
+          "start": 15.399999998509884,
+          "end": 24.399999998509884,
+          "size": 12714
+        },
+        {
+          "name": "http://127.0.0.1:4186/script.js",
+          "start": 15.399999998509884,
+          "end": 24.80000000447035,
+          "size": 57228
+        },
+        {
+          "name": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+          "start": 22.700000002980232,
+          "end": 865.5,
+          "size": 0
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/hero-desktop.webp",
+          "start": 51.399999998509884,
+          "end": 52.20000000298023,
+          "size": 100720
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+          "start": 59.70000000298023,
+          "end": 98.89999999850988,
+          "size": 39588
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/config.js",
+          "start": 98.39999999850988,
+          "end": 99.39999999850988,
+          "size": 1212
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/core.js",
+          "start": 98.39999999850988,
+          "end": 99.39999999850988,
+          "size": 10980
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/metrica.js",
+          "start": 98.39999999850988,
+          "end": 99.60000000149012,
+          "size": 3695
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/content/gallery/cac1215e0f091803-640.webp",
+          "start": 102.89999999850988,
+          "end": 106.5,
+          "size": 49692
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/location.webp",
+          "start": 102.89999999850988,
+          "end": 106.89999999850988,
+          "size": 161546
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/architecture.webp",
+          "start": 102.89999999850988,
+          "end": 107,
+          "size": 141290
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/content/gallery/d66bd7970af683c9-640.webp",
+          "start": 103,
+          "end": 106.80000000447035,
+          "size": 32724
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Ход строительства",
+          "color": "rgb(200, 169, 106)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "В фотоальбомах — путь от основания к первым этажам: апрель — сентябрь 2026.",
+          "color": "rgb(103, 112, 103)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Сентябрь 2026",
+          "color": "rgb(41, 45, 46)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Август 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июль 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июнь 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Май 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Апрель 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 768,
+    "fonts": {
+      ".hero-style-7": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 39
+          },
+          {
+            "familyName": "Sora Medium",
+            "postScriptName": "Sora-Medium",
+            "isCustomFont": true,
+            "glyphCount": 12
+          }
+        ]
+      },
+      ".hero-style-8": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Italic",
+            "isCustomFont": false,
+            "glyphCount": 10
+          },
+          {
+            "familyName": "Newsreader Medium",
+            "postScriptName": "Newsreader-Medium",
+            "isCustomFont": true,
+            "glyphCount": 2
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 18
+          }
+        ]
+      },
+      ".hero-style-9": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 98
+          },
+          {
+            "familyName": "Sora",
+            "postScriptName": "Sora-Regular",
+            "isCustomFont": true,
+            "glyphCount": 22
+          }
+        ]
+      },
+      ".header-cta": {
+        "fonts": [
+          {
+            "familyName": "Sora SemiBold",
+            "postScriptName": "Sora-SemiBold",
+            "isCustomFont": true,
+            "glyphCount": 1
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Bold",
+            "isCustomFont": false,
+            "glyphCount": 14
+          }
+        ]
+      }
+    },
+    "req": [
+      "http://127.0.0.1:4186/",
+      "http://127.0.0.1:4186/assets/fonts/fonts.css",
+      "http://127.0.0.1:4186/styles.css",
+      "http://127.0.0.1:4186/content-model.js",
+      "http://127.0.0.1:4186/script.js",
+      "http://127.0.0.1:4186/privacy/privacy.css",
+      "http://127.0.0.1:4186/privacy/privacy.js",
+      "http://127.0.0.1:4186/assets/logo-cropped.webp",
+      "http://127.0.0.1:4186/assets/hero-tablet.webp",
+      "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "http://127.0.0.1:4186/assets/architecture.webp",
+      "http://127.0.0.1:4186/assets/location.webp",
+      "http://127.0.0.1:4186/assets/content/gallery/cac1215e0f091803-640.webp",
+      "http://127.0.0.1:4186/assets/content/gallery/d66bd7970af683c9-640.webp",
+      "http://127.0.0.1:4186/privacy/config.js",
+      "http://127.0.0.1:4186/privacy/core.js",
+      "http://127.0.0.1:4186/privacy/metrica.js",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/adfddf5b-143e-4bdd-bd97-ce83b0471612"
+    ],
+    "info": {
+      "lcp": [
+        {
+          "time": 72,
+          "element": "<img src=\"assets/logo-cropped.webp\" alt=\"Дом у моря\" class=\"logo\" width=\"811\" height=\"208\">",
+          "url": "http://127.0.0.1:4186/assets/logo-cropped.webp"
+        }
+      ],
+      "images": [
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 195,
+          "height": 50,
+          "box": {
+            "x": 54.75,
+            "y": 28.359375,
+            "width": 194.578125,
+            "height": 49.90625,
+            "top": 28.359375,
+            "right": 249.328125,
+            "bottom": 78.265625,
+            "left": 54.75
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/architecture.webp",
+          "width": 691,
+          "height": 340,
+          "box": {
+            "x": 37.816802978515625,
+            "y": 1214.2958984375,
+            "width": 692.366455078125,
+            "height": 340.564453125,
+            "top": 1214.2958984375,
+            "right": 730.1832580566406,
+            "bottom": 1554.8603515625,
+            "left": 37.816802978515625
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/location.webp",
+          "width": 314,
+          "height": 558,
+          "box": {
+            "x": 415.7396545410156,
+            "y": 2632.099609375,
+            "width": 314.1300964355469,
+            "height": 558.55078125,
+            "top": 2632.099609375,
+            "right": 729.8697509765625,
+            "bottom": 3190.650390625,
+            "left": 415.7396545410156
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 358,
+          "height": 92,
+          "box": {
+            "x": 40,
+            "y": 11853.5,
+            "width": 357.8125,
+            "height": 91.765625,
+            "top": 11853.5,
+            "right": 397.8125,
+            "bottom": 11945.265625,
+            "left": 40
+          }
+        }
+      ],
+      "perf": [
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/fonts.css",
+          "start": 4.700000002980232,
+          "end": 8,
+          "size": 1726
+        },
+        {
+          "name": "http://127.0.0.1:4186/styles.css",
+          "start": 4.799999997019768,
+          "end": 8.200000002980232,
+          "size": 90541
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.css",
+          "start": 4.799999997019768,
+          "end": 8.399999998509884,
+          "size": 4583
+        },
+        {
+          "name": "http://127.0.0.1:4186/content-model.js",
+          "start": 4.799999997019768,
+          "end": 8.799999997019768,
+          "size": 5099
+        },
+        {
+          "name": "http://127.0.0.1:4186/script.js",
+          "start": 4.799999997019768,
+          "end": 9.100000001490116,
+          "size": 57228
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "start": 4.899999998509884,
+          "end": 8.700000002980232,
+          "size": 29216
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.js",
+          "start": 4.899999998509884,
+          "end": 8.5,
+          "size": 12714
+        },
+        {
+          "name": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+          "start": 6.5,
+          "end": 682.5,
+          "size": 0
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/hero-tablet.webp",
+          "start": 19.100000001490116,
+          "end": 19.899999998509884,
+          "size": 61724
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+          "start": 22.200000002980232,
+          "end": 51.5,
+          "size": 42644
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+          "start": 22.399999998509884,
+          "end": 51.100000001490116,
+          "size": 19604
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+          "start": 25.299999997019768,
+          "end": 51.70000000298023,
+          "size": 39588
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+          "start": 26.399999998509884,
+          "end": 51.20000000298023,
+          "size": 20076
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+          "start": 26.399999998509884,
+          "end": 51.5,
+          "size": 20072
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+          "start": 26.399999998509884,
+          "end": 51.600000001490116,
+          "size": 45928
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/architecture.webp",
+          "start": 53.899999998509884,
+          "end": 56.5,
+          "size": 141290
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/location.webp",
+          "start": 53.899999998509884,
+          "end": 58.399999998509884,
+          "size": 161546
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/content/gallery/cac1215e0f091803-640.webp",
+          "start": 53.899999998509884,
+          "end": 58.20000000298023,
+          "size": 49692
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/content/gallery/d66bd7970af683c9-640.webp",
+          "start": 53.899999998509884,
+          "end": 58.29999999701977,
+          "size": 32724
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/config.js",
+          "start": 54.600000001490116,
+          "end": 58,
+          "size": 1212
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/metrica.js",
+          "start": 54.600000001490116,
+          "end": 58.100000001490116,
+          "size": 3695
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/core.js",
+          "start": 54.600000001490116,
+          "end": 58.29999999701977,
+          "size": 10980
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Ход строительства",
+          "color": "rgb(200, 169, 106)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "В фотоальбомах — путь от основания к первым этажам: апрель — сентябрь 2026.",
+          "color": "rgb(103, 112, 103)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Сентябрь 2026",
+          "color": "rgb(41, 45, 46)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Август 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июль 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июнь 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Май 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Апрель 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "fonts": {
+      ".hero-style-7": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 39
+          },
+          {
+            "familyName": "Sora Medium",
+            "postScriptName": "Sora-Medium",
+            "isCustomFont": true,
+            "glyphCount": 11
+          }
+        ]
+      },
+      ".hero-style-8": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Italic",
+            "isCustomFont": false,
+            "glyphCount": 10
+          },
+          {
+            "familyName": "Newsreader Medium",
+            "postScriptName": "Newsreader-Medium",
+            "isCustomFont": true,
+            "glyphCount": 2
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 18
+          }
+        ]
+      },
+      ".hero-style-9": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 98
+          },
+          {
+            "familyName": "Sora",
+            "postScriptName": "Sora-Regular",
+            "isCustomFont": true,
+            "glyphCount": 21
+          }
+        ]
+      },
+      ".header-cta": {
+        "fonts": [
+          {
+            "familyName": "Sora SemiBold",
+            "postScriptName": "Sora-SemiBold",
+            "isCustomFont": true,
+            "glyphCount": 1
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Bold",
+            "isCustomFont": false,
+            "glyphCount": 14
+          }
+        ]
+      }
+    },
+    "req": [
+      "http://127.0.0.1:4186/",
+      "http://127.0.0.1:4186/assets/fonts/fonts.css",
+      "http://127.0.0.1:4186/styles.css",
+      "http://127.0.0.1:4186/content-model.js",
+      "http://127.0.0.1:4186/script.js",
+      "http://127.0.0.1:4186/privacy/privacy.css",
+      "http://127.0.0.1:4186/privacy/privacy.js",
+      "http://127.0.0.1:4186/assets/logo-cropped.webp",
+      "http://127.0.0.1:4186/assets/hero-mobile.webp",
+      "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "http://127.0.0.1:4186/assets/architecture.webp",
+      "http://127.0.0.1:4186/assets/location.webp",
+      "http://127.0.0.1:4186/privacy/config.js",
+      "http://127.0.0.1:4186/privacy/core.js",
+      "http://127.0.0.1:4186/privacy/metrica.js",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/2bb3e603-4b02-47fd-beb5-262fea4baf2e"
+    ],
+    "info": {
+      "lcp": [
+        {
+          "time": 92,
+          "element": "<p class=\"privacy-banner-note\">Внешняя аналитика отключена. Здесь сохраняется только ваш выбор.</p>",
+          "url": ""
+        }
+      ],
+      "images": [
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 99,
+          "height": 25,
+          "box": {
+            "x": 33,
+            "y": 32.328125,
+            "width": 98.8125,
+            "height": 25.34375,
+            "top": 32.328125,
+            "right": 131.8125,
+            "bottom": 57.671875,
+            "left": 33
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/architecture.webp",
+          "width": 350,
+          "height": 480,
+          "box": {
+            "x": 19.705322265625,
+            "y": 1167.595947265625,
+            "width": 350.58935546875,
+            "height": 480.80810546875,
+            "top": 1167.595947265625,
+            "right": 370.294677734375,
+            "bottom": 1648.404052734375,
+            "left": 19.705322265625
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/location.webp",
+          "width": 350,
+          "height": 240,
+          "box": {
+            "x": 19.705322265625,
+            "y": 2939.7978515625,
+            "width": 350.58935546875,
+            "height": 240.404296875,
+            "top": 2939.7978515625,
+            "right": 370.294677734375,
+            "bottom": 3180.2021484375,
+            "left": 19.705322265625
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 280,
+          "height": 72,
+          "box": {
+            "x": 20,
+            "y": 14841.71875,
+            "width": 280,
+            "height": 71.8125,
+            "top": 14841.71875,
+            "right": 300,
+            "bottom": 14913.53125,
+            "left": 20
+          }
+        }
+      ],
+      "perf": [
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/fonts.css",
+          "start": 3.899999998509884,
+          "end": 6.899999998509884,
+          "size": 1726
+        },
+        {
+          "name": "http://127.0.0.1:4186/styles.css",
+          "start": 4,
+          "end": 7.5,
+          "size": 90541
+        },
+        {
+          "name": "http://127.0.0.1:4186/content-model.js",
+          "start": 4,
+          "end": 8.199999995529652,
+          "size": 5099
+        },
+        {
+          "name": "http://127.0.0.1:4186/script.js",
+          "start": 4,
+          "end": 8.099999994039536,
+          "size": 57228
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.css",
+          "start": 4.0999999940395355,
+          "end": 7.5,
+          "size": 4583
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "start": 4.0999999940395355,
+          "end": 8.199999995529652,
+          "size": 29216
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.js",
+          "start": 4.0999999940395355,
+          "end": 7.699999995529652,
+          "size": 12714
+        },
+        {
+          "name": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+          "start": 5.699999995529652,
+          "end": 706.5999999940395,
+          "size": 0
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/hero-mobile.webp",
+          "start": 18.899999998509884,
+          "end": 19.599999994039536,
+          "size": 23140
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+          "start": 21.799999997019768,
+          "end": 48.69999999552965,
+          "size": 42644
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+          "start": 22,
+          "end": 48.79999999701977,
+          "size": 19604
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+          "start": 24.799999997019768,
+          "end": 48.79999999701977,
+          "size": 20072
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+          "start": 24.899999998509884,
+          "end": 49,
+          "size": 39588
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+          "start": 26.099999994039536,
+          "end": 49.599999994039536,
+          "size": 20076
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+          "start": 26.099999994039536,
+          "end": 49.599999994039536,
+          "size": 45928
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/architecture.webp",
+          "start": 51.69999999552965,
+          "end": 54.399999998509884,
+          "size": 141290
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/location.webp",
+          "start": 51.69999999552965,
+          "end": 54.399999998509884,
+          "size": 161546
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/config.js",
+          "start": 52.19999999552965,
+          "end": 54.099999994039536,
+          "size": 1212
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/metrica.js",
+          "start": 52.19999999552965,
+          "end": 54.099999994039536,
+          "size": 3695
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/core.js",
+          "start": 52.19999999552965,
+          "end": 54.29999999701977,
+          "size": 10980
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Ход строительства",
+          "color": "rgb(200, 169, 106)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "В фотоальбомах — путь от основания к первым этажам: апрель — сентябрь 2026.",
+          "color": "rgb(103, 112, 103)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Сентябрь 2026",
+          "color": "rgb(41, 45, 46)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Август 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июль 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июнь 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Май 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Апрель 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    }
+  },
+  {
+    "width": 320,
+    "fonts": {
+      ".hero-style-7": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 39
+          },
+          {
+            "familyName": "Sora Medium",
+            "postScriptName": "Sora-Medium",
+            "isCustomFont": true,
+            "glyphCount": 11
+          }
+        ]
+      },
+      ".hero-style-8": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Italic",
+            "isCustomFont": false,
+            "glyphCount": 10
+          },
+          {
+            "familyName": "Newsreader Medium",
+            "postScriptName": "Newsreader-Medium",
+            "isCustomFont": true,
+            "glyphCount": 2
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 18
+          }
+        ]
+      },
+      ".hero-style-9": {
+        "fonts": [
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Roman",
+            "isCustomFont": false,
+            "glyphCount": 98
+          },
+          {
+            "familyName": "Sora",
+            "postScriptName": "Sora-Regular",
+            "isCustomFont": true,
+            "glyphCount": 20
+          }
+        ]
+      },
+      ".header-cta": {
+        "fonts": [
+          {
+            "familyName": "Sora SemiBold",
+            "postScriptName": "Sora-SemiBold",
+            "isCustomFont": true,
+            "glyphCount": 1
+          },
+          {
+            "familyName": "Times",
+            "postScriptName": "Times-Bold",
+            "isCustomFont": false,
+            "glyphCount": 14
+          }
+        ]
+      }
+    },
+    "req": [
+      "http://127.0.0.1:4186/",
+      "http://127.0.0.1:4186/assets/fonts/fonts.css",
+      "http://127.0.0.1:4186/styles.css",
+      "http://127.0.0.1:4186/content-model.js",
+      "http://127.0.0.1:4186/script.js",
+      "http://127.0.0.1:4186/privacy/privacy.css",
+      "http://127.0.0.1:4186/privacy/privacy.js",
+      "http://127.0.0.1:4186/assets/logo-cropped.webp",
+      "http://127.0.0.1:4186/assets/hero-mobile.webp",
+      "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+      "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+      "http://127.0.0.1:4186/privacy/config.js",
+      "http://127.0.0.1:4186/privacy/core.js",
+      "http://127.0.0.1:4186/privacy/metrica.js",
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "http://127.0.0.1:4186/assets/architecture.webp",
+      "http://127.0.0.1:4186/assets/location.webp",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/19303f05-a6df-42da-b51d-1a1c1f9e5651"
+    ],
+    "info": {
+      "lcp": [
+        {
+          "time": 88,
+          "element": "<p>Яндекс.Метрика — по желанию. Сайт работает и без неё.</p>",
+          "url": ""
+        }
+      ],
+      "images": [
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 94,
+          "height": 24,
+          "box": {
+            "x": 33,
+            "y": 33,
+            "width": 93.5625,
+            "height": 24,
+            "top": 33,
+            "right": 126.5625,
+            "bottom": 57,
+            "left": 33
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/architecture.webp",
+          "width": 280,
+          "height": 480,
+          "box": {
+            "x": 19.770828247070312,
+            "y": 1184.607177734375,
+            "width": 280.4583740234375,
+            "height": 480.78564453125,
+            "top": 1184.607177734375,
+            "right": 300.2292022705078,
+            "bottom": 1665.392822265625,
+            "left": 19.770828247070312
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/location.webp",
+          "width": 300,
+          "height": 240,
+          "box": {
+            "x": 19.75445556640625,
+            "y": 2956.803466796875,
+            "width": 300.4910888671875,
+            "height": 240.39306640625,
+            "top": 2956.803466796875,
+            "right": 320.24554443359375,
+            "bottom": 3197.196533203125,
+            "left": 19.75445556640625
+          }
+        },
+        {
+          "src": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "width": 280,
+          "height": 72,
+          "box": {
+            "x": 20,
+            "y": 15557,
+            "width": 280,
+            "height": 71.8125,
+            "top": 15557,
+            "right": 300,
+            "bottom": 15628.8125,
+            "left": 20
+          }
+        }
+      ],
+      "perf": [
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/fonts.css",
+          "start": 3.7999999970197678,
+          "end": 7.0999999940395355,
+          "size": 1726
+        },
+        {
+          "name": "http://127.0.0.1:4186/styles.css",
+          "start": 3.899999998509884,
+          "end": 7.199999995529652,
+          "size": 90541
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.css",
+          "start": 4,
+          "end": 7.199999995529652,
+          "size": 4583
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/logo-cropped.webp",
+          "start": 4,
+          "end": 7.5999999940395355,
+          "size": 29216
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/privacy.js",
+          "start": 4,
+          "end": 7.399999998509884,
+          "size": 12714
+        },
+        {
+          "name": "http://127.0.0.1:4186/content-model.js",
+          "start": 4,
+          "end": 7.799999997019768,
+          "size": 5099
+        },
+        {
+          "name": "http://127.0.0.1:4186/script.js",
+          "start": 4,
+          "end": 8.099999994039536,
+          "size": 57228
+        },
+        {
+          "name": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+          "start": 5.5999999940395355,
+          "end": 659.5999999940395,
+          "size": 0
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/hero-mobile.webp",
+          "start": 18.69999999552965,
+          "end": 19.5,
+          "size": 23140
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-4.woff2",
+          "start": 21.899999998509884,
+          "end": 48.099999994039536,
+          "size": 42644
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-6.woff2",
+          "start": 22,
+          "end": 48.399999998509884,
+          "size": 19604
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-7.woff2",
+          "start": 24.899999998509884,
+          "end": 48.29999999701977,
+          "size": 20072
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-3.woff2",
+          "start": 25,
+          "end": 48.399999998509884,
+          "size": 39588
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-8.woff2",
+          "start": 26.099999994039536,
+          "end": 48.5,
+          "size": 20076
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/fonts/font-2.woff2",
+          "start": 26.099999994039536,
+          "end": 48.5,
+          "size": 45928
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/config.js",
+          "start": 47,
+          "end": 49.099999994039536,
+          "size": 1212
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/core.js",
+          "start": 47,
+          "end": 49.5,
+          "size": 10980
+        },
+        {
+          "name": "http://127.0.0.1:4186/privacy/metrica.js",
+          "start": 47.099999994039536,
+          "end": 49.399999998509884,
+          "size": 3695
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/architecture.webp",
+          "start": 51.29999999701977,
+          "end": 53.69999999552965,
+          "size": 141290
+        },
+        {
+          "name": "http://127.0.0.1:4186/assets/location.webp",
+          "start": 51.399999998509884,
+          "end": 53.599999994039536,
+          "size": 161546
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Ход строительства",
+          "color": "rgb(200, 169, 106)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "В фотоальбомах — путь от основания к первым этажам: апрель — сентябрь 2026.",
+          "color": "rgb(103, 112, 103)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Сентябрь 2026",
+          "color": "rgb(41, 45, 46)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Август 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июль 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Июнь 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Май 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "text": "Апрель 2026",
+          "color": "rgb(122, 120, 111)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "parentBg": "rgba(0, 0, 0, 0)",
+          "sectionBg": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    }
+  }
+]

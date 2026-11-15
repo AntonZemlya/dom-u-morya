@@ -985,3 +985,15 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 .finale-footer .footer-fineprint{display:grid;grid-template-columns:1.2fr 1fr;column-gap:64px;text-align:left}
 @media(max-width:900px){.finale-footer .footer-fineprint{column-gap:32px}}
 @media(max-width:600px){.finale-footer .footer-fineprint{grid-template-columns:1fr;row-gap:8px}}
+
+/* PAGESPEED-MOBILE-001: confirmed Lighthouse contrast failures only. */
+#progress .construction-heading .plans-style-4{color:#806534}
+#progress .construction-status>p.construction-story{color:#626b62}
+#progress .month-tabs button:not(.active){color:#6b695f}
+#developer .plans-style-4,.content-faq .plans-style-4{color:#806534}
+
+/* Keep the approved logo geometry independent of resized-file rounding. */
+.logo,.footer-logo{aspect-ratio:811/208}
+
+/* Reserve the original iframe height before its deferred creation. */
+.location-style-14{min-height:clamp(260px,32vw,380px)}

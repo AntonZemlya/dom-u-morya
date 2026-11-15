@@ -1,0 +1,9 @@
+PASS banner production 320: four pages, compact, no overflow/overlap, keyboard
+PASS banner production 390: four pages, compact, no overflow/overlap, keyboard
+PASS banner production 768: four pages, compact, no overflow/overlap, keyboard
+PASS banner production 1440: four pages, compact, no overflow/overlap, keyboard
+PASS banner preview 320: four pages, compact, no overflow/overlap, keyboard, consent/reload/withdraw
+PASS banner preview 390: four pages, compact, no overflow/overlap, keyboard, consent/reload/withdraw
+PASS banner preview 768: four pages, compact, no overflow/overlap, keyboard, consent/reload/withdraw
+PASS banner preview 1440: four pages, compact, no overflow/overlap, keyboard, consent/reload/withdraw
+PASS resize and short viewport; all analytics traffic blocked before consent

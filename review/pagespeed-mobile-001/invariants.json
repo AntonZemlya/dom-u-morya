@@ -1,0 +1,147 @@
+{
+  "sourceBaseline": "47854ca",
+  "protected": [
+    {
+      "file": "data/apartments.json",
+      "identical": true,
+      "sha256": "808b99e921ddba6a242338f3bc1cf1b3fc145077610f9c64fdaa7b65e603a92c"
+    },
+    {
+      "file": "data/plan-groups.json",
+      "identical": true,
+      "sha256": "e64ba848095059776e555b9e1d98372ae77b4c6500ca6b0f8a0340476fb38da9"
+    },
+    {
+      "file": "data/media.json",
+      "identical": true,
+      "sha256": "e2d07a45a448b78e6408b108e9d9508a9d0d9a86db4b5f2b7dda0bb056840118"
+    },
+    {
+      "file": "data/project-facts.json",
+      "identical": true,
+      "sha256": "b9de530f9212de238e37b503ceb14c0c4e99903ca208c8da3058d06c3b192568"
+    },
+    {
+      "file": "content-model.js",
+      "identical": true,
+      "sha256": "554a857918a31a199da8fa942582a0446304da0ce6890f40239005c9ecfadd62"
+    },
+    {
+      "file": "scripts/seo.mjs",
+      "identical": true,
+      "sha256": "307bf207336cdd789edd66907bb4b413eacadf4b1b31dbcd02e950418e14b1cd"
+    },
+    {
+      "file": "scripts/realty-schema.mjs",
+      "identical": true,
+      "sha256": "337c91632bed7f7466318fd6da5974a9512d0fa941af385ac4cd65c291b2053d"
+    },
+    {
+      "file": "assets/architecture.webp",
+      "identical": true,
+      "sha256": "09f0bcc0ab4533855360594e50d21a638f86dcbdc1d3295915e7b1f6b03e21f5"
+    },
+    {
+      "file": "assets/location.webp",
+      "identical": true,
+      "sha256": "b56c26887ed84096f53842ae2eef019afaf9c302c2d10759c45448ea0e17cfd7"
+    },
+    {
+      "file": "assets/logo-cropped.webp",
+      "identical": true,
+      "sha256": "a54a84e8925a7d9b195b411bb60e4c84975fdd4abf08a7e8c5b9102fe123f413"
+    },
+    {
+      "file": "api/analytics-consent.php",
+      "identical": true,
+      "sha256": "8bc7cd3d9e7e90b99b38d60080a7bbf2d2550e2bfb3c06126f2e06ff904104a3"
+    },
+    {
+      "file": "api/analytics-core.php",
+      "identical": true,
+      "sha256": "b721b526e13108f90d122503681db5ba3f8d63082147e16da87ab5c608cb654c"
+    },
+    {
+      "file": "api/analytics-document.php",
+      "identical": true,
+      "sha256": "739c252cc4c175dfb096bd157027b3328c3ca9c5c0bacdc4f7f326e05ffe6226"
+    },
+    {
+      "file": "api/form-status.php",
+      "identical": true,
+      "sha256": "d4792dd7a9a1a7622f00c0bce79144d44f2493de6fbbb4168803e9cf73808b58"
+    },
+    {
+      "file": "api/lead-catalog.php",
+      "identical": true,
+      "sha256": "67966ee5b6a4eea6198a6f4d5af86dae6426cda022c2b480aa5c992ea06fcc96"
+    },
+    {
+      "file": "api/lead-core.php",
+      "identical": true,
+      "sha256": "b2c520b21ae061fb2a9a16f658b0d4316e89ee556d0b44f344506067cf292a91"
+    },
+    {
+      "file": "api/lead-smtp.php",
+      "identical": true,
+      "sha256": "2b311f13e2a5f0b127593aba0c75bada33a101fa15ec108a8ef2b091a90e4bfe"
+    },
+    {
+      "file": "api/lead.php",
+      "identical": true,
+      "sha256": "7b707164970ac8cf0ad24307d38bba0e83bff3dd5707a74897aa2f1d32d66e23"
+    },
+    {
+      "file": "api/smtp-manifest.php",
+      "identical": true,
+      "sha256": "f39a8f8dcc38870c175835e1e080c9ccc03a3304942bc38fa70de3f19589a565"
+    },
+    {
+      "file": "privacy/config.js",
+      "identical": true,
+      "sha256": "0fe28b5ec0cecaa8e56c5d75bddb5252a154606f0e224f3986e40bf7bd3437f3"
+    },
+    {
+      "file": "privacy/core.js",
+      "identical": true,
+      "sha256": "dcb3986a861d4d3db078fe4d3fcdaa3090cc615cdd8fe1eba8b4aab49e6f6d6e"
+    },
+    {
+      "file": "privacy/metrica.js",
+      "identical": true,
+      "sha256": "89aeef239c0178e76fcf98eb366ca8a4c6bb975422d65f37301692a4d704be37"
+    },
+    {
+      "file": "privacy/privacy.css",
+      "identical": true,
+      "sha256": "19f0f3ba3a9609ea091a730343bccfd2e71c12331edf48b47cec0758892379d1"
+    },
+    {
+      "file": "privacy/privacy.js",
+      "identical": true,
+      "sha256": "585f8f79db74e81e239fb507008c919c451e2f5b8e64ba6fc00f0a2d42d8fabd"
+    }
+  ],
+  "pages": [
+    {
+      "file": "index.html",
+      "seoIdentical": true,
+      "legalArticleIdentical": null
+    },
+    {
+      "file": "privacy.html",
+      "seoIdentical": true,
+      "legalArticleIdentical": true
+    },
+    {
+      "file": "consent-personal-data.html",
+      "seoIdentical": true,
+      "legalArticleIdentical": true
+    },
+    {
+      "file": "consent-analytics.html",
+      "seoIdentical": true,
+      "legalArticleIdentical": true
+    }
+  ]
+}

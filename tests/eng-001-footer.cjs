@@ -16,7 +16,7 @@ const out=process.env.QA_OUTPUT_DIR,pages=['index.html','privacy.html','consent-
    assert.equal(layout.background,'rgb(33, 55, 60)');if(baseline)assert.deepEqual(layout,baseline,name+': same responsive footer');else baseline=layout;
    assert.equal(await footer.locator('.footer-agency,.footer-operator').count(),0);assert.doesNotMatch(await footer.innerText(),/Саврасов|ОГРНИП|ИНН/);
    const logo=footer.locator('img');assert.equal(await logo.getAttribute('src'),'assets/logo-cropped.webp');await logo.evaluate(i=>i.decode());assert.ok(await logo.evaluate(i=>i.naturalWidth>0&&getComputedStyle(i).filter.includes('brightness(0)')));
-   assert.equal(await footer.locator('.footer-brand').getAttribute('href'),'index.html#top');
+   assert.equal(await footer.locator('.footer-brand').getAttribute('href'),'/');
    assert.equal(await footer.locator('.footer-phone').getAttribute('href'),'tel:+79529568875');assert.equal(await footer.locator('.footer-email').getAttribute('href'),'mailto:info@anyara.ru');
    const link=footer.locator('a[href="privacy.html"]'),settings=footer.locator('[data-privacy-settings]');assert.equal(await link.count(),1);
    const offer=await footer.locator('.footer-fineprint span').last().boundingBox(),legal=await footer.locator('.footer-legal').boundingBox();

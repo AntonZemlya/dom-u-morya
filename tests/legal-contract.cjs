@@ -9,6 +9,11 @@ module.exports=function legalContract(root){
   const unchanged=text=>{
    text=text.replace(/<!-- METRICA-001 shared privacy -->[\s\S]*?<\/script>\n/,'')
     .replace(/<!-- METRICA-001 navigation -->[\s\S]*?<!-- \/METRICA-001 navigation -->\n/,'');
+   // PAGESPEED-MOBILE-001 / LOGO-NAV-001: normalize only the two authorized
+   // presentation changes; the legal text remains compared byte for byte.
+   text=text.replace(/<!-- PERFORMANCE:fonts:start -->[\s\S]*?<!-- PERFORMANCE:fonts:end -->/,
+     '<link rel="stylesheet" href="assets/fonts/fonts.css">')
+    .replace(/<a href="\/" class="logo-link"><img([^>]*)>/,(_,attrs)=>'<a href="index.html" class="logo-link"><img'+attrs.replace(/ srcset="[^"]*" sizes="[^"]*" fetchpriority="high"/,'')+'>');
    // Owner's 03 Nov follow-up shares the main footer on all pages and removes
    // its operator line. Footer parity is checked by the corpus analytics test;
    // the legal article and form/SMTP contract retain the original comparison.

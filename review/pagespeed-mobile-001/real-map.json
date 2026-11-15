@@ -1,0 +1,60 @@
+[
+  {
+    "width": 1440,
+    "mapUrl": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+    "controlsVisible": true,
+    "zoomClick": true,
+    "foreignRequests": [
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/c467190d-14d1-4d32-a8d4-de0ed0e9ff2f",
+      "https://tile.openstreetmap.org/14/9899/5758.png",
+      "https://tile.openstreetmap.org/14/9898/5758.png",
+      "https://tile.openstreetmap.org/14/9899/5757.png",
+      "https://tile.openstreetmap.org/14/9898/5757.png",
+      "https://tile.openstreetmap.org/14/9900/5758.png",
+      "https://tile.openstreetmap.org/14/9897/5758.png",
+      "https://tile.openstreetmap.org/14/9900/5757.png",
+      "https://tile.openstreetmap.org/14/9897/5757.png",
+      "https://tile.openstreetmap.org/14/9901/5758.png",
+      "https://tile.openstreetmap.org/14/9901/5757.png",
+      "https://tile.openstreetmap.org/14/9896/5758.png",
+      "https://tile.openstreetmap.org/14/9896/5757.png",
+      "https://tile.openstreetmap.org/15/19798/11516.png",
+      "https://tile.openstreetmap.org/15/19797/11516.png",
+      "https://tile.openstreetmap.org/15/19798/11515.png",
+      "https://tile.openstreetmap.org/15/19797/11515.png",
+      "https://tile.openstreetmap.org/15/19798/11517.png",
+      "https://tile.openstreetmap.org/15/19797/11517.png",
+      "https://tile.openstreetmap.org/15/19799/11516.png",
+      "https://tile.openstreetmap.org/15/19796/11516.png",
+      "https://tile.openstreetmap.org/15/19799/11515.png",
+      "https://tile.openstreetmap.org/15/19799/11517.png",
+      "https://tile.openstreetmap.org/15/19796/11515.png",
+      "https://tile.openstreetmap.org/15/19796/11517.png",
+      "https://tile.openstreetmap.org/15/19800/11516.png",
+      "https://tile.openstreetmap.org/15/19800/11515.png",
+      "https://tile.openstreetmap.org/15/19800/11517.png",
+      "https://tile.openstreetmap.org/15/19795/11516.png"
+    ]
+  },
+  {
+    "width": 390,
+    "mapUrl": "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+    "controlsVisible": true,
+    "zoomClick": true,
+    "foreignRequests": [
+      "https://www.openstreetmap.org/export/embed.html?bbox=37.4887%2C47.0598%2C37.5287%2C47.0748&layer=mapnik&marker=47.067329%2C37.50867",
+      "https://www.openstreetmap.org/assets/embed-8cbd447f3b7417bd614398c67a6834dd2089300b3b54b49eb1af21c2d226d062.css",
+      "https://www.openstreetmap.org/assets/embed-2741eb8c014a6c9f378e58c2bc8e33c7f047a363c99b44f17d12fb182817bc67.js",
+      "blob:https://www.openstreetmap.org/3fd37088-2e51-44f0-bdf0-ae2b9f8f2c45",
+      "https://tile.openstreetmap.org/13/4949/2879.png",
+      "https://tile.openstreetmap.org/13/4949/2878.png",
+      "https://tile.openstreetmap.org/13/4950/2879.png",
+      "https://tile.openstreetmap.org/13/4948/2879.png",
+      "https://tile.openstreetmap.org/13/4950/2878.png",
+      "https://tile.openstreetmap.org/13/4948/2878.png"
+    ]
+  }
+]

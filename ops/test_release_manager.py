@@ -408,6 +408,26 @@ class Lifecycle(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'Apache policy'):c.verify_package(old_raw,c.sha(old_raw))
         with self.assertRaisesRegex(RuntimeError,'Apache policy'):self.m.preflight(old_manifest,len(old_raw))
 
+    def test_exact_cache_migration_from_v2_preserves_guard_and_rollback(self):
+        previous=self.guard.split(b'\n# PAGESPEED-MOBILE-001:')[0]
+        self.assertEqual(c.sha(previous),c.PREVIOUS_HTACCESS_SHA256)
+        self.assertTrue(self.guard.startswith(previous))
+        (self.doc/'.htaccess').write_bytes(previous)
+        self.baseline=self.m.snapshot(self.identity)
+        with self.assertRaisesRegex(RuntimeError,'only the exact .htaccess'):
+            self.plan('too-broad-cache')
+        raw,manifest,review=self.plan('cache-only',extra={'index.html':b'old index','script.js':b'old script'})
+        self.assertEqual(review['plan']['apache_policy_migration'],dict(scope='PAGESPEED-MOBILE-001',
+            from_sha256=c.PREVIOUS_HTACCESS_SHA256,to_sha256=c.APPROVED_HTACCESS_SHA256))
+        self.assertEqual([row['path'] for row in review['plan']['changes']],['.htaccess'])
+        self.m.apply(raw,review['plan'],review['go'])
+        self.m.attest('cache-only',review['plan'],review['go'],dict(status='PASS',package_sha256=c.sha(raw)))
+        rollback=self.m.rollback_plan('cache-only')
+        self.m.rollback(rollback['plan'],rollback['go'])
+        self.assertEqual(self.m.snapshot(self.identity),self.baseline)
+        old_raw,old_manifest=self.package(extra={'.htaccess':previous})
+        with self.assertRaisesRegex(RuntimeError,'Apache policy'):c.verify_package(old_raw,c.sha(old_raw))
+
     def test_apache_migration_rejects_other_changes_and_forged_scope(self):
         raw,manifest,review=self.migration_plan()
         with self.assertRaisesRegex(RuntimeError,'only the exact .htaccess'):

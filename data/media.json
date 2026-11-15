@@ -253,6 +253,231 @@
   ],
   "construction": [
     {
+      "month": "2026-10",
+      "title": "Октябрь 2026",
+      "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "images": [
+        {
+          "id": "2026-10-01",
+          "title": "Октябрь 2026 · фото 1",
+          "src": "assets/content/construction/7c8d6f6c6f88c34e-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/7c8d6f6c6f88c34e-640.webp 640w, assets/content/construction/7c8d6f6c6f88c34e-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/7c8d6f6c6f88c34e-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/7c8d6f6c6f88c34e-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/f2d/1000_773_1/et7md45j0oy5ci511aif7f63qvkm2xmj.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-01.jpg",
+          "sha256": "7c8d6f6c6f88c34e9a5b18a93da2008abc571856f93ed0f00152d4ff95f07c4f",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": true
+        },
+        {
+          "id": "2026-10-02",
+          "title": "Октябрь 2026 · фото 2",
+          "src": "assets/content/construction/bfb310d7758744b6-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/bfb310d7758744b6-640.webp 640w, assets/content/construction/bfb310d7758744b6-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/bfb310d7758744b6-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/bfb310d7758744b6-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4e9/1000_773_1/rgirjlcloaumxhnz1m4y3qgqs5pjj7yf.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-02.jpg",
+          "sha256": "bfb310d7758744b67b44798656cdb3bec4c8c5fd2aefeba550ed72a9d52b185f",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": false
+        },
+        {
+          "id": "2026-10-03",
+          "title": "Октябрь 2026 · фото 3",
+          "src": "assets/content/construction/20eb759e6bdbb60a-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/20eb759e6bdbb60a-640.webp 640w, assets/content/construction/20eb759e6bdbb60a-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/20eb759e6bdbb60a-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/20eb759e6bdbb60a-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/31f/1000_773_1/uiarnhh09zpc18okgt0af0oxr2uecmcq.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-03.jpg",
+          "sha256": "20eb759e6bdbb60a5f3400386206591bfa965fc2386c13f585e132ffad853b22",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": false
+        },
+        {
+          "id": "2026-10-04",
+          "title": "Октябрь 2026 · фото 4",
+          "src": "assets/content/construction/f838cdc80bcaf646-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/f838cdc80bcaf646-640.webp 640w, assets/content/construction/f838cdc80bcaf646-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/f838cdc80bcaf646-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/f838cdc80bcaf646-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/d86/1000_773_1/v7wk8so9xx0hxxz0xdwfh5u7ap5x2oae.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-04.jpg",
+          "sha256": "f838cdc80bcaf646b9a060a538dc27a61332bf8a70a72c80939ca029964ad811",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": false
+        },
+        {
+          "id": "2026-10-05",
+          "title": "Октябрь 2026 · фото 5",
+          "src": "assets/content/construction/590dbef6bcafe353-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/590dbef6bcafe353-640.webp 640w, assets/content/construction/590dbef6bcafe353-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/590dbef6bcafe353-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/590dbef6bcafe353-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e46/1000_773_1/tn3d0vnua2oza1kc480he3e8tld4suiy.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-05.jpg",
+          "sha256": "590dbef6bcafe3531bcf13fd5de9c24e8c440f610b177901f6b6a5dc03f668e7",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": false
+        },
+        {
+          "id": "2026-10-06",
+          "title": "Октябрь 2026 · фото 6",
+          "src": "assets/content/construction/8d7873c9d7ca15f5-1000.webp",
+          "width": 1000,
+          "height": 667,
+          "srcset": "assets/content/construction/8d7873c9d7ca15f5-640.webp 640w, assets/content/construction/8d7873c9d7ca15f5-1000.webp 1000w",
+          "variants": [
+            {
+              "src": "assets/content/construction/8d7873c9d7ca15f5-640.webp",
+              "width": 640,
+              "height": 427
+            },
+            {
+              "src": "assets/content/construction/8d7873c9d7ca15f5-1000.webp",
+              "width": 1000,
+              "height": 667
+            }
+          ],
+          "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/bf4/1000_773_1/85d6ce9mdhyf0w6wsa3lbin6ygv9gxk9.jpg",
+          "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+          "rights_status": "owner_confirmed",
+          "rights_confirmation": {
+            "status": "owner_confirmed",
+            "confirmed_on": "2026-11-15",
+            "scope": "Октябрьский альбом строительства 2026",
+            "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+          },
+          "original_path": "media/construction/2026-10-06.jpg",
+          "sha256": "8d7873c9d7ca15f5179bdfdc89b283a242facea7f6d9aa20328a745b631090d7",
+          "classification": "Фото строительства",
+          "capture_date": null,
+          "album_month": "2026-10",
+          "is_cover": false
+        }
+      ],
+      "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
+    },
+    {
       "month": "2026-09",
       "title": "Сентябрь 2026",
       "source_url": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
@@ -1141,5 +1366,6 @@
       ],
       "date_note": "Месяц альбома застройщика; точная дата съёмки не установлена."
     }
-  ]
+  ],
+  "construction_updated_on": "2026-11-15"
 }

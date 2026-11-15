@@ -174,8 +174,8 @@ async function makeCalcPdf(html, filename){
 const state = {
   filtersOpen: false, mortgageProgram: 'regional',
   filter: 'studio', budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6, planViews:{}, selectedPlanView:'furnished',
-  price: Math.min(...PLANS.map(p=>p.price)), downPct: 10, term: 30, rate: 2,
-  plansView: 'lots', aboutTab: 'arch',
+  price: Math.min(...PLANS.map(p=>p.price)), downPct: ContentModel.minimumDownPayment(Math.min(...PLANS.map(p=>p.price)), ContentModel.mortgagePrograms.regional).value, downMode:'auto', downAdjustment:'', term: 30, rate: 2,
+  aboutTab: 'arch',
   selectedPlanId: null,
   snapshot: null,
   formEnabled: false, formBusy: false, formAttempt: null,
@@ -305,10 +305,8 @@ function renderTabs(){
   document.getElementById('layout-filter').value=state.layout;
 }
 function renderFilterDisclosure(){
-  const lots = state.plansView === 'lots';
   const count = [state.budget, state.floor, state.layout, state.sea, state.sort !== 'price'].filter(Boolean).length;
-  const open = lots && state.filtersOpen;
-  document.getElementById('catalog-filter-actions').hidden = !lots;
+  const open = state.filtersOpen;
   document.getElementById('catalog-controls').hidden = !open;
   document.getElementById('toggle-filters').setAttribute('aria-expanded', String(open));
   document.getElementById('filter-disclosure-status').textContent = open ? 'Открыты' : 'Скрыты';
@@ -332,14 +330,14 @@ function renderPlansGrid(){
   const list=currentFilteredPlans();
   document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||'furnished')).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
   document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)}`;
-  document.getElementById('show-more-plans').hidden=list.length<=state.limit||state.plansView!=='lots';
+  document.getElementById('show-more-plans').hidden=list.length<=state.limit;
 }
 function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||'furnished'];}
 function askPlan(plan){
   state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:plan.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
   state.planChoice=plan.category;updateForm();scrollToForm();
 }
-function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;renderCalculator();scrollToEl('calculator',80);}
+function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;updateAutomaticDownPayment();renderCalculator();scrollToEl('calculator',80);}
 function wirePlansEvents(){
   // These progressive-enhancement links act as buttons once the catalog is live.
   document.getElementById('plans-grid').addEventListener('keydown',e=>{
@@ -380,91 +378,229 @@ function wireGalleryEvents(){
   select(SITE_DATA.media.construction[0].month);
 }
 /* ================= lightbox ================= */
-const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0};
+const lb={mode:null,index:null,opener:null,lotId:null,month:null,zoom:1,x:0,y:0,items:[],pointers:new Map(),gesture:null,settling:false,queued:0};
 function lightboxItems(){
-  if(lb.mode==='plan'){const p=PLANS.find(p=>p.id===lb.lotId);return p.plans.map(a=>({src:a.local_path,title:p.title+' · '+ContentModel.views[a.type],type:a.type,caption:p.meta+' · '+rub(p.price)+' · мебель приобретается отдельно'}));}
+  if(lb.mode==='plan'){
+    const p=PLANS.find(p=>p.id===lb.lotId);
+    return p.plans.map(a=>({src:a.local_path,preview:ContentModel.previewPath(a),title:p.title+' · '+ContentModel.views[a.type],type:a.type,caption:p.meta+' · '+rub(p.price)+' · мебель приобретается отдельно'}));
+  }
   const items=lb.mode==='gallery'?GALLERY:SITE_DATA.media.construction.find(m=>m.month===lb.month).images;
-  return items.map(m=>({...m,src:m.variants.at(-1).src,caption:lb.mode==='gallery'?'Визуализация застройщика':'Фото строительства'}));
+  return items.map(m=>({...m,preview:m.src,src:m.variants.at(-1).src,caption:lb.mode==='gallery'?'Визуализация застройщика':'Фото строительства'}));
 }
-function lightboxCount(){return lightboxItems().length;}
+function lightboxCount(){return lb.items.length;}
+function lightboxTrack(offset=0){
+  document.getElementById('lightbox-track').style.transform=`translate3d(calc(-100% + ${offset}px),0,0)`;
+}
+function resetLightboxGesture(){
+  const image=document.getElementById('lightbox-image');
+  // Clear state before releasing capture: lostpointercapture can be synchronous.
+  const ids=[...lb.pointers.keys()];lb.pointers.clear();lb.gesture=null;
+  ids.forEach(id=>{if(image.hasPointerCapture(id))image.releasePointerCapture(id);});
+  image.classList.remove('is-dragging');
+}
+function cancelLightboxMotion(){
+  lb.queued=0;
+  lb.finish?.();
+  resetLightboxGesture();
+  lightboxTrack();
+}
 function openLightbox(mode,index,id){
   lb.opener=document.activeElement;lb.mode=mode;lb.index=index;lb.lotId=mode==='plan'?id:null;lb.month=mode==='construction'?id:null;
+  lb.items=lightboxItems();lb.queued=0;
   const overlay=document.getElementById('lightbox');overlay.hidden=false;overlay.classList.add('open');
   lb.background=[...document.body.children].filter(el=>el!==overlay&&el.tagName!=='SCRIPT').map(el=>[el,el.inert]);lb.background.forEach(([el])=>el.inert=true);
   lb.overflow=document.body.style.overflow;document.body.style.overflow='hidden';renderLightbox();document.getElementById('lightbox-close').focus();
   if(mode==='plan')document.dispatchEvent(new Event('dom:plan-open'));
 }
 function closeLightbox(){
+  if(lb.index==null)return;
+  cancelLightboxMotion();
   const overlay=document.getElementById('lightbox');overlay.classList.remove('open');overlay.hidden=true;
   lb.background?.forEach(([el,inert])=>el.inert=inert);document.body.style.overflow=lb.overflow||'';
-  if(lb.opener?.isConnected)lb.opener.focus({preventScroll:true});lb.mode=null;lb.index=null;
+  if(lb.opener?.isConnected)lb.opener.focus({preventScroll:true});lb.mode=null;lb.index=null;lb.items=[];
+  // Drop decoded full-size neighbours when the viewer is closed.
+  document.querySelectorAll('.lightbox-slide').forEach(slide=>{slide.style.backgroundImage='';const img=slide.querySelector('img');img.removeAttribute('src');img.removeAttribute('srcset');});
 }
 function applyZoom(){
   lb.zoom=Math.max(1,Math.min(4,lb.zoom));
   const box=document.getElementById('lightbox-image').getBoundingClientRect();
   lb.x=Math.max(-box.width*(lb.zoom-1)/2,Math.min(box.width*(lb.zoom-1)/2,lb.x));lb.y=Math.max(-box.height*(lb.zoom-1)/2,Math.min(box.height*(lb.zoom-1)/2,lb.y));
-  document.getElementById('lightbox-asset').style.transform=`translate(${lb.x}px,${lb.y}px) scale(${lb.zoom})`;
+  const image=document.getElementById('lightbox-asset');
+  image.style.transform=`translate(${lb.x}px,${lb.y}px) scale(${lb.zoom})`;
+  image.parentElement.style.backgroundImage=lb.zoom>1?'none':`url("${lb.items[lb.index].preview}")`;
   document.getElementById('zoom-reset').textContent=Math.round(lb.zoom*100)+'%';document.getElementById('zoom-out').disabled=lb.zoom===1;document.getElementById('zoom-in').disabled=lb.zoom===4;
 }
-function renderLightbox(){
-  if(lb.index==null)return;const items=lightboxItems(),item=items[lb.index];
+function setLightboxSlide(slide,index,active){
+  const item=lb.items[(index+lightboxCount())%lightboxCount()],img=slide.querySelector('img');
+  if(active){img.id='lightbox-asset';slide.removeAttribute('aria-hidden');}else{img.removeAttribute('id');slide.setAttribute('aria-hidden','true');}
+  img.style.transform='';img.alt=active?item.title:'';
+  // The already loaded thumbnail remains visible while the prepared large variant decodes.
+  slide.style.backgroundImage=`url("${item.preview}")`;
+  if(item.srcset){img.srcset=item.srcset;img.sizes=Math.min(innerWidth,1100)+'px';}else{img.removeAttribute('srcset');img.removeAttribute('sizes');}
+  if(img.getAttribute('src')!==item.src)img.src=item.src;
+}
+function renderLightbox(preserveSlides=false){
+  if(lb.index==null)return;
+  const items=lb.items,item=items[lb.index],track=document.getElementById('lightbox-track');
+  // Clear the former active ID first, including after a slide rotation.
+  track.querySelectorAll('[id]').forEach(img=>img.removeAttribute('id'));
+  [...track.children].forEach((slide,i)=>{
+    if(!preserveSlides||i!==1)setLightboxSlide(slide,lb.index+i-1,i===1);
+    else {const img=slide.querySelector('img');img.id='lightbox-asset';img.alt=item.title;img.style.transform='';slide.removeAttribute('aria-hidden');}
+  });
+  lightboxTrack();
   document.getElementById('lightbox-title-text').textContent=item.title;document.getElementById('lightbox-position').textContent=(lb.index+1)+' из '+items.length;
   document.getElementById('lightbox-caption').textContent=item.caption;
   document.getElementById('lightbox').dataset.mode=lb.mode;
   document.getElementById('lightbox-calc').hidden=lb.mode!=='plan';
-  const img=document.getElementById('lightbox-asset');img.src=item.src;img.alt=item.title;
-  const variants=document.getElementById('lightbox-variants');variants.hidden=lb.mode!=='plan';variants.innerHTML=lb.mode==='plan'?items.map((m,i)=>`<button type="button" data-lb-view="${i}" aria-pressed="${lb.index===i}">${ContentModel.views[m.type]}</button>`).join(''):'';
+  for(const id of ['lightbox-prev','lightbox-next'])document.getElementById(id).disabled=items.length<2;
+  const variants=document.getElementById('lightbox-variants');variants.hidden=lb.mode!=='plan';
   if(lb.mode==='plan'){
+    if(variants.children.length!==items.length)variants.innerHTML=items.map((m,i)=>`<button type="button" data-lb-view="${i}">${ContentModel.views[m.type]}</button>`).join('');
+    [...variants.children].forEach((b,i)=>b.setAttribute('aria-pressed',String(i===lb.index)));
     state.planViews[lb.lotId]=item.type;
     const card=document.querySelector(`[data-lot-id="${lb.lotId}"]`);
-    if(card){card.querySelector('img').src=ContentModel.previewPath({local_path:item.src});card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
-  }
+    if(card){card.querySelector('img').src=item.preview;card.querySelector('img').alt=item.title;card.querySelector('.plan-thumb').href=item.src;card.querySelectorAll('[data-plan-view]').forEach(v=>v.setAttribute('aria-pressed',String(v.dataset.planView===item.type)));}
+  }else variants.replaceChildren();
   lb.zoom=1;lb.x=lb.y=0;applyZoom();
 }
-function lightboxNav(dir){lb.index=(lb.index+dir+lightboxCount())%lightboxCount();renderLightbox();}
+function settleLightbox(dir=0){
+  const track=document.getElementById('lightbox-track'),width=document.getElementById('lightbox-image').clientWidth;
+  lb.settling=true;
+  const finish=()=>{
+    if(lb.finish!==finish)return;
+    clearTimeout(lb.timer);track.removeEventListener('transitionend',ended);track.classList.remove('is-settling');
+    lb.finish=null;lb.settling=false;
+    if(dir){
+      // Rotate the decoded DOM node into the centre; never replace a visible frame.
+      if(dir>0)track.append(track.firstElementChild);else track.prepend(track.lastElementChild);
+      lb.index=(lb.index+dir+lightboxCount())%lightboxCount();renderLightbox(true);
+    }else lightboxTrack();
+    const next=Math.sign(lb.queued);lb.queued-=next;
+    if(next)lightboxNav(next);
+  };
+  const ended=e=>{if(e.target===track&&e.propertyName==='transform')finish();};
+  lb.finish=finish;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
+  // Commit the dragged position before adding the settling transition.
+  void track.offsetWidth;track.classList.add('is-settling');
+  track.addEventListener('transitionend',ended);
+  lightboxTrack(-dir*width);
+  lb.timer=setTimeout(finish,340);
+}
+function lightboxNav(dir){
+  if(lb.index==null||lightboxCount()<2)return;
+  if(lb.settling){lb.queued=Math.max(-3,Math.min(3,lb.queued+dir));return;}
+  resetLightboxGesture();lb.zoom=1;lb.x=lb.y=0;applyZoom();settleLightbox(dir);
+}
 function wireLightboxEvents(){
   const overlay=document.getElementById('lightbox'),inner=document.getElementById('lightbox-inner'),image=document.getElementById('lightbox-image');
   document.getElementById('lightbox-calc').addEventListener('click',()=>{const id=lb.lotId;closeLightbox();calcHere(PLANS.find(p=>p.id===id));});
   overlay.addEventListener('click',closeLightbox);inner.addEventListener('click',e=>e.stopPropagation());document.getElementById('lightbox-close').addEventListener('click',closeLightbox);
   document.getElementById('lightbox-prev').addEventListener('click',()=>lightboxNav(-1));document.getElementById('lightbox-next').addEventListener('click',()=>lightboxNav(1));
-  document.getElementById('lightbox-variants').addEventListener('click',e=>{const b=e.target.closest('[data-lb-view]');if(b){lb.index=Number(b.dataset.lbView);renderLightbox();document.querySelector(`[data-lb-view="${lb.index}"]`).focus();}});
-  for(const [id,change] of [['zoom-in',.5],['zoom-out',-.5],['zoom-reset',0]])document.getElementById(id).addEventListener('click',()=>{lb.zoom=change?lb.zoom+change:1;applyZoom();});
-  image.addEventListener('dblclick',()=>{lb.zoom=lb.zoom===1?2:1;applyZoom();});
+  document.getElementById('lightbox-variants').addEventListener('click',e=>{const b=e.target.closest('[data-lb-view]');if(b){cancelLightboxMotion();lb.index=Number(b.dataset.lbView);renderLightbox();b.focus();}});
+  for(const [id,change] of [['zoom-in',.5],['zoom-out',-.5],['zoom-reset',0]])document.getElementById(id).addEventListener('click',()=>{cancelLightboxMotion();lb.zoom=change?lb.zoom+change:1;applyZoom();});
+  image.addEventListener('dblclick',()=>{if(performance.now()<(lb.suppressDoubleClickUntil||0))return;cancelLightboxMotion();lb.zoom=lb.zoom===1?2:1;applyZoom();});
   document.addEventListener('keydown',e=>{
     if(lb.index==null)return;
     if(e.key==='Escape'){e.preventDefault();closeLightbox();return;}
     if(e.key==='Tab'){const controls=[...overlay.querySelectorAll('button,a[href]')].filter(b=>!b.disabled&&b.getClientRects().length);const i=controls.indexOf(document.activeElement);e.preventDefault();controls[(i+(e.shiftKey?-1:1)+controls.length)%controls.length].focus();}
     if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','0'].includes(e.key))e.preventDefault();
-    if(e.key==='+'||e.key==='='){lb.zoom+=.5;applyZoom();}else if(e.key==='-'){lb.zoom-=.5;applyZoom();}else if(e.key==='0'){lb.zoom=1;applyZoom();}
+    if(e.key==='+'||e.key==='='||e.key==='-'||e.key==='0'){cancelLightboxMotion();lb.zoom=e.key==='0'?1:lb.zoom+(e.key==='-'?-.5:.5);applyZoom();}
     else if(lb.zoom>1){if(e.key==='ArrowLeft')lb.x+=50;if(e.key==='ArrowRight')lb.x-=50;if(e.key==='ArrowUp')lb.y+=50;if(e.key==='ArrowDown')lb.y-=50;applyZoom();}
     else if(e.key==='ArrowLeft')lightboxNav(-1);else if(e.key==='ArrowRight')lightboxNav(1);
   });
-  let gesture=null;
-  const distance=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
-  image.addEventListener('touchstart',e=>{gesture={x:e.touches[0].clientX,y:e.touches[0].clientY,panX:lb.x,panY:lb.y,zoom:lb.zoom,pinch:e.touches.length>1?distance(e.touches):0,multi:e.touches.length>1};},{passive:true});
-  image.addEventListener('touchmove',e=>{if(!gesture)return;e.preventDefault();if(e.touches.length>1){if(!gesture.pinch){gesture.pinch=distance(e.touches);gesture.zoom=lb.zoom;}gesture.multi=true;lb.zoom=gesture.zoom*distance(e.touches)/gesture.pinch;applyZoom();}else if(lb.zoom>1){lb.x=gesture.panX+e.touches[0].clientX-gesture.x;lb.y=gesture.panY+e.touches[0].clientY-gesture.y;applyZoom();}},{passive:false});
-  image.addEventListener('touchend',e=>{if(!gesture)return;if(e.touches.length)return;const g=gesture;gesture=null;if(g.multi||g.zoom>1)return;const t=e.changedTouches[0],dx=t.clientX-g.x,dy=t.clientY-g.y;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))lightboxNav(dx<0?1:-1);else if(Math.abs(dy)>100&&Math.abs(dy)>Math.abs(dx))closeLightbox();});
-  image.addEventListener('touchcancel',()=>gesture=null);
-  let drag=null;image.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||lb.zoom===1)return;drag={x:e.clientX,y:e.clientY,panX:lb.x,panY:lb.y};image.setPointerCapture(e.pointerId);});image.addEventListener('pointermove',e=>{if(drag){lb.x=drag.panX+e.clientX-drag.x;lb.y=drag.panY+e.clientY-drag.y;applyZoom();}});image.addEventListener('pointerup',()=>drag=null);image.addEventListener('pointercancel',()=>drag=null);
+  const points=()=>[...lb.pointers.values()];
+  const midpoint=([a,b])=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});
+  const distance=([a,b])=>Math.hypot(a.x-b.x,a.y-b.y);
+  function startGesture(blockSwipe=false){
+    const ps=points();
+    if(ps.length>1){
+      const mid=midpoint(ps),rect=image.getBoundingClientRect();
+      lightboxTrack();
+      lb.gesture={kind:'pinch',distance:Math.max(1,distance(ps)),zoom:lb.zoom,panX:lb.x,panY:lb.y,mid,center:{x:rect.left+rect.width/2,y:rect.top+rect.height/2},blockSwipe:true};
+    }else if(ps.length){
+      const p=ps[0];lb.gesture={kind:lb.zoom>1||blockSwipe?'pan':'pending',x:p.x,y:p.y,panX:lb.x,panY:lb.y,dx:0,dy:0,samples:[{x:p.x,t:performance.now()}],blockSwipe};
+    }else lb.gesture=null;
+  }
+  image.addEventListener('pointerdown',e=>{
+    if(e.button!==0||lb.index==null)return;
+    lb.queued=0;lb.finish?.();
+    lb.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});image.setPointerCapture(e.pointerId);startGesture();
+  });
+  image.addEventListener('pointermove',e=>{
+    if(!lb.pointers.has(e.pointerId)||!lb.gesture)return;
+    lb.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    const g=lb.gesture,ps=points();
+    if(ps.length>1){
+      const mid=midpoint(ps);lb.zoom=Math.max(1,Math.min(4,g.zoom*distance(ps)/g.distance));
+      const ratio=lb.zoom/g.zoom;
+      lb.x=(g.panX-(g.mid.x-g.center.x))*ratio+mid.x-g.center.x;
+      lb.y=(g.panY-(g.mid.y-g.center.y))*ratio+mid.y-g.center.y;applyZoom();
+    }else{
+      g.dx=e.clientX-g.x;g.dy=e.clientY-g.y;
+      if(g.kind==='pending'&&Math.hypot(g.dx,g.dy)>6)g.kind=Math.abs(g.dx)>Math.abs(g.dy)*1.1?'swipe':'vertical';
+      if(g.kind==='pan'){lb.x=g.panX+g.dx;lb.y=g.panY+g.dy;applyZoom();}
+      else if(g.kind==='swipe'){
+        // One frame at most; the adjacent frame always occupies the revealed area.
+        lightboxTrack(Math.max(-image.clientWidth,Math.min(image.clientWidth,g.dx)));
+        const t=performance.now();g.samples.push({x:e.clientX,t});g.samples=g.samples.filter(s=>s.t>=t-100);
+      }
+      if(Math.hypot(g.dx,g.dy)>6)image.classList.add('is-dragging');
+    }
+  });
+  function endPointer(e,cancelled=false){
+    if(!lb.pointers.has(e.pointerId))return;
+    const g=lb.gesture;
+    lb.pointers.delete(e.pointerId);
+    if(image.hasPointerCapture(e.pointerId))image.releasePointerCapture(e.pointerId);
+    image.classList.remove('is-dragging');
+    if(cancelled){resetLightboxGesture();if(lb.index!=null)settleLightbox();return;}
+    if(lb.pointers.size){startGesture(true);return;}
+    lb.gesture=null;
+    if(!g)return;
+    if(g.kind!=='pending')lb.suppressDoubleClickUntil=performance.now()+350;
+    if(g.kind==='swipe'){
+      const dx=e.clientX-g.x,dy=e.clientY-g.y,last=g.samples[0],velocity=last?(e.clientX-last.x)/Math.max(1,performance.now()-last.t):0;
+      const enough=Math.abs(dx)>image.clientWidth*.22||Math.abs(dx)>24&&Math.abs(velocity)>.45&&Math.sign(velocity)===Math.sign(dx);
+      settleLightbox(enough&&Math.abs(dx)>Math.abs(dy)*1.1?(dx<0?1:-1):0);
+    }else if(g.kind==='vertical'&&Math.abs(g.dy)>120&&Math.abs(g.dy)>Math.abs(g.dx)*1.2&&!g.blockSwipe)closeLightbox();
+  }
+  image.addEventListener('pointerup',e=>endPointer(e));
+  image.addEventListener('pointercancel',e=>endPointer(e,true));
+  image.addEventListener('lostpointercapture',e=>{if(lb.pointers.has(e.pointerId))endPointer(e,true);});
+  let resizeFrame;
+  window.addEventListener('resize',()=>{if(lb.index==null)return;cancelLightboxMotion();cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{if(lb.index!=null){document.querySelectorAll('.lightbox-slide img[srcset]').forEach(img=>img.sizes=Math.min(innerWidth,1100)+'px');applyZoom();}});});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&lb.index!=null)cancelLightboxMotion();});
 }
+
 
 /* ================= calculator ================= */
 // Presets reflect the published site content, not a bank eligibility decision.
-const MORTGAGE_PROGRAMS = {
-  regional: {title:'Льготная ипотека 2%', rate:2, minDown:10, limit:6000000},
-  family: {title:'Семейная ипотека 6%', rate:6, minDown:20, limit:12000000},
-};
+const MORTGAGE_PROGRAMS = ContentModel.mortgagePrograms;
+function updateAutomaticDownPayment(){
+  if(state.downMode!=='auto')return;
+  const range=document.getElementById('down-range');
+  state.downPct=ContentModel.minimumDownPayment(state.price,MORTGAGE_PROGRAMS[state.mortgageProgram],{min:ContentModel.downRange.min,max:Number(range.max),step:Number(range.step)}).value;
+}
 function mortgageContext(){
   const program = MORTGAGE_PROGRAMS[state.mortgageProgram];
+  const range=document.getElementById('down-range');
+  const impossible=program&&!ContentModel.minimumDownPayment(state.price,program,{min:ContentModel.downRange.min,max:Number(range.max),step:Number(range.step)}).feasible;
   const warning = program && calcNumbers().loanAmount > program.limit
-    ? `Сумма кредита превышает лимит программы ${rub(program.limit)}. Расчёт по ставке ${program.rate}% не означает её доступность на всю сумму. Комбинированная ипотека не моделируется; условия уточнит банк.` : '';
+    ? `Сумма кредита превышает лимит программы ${rub(program.limit)}. Расчёт по ставке ${program.rate}% не означает её доступность на всю сумму. Комбинированная ипотека не моделируется; условия уточнит банк.${impossible?` Даже при взносе ${range.max}% кредит не укладывается в лимит программы.`:""}` : '';
   return {program, title:program ? program.title : 'Индивидуальная ставка', warning};
 }
 function selectMortgageProgram(key){
   const program = MORTGAGE_PROGRAMS[key];
   state.mortgageProgram = key;
   state.rate = program.rate;
-  state.downPct = Math.max(state.downPct, program.minDown);
+  state.downAdjustment='';
+  if(state.downMode==='auto')updateAutomaticDownPayment();
+  else if(state.downPct<program.minDown){
+    state.downPct=program.minDown;
+    state.downAdjustment=`Взнос повышен до ${program.minDown}% — минимум выбранной программы.`;
+  }
   renderCalculator();
   scrollToEl('calculator', 80);
   document.getElementById('mortgage-program').focus({preventScroll:true});
@@ -491,6 +627,8 @@ function renderCalculator(){
   document.getElementById('down-range').value = s.downPct;
   document.getElementById('price-label').textContent = rub(s.price);
   document.getElementById('down-label').textContent = s.downPct + '% · ' + rub(downPayment);
+  document.getElementById('down-mode').textContent = s.downAdjustment || (s.downMode==='auto' ? (program ? 'Взнос подобран автоматически по лимиту программы.' : 'Автоматически: минимальный взнос для расчёта.') : 'Ручная настройка: выбранный вами взнос.');
+  document.getElementById('down-auto').hidden = s.downMode==='auto';
   document.getElementById('term-label').textContent = s.term + ' лет';
   document.getElementById('rate-label').textContent = s.rate.toFixed(1) + '%';
   document.getElementById('payment-label').textContent = rub(payment) + ' / мес';
@@ -559,16 +697,20 @@ function downloadCalc(){
 }
 function wireCalculatorEvents(){
   document.getElementById('price-range').addEventListener('input', e => {
-    state.price = Number(e.target.value); state.selectedPlanId = null; renderCalculator();
+    state.price = Number(e.target.value); state.selectedPlanId = null; updateAutomaticDownPayment(); renderCalculator();
   });
   document.getElementById('down-range').addEventListener('input', e => {
-    state.downPct = Number(e.target.value); renderCalculator();
+    state.downPct = Number(e.target.value); state.downMode='manual'; state.downAdjustment=''; renderCalculator();
+  });
+  document.getElementById('down-auto').addEventListener('click', () => {
+    state.downMode='auto'; state.downAdjustment=''; updateAutomaticDownPayment(); renderCalculator();
+    document.getElementById('down-range').focus({preventScroll:true});
   });
   document.getElementById('term-range').addEventListener('input', e => {
     state.term = Number(e.target.value); renderCalculator();
   });
   document.getElementById('rate-range').addEventListener('input', e => {
-    state.rate = Number(e.target.value); state.mortgageProgram = null; renderCalculator();
+    state.rate = Number(e.target.value); state.mortgageProgram = null; updateAutomaticDownPayment(); renderCalculator();
   });
   document.getElementById('calc-plan-clear').addEventListener('click', e => {
     e.preventDefault(); state.selectedPlanId = null; renderCalculator(); scrollToEl('plans', 80);
@@ -891,7 +1033,7 @@ function renderContactArea(){
 function init(){
   document.documentElement.classList.add('content-ready');
   setupAbout();
-  renderTabs(); renderPlansGrid(); wirePlansEvents(); setupPlanViews(); setupMap();
+  renderTabs(); renderPlansGrid(); wirePlansEvents();  setupMap();
   renderGallery(); wireGalleryEvents();
   document.querySelectorAll('.faq-questions details').forEach(d=>{
     const summary=d.querySelector('summary');
@@ -954,26 +1096,6 @@ function setupAbout(){
   window.addEventListener('resize', () => { cancelAnimationFrame(scheduled); scheduled = requestAnimationFrame(reserveHeight); });
 }
 
-function setupPlanViews(){
-  document.getElementById('category-grid').innerHTML = CATEGORIES.map(ContentModel.category).join('');
-  const setView = view => {
-    state.plansView = view;
-    document.getElementById('plans-grid').hidden = view !== 'lots';
-    document.getElementById('plan-tabs').hidden = view !== 'lots';
-    renderFilterDisclosure();
-    document.getElementById('catalog-result').hidden = view !== 'lots';
-    document.getElementById('show-more-plans').hidden = view !== 'lots' || currentFilteredPlans().length <= state.limit;
-    document.getElementById('category-grid').hidden = view !== 'cats';
-    document.querySelectorAll('[data-view]').forEach(b => { b.classList.toggle('active', b.dataset.view === view); b.setAttribute('aria-pressed', String(b.dataset.view === view)); });
-  };
-  document.getElementById('plan-views').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) setView(b.dataset.view); });
-  document.getElementById('category-grid').addEventListener('click', e => {
-    const a = e.target.closest('[data-category]'); if (!a) return; e.preventDefault();
-    const c = CATEGORIES.find(c => c.key === a.dataset.category);
-    if (a.dataset.categoryAction === 'lots') { state.filter = c.key; state.layout=''; state.limit=6; renderTabs(); renderPlansGrid(); setView('lots'); document.querySelector('[data-tab="'+c.key+'"]').focus({preventScroll:true}); }
-    else openGenericRequest({kind:'plan', kicker:'Ваш запрос', planChoice:c.key, objectTitle:c.title, objectMeta:c.area+' · '+c.price, rows:[]});
-  });
-}
 // Canonical links keep native new-tab/download/modifier behaviour.
 function setupHomeLinks(){
   document.querySelectorAll('.logo-link[href="/"], .footer-brand[href="/"]').forEach(link => {

@@ -301,7 +301,6 @@ button{font-family:inherit}
 .plans-style-6 { font: 400 16px / 1.75 Sora; color: rgb(90, 96, 104); margin: 0px 0px 36px; max-width: 640px; }
 .plans-style-7 { display: flex; justify-content: space-between; align-items: center; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 36px; }
 .plans-style-8 { display: flex; gap: 10px; flex-wrap: wrap; }
-.plans-style-9 { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
 .plans-style-10 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
 .pricing-style-1 { position: relative; overflow: hidden; }
 .pricing-style-2 { position: absolute; bottom: -140px; left: -80px; width: 380px; height: 380px; border-radius: 44% 56% 60% 40% / 50% 45% 55% 50%; background: radial-gradient(circle, rgba(90, 96, 104, 0.08) 0%, rgba(90, 96, 104, 0) 72%); filter: blur(14px); pointer-events: none; z-index: 0; }
@@ -374,14 +373,6 @@ button{font-family:inherit}
 .about-tab, .view-chip { padding:11px 20px; border-radius:99px; font:500 13px Sora; cursor:pointer; background:#FBFAF7; color:#5A6068; border:1px solid rgba(37,40,45,.1); transition:background .3s,color .3s,border-color .3s; }
 .about-tab.active, .view-chip.active { background:#25282D; color:#F6F3ED; border-color:#25282D; }
 #about-content { align-items:start; }
-.category-card { background:#FBFAF7; padding:32px; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.05); display:flex; flex-direction:column; transition:box-shadow .3s; }
-.category-title { font:500 19px Sora; margin-bottom:8px; }
-.category-note { font:400 13.5px Sora; color:#5A6068; margin-bottom:22px; }
-.category-price { font:400 28px Newsreader,serif; margin-bottom:6px; }
-.category-area { font:400 13px Sora; color:#5A6068; margin-bottom:24px; }
-.category-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; margin-top:auto; padding-top:16px; border-top:1px solid rgba(37,40,45,.08); }
-.category-actions a { font:600 13px Sora; display:inline-block; padding:8px 0; }
-.category-actions .dot { width:6px; height:6px; border-radius:50%; background:#C8A96A; flex:none; }
 .map-unlock { border:0; width:100%; }
 :focus-visible { outline:2px solid #C8A96A; outline-offset:4px; }
 #site-header:focus-within { transform:translateY(0); }
@@ -997,3 +988,20 @@ footer.finale-footer{background:#21373c;color:#e5e9e2;border:0;padding:0}
 
 /* Reserve the original iframe height before its deferred creation. */
 .location-style-14{min-height:clamp(260px,32vw,380px)}
+
+/* UX-CONTENT-001: track is mounted only inside the existing photo viewer. */
+#lightbox .lightbox-image{padding:0;isolation:isolate;cursor:grab}
+#lightbox .lightbox-image.is-dragging{cursor:grabbing}
+#lightbox .lightbox-track{display:flex;flex:none;width:100%;height:100%;transform:translate3d(-100%,0,0);will-change:transform}
+#lightbox .lightbox-track.is-settling{transition:transform .26s cubic-bezier(.22,.7,.25,1)}
+#lightbox .lightbox-slide{flex:0 0 100%;min-width:0;height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;background-size:contain;background-position:center;background-repeat:no-repeat}
+#lightbox[data-mode=plan] .lightbox-slide{padding:24px;background-color:#fbfaf7;background-origin:content-box}
+#lightbox .lightbox-slide img{flex:none;object-fit:contain;touch-action:none}
+#lightbox .lightbox-navigation{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:space-between;padding:16px}
+#lightbox .lightbox-arrow{pointer-events:auto;position:relative;inset:auto;transform:none;width:48px;height:48px;flex:none;border:1px solid #ffffff50;background:#20262299;backdrop-filter:blur(12px);color:#fff;transition:background .2s}
+#lightbox .lightbox-arrow:hover{background:#202622d9}
+#lightbox .lightbox-bottom{justify-content:center}
+.down-setting{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;font:400 11px/1.6 Sora,Arial,sans-serif;color:#5a6068;min-height:44px;margin-top:4px}
+.down-setting button{font:500 11px Sora,Arial,sans-serif;min-height:44px;border:0;background:transparent;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 0;color:inherit}
+@media(max-width:600px){#lightbox[data-mode=plan] .lightbox-slide{padding:12px}#lightbox .lightbox-navigation{padding:8px}#lightbox .lightbox-arrow{width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){#lightbox .lightbox-track.is-settling{transition:none}#lightbox .lightbox-arrow{transition:none}}

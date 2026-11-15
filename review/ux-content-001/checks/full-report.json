@@ -1,0 +1,431 @@
+{
+  "schema": 1,
+  "mode": "full",
+  "complete": true,
+  "node": "v22.23.4",
+  "platform": "darwin",
+  "started_at": "2026-11-15T16:38:42.641Z",
+  "status": "PASS",
+  "seconds": 260.99,
+  "checks": [
+    {
+      "id": "toolchain",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.022,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "-e",
+        "if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"
+      ]
+    },
+    {
+      "id": "source",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.398,
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ]
+    },
+    {
+      "id": "syntax",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.163,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "scripts/ci-static.mjs"
+      ]
+    },
+    {
+      "id": "performance-assets",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.042,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/performance/assets.mjs"
+      ]
+    },
+    {
+      "id": "analytics-unit",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.067,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/analytics.test.mjs"
+      ]
+    },
+    {
+      "id": "release-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.752,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/release.cjs"
+      ]
+    },
+    {
+      "id": "production-build",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.433,
+      "command": [
+        "npm",
+        "run",
+        "build:production"
+      ]
+    },
+    {
+      "id": "offline-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.267,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/ci-contract.mjs"
+      ]
+    },
+    {
+      "id": "seo",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.123,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/seo.mjs"
+      ]
+    },
+    {
+      "id": "legal",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.053,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "-e",
+        "require('./tests/legal-contract.cjs')(process.cwd())"
+      ]
+    },
+    {
+      "id": "release-manager",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.84,
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "ops",
+        "-p",
+        "test_release_manager.py"
+      ]
+    },
+    {
+      "id": "php84",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.047,
+      "command": [
+        "/private/tmp/dom-u-morya-pagespeed-repo/toolchain/php@8.4/8.4.27_1/bin/php",
+        "-n",
+        "-r",
+        "if(PHP_MAJOR_VERSION!==8||PHP_MINOR_VERSION!==4||!extension_loaded('openssl')||!extension_loaded('ctype'))exit(1);echo PHP_VERSION;"
+      ]
+    },
+    {
+      "id": "analytics-sqlite",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.08,
+      "command": [
+        "/private/tmp/dom-u-morya-pagespeed-repo/toolchain/php@8.4/8.4.27_1/bin/php",
+        "-n",
+        "tests/analytics.test.php"
+      ]
+    },
+    {
+      "id": "analytics-browser",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 30.156,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/analytics-browser.cjs"
+      ]
+    },
+    {
+      "id": "composer",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.255,
+      "command": [
+        "composer",
+        "validate",
+        "--strict",
+        "--no-check-all",
+        "--no-interaction"
+      ]
+    },
+    {
+      "id": "composer-audit",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.375,
+      "command": [
+        "composer",
+        "audit",
+        "--locked",
+        "--no-interaction"
+      ]
+    },
+    {
+      "id": "smtp-runtime",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.032,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "scripts/smtp-runtime.mjs"
+      ]
+    },
+    {
+      "id": "form-smtp",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 27.2,
+      "command": [
+        "npm",
+        "run",
+        "test:form"
+      ]
+    },
+    {
+      "id": "chromium",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.23,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/ci-browser-dependency.cjs"
+      ]
+    },
+    {
+      "id": "ui",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 21.831,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/ui.cjs",
+        "--root",
+        "dist"
+      ]
+    },
+    {
+      "id": "privacy-banner",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 5.016,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/privacy-banner.cjs",
+        "--root",
+        "dist"
+      ]
+    },
+    {
+      "id": "shared-footer",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 3.43,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/eng-001-footer.cjs"
+      ]
+    },
+    {
+      "id": "ux-content-001",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 35.563,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/ux-content-001.cjs"
+      ]
+    },
+    {
+      "id": "catalog-pdf",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 26.381,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/catalog.cjs",
+        "--root",
+        "dist"
+      ]
+    },
+    {
+      "id": "catalog-transfer",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 5.866,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/catalog-transfer.cjs"
+      ]
+    },
+    {
+      "id": "previews",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 11.271,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/plan-previews.cjs"
+      ]
+    },
+    {
+      "id": "seo-browser",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.671,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/seo-browser.cjs"
+      ]
+    },
+    {
+      "id": "performance",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 61.444,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/performance.cjs",
+        "ci"
+      ]
+    },
+    {
+      "id": "legacy-fixtures",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.163,
+      "command": [
+        "python3",
+        "-B",
+        "scripts/ci-legacy-fixtures.py"
+      ]
+    },
+    {
+      "id": "manager-guard-http",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.228,
+      "command": [
+        "python3",
+        "-B",
+        "ops/test_release_guard_http.py"
+      ]
+    },
+    {
+      "id": "url-redirects-http",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.937,
+      "command": [
+        "python3",
+        "-B",
+        "ops/test_url_redirects_http.py"
+      ]
+    },
+    {
+      "id": "legacy-security",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.709,
+      "command": [
+        "npm",
+        "run",
+        "test:security"
+      ]
+    },
+    {
+      "id": "legacy-form-release",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 4.61,
+      "command": [
+        "npm",
+        "run",
+        "test:form-release"
+      ]
+    },
+    {
+      "id": "smtp-package",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.228,
+      "command": [
+        "npm",
+        "run",
+        "test:smtp-package"
+      ]
+    },
+    {
+      "id": "smtp-e2e",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 12.068,
+      "command": [
+        "npm",
+        "run",
+        "test:smtp-e2e"
+      ]
+    }
+  ]
+}

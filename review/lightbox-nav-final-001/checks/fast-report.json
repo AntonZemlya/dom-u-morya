@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "mode": "fast",
+  "complete": true,
+  "node": "v22.23.4",
+  "platform": "darwin",
+  "started_at": "2026-11-15T22:31:27.678Z",
+  "status": "PASS",
+  "seconds": 6.306,
+  "checks": [
+    {
+      "id": "toolchain",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.031,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "-e",
+        "if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"
+      ]
+    },
+    {
+      "id": "source",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.533,
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ]
+    },
+    {
+      "id": "syntax",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 1.416,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "scripts/ci-static.mjs"
+      ]
+    },
+    {
+      "id": "performance-assets",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.044,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/performance/assets.mjs"
+      ]
+    },
+    {
+      "id": "analytics-unit",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.043,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/analytics.test.mjs"
+      ]
+    },
+    {
+      "id": "release-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.932,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/release.cjs"
+      ]
+    },
+    {
+      "id": "production-build",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.48,
+      "command": [
+        "npm",
+        "run",
+        "build:production"
+      ]
+    },
+    {
+      "id": "offline-contract",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.29,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/ci-contract.mjs"
+      ]
+    },
+    {
+      "id": "seo",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.191,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "tests/seo.mjs"
+      ]
+    },
+    {
+      "id": "legal",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 0.06,
+      "command": [
+        "/Users/azm1982/.nvm/versions/node/v22.23.4/bin/node",
+        "-e",
+        "require('./tests/legal-contract.cjs')(process.cwd())"
+      ]
+    },
+    {
+      "id": "release-manager",
+      "status": "PASS",
+      "required": true,
+      "reason": "",
+      "seconds": 2.28,
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "ops",
+        "-p",
+        "test_release_manager.py"
+      ]
+    }
+  ]
+}

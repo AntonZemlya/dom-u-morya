@@ -1,0 +1,83 @@
+{
+  "method": "Uncompressed permanent preview 127.0.0.1:4183, Lighthouse 13.6.0; not directly comparable with the prior gzip lab. Mobile first run overlapped a navigation smoke test. All observations retained; compare releases via lighthouse-comparison.json.",
+  "runs": [
+    {
+      "run": "desktop-1",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 1063.8289459121588,
+      "cls": 0,
+      "tbt_ms": 0,
+      "bytes": 845766
+    },
+    {
+      "run": "desktop-2",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 1067.4716272726941,
+      "cls": 0,
+      "tbt_ms": 0,
+      "bytes": 845766
+    },
+    {
+      "run": "desktop-3",
+      "scores": {
+        "performance": 98.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 1111.7495326837243,
+      "cls": 0,
+      "tbt_ms": 0,
+      "bytes": 910819
+    },
+    {
+      "run": "mobile-1",
+      "scores": {
+        "performance": 74.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 2462.9824,
+      "cls": 0,
+      "tbt_ms": 796.5088000000001,
+      "bytes": 729607
+    },
+    {
+      "run": "mobile-2",
+      "scores": {
+        "performance": 80.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 4719.875568955873,
+      "cls": 0.013455794746718359,
+      "tbt_ms": 0,
+      "bytes": 729607
+    },
+    {
+      "run": "mobile-3",
+      "scores": {
+        "performance": 81.0,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcp_ms": 4502.193032682591,
+      "cls": 0.013455794746718359,
+      "tbt_ms": 0,
+      "bytes": 729607
+    }
+  ]
+}

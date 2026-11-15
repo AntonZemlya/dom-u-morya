@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "viewports": [
+    {
+      "width": 1440,
+      "js": false,
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "js": true,
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "js": false,
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "js": true,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "js": false,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "js": true,
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "js": false,
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "js": true,
+      "status": "PASS"
+    }
+  ],
+  "realTouch": [
+    "gallery",
+    "construction",
+    "plan"
+  ],
+  "widths": [
+    390,
+    320
+  ]
+}

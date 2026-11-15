@@ -16,7 +16,7 @@
     const asset=p.plans.find(x=>x.type===view);
     const availability = availabilityLabels[p.developer_availability];
     const status = availability
-      ? `<p>${availability} · ${esc(displayDate(p.snapshot_date))}</p>`
+      ? `<p>${availability}</p>`
       : '<p>Наличие требует уточнения.</p>';
     return `<article class="card card-hover" data-lot-id="${p.id}" data-layout="${p.plan_group_id}">
       <div class="card-heading"><div class="plan-title">${esc(p.title)}</div><span class="card-edition">Корпус ${esc(p.building)}</span></div>
@@ -26,8 +26,20 @@
       <details class="lot-details"><summary>О квартире</summary><p>Корпус ${esc(p.building)}, секция ${esc(p.section)} · ID ${p.id}</p><p>${p.features.map(esc).join(' · ')}</p><p>${rub(p.price_per_m2_rub)} / м²</p>${status}</details>
       <div class="plan-links"><a href="#contact" data-action="ask-plan" data-id="${p.id}">Уточнить наличие</a><a href="#calculator" class="plan-link-calc link-hover-gold" data-action="calc-here" data-id="${p.id}">Рассчитать ипотеку</a></div></article>`;
   }
-  function category(c){return `<article class="category-card card-hover"><div class="category-title">${c.title}</div><div class="category-note">${c.count} опубликованных предложений · корпус 1</div><div class="category-price">${c.price}</div><div class="category-area">${c.area}</div><div class="category-actions"><a href="#plans" data-category="${c.key}" data-category-action="lots">Смотреть квартиры →</a><a href="#contact" data-category="${c.key}" data-category-action="ask">Запросить подборку →</a></div></article>`;}
   function photo(m,index,mode,month=''){return `<a class="gallery-item" href="${esc(m.src)}" data-action="open-${mode}-image" data-index="${index}"${month?` data-month="${month}"`:''} aria-label="Открыть: ${esc(m.title)}"><img src="${esc(m.src)}" srcset="${esc(m.srcset)}" sizes="${mode==='construction'&&index===0?'(max-width:600px) 90vw, 1000px':'(max-width:600px) 90vw, (max-width:1000px) 45vw, 620px'}" width="${m.width}" height="${m.height}" loading="lazy" decoding="async" alt="${esc(m.title)}"><span class="gallery-item-label">${esc(m.title)}</span></a>`;}
-  const api={labels,displayDate,keys,views,esc,rub,previewPath,plans,categories,card,category,photo};
+  // One calculator contract for generated HTML and live interactions.
+  const mortgagePrograms = {
+    regional: {title:'Льготная ипотека 2%', rate:2, minDown:10, limit:6000000},
+    family: {title:'Семейная ипотека 6%', rate:6, minDown:20, limit:12000000},
+  };
+  const downRange = {min:10, max:70, step:1};
+  function minimumDownPayment(price, program, range=downRange){
+    const min=Math.max(range.min, program?.minDown || range.min);
+    const required=Math.max(min, program ? 100*(price-program.limit)/price : min);
+    const aligned=min+Math.ceil((required-min)/range.step-1e-10)*range.step;
+    const max=min+Math.floor((range.max-min)/range.step)*range.step;
+    return {value:Math.min(max, aligned), feasible:aligned<=max};
+  }
+  const api={labels,displayDate,keys,views,esc,rub,previewPath,plans,categories,card,photo,mortgagePrograms,downRange,minimumDownPayment};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ContentModel=api;
 })(typeof window==='undefined'?globalThis:window);

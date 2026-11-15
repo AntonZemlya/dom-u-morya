@@ -2381,6 +2381,233 @@
           "height": 563
         }
       ]
+    },
+    {
+      "original_path": "media/construction/2026-10-01.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/f2d/1000_773_1/et7md45j0oy5ci511aif7f63qvkm2xmj.jpg",
+      "source_sha256": "7c8d6f6c6f88c34e9a5b18a93da2008abc571856f93ed0f00152d4ff95f07c4f",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/7c8d6f6c6f88c34e-640.webp",
+          "sha256": "7e1958d7d1dbc48246222e5108d88fe523e70fed0aae5803dc5d5b446a64b573",
+          "bytes": 78604,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/7c8d6f6c6f88c34e-1000.webp",
+          "sha256": "45d5d38c71d9d92d4ccf55f6f96621d8ef2fcced88064d23127068c7586226b5",
+          "bytes": 190686,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-02.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/4e9/1000_773_1/rgirjlcloaumxhnz1m4y3qgqs5pjj7yf.jpg",
+      "source_sha256": "bfb310d7758744b67b44798656cdb3bec4c8c5fd2aefeba550ed72a9d52b185f",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/bfb310d7758744b6-640.webp",
+          "sha256": "deb4569f3374d8202bd9ed5a0e9a67dd0b86586a6271ffb12a58b14c2c4fbb96",
+          "bytes": 75862,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/bfb310d7758744b6-1000.webp",
+          "sha256": "bd3f89644babbf4d5788541a66b6cf33d1d7fb8f8f12ad681336ae98ccbfe228",
+          "bytes": 177766,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-03.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/31f/1000_773_1/uiarnhh09zpc18okgt0af0oxr2uecmcq.jpg",
+      "source_sha256": "20eb759e6bdbb60a5f3400386206591bfa965fc2386c13f585e132ffad853b22",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/20eb759e6bdbb60a-640.webp",
+          "sha256": "9d78f0f63fe1c201510e494f6b56334d03ac198ba9d38228333de06fb00332a6",
+          "bytes": 66330,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/20eb759e6bdbb60a-1000.webp",
+          "sha256": "88466471244f5e18ad4815f4e64d58dfecf00b1336e69e950eabd4ef86498701",
+          "bytes": 164554,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-04.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/d86/1000_773_1/v7wk8so9xx0hxxz0xdwfh5u7ap5x2oae.jpg",
+      "source_sha256": "f838cdc80bcaf646b9a060a538dc27a61332bf8a70a72c80939ca029964ad811",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/f838cdc80bcaf646-640.webp",
+          "sha256": "2f371590c4cb21c56a56ca246d71ce86b064fba7e4696afe2015b72b88dde539",
+          "bytes": 102820,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/f838cdc80bcaf646-1000.webp",
+          "sha256": "2eada85952173f982a2119b49570e15218f96dccc6eef30dccfeb26484efcbef",
+          "bytes": 260934,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-05.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/e46/1000_773_1/tn3d0vnua2oza1kc480he3e8tld4suiy.jpg",
+      "source_sha256": "590dbef6bcafe3531bcf13fd5de9c24e8c440f610b177901f6b6a5dc03f668e7",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/590dbef6bcafe353-640.webp",
+          "sha256": "06119722d8b3a725a62ea6884c059754f4d54b7fdaafa58094b1ab9f8fbdc521",
+          "bytes": 65934,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/590dbef6bcafe353-1000.webp",
+          "sha256": "c1de3231dd53ddb41f6474e234b2a6cf78143c441afff3deed4c9c12cf55c8a1",
+          "bytes": 153360,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-06.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/bf4/1000_773_1/85d6ce9mdhyf0w6wsa3lbin6ygv9gxk9.jpg",
+      "source_sha256": "8d7873c9d7ca15f5179bdfdc89b283a242facea7f6d9aa20328a745b631090d7",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "outputs": [
+        {
+          "path": "assets/content/construction/8d7873c9d7ca15f5-640.webp",
+          "sha256": "ea850d89482b006cbbd07742446973640e07d29d7f83a1ecc4d4e86d0dee0fbb",
+          "bytes": 66426,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/8d7873c9d7ca15f5-1000.webp",
+          "sha256": "480e9c582fe4972c90ca3aae6d4c781a456c8ba7f04a9806315855837cb42962",
+          "bytes": 156520,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "original_path": "media/construction/2026-10-cover.jpg",
+      "source_url": "https://sadovoe-kolco.ru/upload/resize_cache/iblock/146/1000_773_1/w38enkpec2tmfaverlu8knwc2hdxksr6.jpg",
+      "source_sha256": "1411b40a5066c830f03034f94f4c23752bc2d1278478719021e7734a698c9234",
+      "source_owner": "ГК «Садовое кольцо»",
+      "origin_page": "https://sadovoe-kolco.ru/projects/mariupol/house-by-the-sea",
+      "fetched_at": "2026-11-15",
+      "rights_status": "owner_confirmed",
+      "rights_confirmation": {
+        "status": "owner_confirmed",
+        "confirmed_on": "2026-11-15",
+        "scope": "Октябрьский альбом строительства 2026",
+        "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
+      },
+      "duplicate_of": "2026-10-01",
+      "duplicate_note": "Та же фотография с другой JPEG-компрессией; отдельно в альбоме не показывается.",
+      "outputs": [
+        {
+          "path": "assets/content/construction/7c8d6f6c6f88c34e-640.webp",
+          "sha256": "7e1958d7d1dbc48246222e5108d88fe523e70fed0aae5803dc5d5b446a64b573",
+          "bytes": 78604,
+          "width": 640,
+          "height": 427
+        },
+        {
+          "path": "assets/content/construction/7c8d6f6c6f88c34e-1000.webp",
+          "sha256": "45d5d38c71d9d92d4ccf55f6f96621d8ef2fcced88064d23127068c7586226b5",
+          "bytes": 190686,
+          "width": 1000,
+          "height": 667
+        }
+      ]
+    }
+  ],
+  "album_permissions": [
+    {
+      "status": "owner_confirmed",
+      "confirmed_on": "2026-11-15",
+      "scope": "Октябрьский альбом строительства 2026",
+      "evidence": "Владелец в чате UX-CONTENT-001: «подтверждаю права на октябрьский альбом, используй его»."
     }
   ]
 }

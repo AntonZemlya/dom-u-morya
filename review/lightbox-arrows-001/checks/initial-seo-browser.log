@@ -1,0 +1,18 @@
+PASS SEO 1440 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 1440 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 768 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 768 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 390 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 390 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 320 JS=true: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+PASS SEO 320 JS=false: exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow
+page.goto: Timeout 30000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:50932/index.html", waiting until "load"[22m
+
+    at /Users/azm1982/Documents/Projects/dom-u-morya-ux-content-001/tests/seo-browser.cjs:26:127 {
+  log: [
+    '  - navigating to "http://127.0.0.1:50932/index.html", waiting until "load"'
+  ],
+  name: 'TimeoutError'
+}

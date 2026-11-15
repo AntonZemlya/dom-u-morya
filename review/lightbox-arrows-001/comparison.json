@@ -1,0 +1,1165 @@
+{
+  "baseline": "b883b8bf9a92fbc11ac238f6e0597b11bfea9482",
+  "comparisons": [
+    {
+      "width": 1440,
+      "image": "tower",
+      "beforeImageWidth": 1015.6618331265508,
+      "afterImageWidth": 1015.6618331265508,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 152.296875,
+          "right": 200.296875,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1239.6875,
+          "right": 1287.6875,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "image": "horizontal",
+      "beforeImageWidth": 1100,
+      "afterImageWidth": 1100,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 110,
+          "right": 158,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1282,
+          "right": 1330,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "image": "vertical",
+      "beforeImageWidth": 578.532464664311,
+      "afterImageWidth": 578.532464664311,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 370.8125,
+          "right": 418.8125,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1021.171875,
+          "right": 1069.171875,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "image": "construction",
+      "beforeImageWidth": 1100,
+      "afterImageWidth": 1100,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 110,
+          "right": 158,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1282,
+          "right": 1330,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "image": "plan",
+      "beforeImageWidth": 285.53876616379307,
+      "afterImageWidth": 285.53876616379307,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 517.265625,
+          "right": 565.265625,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 874.71875,
+          "right": 922.71875,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "image": "tower",
+      "beforeImageWidth": 688,
+      "afterImageWidth": 632,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 8,
+          "right": 56,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 712,
+          "right": 760,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "image": "horizontal",
+      "beforeImageWidth": 688,
+      "afterImageWidth": 632,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 8,
+          "right": 56,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 712,
+          "right": 760,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "image": "vertical",
+      "beforeImageWidth": 578.4898785425102,
+      "afterImageWidth": 578.4898785425102,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 34.828125,
+          "right": 82.828125,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 685.15625,
+          "right": 733.15625,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "image": "construction",
+      "beforeImageWidth": 688,
+      "afterImageWidth": 632,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 8,
+          "right": 56,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 712,
+          "right": 760,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(238, 234, 225)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "image": "plan",
+      "beforeImageWidth": 285.53876616379307,
+      "afterImageWidth": 285.53876616379307,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 181.265625,
+          "right": 229.265625,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(39, 54, 47)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 538.71875,
+          "right": 586.71875,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": 38,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "image": "tower",
+      "beforeImageWidth": 358,
+      "afterImageWidth": 358,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 342,
+          "right": 386,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "image": "horizontal",
+      "beforeImageWidth": 358,
+      "afterImageWidth": 358,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 342,
+          "right": 386,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "image": "vertical",
+      "beforeImageWidth": 358,
+      "afterImageWidth": 358,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 342,
+          "right": 386,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "image": "construction",
+      "beforeImageWidth": 358,
+      "afterImageWidth": 358,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 342,
+          "right": 386,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "image": "plan",
+      "beforeImageWidth": 222.20684267241379,
+      "afterImageWidth": 222.20684267241379,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 35.984375,
+          "right": 79.984375,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 310,
+          "right": 354,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "image": "tower",
+      "beforeImageWidth": 288,
+      "afterImageWidth": 288,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 272,
+          "right": 316,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "image": "horizontal",
+      "beforeImageWidth": 288,
+      "afterImageWidth": 288,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 272,
+          "right": 316,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "image": "vertical",
+      "beforeImageWidth": 288,
+      "afterImageWidth": 288,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 272,
+          "right": 316,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "image": "construction",
+      "beforeImageWidth": 288,
+      "afterImageWidth": 288,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 4,
+          "right": 48,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 272,
+          "right": 316,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "image": "plan",
+      "beforeImageWidth": 210.00856681034483,
+      "afterImageWidth": 210.00856681034483,
+      "beforeButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "afterButtons": [
+        {
+          "id": "lightbox-prev",
+          "left": 7.09375,
+          "right": 51.09375,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 268.890625,
+          "right": 312.890625,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": 34,
+          "visible": "visible",
+          "stroke": "rgb(72, 82, 75)",
+          "vectorEffect": "non-scaling-stroke"
+        }
+      ]
+    }
+  ]
+}

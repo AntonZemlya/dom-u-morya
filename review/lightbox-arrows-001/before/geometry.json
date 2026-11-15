@@ -1,0 +1,1325 @@
+{
+  "phase": "before",
+  "records": [
+    {
+      "label": "tower",
+      "width": 1440,
+      "frame": {
+        "left": 212.16908343672458,
+        "right": 1227.8309165632754,
+        "top": 112,
+        "bottom": 856.203125,
+        "width": 1015.6618331265508,
+        "height": 744.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 1181.78125,
+          "right": 1270,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 642.453125,
+          "right": 797.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 401.015625,
+          "right": 431.390625,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "horizontal",
+      "width": 1440,
+      "frame": {
+        "left": 170,
+        "right": 1270,
+        "top": 175.1015625,
+        "bottom": 793.1015625,
+        "width": 1100,
+        "height": 618
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 1181.78125,
+          "right": 1270,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 642.453125,
+          "right": 797.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 446.328125,
+          "right": 479.078125,
+          "top": 66,
+          "bottom": 81,
+          "width": 32.75,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "vertical",
+      "width": 1440,
+      "frame": {
+        "left": 430.7337676678445,
+        "right": 1009.2662323321555,
+        "top": 112,
+        "bottom": 856.203125,
+        "width": 578.532464664311,
+        "height": 744.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 1181.78125,
+          "right": 1270,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 642.453125,
+          "right": 797.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 257.90625,
+          "right": 291.140625,
+          "top": 66,
+          "bottom": 81,
+          "width": 33.234375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "construction",
+      "width": 1440,
+      "frame": {
+        "left": 170,
+        "right": 1270,
+        "top": 117.6015625,
+        "bottom": 850.6015625,
+        "width": 1100,
+        "height": 733
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 1181.78125,
+          "right": 1270,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 642.453125,
+          "right": 797.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 428.234375,
+          "right": 458.875,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.640625,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "plan",
+      "width": 1440,
+      "frame": {
+        "left": 577.2306169181035,
+        "right": 862.7693830818965,
+        "top": 223,
+        "bottom": 808.203125,
+        "width": 285.53876616379307,
+        "height": 585.203125
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 186,
+          "right": 234,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 1206,
+          "right": 1254,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 1181.78125,
+          "right": 1270,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 556.265625,
+          "right": 711.34375,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 445.859375,
+          "right": 475.953125,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.09375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "tower",
+      "width": 768,
+      "frame": {
+        "left": 40,
+        "right": 728,
+        "top": 231.92447916666669,
+        "bottom": 736.2786458333333,
+        "width": 688,
+        "height": 504.35416666666663
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 639.78125,
+          "right": 728,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 306.453125,
+          "right": 461.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 271.015625,
+          "right": 301.390625,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "horizontal",
+      "width": 768,
+      "frame": {
+        "left": 40,
+        "right": 728,
+        "top": 290.6015625,
+        "bottom": 677.6015625,
+        "width": 688,
+        "height": 387
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 639.78125,
+          "right": 728,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 306.453125,
+          "right": 461.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 316.328125,
+          "right": 349.078125,
+          "top": 66,
+          "bottom": 81,
+          "width": 32.75,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "vertical",
+      "width": 768,
+      "frame": {
+        "left": 94.75506072874492,
+        "right": 673.2449392712551,
+        "top": 112,
+        "bottom": 856.203125,
+        "width": 578.4898785425102,
+        "height": 744.203125
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 639.78125,
+          "right": 728,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 306.453125,
+          "right": 461.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 127.90625,
+          "right": 161.140625,
+          "top": 66,
+          "bottom": 81,
+          "width": 33.234375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "construction",
+      "width": 768,
+      "frame": {
+        "left": 40,
+        "right": 728,
+        "top": 254.46922873207302,
+        "bottom": 713.733896267927,
+        "width": 688,
+        "height": 459.26466753585396
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 460.09375,
+          "bottom": 508.09375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 639.78125,
+          "right": 728,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 306.453125,
+          "right": 461.53125,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 298.234375,
+          "right": 328.875,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.640625,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "plan",
+      "width": 768,
+      "frame": {
+        "left": 241.23061691810346,
+        "right": 526.7693830818965,
+        "top": 223,
+        "bottom": 808.203125,
+        "width": 285.53876616379307,
+        "height": 585.203125
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 56,
+          "right": 104,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 664,
+          "right": 712,
+          "top": 491.59375,
+          "bottom": 539.59375,
+          "width": 48,
+          "height": 48,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 639.78125,
+          "right": 728,
+          "top": 50,
+          "bottom": 94,
+          "width": 88.21875,
+          "height": 44
+        },
+        {
+          "left": 220.265625,
+          "right": 375.34375,
+          "top": 872.203125,
+          "bottom": 918.203125,
+          "width": 155.078125,
+          "height": 46
+        },
+        {
+          "left": 315.859375,
+          "right": 345.953125,
+          "top": 66,
+          "bottom": 81,
+          "width": 30.09375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "tower",
+      "width": 390,
+      "frame": {
+        "left": 16,
+        "right": 374,
+        "top": 275.29387019230774,
+        "bottom": 536.9092548076923,
+        "width": 358,
+        "height": 261.6153846153846
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 297.78125,
+          "right": 374,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 121.453125,
+          "right": 268.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 52.265625,
+          "top": 55,
+          "bottom": 70,
+          "width": 30.375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "horizontal",
+      "width": 390,
+      "frame": {
+        "left": 16,
+        "right": 374,
+        "top": 305.5861778846154,
+        "bottom": 506.6169471153846,
+        "width": 358,
+        "height": 201.03076923076924
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 297.78125,
+          "right": 374,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 121.453125,
+          "right": 268.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 54.640625,
+          "top": 55,
+          "bottom": 70,
+          "width": 32.75,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "vertical",
+      "width": 390,
+      "frame": {
+        "left": 16,
+        "right": 374,
+        "top": 175.69643429487178,
+        "bottom": 636.5066907051282,
+        "width": 358,
+        "height": 460.81025641025644
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 297.78125,
+          "right": 374,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 121.453125,
+          "right": 268.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 55.125,
+          "top": 55,
+          "bottom": 70,
+          "width": 33.234375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "construction",
+      "width": 390,
+      "frame": {
+        "left": 16,
+        "right": 374,
+        "top": 286.7682291666667,
+        "bottom": 525.4348958333333,
+        "width": 358,
+        "height": 238.66666666666666
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 297.78125,
+          "right": 374,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 121.453125,
+          "right": 268.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 52.53125,
+          "top": 55,
+          "bottom": 70,
+          "width": 30.640625,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "plan",
+      "width": 390,
+      "frame": {
+        "left": 83.89657866379311,
+        "right": 306.1034213362069,
+        "top": 171,
+        "bottom": 626.40625,
+        "width": 222.20684267241379,
+        "height": 455.40625
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 322,
+          "right": 366,
+          "top": 376.703125,
+          "bottom": 420.703125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 297.78125,
+          "right": 374,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 121.453125,
+          "right": 268.53125,
+          "top": 666.40625,
+          "bottom": 712.40625,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 51.984375,
+          "top": 55,
+          "bottom": 70,
+          "width": 30.09375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "tower",
+      "width": 320,
+      "frame": {
+        "left": 16,
+        "right": 304,
+        "top": 300.8015625,
+        "bottom": 511.4015625,
+        "width": 288,
+        "height": 210.6
+      },
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 227.78125,
+          "right": 304,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 86.453125,
+          "right": 233.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 52.265625,
+          "top": 55,
+          "bottom": 70,
+          "width": 30.375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "horizontal",
+      "width": 320,
+      "frame": {
+        "left": 16,
+        "right": 304,
+        "top": 337.6015625,
+        "bottom": 499.6015625,
+        "width": 288,
+        "height": 162
+      },
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 396.59375,
+          "bottom": 440.59375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 227.78125,
+          "right": 304,
+          "top": 37.5,
+          "bottom": 81.5,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 86.453125,
+          "right": 233.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 54.640625,
+          "top": 80,
+          "bottom": 95,
+          "width": 32.75,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "vertical",
+      "width": 320,
+      "frame": {
+        "left": 16,
+        "right": 304,
+        "top": 220.7015625,
+        "bottom": 591.5015625,
+        "width": 288,
+        "height": 370.8
+      },
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 227.78125,
+          "right": 304,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 86.453125,
+          "right": 233.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 55.125,
+          "top": 55,
+          "bottom": 70,
+          "width": 33.234375,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "construction",
+      "width": 320,
+      "frame": {
+        "left": 16,
+        "right": 304,
+        "top": 310.2515625,
+        "bottom": 501.9515625,
+        "width": 288,
+        "height": 191.70000000000002
+      },
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 384.09375,
+          "bottom": 428.09375,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 227.78125,
+          "right": 304,
+          "top": 25,
+          "bottom": 69,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 86.453125,
+          "right": 233.53125,
+          "top": 742.203125,
+          "bottom": 788.203125,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 52.53125,
+          "top": 55,
+          "bottom": 70,
+          "width": 30.640625,
+          "height": 15
+        }
+      ]
+    },
+    {
+      "label": "plan",
+      "width": 320,
+      "frame": {
+        "left": 54.995716594827584,
+        "right": 265.00428340517243,
+        "top": 195.99999999999997,
+        "bottom": 626.40625,
+        "width": 210.00856681034483,
+        "height": 430.40625000000006
+      },
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "left": 24,
+          "right": 68,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        },
+        {
+          "id": "lightbox-next",
+          "left": 252,
+          "right": 296,
+          "top": 389.203125,
+          "bottom": 433.203125,
+          "width": 44,
+          "height": 44,
+          "circle": null,
+          "visible": "visible"
+        }
+      ],
+      "controls": [
+        {
+          "left": 227.78125,
+          "right": 304,
+          "top": 37.5,
+          "bottom": 81.5,
+          "width": 76.21875,
+          "height": 44
+        },
+        {
+          "left": 86.453125,
+          "right": 233.53125,
+          "top": 666.40625,
+          "bottom": 712.40625,
+          "width": 147.078125,
+          "height": 46
+        },
+        {
+          "left": 21.890625,
+          "right": 51.984375,
+          "top": 80,
+          "bottom": 95,
+          "width": 30.09375,
+          "height": 15
+        }
+      ]
+    }
+  ]
+}

@@ -56,6 +56,8 @@ try{
   n('ui','tests/ui.cjs',['chromium','production-build'],['--root','dist']);
   n('privacy-banner','tests/privacy-banner.cjs',['chromium','production-build'],['--root','dist']);
   n('shared-footer','tests/eng-001-footer.cjs',['chromium','production-build']);
+  n('ux-content-001','tests/ux-content-001.cjs',['chromium','production-build']);
+  n('lightbox-arrows','tests/lightbox-arrows.cjs',['chromium','production-build']);
   n('catalog-pdf','tests/catalog.cjs',['chromium','production-build'],['--root','dist']);
   n('catalog-transfer','tests/catalog-transfer.cjs',['chromium','production-build']);
   n('previews','tests/plan-previews.cjs',['chromium','production-build']);

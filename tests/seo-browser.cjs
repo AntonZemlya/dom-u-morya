@@ -22,7 +22,7 @@ for(const width of [1440,768,390,320])for(const js of [true,false]){
  for(const src of references)assert.ok(fs.existsSync(path.join(root,'dist',src)),src);
  await c.close();console.log('PASS SEO '+width+' JS='+js+': exact visible H1, headings, alt/dimensions, real lazy backgrounds, srcsets, no overflow');
 }
-const c=await b.newContext({javaScriptEnabled:false}),p=await c.newPage();
+const c=await b.newContext({javaScriptEnabled:false}),p=await c.newPage();await maskMap(p);
 for(const file of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const response=await p.goto(site.url+'/'+file);assert.equal(response.status(),200);const raw=await response.text();assert.doesNotMatch(raw,/https?:\/\/(?:localhost|127\.0\.0\.1|example\.)/);if (file !== 'consent-analytics.html') assert.equal(await p.locator('meta[property="og:title"]').getAttribute('content'),await p.title());
  assert.equal(await p.locator('a[href*="sadovoe-kolco"]').count(),0);}
 await c.close();

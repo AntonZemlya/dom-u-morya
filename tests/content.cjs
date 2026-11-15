@@ -6,8 +6,8 @@ assert.deepEqual(groups.flatMap(g=>g.apartments).sort(),[...ids].sort());
 assert.equal(Math.min(...a.map(p=>p.price_rub)),6978183);assert.equal(Math.max(...a.map(p=>p.price_rub)),15154854);
 const paths=new Set();for(const p of a){assert.equal(p.project_id,'24');assert.equal(p.project_slug,'house-by-the-sea');assert.equal(p.availability_confirmed_by_agent,false);assert.match(p.snapshot_date,/^\d{4}-\d{2}-\d{2}$/);assert.equal(groups.find(g=>g.id===p.plan_group_id).apartments.includes(p.id),true);assert.deepEqual(p.plans.map(v=>v.type).sort(),['floor','furnished','unfurnished']);for(const v of p.plans){paths.add(v.local_path);const bytes=fs.readFileSync(path.join(root,v.local_path));assert.equal(hash(bytes),v.sha256);assert.doesNotMatch(bytes.toString(),/<script\b|\bon\w+\s*=|<foreignObject\b/i);}}
 assert.equal(paths.size,57);
-assert.equal(media.gallery.length,8);assert.deepEqual(media.construction.map(a=>a.month),['2026-09','2026-08','2026-07','2026-06','2026-05','2026-04']);assert.equal(new Set(media.construction.flatMap(a=>a.images.map(i=>i.sha256))).size,29);
-for(const photo of [...media.gallery,...media.construction.flatMap(m=>m.images)]){assert.equal(photo.rights_status,'permission_not_verified');assert.ok(photo.source_url.startsWith('https://sadovoe-kolco.ru/'));assert.ok(photo.width>0&&photo.height>0);for(const v of photo.variants)assert.ok(fs.existsSync(path.join(root,v.src)));}
+assert.equal(media.gallery.length,8);assert.deepEqual(media.construction.map(a=>a.month),['2026-10','2026-09','2026-08','2026-07','2026-06','2026-05','2026-04']);assert.equal(new Set(media.construction.flatMap(a=>a.images.map(i=>i.sha256))).size,35);
+for(const photo of [...media.gallery,...media.construction.flatMap(m=>m.images)]){assert.equal(photo.rights_status,photo.album_month==='2026-10'?'owner_confirmed':'permission_not_verified');assert.ok(photo.source_url.startsWith('https://sadovoe-kolco.ru/'));assert.ok(photo.width>0&&photo.height>0);for(const v of photo.variants)assert.ok(fs.existsSync(path.join(root,v.src)));}
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),data=JSON.parse(html.match(/<script id="site-data" type="application\/json">(.*?)<\/script>/s)[1]);assert.deepEqual(data.apartments.map(p=>[p.id,p.price_rub,p.developer_availability]),a.map(p=>[p.id,p.price_rub,p.developer_availability]));
 assert.deepEqual(data.media.gallery.map(p=>p.src),media.gallery.map(p=>p.src));
 assert.deepEqual(data.media.construction.map(m=>m.images.map(p=>p.src)),media.construction.map(m=>m.images.map(p=>p.src)));
@@ -17,7 +17,15 @@ for(const c of M.categories(plans))assert.ok(html.includes(c.price));
 // Frozen hero: exact source and the three image hashes, independent of generated content.
 const {execFileSync}=require('node:child_process');const base=execFileSync('git',['show','b63b88e:index.html'],{cwd:root,encoding:'utf8'});const hero=s=>s.match(/<section id="hero-section"[\s\S]*?<\/section>/)[0];assert.equal(require('./seo-contract.cjs').semantic(hero(html)),hero(base));
 for(const name of ['hero-desktop.webp','hero-tablet.webp','hero-mobile.webp'])assert.equal(hash(fs.readFileSync(path.join(root,'assets',name))),hash(execFileSync('git',['show','b63b88e:assets/'+name],{cwd:root,maxBuffer:5*1024*1024})));
-// V2.2 removes two unused hint rules; every other rule of the approved stylesheet remains intact.
-const withoutHints=css=>css.replace(/\.form-hint(?:-dot)?\{[^}]*\}\n/g,'');
-assert.ok(withoutHints(require('./seo-contract.cjs').css(fs.readFileSync(path.join(root,'styles.css'),'utf8'))).startsWith(withoutHints(execFileSync('git',['show','b63b88e:styles.css'],{cwd:root,encoding:'utf8'}))), 'Approved CSS, including every hero breakpoint and animation, remains unchanged except removed obsolete form hints');
+// The new, owner-approved album is additive; the full old catalogue/media remain frozen.
+const oldMedia=JSON.parse(execFileSync('git',['show','b686c5f:data/media.json'],{cwd:root,encoding:'utf8'}));
+assert.deepEqual(media.gallery,oldMedia.gallery);
+assert.deepEqual(media.construction.filter(album=>album.month!=='2026-10'),oldMedia.construction);
+const october=media.construction[0];assert.equal(october.images.length,6);assert.equal(october.rights_status,'owner_confirmed');
+for(const file of ['data/apartments.json','data/plan-groups.json'])assert.deepEqual(fs.readFileSync(path.join(root,file)),execFileSync('git',['show','b686c5f:'+file],{cwd:root,maxBuffer:5e6}));
+const provenance=read('media-provenance');
+for(const record of provenance.sources.filter(row=>row.rights_status==='owner_confirmed'))for(const output of record.outputs)assert.equal(hash(fs.readFileSync(path.join(root,output.path))),output.sha256);
+// Only obsolete form hints and the removed category mode are exempt from the frozen CSS contract.
+const withoutHints=css=>css.replace(/\.form-hint(?:-dot)?\{[^}]*\}\n/g,'').replace(/^\.category-(?:card|title|note|price|area|actions)[^\n]*\n/gm,'').replace(/^\.plans-style-9[^\n]*\n/gm,'');
+assert.ok(withoutHints(require('./seo-contract.cjs').css(fs.readFileSync(path.join(root,'styles.css'),'utf8'))).startsWith(withoutHints(execFileSync('git',['show','b63b88e:styles.css'],{cwd:root,encoding:'utf8'}))), 'Approved CSS, including every hero breakpoint and animation, remains unchanged except removed obsolete form hints/category mode');
 console.log('PASS 28 IDs, categories 4/16/6/2, 19 groups, 84 links/57 byte-identical SVG, media provenance, generated HTML and frozen hero sources');

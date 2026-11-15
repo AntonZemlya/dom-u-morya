@@ -1,0 +1,219 @@
+{
+  "method": "Lighthouse 13.6.0; same isolated Playwright Chromium, gzip loopback servers, cold profile each run; alternating baseline b686c5f and candidate. No production requests or writes.",
+  "runs": [
+    {
+      "phase": "before",
+      "device": "mobile",
+      "run": 1,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2796.883675,
+      "cls": 0.013455794746718359,
+      "tbt": 0,
+      "bytes": 402143,
+      "benchmarkIndex": 3890
+    },
+    {
+      "phase": "after",
+      "device": "mobile",
+      "run": 1,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2856.9273,
+      "cls": 0.013455794746718359,
+      "tbt": 0,
+      "bytes": 404601,
+      "benchmarkIndex": 3893
+    },
+    {
+      "phase": "before",
+      "device": "desktop",
+      "run": 1,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 688.2928,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 518302,
+      "benchmarkIndex": 3893
+    },
+    {
+      "phase": "after",
+      "device": "desktop",
+      "run": 1,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 688.6313999999999,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 520760,
+      "benchmarkIndex": 3889.5
+    },
+    {
+      "phase": "before",
+      "device": "mobile",
+      "run": 2,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2793.2018250000006,
+      "cls": 0.003144705158054653,
+      "tbt": 0,
+      "bytes": 402143,
+      "benchmarkIndex": 3870.5
+    },
+    {
+      "phase": "after",
+      "device": "mobile",
+      "run": 2,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2854.2000000000003,
+      "cls": 0.013455794746718359,
+      "tbt": 0,
+      "bytes": 404601,
+      "benchmarkIndex": 3880.5
+    },
+    {
+      "phase": "before",
+      "device": "desktop",
+      "run": 2,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 708.5669999999999,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 583150,
+      "benchmarkIndex": 3886
+    },
+    {
+      "phase": "after",
+      "device": "desktop",
+      "run": 2,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 690.835,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 520760,
+      "benchmarkIndex": 3871
+    },
+    {
+      "phase": "before",
+      "device": "mobile",
+      "run": 3,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2822.6127750000005,
+      "cls": 0.003144705158054653,
+      "tbt": 11,
+      "bytes": 402143,
+      "benchmarkIndex": 3880.5
+    },
+    {
+      "phase": "after",
+      "device": "mobile",
+      "run": 3,
+      "performance": 96,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 2855.562450000001,
+      "cls": 0.013455794746718359,
+      "tbt": 0,
+      "bytes": 404601,
+      "benchmarkIndex": 3884.5
+    },
+    {
+      "phase": "before",
+      "device": "desktop",
+      "run": 3,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 688.366,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 518302,
+      "benchmarkIndex": 3892
+    },
+    {
+      "phase": "after",
+      "device": "desktop",
+      "run": 3,
+      "performance": 100,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": 690.0040000000001,
+      "cls": 0,
+      "tbt": 0,
+      "bytes": 520760,
+      "benchmarkIndex": 3892.5
+    }
+  ],
+  "medians": {
+    "before": {
+      "mobile": {
+        "performance": 96,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": 2796.883675,
+        "cls": 0.003144705158054653,
+        "tbt": 0,
+        "bytes": 402143
+      },
+      "desktop": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": 688.366,
+        "cls": 0,
+        "tbt": 0,
+        "bytes": 518302
+      }
+    },
+    "after": {
+      "mobile": {
+        "performance": 96,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": 2855.562450000001,
+        "cls": 0.013455794746718359,
+        "tbt": 0,
+        "bytes": 404601
+      },
+      "desktop": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": 690.0040000000001,
+        "cls": 0,
+        "tbt": 0,
+        "bytes": 520760
+      }
+    }
+  }
+}

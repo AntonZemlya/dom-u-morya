@@ -20,6 +20,7 @@ assets/performance/logo-208-9fc30e7ce8dfe9c8.webp
 assets/performance/logo-416-3100ea4cbf9376ca.webp
 consent-analytics.html
 consent-personal-data.html
+data/performance-assets.json
 index.html
 ops/RELEASE-RUNBOOK.md
 ops/release_core.py

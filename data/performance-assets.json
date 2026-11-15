@@ -1,0 +1,89 @@
+{
+  "logo": [
+    {
+      "src": "assets/performance/logo-208-9fc30e7ce8dfe9c8.webp",
+      "width": 208,
+      "bytes": 5304
+    },
+    {
+      "src": "assets/performance/logo-416-3100ea4cbf9376ca.webp",
+      "width": 416,
+      "bytes": 13352
+    }
+  ],
+  "location": [
+    {
+      "src": "assets/performance/location-480-0e9563b30925ea5e.webp",
+      "width": 480,
+      "bytes": 23988
+    },
+    {
+      "src": "assets/performance/location-768-4d444d254972ec00.webp",
+      "width": 768,
+      "bytes": 64696
+    },
+    {
+      "src": "assets/performance/location-1024-ea0690d29403c94f.webp",
+      "width": 1024,
+      "bytes": 95984
+    }
+  ],
+  "architecture": [
+    {
+      "src": "assets/performance/architecture-768-785845aa8a1fea81.webp",
+      "width": 768,
+      "bytes": 63496
+    }
+  ],
+  "architecture-mobile": [
+    {
+      "src": "assets/performance/architecture-mobile-432-5c64a02328ab5b4c.webp",
+      "width": 432,
+      "bytes": 37744
+    },
+    {
+      "src": "assets/performance/architecture-mobile-864-7e644c9515d3e1a5.webp",
+      "width": 864,
+      "bytes": 102412
+    }
+  ],
+  "fonts": [
+    {
+      "src": "assets/performance/font-1-589d5bc540bf8a21.woff2",
+      "bytes": 42604
+    },
+    {
+      "src": "assets/performance/font-2-ee97755e1627a905.woff2",
+      "bytes": 45628
+    },
+    {
+      "src": "assets/performance/font-3-16a8472875804598.woff2",
+      "bytes": 39288
+    },
+    {
+      "src": "assets/performance/font-4-de8cd81872c5be94.woff2",
+      "bytes": 42344
+    },
+    {
+      "src": "assets/performance/font-5-20b06bae8cd7ad36.woff2",
+      "bytes": 42504
+    },
+    {
+      "src": "assets/performance/font-6-ace866d882f7a84b.woff2",
+      "bytes": 19304
+    },
+    {
+      "src": "assets/performance/font-7-3541516ab4bb29c6.woff2",
+      "bytes": 19772
+    },
+    {
+      "src": "assets/performance/font-8-04e2549e9df505b6.woff2",
+      "bytes": 19776
+    },
+    {
+      "src": "assets/performance/font-9-59363a38ffa3bfe4.woff2",
+      "bytes": 19908
+    }
+  ],
+  "retained": []
+}

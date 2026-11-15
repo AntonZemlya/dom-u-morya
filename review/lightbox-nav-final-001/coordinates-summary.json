@@ -1,0 +1,506 @@
+{
+  "status": "PASS",
+  "toleranceCssPx": 1,
+  "viewports": [
+    {
+      "width": 1440,
+      "checkedStates": 23,
+      "maxDriftCssPx": 0,
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "x": 110,
+          "y": 166,
+          "width": 48,
+          "height": 676,
+          "iconCenterY": 504
+        },
+        {
+          "id": "lightbox-next",
+          "x": 1282,
+          "y": 166,
+          "width": 48,
+          "height": 676,
+          "iconCenterY": 504
+        }
+      ],
+      "requiredImages": [
+        {
+          "label": "tower",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 110,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 1282,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "horizontal",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 110,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 1282,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "vertical",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 110,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 1282,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "construction",
+          "mode": "construction",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 110,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 1282,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "plan",
+          "mode": "plan",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 110,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 1282,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "checkedStates": 23,
+      "maxDriftCssPx": 0,
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "x": 40,
+          "y": 166,
+          "width": 48,
+          "height": 676,
+          "iconCenterY": 504
+        },
+        {
+          "id": "lightbox-next",
+          "x": 680,
+          "y": 166,
+          "width": 48,
+          "height": 676,
+          "iconCenterY": 504
+        }
+      ],
+      "requiredImages": [
+        {
+          "label": "tower",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 40,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 680,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "horizontal",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 40,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 680,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "vertical",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 40,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 680,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "construction",
+          "mode": "construction",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 40,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 680,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        },
+        {
+          "label": "plan",
+          "mode": "plan",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 40,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            },
+            {
+              "id": "lightbox-next",
+              "x": 680,
+              "y": 166,
+              "width": 48,
+              "height": 676
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "checkedStates": 25,
+      "maxDriftCssPx": 0,
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "x": 16,
+          "y": 374,
+          "width": 44,
+          "height": 44,
+          "iconCenterY": 396
+        },
+        {
+          "id": "lightbox-next",
+          "x": 330,
+          "y": 374,
+          "width": 44,
+          "height": 44,
+          "iconCenterY": 396
+        }
+      ],
+      "requiredImages": [
+        {
+          "label": "tower",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 330,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "horizontal",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 330,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "vertical",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 330,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "construction",
+          "mode": "construction",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 330,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "plan",
+          "mode": "plan",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 330,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "checkedStates": 25,
+      "maxDriftCssPx": 0,
+      "buttons": [
+        {
+          "id": "lightbox-prev",
+          "x": 16,
+          "y": 374,
+          "width": 44,
+          "height": 44,
+          "iconCenterY": 396
+        },
+        {
+          "id": "lightbox-next",
+          "x": 260,
+          "y": 374,
+          "width": 44,
+          "height": 44,
+          "iconCenterY": 396
+        }
+      ],
+      "requiredImages": [
+        {
+          "label": "tower",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 260,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "horizontal",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 260,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "vertical",
+          "mode": "gallery",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 260,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "construction",
+          "mode": "construction",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 260,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        },
+        {
+          "label": "plan",
+          "mode": "plan",
+          "buttons": [
+            {
+              "id": "lightbox-prev",
+              "x": 16,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "id": "lightbox-next",
+              "x": 260,
+              "y": 374,
+              "width": 44,
+              "height": 44
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

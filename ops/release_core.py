@@ -26,9 +26,10 @@ TERMINAL = ['verified', 'rolled_back']
 MAX_ARCHIVE = 128 * 1024 * 1024
 MAX_EXPANDED = 256 * 1024 * 1024
 GUARD = b'# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1'
-# Packages accept only v2. The exact v1 policy is a migration/backup baseline only.
+# Packages accept only the current exact policy. Prior revisions are backup/migration baselines.
 LEGACY_HTACCESS_SHA256 = '652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5'
-APPROVED_HTACCESS_SHA256 = '86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a2c7437f877c7'
+PREVIOUS_HTACCESS_SHA256 = '86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a2c7437f877c7'
+APPROVED_HTACCESS_SHA256 = '1412dd94ca93a9942cb0f679472294925496ca12c3e4317484b09e3c5f98504a'
 RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json'}
 BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
                     'needs_rollback','rolling_back','rolled_back','recovery_required'}
@@ -198,7 +199,7 @@ def verify_package(raw, expected_sha, historical=False):
 
 def approved_htaccess(data, baseline=False):
     accepted = [APPROVED_HTACCESS_SHA256]
-    if baseline: accepted.append(LEGACY_HTACCESS_SHA256)
+    if baseline: accepted.extend([LEGACY_HTACCESS_SHA256, PREVIOUS_HTACCESS_SHA256])
     ensure(sha(data) in accepted,
            'Apache policy differs from the accepted exact revision; separate security scope required')
 
@@ -354,11 +355,12 @@ class Manager:
                                     before_sha256=(old or {}).get('sha256'), after_sha256=new))
         migration = None
         if current['.htaccess']['sha256'] != APPROVED_HTACCESS_SHA256:
-            ensure(current['.htaccess']['sha256'] == LEGACY_HTACCESS_SHA256
+            ensure(current['.htaccess']['sha256'] in [LEGACY_HTACCESS_SHA256, PREVIOUS_HTACCESS_SHA256]
                    and len(changes) == 1 and changes[0]['path'] == '.htaccess'
                    and changes[0]['action'] == 'replace',
                    'Apache policy migration permits only the exact .htaccess replacement')
-            migration = dict(scope='SEO-REDIRECT-001', from_sha256=LEGACY_HTACCESS_SHA256,
+            migration = dict(scope='PAGESPEED-MOBILE-001' if current['.htaccess']['sha256'] == PREVIOUS_HTACCESS_SHA256 else 'SEO-REDIRECT-001',
+                             from_sha256=current['.htaccess']['sha256'],
                              to_sha256=APPROVED_HTACCESS_SHA256)
         plan=dict(schema='dom-plan/v1', action='apply' if changes else 'noop', domain=DOMAIN, release_id=release_id,
                   commit=manifest['commit'], package_sha256=package_sha, package_bytes=package_bytes,

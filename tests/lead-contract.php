@@ -25,7 +25,7 @@ function error(int $code, callable $fn): void {
 }
 try {
     $one=request([]); check(count($mails)===1); check(!isset($mails[0]['to']));
-    check(str_contains($mails[0]['body'],'6 978 183 ₽')); check(str_contains($mails[0]['body'],'Редакция согласия: 2026-10-31'));
+    check(str_contains($mails[0]['body'],'7 117 760 ₽')); check(str_contains($mails[0]['body'],'Редакция согласия: 2026-10-31'));
     check($mails[0]['subject']==='ЖК «Дом у моря» — новая заявка'); check(!str_contains($mails[0]['body'],$one['id']));
     $audit=array_values(json_decode(file_get_contents($dir.'/state.json'),true)['items'])[0];
     check($audit['created']===$now && $audit['consentVersion']===DomLead\CONSENT_VERSION && $audit['id']===$one['id']);
@@ -53,7 +53,7 @@ try {
     error(422,fn()=>request(['lotId'=>'unknown'])); error(422,fn()=>request(['category'=>'3k']));
     error(422,fn()=>request(['planView'=>'other'])); error(422,fn()=>request(['requestKind'=>'other']));
     error(400,fn()=>request([],['HTTP_IDEMPOTENCY_KEY'=>'']));
-    $calc=['price'=>6978183,'downPct'=>20,'term'=>20,'rate'=>6,'program'=>'family'];
+    $calc=['price'=>7117760,'downPct'=>20,'term'=>20,'rate'=>6,'program'=>'family'];
     error(422,fn()=>request(['calculation'=>array_replace($calc,['price'=>1])]));
     error(422,fn()=>request(['calculation'=>array_replace($calc,['price'=>7000000])]));
     error(422,fn()=>request(['calculation'=>array_replace($calc,['term'=>'20'])]));
@@ -114,11 +114,11 @@ E-mail: synthetic@example.invalid
 Квартира № 6 (лот 22825)
 Этаж: 2
 Площадь: 29 м²
-Стоимость по каталогу: 6 978 183 ₽
+Стоимость по каталогу: 7 117 760 ₽
 Вид планировки: с мебелью
 
 ИПОТЕЧНЫЙ РАСЧЁТ
-Стоимость для расчёта: 6 978 183 ₽
+Стоимость для расчёта: 7 117 760 ₽
 Первоначальный взнос: 20%
 Срок: 20 лет
 Ставка: 6%

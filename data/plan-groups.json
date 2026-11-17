@@ -13,8 +13,8 @@
     "area_values": [
       29
     ],
-    "price_min_rub": 6978183,
-    "price_max_rub": 6978183,
+    "price_min_rub": 7117760,
+    "price_max_rub": 7117760,
     "sample_plans": [
       {
         "type": "furnished",
@@ -58,8 +58,8 @@
     "area_values": [
       28.9
     ],
-    "price_min_rub": 7741038,
-    "price_max_rub": 7762135,
+    "price_min_rub": 7501082,
+    "price_max_rub": 7600671,
     "sample_plans": [
       {
         "type": "furnished",
@@ -101,8 +101,8 @@
     "area_values": [
       28.9
     ],
-    "price_min_rub": 7762135,
-    "price_max_rub": 7762135,
+    "price_min_rub": 7719450,
+    "price_max_rub": 7719450,
     "sample_plans": [
       {
         "type": "furnished",
@@ -131,48 +131,44 @@
     ]
   },
   {
-    "id": "layout-12c10e0ed8f5",
-    "furnished_sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+    "id": "layout-6c31471b8509",
+    "furnished_sha256": "6c31471b850930e5804dab327773df7f9b8bb0822932c398fc241f638548c58c",
     "bedrooms": 1,
     "apartments": [
-      "22890",
-      "22906",
-      "22938"
+      "22821"
     ],
     "numbers": [
-      71,
-      87,
-      119
+      2
     ],
-    "count": 3,
+    "count": 1,
     "area_values": [
-      33.1
+      33.8
     ],
-    "price_min_rub": 7933673,
-    "price_max_rub": 8464100,
+    "price_min_rub": 7651238,
+    "price_max_rub": 7651238,
     "sample_plans": [
       {
         "type": "furnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_6_7.svg",
-        "local_path": "assets/content/plans/12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981.svg",
-        "original_path": "media/plans/22890-apt-71-furnished.svg",
-        "sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_2.svg",
+        "local_path": "assets/content/plans/6c31471b850930e5804dab327773df7f9b8bb0822932c398fc241f638548c58c.svg",
+        "original_path": "media/plans/22821-apt-2-furnished.svg",
+        "sha256": "6c31471b850930e5804dab327773df7f9b8bb0822932c398fc241f638548c58c",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "unfurnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_6_7.svg",
-        "local_path": "assets/content/plans/030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea.svg",
-        "original_path": "media/plans/22890-apt-71-unfurnished.svg",
-        "sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_2.svg",
+        "local_path": "assets/content/plans/a35a3f8ccdafdf4c26dbe69d8fca47dffcdfbe032a282b9f4096116462f65cd7.svg",
+        "original_path": "media/plans/22821-apt-2-unfurnished.svg",
+        "sha256": "a35a3f8ccdafdf4c26dbe69d8fca47dffcdfbe032a282b9f4096116462f65cd7",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "floor",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_7.svg",
-        "local_path": "assets/content/plans/0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73.svg",
-        "original_path": "media/plans/22890-apt-71-floor.svg",
-        "sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_2.svg",
+        "local_path": "assets/content/plans/bd78bcb10338c017071e7e70b30f2e574793afb4e4d30f038cd35886f02be442.svg",
+        "original_path": "media/plans/22821-apt-2-floor.svg",
+        "sha256": "bd78bcb10338c017071e7e70b30f2e574793afb4e4d30f038cd35886f02be442",
         "rights_status": "permission_not_verified"
       }
     ]
@@ -191,8 +187,8 @@
     "area_values": [
       35.7
     ],
-    "price_min_rub": 8042710,
-    "price_max_rub": 8042710,
+    "price_min_rub": 8040890,
+    "price_max_rub": 8040890,
     "sample_plans": [
       {
         "type": "furnished",
@@ -221,134 +217,48 @@
     ]
   },
   {
-    "id": "layout-e8fa5cc366d7",
-    "furnished_sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
+    "id": "layout-12c10e0ed8f5",
+    "furnished_sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
     "bedrooms": 1,
     "apartments": [
-      "22833"
+      "22890",
+      "22906",
+      "22938"
     ],
     "numbers": [
-      14
-    ],
-    "count": 1,
-    "area_values": [
-      35.7
-    ],
-    "price_min_rub": 8042710,
-    "price_max_rub": 8042710,
-    "sample_plans": [
-      {
-        "type": "furnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_14.svg",
-        "local_path": "assets/content/plans/e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd.svg",
-        "original_path": "media/plans/22833-apt-14-furnished.svg",
-        "sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
-        "rights_status": "permission_not_verified"
-      },
-      {
-        "type": "unfurnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_14.svg",
-        "local_path": "assets/content/plans/256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20.svg",
-        "original_path": "media/plans/22833-apt-14-unfurnished.svg",
-        "sha256": "256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20",
-        "rights_status": "permission_not_verified"
-      },
-      {
-        "type": "floor",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_14.svg",
-        "local_path": "assets/content/plans/0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79.svg",
-        "original_path": "media/plans/22833-apt-14-floor.svg",
-        "sha256": "0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79",
-        "rights_status": "permission_not_verified"
-      }
-    ]
-  },
-  {
-    "id": "layout-754dfd7d47de",
-    "furnished_sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
-    "bedrooms": 1,
-    "apartments": [
-      "22838",
-      "22886",
-      "22918"
-    ],
-    "numbers": [
-      19,
-      67,
-      99
+      71,
+      87,
+      119
     ],
     "count": 3,
     "area_values": [
-      35.7
+      33.1
     ],
-    "price_min_rub": 8067093,
-    "price_max_rub": 8432661,
+    "price_min_rub": 8052667,
+    "price_max_rub": 8161533,
     "sample_plans": [
       {
         "type": "furnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_3.svg",
-        "local_path": "assets/content/plans/754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81.svg",
-        "original_path": "media/plans/22838-apt-19-furnished.svg",
-        "sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_6_7.svg",
+        "local_path": "assets/content/plans/12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981.svg",
+        "original_path": "media/plans/22890-apt-71-furnished.svg",
+        "sha256": "12c10e0ed8f5be4a1bd1cc4ede0d61882a6ea3258c2e76fe1cd4a3555557a981",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "unfurnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_3.svg",
-        "local_path": "assets/content/plans/279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443.svg",
-        "original_path": "media/plans/22838-apt-19-unfurnished.svg",
-        "sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_6_7.svg",
+        "local_path": "assets/content/plans/030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea.svg",
+        "original_path": "media/plans/22890-apt-71-unfurnished.svg",
+        "sha256": "030cfb6090a17299a9db1654511be8645d33c97022cbaae38d86524bc8477eea",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "floor",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_3.svg",
-        "local_path": "assets/content/plans/df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7.svg",
-        "original_path": "media/plans/22838-apt-19-floor.svg",
-        "sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
-        "rights_status": "permission_not_verified"
-      }
-    ]
-  },
-  {
-    "id": "layout-7c704045ca9c",
-    "furnished_sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
-    "bedrooms": 1,
-    "apartments": [
-      "22849"
-    ],
-    "numbers": [
-      30
-    ],
-    "count": 1,
-    "area_values": [
-      35.7
-    ],
-    "price_min_rub": 8067093,
-    "price_max_rub": 8067093,
-    "sample_plans": [
-      {
-        "type": "furnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_14.svg",
-        "local_path": "assets/content/plans/7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0.svg",
-        "original_path": "media/plans/22849-apt-30-furnished.svg",
-        "sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
-        "rights_status": "permission_not_verified"
-      },
-      {
-        "type": "unfurnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_14.svg",
-        "local_path": "assets/content/plans/1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414.svg",
-        "original_path": "media/plans/22849-apt-30-unfurnished.svg",
-        "sha256": "1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414",
-        "rights_status": "permission_not_verified"
-      },
-      {
-        "type": "floor",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_14.svg",
-        "local_path": "assets/content/plans/980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94.svg",
-        "original_path": "media/plans/22849-apt-30-floor.svg",
-        "sha256": "980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_7.svg",
+        "local_path": "assets/content/plans/0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73.svg",
+        "original_path": "media/plans/22890-apt-71-floor.svg",
+        "sha256": "0d465d095cf6abb80d5a2e37ffaf5116555fcfa0ac0b97055182e446ed36fe73",
         "rights_status": "permission_not_verified"
       }
     ]
@@ -369,8 +279,8 @@
     "area_values": [
       38.5
     ],
-    "price_min_rub": 8080996,
-    "price_max_rub": 8783698,
+    "price_min_rub": 8080188,
+    "price_max_rub": 8516662,
     "sample_plans": [
       {
         "type": "furnished",
@@ -399,44 +309,132 @@
     ]
   },
   {
-    "id": "layout-dc43606a4c1f",
-    "furnished_sha256": "dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3",
+    "id": "layout-754dfd7d47de",
+    "furnished_sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
     "bedrooms": 1,
     "apartments": [
-      "22820"
+      "22838",
+      "22886"
     ],
     "numbers": [
-      1
+      19,
+      67
     ],
-    "count": 1,
+    "count": 2,
     "area_values": [
-      41
+      35.7
     ],
-    "price_min_rub": 8341040,
-    "price_max_rub": 8341040,
+    "price_min_rub": 8106221,
+    "price_max_rub": 8254376,
     "sample_plans": [
       {
         "type": "furnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_1.svg",
-        "local_path": "assets/content/plans/dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3.svg",
-        "original_path": "media/plans/22820-apt-1-furnished.svg",
-        "sha256": "dc43606a4c1f7772584fa4410cad21b08a125c3f850dc911df24b30e7065bbd3",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_3.svg",
+        "local_path": "assets/content/plans/754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81.svg",
+        "original_path": "media/plans/22838-apt-19-furnished.svg",
+        "sha256": "754dfd7d47de13e640845016bd8e0ba82226965ade52eb54cbcedb4c1671ab81",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "unfurnished",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_1.svg",
-        "local_path": "assets/content/plans/bbf7482835d364f09a87afc8f7f579c2c35cbf61520a9ff45dc903b24f644e41.svg",
-        "original_path": "media/plans/22820-apt-1-unfurnished.svg",
-        "sha256": "bbf7482835d364f09a87afc8f7f579c2c35cbf61520a9ff45dc903b24f644e41",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_3.svg",
+        "local_path": "assets/content/plans/279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443.svg",
+        "original_path": "media/plans/22838-apt-19-unfurnished.svg",
+        "sha256": "279a1fcc5bfbc64082116165dbcb8d2f9b24e58148ba6ed941df5e2e2c719443",
         "rights_status": "permission_not_verified"
       },
       {
         "type": "floor",
-        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_1.svg",
-        "local_path": "assets/content/plans/8b1dc3f02050ef7419aebd6b33d2d5b3fda8ead91ef2be78654306979404a033.svg",
-        "original_path": "media/plans/22820-apt-1-floor.svg",
-        "sha256": "8b1dc3f02050ef7419aebd6b33d2d5b3fda8ead91ef2be78654306979404a033",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_3.svg",
+        "local_path": "assets/content/plans/df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7.svg",
+        "original_path": "media/plans/22838-apt-19-floor.svg",
+        "sha256": "df44163e928bcd92d2b322fbe370c70d17e438ed03603fe516c49e21510f5af7",
+        "rights_status": "permission_not_verified"
+      }
+    ]
+  },
+  {
+    "id": "layout-e8fa5cc366d7",
+    "furnished_sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
+    "bedrooms": 1,
+    "apartments": [
+      "22833"
+    ],
+    "numbers": [
+      14
+    ],
+    "count": 1,
+    "area_values": [
+      35.7
+    ],
+    "price_min_rub": 8163341,
+    "price_max_rub": 8163341,
+    "sample_plans": [
+      {
+        "type": "furnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_2_14.svg",
+        "local_path": "assets/content/plans/e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd.svg",
+        "original_path": "media/plans/22833-apt-14-furnished.svg",
+        "sha256": "e8fa5cc366d7e00fda537440dd213cc0a1557de6ccc582fa20cf222acf613cdd",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "unfurnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_2_14.svg",
+        "local_path": "assets/content/plans/256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20.svg",
+        "original_path": "media/plans/22833-apt-14-unfurnished.svg",
+        "sha256": "256165674b59ee7e95d2019ffbcfac7267791e5707950bae3be6f21c8f32cf20",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "floor",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_2_14.svg",
+        "local_path": "assets/content/plans/0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79.svg",
+        "original_path": "media/plans/22833-apt-14-floor.svg",
+        "sha256": "0ee9d8852b816f971a6fda69575cce5100810d75c992fee681575b97eeb16b79",
+        "rights_status": "permission_not_verified"
+      }
+    ]
+  },
+  {
+    "id": "layout-7c704045ca9c",
+    "furnished_sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
+    "bedrooms": 1,
+    "apartments": [
+      "22849"
+    ],
+    "numbers": [
+      30
+    ],
+    "count": 1,
+    "area_values": [
+      35.7
+    ],
+    "price_min_rub": 8188081,
+    "price_max_rub": 8188081,
+    "sample_plans": [
+      {
+        "type": "furnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_3_14.svg",
+        "local_path": "assets/content/plans/7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0.svg",
+        "original_path": "media/plans/22849-apt-30-furnished.svg",
+        "sha256": "7c704045ca9c7b55a1e24a1a93cca5af7dc3b3c980a180d0b2e39968abb9c5a0",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "unfurnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_3_14.svg",
+        "local_path": "assets/content/plans/1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414.svg",
+        "original_path": "media/plans/22849-apt-30-unfurnished.svg",
+        "sha256": "1989e2683d7a1f13baa9205d18fa00f9b2979323249b808ab4625f574f701414",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "floor",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_3-12_14.svg",
+        "local_path": "assets/content/plans/980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94.svg",
+        "original_path": "media/plans/22849-apt-30-floor.svg",
+        "sha256": "980404abc624f94f73116f51f445707351462e97ef045bb759ac5abab6813e94",
         "rights_status": "permission_not_verified"
       }
     ]
@@ -455,8 +453,8 @@
     "area_values": [
       41
     ],
-    "price_min_rub": 8426566,
-    "price_max_rub": 8426566,
+    "price_min_rub": 8425746,
+    "price_max_rub": 8425746,
     "sample_plans": [
       {
         "type": "furnished",
@@ -500,8 +498,8 @@
     "area_values": [
       41.5
     ],
-    "price_min_rub": 8527337,
-    "price_max_rub": 8553233,
+    "price_min_rub": 8526507,
+    "price_max_rub": 8552403,
     "sample_plans": [
       {
         "type": "furnished",
@@ -543,8 +541,8 @@
     "area_values": [
       33.6
     ],
-    "price_min_rub": 8831424,
-    "price_max_rub": 8831424,
+    "price_min_rub": 8963909,
+    "price_max_rub": 8963909,
     "sample_plans": [
       {
         "type": "furnished",
@@ -568,6 +566,49 @@
         "local_path": "assets/content/plans/c256b74ca11c93cf3e36319943ee62535b20bf73bd9a1854e8ff0865a916124b.svg",
         "original_path": "media/plans/23029-apt-210-floor.svg",
         "sha256": "c256b74ca11c93cf3e36319943ee62535b20bf73bd9a1854e8ff0865a916124b",
+        "rights_status": "permission_not_verified"
+      }
+    ]
+  },
+  {
+    "id": "layout-3b836173d249",
+    "furnished_sha256": "3b836173d249328a92b5e876113e13054ea4265baefedf9181fc0daefa9bbc04",
+    "bedrooms": 1,
+    "apartments": [
+      "23022"
+    ],
+    "numbers": [
+      203
+    ],
+    "count": 1,
+    "area_values": [
+      34.7
+    ],
+    "price_min_rub": 9174958,
+    "price_max_rub": 9174958,
+    "sample_plans": [
+      {
+        "type": "furnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-meb/1_1_14_13.svg",
+        "local_path": "assets/content/plans/3b836173d249328a92b5e876113e13054ea4265baefedf9181fc0daefa9bbc04.svg",
+        "original_path": "media/plans/23022-apt-203-furnished.svg",
+        "sha256": "3b836173d249328a92b5e876113e13054ea4265baefedf9181fc0daefa9bbc04",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "unfurnished",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan/1_1_14_13.svg",
+        "local_path": "assets/content/plans/e007f1d813c94c3c92746b80b56a358d0bfdc4e05f571d43f48175b0d107aa5a.svg",
+        "original_path": "media/plans/23022-apt-203-unfurnished.svg",
+        "sha256": "e007f1d813c94c3c92746b80b56a358d0bfdc4e05f571d43f48175b0d107aa5a",
+        "rights_status": "permission_not_verified"
+      },
+      {
+        "type": "floor",
+        "source_url": "https://sadovoe-kolco.ru/upload/plans/house-by-the-sea/plan-floor/1_1_13-14_13.svg",
+        "local_path": "assets/content/plans/3e3c8d28efef6321f6844531f4715f30bd0a2350ae1697181908935665e9ddd4.svg",
+        "original_path": "media/plans/23022-apt-203-floor.svg",
+        "sha256": "3e3c8d28efef6321f6844531f4715f30bd0a2350ae1697181908935665e9ddd4",
         "rights_status": "permission_not_verified"
       }
     ]

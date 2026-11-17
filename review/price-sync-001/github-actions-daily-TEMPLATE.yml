@@ -1,0 +1,64 @@
+name: Daily developer offer audit
+
+on:
+  schedule:
+    # 08:17 Moscow time, no autonomous production writes.
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: developer-offer-audit
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Compare official catalog and individual offers
+        id: audit
+        continue-on-error: true
+        run: |
+          python3 -B scripts/check_official_prices.py --check --output "$RUNNER_TEMP/price-comparison.json"
+      - name: Publish comparison summary
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib
+          p=pathlib.Path(os.environ['RUNNER_TEMP'])/'price-comparison.json'
+          lines=['# ЖК Дом у моря — ежедневная проверка цен', '']
+          if p.exists():
+              d=json.loads(p.read_text())
+              lines.extend([
+                  'Источник: '+d['project_url'],
+                  'Время проверки (UTC): '+d['checked_at'],
+                  'Сверено предложений: '+str(d['official_count']),
+                  'Изменившихся цен: '+str(d['price_changed']),
+                  'Новые ID: '+', '.join(d['added_ids']),
+                  'Исчезнувшие ID: '+', '.join(d['removed_ids']),
+                  '',
+                  '| № квартиры | Было, ₽ | Сейчас, ₽ | Разница, ₽ |',
+                  '|---:|---:|---:|---:|',
+              ])
+              for row in d['prices']:
+                  if row['delta'] != 0:
+                      lines.append(f"| {row['number']} | {row['old_price']:,} | {row['new_price']:,} | {row['delta']:+,} |")
+              if not d['price_changed'] and not d['added_ids'] and not d['removed_ids']:
+                  lines.append('Нет изменений')
+          else:
+              lines.append('Не удалось проверить: источник недоступен или изменил формат.')
+          lines.extend(['', 'При расхождении требуется проверка и отдельный релиз. Автопубликация запрещена.'])
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as stream:
+              stream.write('\n'.join(lines)+'\n')
+          PY
+      - name: Fail visibly on price drift or verification failure
+        if: steps.audit.outcome != 'success'
+        run: |
+          echo "::error::Price or inventory drift, or developer source unavailable. Review the report."
+          exit 1

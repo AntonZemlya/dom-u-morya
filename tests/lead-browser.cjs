@@ -47,7 +47,7 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
  assert.equal(mails().length,1);await p.unroute('**/api/lead.php');await p.locator('#submit-btn').click();
  await p.waitForFunction(()=>document.getElementById('form-status').textContent.includes('Запрос принят на обработку'));assert.equal(mails().length,1);
  assert.match(mails()[0].body,/ИПОТЕЧНЫЙ РАСЧЁТ/);
- for(const text of ['Квартира № 6 (лот 22825)','6 978 183 ₽','Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','synthetic@example.invalid','Способ связи: Telegram','Удобное время: 12:00–15:00'])assert.ok(mails()[0].body.includes(text),text);
+ for(const text of ['Квартира № 6 (лот 22825)','7 117 760 ₽','Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','synthetic@example.invalid','Способ связи: Telegram','Удобное время: 12:00–15:00'])assert.ok(mails()[0].body.includes(text),text);
  for(const [code,copy] of [[422,'Проверьте'],[429,'Слишком много'],[409,'Повторная отправка'],[500,'Запрос не принят'],[503,'временно недоступен']]){
   await p.route('**/api/lead.php',r=>r.fulfill({status:code,contentType:'application/json',body:'{"ok":false}'}));
   await p.locator('#consent-input').check();await p.locator('#submit-btn').click();await p.waitForFunction(copy=>document.getElementById('form-status').textContent.includes(copy),copy);

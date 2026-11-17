@@ -41,8 +41,8 @@ async function touchDriver(p){
       await prepare(p,site.url,js);
       const amounts=await p.locator('#price-label,#down-label,#loan-label,#payment-label,#income-label').allTextContents();
       if(!js)staticAmounts=amounts;else assert.deepEqual(amounts,staticAmounts,'No hydration jump');
-      assert.equal(await p.locator('#down-range').inputValue(),'15');
-      assert.equal(money(await p.locator('#loan-label').textContent()),5931456);
+      assert.equal(await p.locator('#down-range').inputValue(),String(M.minimumDownPayment(Math.min(...apartments.map(a=>a.price_rub)),M.mortgagePrograms.regional).value));
+      assert.equal(money(await p.locator('#loan-label').textContent()),Math.round(Math.min(...apartments.map(a=>a.price_rub))*(1-M.minimumDownPayment(Math.min(...apartments.map(a=>a.price_rub)),M.mortgagePrograms.regional).value/100)));
       assert.equal(await p.locator('#plan-views,#category-grid,.category-card').count(),0);
       assert.equal(await p.locator('#catalog-controls').isVisible(),false);
       assert.equal(await p.locator('.catalog-footnote').innerText(),'Мебель на схемах — пример расстановки.');

@@ -29,6 +29,7 @@ const n=(id,file,requires=[],args=[])=>run(id,process.execPath,[file,...args],re
 try{
  run('toolchain',process.execPath,['-e',"if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"]);
  run('source','npm',['run','check'],['toolchain']);
+ run('price-sync-unit','python3',['-B','tests/test_price_sync.py'],['source']);
  n('syntax','scripts/ci-static.mjs',['toolchain']);
  n('performance-assets','tests/performance/assets.mjs',['source']);
  n('analytics-unit','tests/analytics.test.mjs',['toolchain']);

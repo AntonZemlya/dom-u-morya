@@ -59,7 +59,7 @@ try{
   {cwd:root,env:{...process.env,LEAD_CONFIG:cfgPath,LEAD_SMTP_TEST:'1'},stdio:['ignore','ignore','pipe']});server.stderr.on('data',b=>{log+=b;});
  let ready=false;for(let i=0;i<100;i++){try{await fetch(origin+'/api/form-status.php');ready=true;break;}catch{}await pause(50);}assert.ok(ready);
  const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-31',lotId:'22825',category:'studio',planView:'furnished',
-  requestKind:'calc',email:'synthetic@example.invalid',channel:'Telegram',callTime:'12-15',calculation:{price:6978183,downPct:20,term:20,rate:6,program:'family'}};
+  requestKind:'calc',email:'synthetic@example.invalid',channel:'Telegram',callTime:'12-15',calculation:{price:7117760,downPct:20,term:20,rate:6,program:'family'}};
  const post=(p=payload,key=randomUUID(),headers={})=>fetch(origin+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin,'X-Lead-Request':'1','Idempotency-Key':key,...headers},body:typeof p==='string'?p:JSON.stringify(p)});
  const status=async()=>await(await fetch(origin+'/api/form-status.php')).json();
  reset();config({FORM_ENABLED:false});assert.deepEqual(await status(),{enabled:false,ready:true,consentVersion:'2026-10-31'});
@@ -74,7 +74,7 @@ try{
  assert.equal(m.sender,'<sales@zhk-dom-umorya.ru>');assert.deepEqual(m.recipients,['<info@anyara.ru>','<azm1982@yandex.ru>']);assert.equal(m.contentType,'text/plain');assert.equal(m.charset,'utf-8');assert.equal(m.encoding,'base64');
  assert.equal(plain(m),['Новая заявка с сайта ЖК «Дом у моря»','Дата и время: '+fullDate,'','КОНТАКТЫ','Имя: '+payload.name,'Телефон: '+payload.phone,
   'E-mail: '+payload.email,'Способ связи: Telegram','Удобное время: 12:00–15:00','','КВАРТИРА','Категория: Студия','Квартира № 6 (лот 22825)',
-  'Этаж: 2','Площадь: 29 м²','Стоимость по каталогу: 6 978 183 ₽','Вид планировки: с мебелью','','ИПОТЕЧНЫЙ РАСЧЁТ','Стоимость для расчёта: 6 978 183 ₽',
+  'Этаж: 2','Площадь: 29 м²','Стоимость по каталогу: 7 117 760 ₽','Вид планировки: с мебелью','','ИПОТЕЧНЫЙ РАСЧЁТ','Стоимость для расчёта: 7 117 760 ₽',
   'Первоначальный взнос: 20%','Срок: 20 лет','Ставка: 6%','Программа: Семейная ипотека','','Расчёт предварительный и не является предложением банка.',
   '', 'Стоимость и наличие квартиры требуют подтверждения агентством.',...consentLines(fullDate)].join('\n'));
  assert.equal(audit().filter(x=>x.command==='MAIL').length,1);assert.equal(audit().filter(x=>x.command==='RCPT').length,2);assert.equal(audit().filter(x=>x.command==='DATA').length,1);

@@ -25,7 +25,7 @@ const originals=JSON.parse(fs.readFileSync(new URL('./seo-originals.json',import
 const {createHash}=await import('node:crypto');
 const M=(await import('../content-model.js')).default;
 const apartments=JSON.parse(fs.readFileSync(new URL('../data/apartments.json',import.meta.url)));
-assert.equal(Object.keys(originals).length,57);assert.equal(apartments.length,28);assert.equal(apartments.flatMap(a=>a.plans).length,84);
+assert.equal(Object.keys(originals).length,60);assert.equal(apartments.length,28);assert.equal(apartments.flatMap(a=>a.plans).length,84);
 for (const site of [origin, '']) {
   const generated = seoHTML(fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8'), 'index.html', site);
   const nodes = JSON.parse(generated.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph'];
@@ -66,7 +66,7 @@ assert.equal(offerForLot({...apartments[0], snapshot_date:undefined}, localId), 
 assert.equal(offerForLot({...apartments[0], developer_availability:'SoldOut'}, localId).availability, 'https://schema.org/SoldOut');
 for(const [src,sha] of Object.entries(originals)){const buffer=fs.readFileSync(new URL('../'+src,import.meta.url));assert.equal(createHash('sha256').update(buffer).digest('hex'),sha);const derivative=src.replace(/\.svg$/,'.preview.webp');const bytes=fs.readFileSync(new URL('../'+derivative,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<buffer.length);}
 for(const p of M.plans(apartments))for(const v of Object.keys(M.views)){const asset=p.plans.find(a=>a.type===v),html=M.card(p,v);assert.ok(html.includes('src="'+M.previewPath(asset)+'"'));assert.ok(html.includes('href="'+asset.local_path+'"'));assert.ok(html.includes(M.rub(p.price)));}
-console.log('PASS 57 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');
+console.log('PASS 60 immutable SHA originals, lighter lossless previews, all 28×3 modes and real original fallback links');
 
 const sharp=(await import('sharp')).default;
 const og=await sharp(new URL('../assets/og-project.jpg',import.meta.url).pathname).metadata();assert.deepEqual([og.width,og.height,og.format],[1200,630,'jpeg']);

@@ -172,7 +172,9 @@ class Lifecycle(unittest.TestCase):
         self.runtime_data['manifest.json']=c.canonical(dict(identity=self.identity,files=hashes))
         rt=self.private/'smtp-runtime'/self.identity;rt.mkdir(parents=True,mode=0o700);(rt/'src').mkdir(mode=0o700)
         for n,b in self.runtime_data.items():(rt/n).write_bytes(b);(rt/n).chmod(0o600)
-        self.guard=(Path(__file__).resolve().parent.parent/'.htaccess').read_bytes()
+        release_root = Path(__file__).resolve().parent.parent
+        self.catalog_guard = (release_root/'.htaccess').read_bytes()
+        self.guard = subprocess.check_output(['git', 'show', '1e3ecac8d72034d9ce4bc8a71b365796e5d07a59:.htaccess'], cwd=release_root)
         (self.doc/'api').mkdir();(self.doc/'.envrc').write_bytes(b'protected php84 fixture')
         (self.doc/'.htaccess').write_bytes(self.guard);(self.doc/'index.html').write_bytes(b'old index')
         (self.doc/'script.js').write_bytes(b'old script');(self.doc/'api/smtp-manifest.php').write_bytes(b'fixed runtime descriptor')
@@ -386,6 +388,27 @@ class Lifecycle(unittest.TestCase):
         self.baseline=self.m.snapshot(self.identity)
         # Migration changes exactly .htaccess, including modes and all other bytes.
         return self.plan(release_id,extra={'index.html':b'old index','script.js':b'old script'})
+
+    def test_catalog_migration_future_release_and_rollback_preserve_private_state(self):
+        public = {name:b'catalog-compatible fixture' for name in c.CATALOG_PUBLIC_FILES - {'index.html'}}
+        public['.htaccess'] = self.catalog_guard
+        with self.assertRaisesRegex(RuntimeError, 'compatible'):
+            self.plan('incomplete-catalog', extra={'.htaccess':self.catalog_guard})
+        first, _, setup = self.verified('catalog-route', extra=public)
+        self.assertEqual(setup['plan']['apache_policy_migration']['scope'], 'PRICE-SYNC-002')
+        private = self.private/'catalog-sync-v1'
+        private.mkdir(mode=0o700)
+        state = private/'state.json'
+        state.write_bytes(b'catalog state owned by Cron')
+        state.chmod(0o600)
+        with self.assertRaisesRegex(RuntimeError, 'catalog-compatible rollback'):
+            self.m.rollback_plan('catalog-route')
+        _, _, next_review = self.verified('compatible-release', version='next', extra=public)
+        self.assertIsNone(next_review['plan']['apache_policy_migration'])
+        rollback = self.m.rollback_plan('compatible-release')
+        self.m.rollback(rollback['plan'], rollback['go'])
+        self.assertEqual(state.read_bytes(), b'catalog state owned by Cron')
+        self.assertEqual(self.m.status('catalog-route')['phase'], 'verified')
 
     def test_exact_apache_migration_backup_rollback_and_target_only_packages(self):
         raw,manifest,review=self.migration_plan()

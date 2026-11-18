@@ -17,6 +17,9 @@ class Release(E2E):
     # Inherit only fixture setup/cleanup, not the historical GO A test cases.
     def setUp(self):
         super().setUp();self.configure(cgi=True)
+        # The archived form package only replaces form files. Its untouched fixture
+        # must include the dependency used by the current lead core.
+        (self.doc/'api/catalog-view.php').write_bytes((ROOT/'api/catalog-view.php').read_bytes())
         self.worker=remote.Worker(str(self.home),PHP)
         self.baseline=self.worker.snapshot()
         baseline=json.loads(cli.BASELINE.read_text())

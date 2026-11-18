@@ -30,6 +30,8 @@ GUARD = b'# END DOM-U-MORYA PERMANENT DOTFILE GUARD v1'
 LEGACY_HTACCESS_SHA256 = '652ea884d02b2a73b7fa026823c4732fd1ccccba1ba11e1c43ee8c19be0e3ee5'
 PREVIOUS_HTACCESS_SHA256 = '86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a2c7437f877c7'
 APPROVED_HTACCESS_SHA256 = '1412dd94ca93a9942cb0f679472294925496ca12c3e4317484b09e3c5f98504a'
+CATALOG_HTACCESS_SHA256 = '4fcb98daec1c53d3b5829a9731c202e614d9d83080e67a784a66014a27eb7758'
+CATALOG_PUBLIC_FILES = {'index.php', 'index.html', 'api/catalog-view.php', 'api/catalog-plan.php', 'api/lead-core.php'}
 RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json'}
 BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
                     'needs_rollback','rolling_back','rolled_back','recovery_required'}
@@ -190,6 +192,8 @@ def verify_package(raw, expected_sha, historical=False):
     ensure(set(files) == set(m['files']) == expected, 'Package allowlist mismatch')
     ensure(all(sha(b) == m['files'][n] for n, b in files.items()), 'Package member SHA mismatch')
     approved_htaccess(files.get('public/.htaccess', b''), baseline=historical)
+    if m['files'].get('public/.htaccess') == CATALOG_HTACCESS_SHA256:
+        ensure(CATALOG_PUBLIC_FILES <= set(names), 'Catalog route requires the complete compatible application')
     upstream = json.loads(files['private/smtp-runtime/' + identity + '/manifest.json'])
     ensure(upstream['identity'] == identity and set(upstream['files']) == set(RUNTIME_FILES)-{'manifest.json'}, 'Runtime manifest mismatch')
     ensure(sha(json.dumps(upstream['files'], separators=(',', ':')).encode()) == identity, 'Runtime identity mismatch')
@@ -198,7 +202,7 @@ def verify_package(raw, expected_sha, historical=False):
 
 
 def approved_htaccess(data, baseline=False):
-    accepted = [APPROVED_HTACCESS_SHA256]
+    accepted = [APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256]
     if baseline: accepted.extend([LEGACY_HTACCESS_SHA256, PREVIOUS_HTACCESS_SHA256])
     ensure(sha(data) in accepted,
            'Apache policy differs from the accepted exact revision; separate security scope required')
@@ -324,8 +328,13 @@ class Manager:
         finally:
             os.close(fd)
 
+    def active_catalog(self):
+        state = real(self.private / 'catalog-sync-v1' / 'state.json')
+        return state.exists()
+
     def preflight(self, manifest, package_bytes=0):
-        ensure(manifest['files'].get('public/.htaccess')==APPROVED_HTACCESS_SHA256, 'Package Apache policy changed: STOP')
+        target_policy = manifest['files'].get('public/.htaccess')
+        ensure(target_policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256), 'Package Apache policy changed: STOP')
         identity=manifest['runtime_identity']; snapshot=self.snapshot(identity)
         # SMTP upgrades require a separate config migration; ordinary releases preserve config.
         ensure(snapshot['public']['api/smtp-manifest.php']['sha256'] == manifest['files']['public/api/smtp-manifest.php'], 'SMTP runtime migration requires separate reviewed scope')
@@ -354,7 +363,15 @@ class Manager:
                 changes.append(dict(path=name, action='delete' if new is None else 'add' if old is None else 'replace',
                                     before_sha256=(old or {}).get('sha256'), after_sha256=new))
         migration = None
-        if current['.htaccess']['sha256'] != APPROVED_HTACCESS_SHA256:
+        baseline_policy = current['.htaccess']['sha256']
+        target_policy = wanted['.htaccess']
+        if baseline_policy == CATALOG_HTACCESS_SHA256:
+            ensure(target_policy == baseline_policy, 'Live catalog requires a catalog-compatible release')
+        elif target_policy == CATALOG_HTACCESS_SHA256:
+            ensure(baseline_policy == APPROVED_HTACCESS_SHA256 and CATALOG_PUBLIC_FILES <= set(wanted),
+                   'Catalog route requires the exact v3 baseline and compatible package')
+            migration = dict(scope='PRICE-SYNC-002', from_sha256=baseline_policy, to_sha256=target_policy)
+        elif baseline_policy != APPROVED_HTACCESS_SHA256:
             ensure(current['.htaccess']['sha256'] in [LEGACY_HTACCESS_SHA256, PREVIOUS_HTACCESS_SHA256]
                    and len(changes) == 1 and changes[0]['path'] == '.htaccess'
                    and changes[0]['action'] == 'replace',
@@ -538,7 +555,13 @@ class Manager:
             ensure(self.snapshot(manifest['runtime_identity'])==plan['snapshot'],'Production drift before publication')
             r['phase']='publishing';self.save(run,r)
             try:
-                for change in sorted(plan['changes'],key=lambda c:(c['path']!='.htaccess',c['path']=='index.html',c['path'])):
+                catalog_route = (plan.get('apache_policy_migration') or {}).get('scope') == 'PRICE-SYNC-002'
+                def publication_order(change):
+                    name = change['path']
+                    if name == '.htaccess':
+                        return 3 if catalog_route else 0, name
+                    return (2 if name == 'index.html' else 1), name
+                for change in sorted(plan['changes'], key=publication_order):
                     path=real(self.doc/change['path'])
                     ensure((meta(path) if path.exists() else None)==plan['snapshot']['public'].get(change['path']), 'Scoped target drift during publication')
                     self.publish(change['path'],files.get('public/'+change['path']))
@@ -572,6 +595,8 @@ class Manager:
             current=json.loads(regular(self.root/'current.json'))
             ensure(current['release_id']==release_id or r['phase'] in ['publishing','needs_rollback','recovery_required','rolling_back','backed_up'], 'A later release exists: rollback latest first')
         base=json.loads(regular(run/'plan.json'))
+        ensure(not self.active_catalog() or base['snapshot']['public']['.htaccess']['sha256'] == CATALOG_HTACCESS_SHA256,
+               'Active catalog requires catalog-compatible rollback; stop the catalog separately before legacy recovery')
         plan=dict(schema='dom-plan/v1',action='rollback',domain=DOMAIN,release_id=release_id,package_sha256=r['package_sha256'],
                   receipt_sha256=digest(r),snapshot=self.snapshot(base['snapshot']['runtime_identity']),policy_sha256=digest(self.policy))
         plan['sha256']=digest(plan)

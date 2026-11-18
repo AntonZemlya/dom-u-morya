@@ -1,4 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {execFileSync}=require('node:child_process');
 const {browser,stable,maskMap,root}=require('./helpers.cjs');
 const base=process.env.LEAD_QA_URL,temp=process.env.LEAD_QA_DIR;
 if(!/^http:\/\/127\.0\.0\.1:\d+$/.test(base)||!temp)throw Error('Only temporary local PHP QA is allowed');
@@ -33,6 +34,34 @@ async function fill(p){await p.locator('#name-input').fill('Синтетичес
   await p.locator('#form-status').focus();assert.equal(await p.locator('#form-status').evaluate(e=>e===document.activeElement),true);
   await p.close();console.log('PASS PHP HTTP/browser selected lot, consent, UTF-8 mail, replay and accessibility '+width);
  }
+ // The running JavaScript in a tab opened before WEBSITE lacks lotPrice.
+ reset();
+ const legacy=await b.newPage({viewport:{width:390,height:844}});
+ await maskMap(legacy);
+ const oldScript=execFileSync('git',['show','1e3ecac8d72034d9ce4bc8a71b365796e5d07a59:script.js'],{cwd:root});
+ await legacy.route(url=>url.pathname==='/script.js', route=>route.fulfill({contentType:'text/javascript',body:oldScript}));
+ await legacy.goto(base+'/?form-qa');await stable(legacy);await legacy.locator('#cookie-decline').click();
+ await legacy.locator('#plans-grid [data-action="ask-plan"]').first().click();
+ await fill(legacy);
+ await legacy.waitForFunction(()=>!document.getElementById('submit-btn').disabled);
+ const [oldResponse] = await Promise.all([
+  legacy.waitForResponse(r=>new URL(r.url()).pathname==='/api/lead.php'&&r.request().method()==='POST'),
+  legacy.locator('#submit-btn').click(),
+ ]);
+ assert.equal(Object.hasOwn(oldResponse.request().postDataJSON(),'lotPrice'),false);
+ assert.equal(oldResponse.status(),409);
+ assert.equal((await oldResponse.json()).error,'catalog_reload_required');
+ await legacy.waitForFunction(()=>document.querySelector('#form-status').textContent.includes('по телефону агентства'));
+ assert.doesNotMatch(await legacy.locator('#form-status').innerText(),/Запрос принят/);
+ assert.equal(mails().length,0);
+ await legacy.locator('#plans-grid [data-action="calc-here"]').first().click();
+ assert.equal(await legacy.evaluate(() => calcDocHtml({}, '').includes('не являются офертой')), true);
+ const oldPdf=legacy.waitForEvent('download', {timeout:15000});
+ await legacy.locator('#download-calc').click();
+ assert.match((await oldPdf).suggestedFilename(), /\.pdf$/);
+ assert.equal(mails().length,0);
+ await legacy.close();
+ console.log('PASS legacy tab: missing lotPrice rejected without sending; existing interface shows agency fallback; old PDF is informational and local');
  reset();const p=await b.newPage({viewport:{width:1440,height:1000}});await maskMap(p);await p.goto(base+'/?form-qa');await stable(p);await p.locator('#cookie-decline').click();
  await p.locator('#plans-grid [data-action="calc-here"]').first().click();
  await p.evaluate(()=>{state.downPct=20;state.term=20;state.rate=6;state.mortgageProgram='family';renderCalculator();});

@@ -44,7 +44,7 @@ function smtpReady(array $cfg): bool {
 }
 
 /** Only final SMTP DATA acknowledgement is success. Exceptions are deliberately opaque. */
-function smtpTransport(array $m, array $cfg): bool {
+function smtpTransport(array $m, array $cfg, bool $controlOnly = false): bool {
     $mail = null;
     try {
         [$host, $port, $tls] = smtpSettings($cfg);
@@ -84,8 +84,13 @@ function smtpTransport(array $m, array $cfg): bool {
         $mail->Hostname = 'zhk-dom-umorya.ru';
         $mail->setFrom(MAIL_FROM, 'ЖК Дом у моря');
         $mail->Sender = MAIL_FROM;
-        $mail->addAddress($cfg['MAIL_TO']);
-        $mail->addBCC($cfg['MAIL_BCC']);
+        if ($controlOnly) {
+            if (!enabled($cfg)) return false;
+            $mail->addAddress($cfg['CONTROL_MAILBOX_VERIFIED']);
+        } else {
+            $mail->addAddress($cfg['MAIL_TO']);
+            $mail->addBCC($cfg['MAIL_BCC']);
+        }
         if ($m['replyTo'] !== '') $mail->addReplyTo($m['replyTo']);
         $mail->Subject = $m['subject'];
         $mail->Body = $m['body'];

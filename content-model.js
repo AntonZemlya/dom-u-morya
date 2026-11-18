@@ -8,12 +8,13 @@
   const rub=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
   const number=n=>n.toLocaleString('ru-RU');
   function plans(data){return data.map(a=>({...a,category:keys[a.bedrooms],title:labels[a.bedrooms]+' № '+a.number,price:a.price_rub,meta:`${number(a.area_m2)} м² · ${a.floor} этаж из ${a.floors_total} · корпус ${a.building}, секция ${a.section} · ID ${a.id}`}));}
-  function categories(list){return keys.map((key,i)=>{const lots=list.filter(a=>a.category===key),areas=lots.map(a=>a.area_m2),min=Math.min(...areas),max=Math.max(...areas);return {key,title:i?labels[i]:'Студии',count:lots.length,price:'от '+rub(Math.min(...lots.map(a=>a.price))),area:(min===max?number(min):number(min)+'–'+number(max))+' м² · чистовая отделка'};});}
+  function categories(list){return keys.map((key,i)=>{const lots=list.filter(a=>a.category===key),areas=lots.map(a=>a.area_m2),min=Math.min(...areas),max=Math.max(...areas);if(!lots.length)return null;return {key,title:i?labels[i]:'Студии',count:lots.length,price:'от '+rub(Math.min(...lots.map(a=>a.price))),area:(min===max?number(min):number(min)+'–'+number(max))+' м²'+(lots.every(lot=>lot.finishing==='Чистовая отделка')?' · чистовая отделка':'')};}).filter(Boolean);}
   const previewPath=asset=>asset.local_path.replace(/\.svg$/,'.preview.webp');
   const availabilityLabels = {InStock:'В продаже', SoldOut:'Продана', OutOfStock:'Недоступна'};
   const displayDate = iso => iso.split('-').reverse().join('.');
   function card(p,view='furnished'){
-    const asset=p.plans.find(x=>x.type===view);
+    const asset=p.plans.find(x=>x.type===view) || p.plans[0];
+    view=asset.type;
     const availability = availabilityLabels[p.developer_availability];
     const status = availability
       ? `<p>${availability}</p>`
@@ -21,7 +22,7 @@
     return `<article class="card card-hover" data-lot-id="${p.id}" data-layout="${p.plan_group_id}">
       <div class="card-heading"><div class="plan-title">${esc(p.title)}</div><span class="card-edition">Корпус ${esc(p.building)}</span></div>
       <a class="plan-thumb" href="${esc(asset.local_path)}" data-action="open-plan-image" data-id="${p.id}" aria-label="Открыть схему: ${esc(p.title)}"><img src="${esc(previewPath(asset))}" width="400" height="300" loading="lazy" decoding="async" alt="${esc(p.title)} — ${views[view]}"><span class="plan-thumb-label">Рассмотреть планировку</span></a>
-      <div class="plan-variants" aria-label="Вид схемы квартиры № ${p.number}">${Object.entries(views).map(([key,label])=>`<a href="${esc(p.plans.find(v=>v.type===key).local_path)}" data-plan-view="${key}" data-id="${p.id}" role="button" aria-pressed="${view===key}">${label}</a>`).join('')}</div>
+      <div class="plan-variants" aria-label="Вид схемы квартиры № ${p.number}">${p.plans.map(({type,local_path})=>`<a href="${esc(local_path)}" data-plan-view="${type}" data-id="${p.id}" role="button" aria-pressed="${view===type}">${views[type]}</a>`).join('')}</div>
       <div class="card-facts"><div class="plan-meta"><strong>${number(p.area_m2)} <small>м²</small></strong><span>${p.floor} этаж из ${p.floors_total}</span></div><div class="plan-price">${rub(p.price)}</div></div>
       <details class="lot-details"><summary>О квартире</summary><p>Корпус ${esc(p.building)}, секция ${esc(p.section)} · ID ${p.id}</p><p>${p.features.map(esc).join(' · ')}</p><p>${rub(p.price_per_m2_rub)} / м²</p>${status}</details>
       <div class="plan-links"><a href="#contact" data-action="ask-plan" data-id="${p.id}">Уточнить наличие</a><a href="#calculator" class="plan-link-calc link-hover-gold" data-action="calc-here" data-id="${p.id}">Рассчитать ипотеку</a></div></article>`;

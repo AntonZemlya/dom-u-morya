@@ -6,6 +6,7 @@ import errno
 import http.client
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import ssl
@@ -18,7 +19,7 @@ import urllib.error
 import urllib.request
 from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, Manager, canonical, digest,
                           ensure, pack, regular, sha, verify_package, check_export_go, export_destination, certificate_sha256, validate_id,
-                          APPROVED_HTACCESS_SHA256)
+                          APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256)
 
 ROOT=Path(__file__).resolve().parent.parent
 CORE=ROOT/'ops/release_core.py'
@@ -120,19 +121,54 @@ def remote(operation, policy, **kwargs):
     return json.loads(result.stdout)
 
 
+def verify_catalog_page(body, headers, template_sha):
+    ensure(headers.get('X-Dom-Catalog-Template') == template_sha and 'no-store' in headers.get('Cache-Control', ''),
+           'Catalog route does not match the verified release template or cache policy')
+    version = headers.get('X-Dom-Catalog-Snapshot', '')
+    status = headers.get('X-Dom-Catalog-Status', '')
+    if version == 'bundled':
+        ensure(sha(body) == template_sha and status == 'confirmed', 'Bundled catalog differs from package')
+        return
+    ensure(re.fullmatch('[a-f0-9]{64}', version) and status in ('confirmed', 'unconfirmed'),
+           'Catalog snapshot identity missing')
+    payload = re.search(rb'<script id="site-data" type="application/json">(.*?)</script>', body, re.S)
+    structured = re.search(rb'<script type="application/ld\+json">(.*?)</script>', body, re.S)
+    ensure(payload and structured, 'Catalog response did not include the HTML payload and structured data')
+    page_data = json.loads(payload[1])
+    lots = page_data['apartments']
+    cards = re.findall(rb'<article\b[^>]*data-lot-id="([0-9]+)"', body)
+    ids = {lot['id'] for lot in lots}
+    ensure(page_data['catalog_version'] == version and page_data['catalog_status'] == status and 0 < len(ids) == len(lots) == len(cards)
+           and ids == {card.decode() for card in cards}, 'Catalog page does not match its active snapshot')
+    graph = json.loads(structured[1])['@graph']
+    offers = next(node['offers'] for node in graph if 'offers' in node)
+    expected = {lot['id']: lot['price_rub'] for lot in lots if lot['developer_availability'] == 'InStock'}
+    actual = {offer['@id'].rsplit('-', 1)[-1]: offer['price'] for offer in offers}
+    ensure(len(actual) == len(offers) and actual == expected and (status != 'unconfirmed' or not actual),
+           'Catalog availability or prices differ between HTML and SEO')
+
+
 def http_verify(manifest, package_sha):
     client=HTTPSGet();get=client.get
-    for path in ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']:
+    policy = manifest['files'].get('public/.htaccess')
+    protected = ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']
+    if policy == CATALOG_HTACCESS_SHA256:
+        protected.extend(['/api/catalog-view.php', '/api/catalog-plan.php'])
+    for path in protected:
         ensure(get(path,(403,404))[0] in [403,404], 'HTTP protected path failure')
     ensure(get('/api/lead.php',(405,))[0]==405, 'API GET guard failed')
     code,headers,body=get('/api/form-status.php');status=json.loads(body)
     ensure(code==200 and status.get('enabled') is True and status.get('ready') is True and 'no-store' in headers.get('Cache-Control',''), 'Form readiness failed; inspect status, do not retry deploy')
     for name in manifest['public_allowlist']:
         if name.startswith('.') or name.endswith('.php'):continue
-        code,_,body=get('/'+('' if name=='index.html' else name))
-        ensure(code==200 and sha(body)==manifest['files']['public/'+name], 'HTTP public SHA mismatch: '+name)
+        code, headers, body = get('/'+('' if name=='index.html' else name))
+        target_sha = manifest['files']['public/'+name]
+        if name == 'index.html' and policy == CATALOG_HTACCESS_SHA256:
+            verify_catalog_page(body, headers, target_sha)
+        else:
+            ensure(code==200 and sha(body)==target_sha, 'HTTP public SHA mismatch: '+name)
     redirects = None
-    if manifest['files'].get('public/.htaccess') == APPROVED_HTACCESS_SHA256:
+    if policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256) and package_sha != 'baseline':
         from url_matrix import check
         matrix = check()
         ensure(matrix['status'] == 'PASS', 'URL redirect matrix failed; inspect release status: '+json.dumps(matrix['failures']))
@@ -142,7 +178,7 @@ def http_verify(manifest, package_sha):
 
 
 def http_preflight(snapshot):
-    manifest={'public_allowlist':['index.html','script.js'],'files':{'public/'+n:snapshot['public'][n]['sha256'] for n in ['index.html','script.js']}}
+    manifest={'public_allowlist':['index.html','script.js'],'files':{'public/'+n:snapshot['public'][n]['sha256'] for n in ['index.html','script.js','.htaccess'] if n in snapshot['public']}}
     return http_verify(manifest,'baseline')
 
 

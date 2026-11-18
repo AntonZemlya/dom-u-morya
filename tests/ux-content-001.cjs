@@ -45,7 +45,11 @@ async function touchDriver(p){
       assert.equal(money(await p.locator('#loan-label').textContent()),Math.round(Math.min(...apartments.map(a=>a.price_rub))*(1-M.minimumDownPayment(Math.min(...apartments.map(a=>a.price_rub)),M.mortgagePrograms.regional).value/100)));
       assert.equal(await p.locator('#plan-views,#category-grid,.category-card').count(),0);
       assert.equal(await p.locator('#catalog-controls').isVisible(),false);
-      assert.equal(await p.locator('.catalog-footnote').innerText(),'Мебель на схемах — пример расстановки.');
+      const snapshotDate = apartments.map(lot => lot.snapshot_date).sort().at(-1);
+      assert.deepEqual((await p.locator('.catalog-footnote').innerText()).split('\n'), [
+        'Мебель на схемах — пример расстановки.',
+        'Информация по состоянию на '+M.displayDate(snapshotDate),
+      ]);
       assert.doesNotMatch(await p.locator('#plans .lot-details').allTextContents().then(s=>s.join(' ')),/\d{2}\.\d{2}\.\d{4}/);
       assert.doesNotMatch(await p.locator('.footer-role').innerText(),/не является застройщиком/);
       assert.equal(await p.locator('.location-style-6').innerText(),'Дом строится на проспекте Адмирала Лунина, 25.');

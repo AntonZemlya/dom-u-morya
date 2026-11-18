@@ -8,6 +8,7 @@
 - [Rollback и disaster recovery](RECOVERY.md).
 - [Инвентаризация Jino на 01.11.2026](BACKUP-INVENTORY.md).
 - [Политика хранения, dry-run и отдельный GO prune](RETENTION.md).
+- [Установка и сопровождение ежедневной синхронизации каталога на Jino](CATALOG-SYNC-RUNBOOK.md).
 
 Production уже опубликован, форма включена. Ни один read-only этап не создаёт
 приватные папки на Jino. `apply` впервые создаёт `.dom-u-morya/manager-v1/` только

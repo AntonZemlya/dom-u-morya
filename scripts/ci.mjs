@@ -30,6 +30,7 @@ try{
  run('toolchain',process.execPath,['-e',"if(Number(process.versions.node.split('.')[0])!==22)throw Error('Node 22 required'); console.log(process.version)"]);
  run('source','npm',['run','check'],['toolchain']);
  run('price-sync-unit','python3',['-B','tests/test_price_sync.py'],['source']);
+ run('catalog-sync-unit','python3',['-B','ops/test_catalog_sync.py'],['toolchain']);
  n('syntax','scripts/ci-static.mjs',['toolchain']);
  n('performance-assets','tests/performance/assets.mjs',['source']);
  n('analytics-unit','tests/analytics.test.mjs',['toolchain']);
@@ -46,6 +47,7 @@ try{
   run('composer','composer',['validate','--strict','--no-check-all','--no-interaction']);
   run('composer-audit','composer',['audit','--locked','--no-interaction'],['composer']);
   n('smtp-runtime','scripts/smtp-runtime.mjs',['composer']);
+  run('catalog-sync-smtp','python3',['-B','ops/test_catalog_mail.py'],['php84','smtp-runtime']);
   run('form-smtp','npm',['run','test:form'],['php84','smtp-runtime','production-build']);
   n('chromium','tests/ci-browser-dependency.cjs');
   // A loopback preview for the historical SEO/performance tests; closed in finally.
@@ -66,7 +68,7 @@ try{
   n('performance','tests/performance.cjs',['chromium','production-build'],['ci']);
   run('legacy-fixtures','python3',['-B','scripts/ci-legacy-fixtures.py'],['smtp-runtime','production-build']);
   run('manager-guard-http','python3',['-B','ops/test_release_guard_http.py'],['production-build']);
-  run('url-redirects-http','python3',['-B','ops/test_url_redirects_http.py'],['php84','production-build']);
+  run('url-redirects-http','python3',['-B','ops/test_url_redirects_http.py'],['php84','production-build','chromium']);
   run('legacy-security','npm',['run','test:security']);
   run('legacy-form-release','npm',['run','test:form-release']);
   run('smtp-package','npm',['run','test:smtp-package']);

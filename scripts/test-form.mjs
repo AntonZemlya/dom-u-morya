@@ -9,7 +9,7 @@ import {randomUUID} from 'node:crypto';
 const root=fileURLToPath(new URL('..',import.meta.url)),php=process.env.PHP84_BIN||'php';
 const run=(bin,args)=>{const p=spawnSync(bin,args,{cwd:root,encoding:'utf8'});if(p.status!==0)throw Error(p.stderr||p.stdout);return p.stdout;};
 assert.equal(run(php,['-n','-r','echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;']),'8.4','Set PHP84_BIN to PHP 8.4 with OpenSSL/ctype');
-for(const name of ['api/lead-core.php','api/lead.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php','ops/config.example.php','tests/lead-contract.php'])run(php,['-n','-l',name]);
+for(const name of ['api/lead-core.php','api/catalog-view.php','api/lead.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php','ops/config.example.php','tests/lead-contract.php'])run(php,['-n','-l',name]);
 console.log(run(php,['-n','tests/lead-contract.php']).trim());
 const runtime=JSON.parse(run(process.execPath,['scripts/smtp-runtime.mjs']));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'dom-smtp-'));fs.chmodSync(temp,0o700);
@@ -58,7 +58,7 @@ try{
  server=spawn(php,['-n','-d','disable_functions=mail','-d','display_errors=0','-S',`127.0.0.1:${port}`,'-t',path.join(root,'dist')],
   {cwd:root,env:{...process.env,LEAD_CONFIG:cfgPath,LEAD_SMTP_TEST:'1'},stdio:['ignore','ignore','pipe']});server.stderr.on('data',b=>{log+=b;});
  let ready=false;for(let i=0;i<100;i++){try{await fetch(origin+'/api/form-status.php');ready=true;break;}catch{}await pause(50);}assert.ok(ready);
- const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-31',lotId:'22825',category:'studio',planView:'furnished',
+ const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-31',lotId:'22825',lotPrice:7117760,category:'studio',planView:'furnished',
   requestKind:'calc',email:'synthetic@example.invalid',channel:'Telegram',callTime:'12-15',calculation:{price:7117760,downPct:20,term:20,rate:6,program:'family'}};
  const post=(p=payload,key=randomUUID(),headers={})=>fetch(origin+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin,'X-Lead-Request':'1','Idempotency-Key':key,...headers},body:typeof p==='string'?p:JSON.stringify(p)});
  const status=async()=>await(await fetch(origin+'/api/form-status.php')).json();

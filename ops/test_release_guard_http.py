@@ -27,7 +27,8 @@ def run():
         files=['.envrc','.env','.git/config','assets/.env','.well-known/acme-challenge/.env']
         for name in files+['.well-known/acme-challenge/fixture-token']:
             p=doc/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(fixture)
-        (doc/'index.html').write_bytes(b'isolated Apache fixture')
+        # This guard harness has no PHP handler. The URL matrix exercises the actual PHP route.
+        (doc/'index.php').write_bytes(b'isolated Apache fixture')
         (doc/'.htaccess').write_bytes(accepted)
         with socket.socket() as sock:
             sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]

@@ -6,6 +6,7 @@ export const RELEASE_FILES = Object.freeze([
   '.htaccess',
   'consent-analytics.html','privacy/config.js','privacy/core.js','privacy/metrica.js','privacy/privacy.js','privacy/privacy.css',
   'api/analytics-consent.php','api/analytics-core.php','api/analytics-document.php',
+  'index.php', 'api/catalog-view.php', 'api/catalog-plan.php',
   'api/lead.php', 'api/lead-core.php', 'api/form-status.php',
   'api/lead-smtp.php', 'api/smtp-manifest.php', 'api/lead-catalog.php',
   'privacy.html', 'consent-personal-data.html', 'index.html', 'styles.css', 'script.js', 'content-model.js', 'favicon.png',

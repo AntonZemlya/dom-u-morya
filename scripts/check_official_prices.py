@@ -4,7 +4,6 @@
 Default is read-only. --apply is deliberately fail-closed when the set of IDs
 changes: adding apartments requires validating and importing their exact plans.
 """
-from __future__ import annotations
 import argparse
 import concurrent.futures
 import datetime as dt
@@ -71,12 +70,18 @@ def get_scripts(document: str):
     p.feed(document)
     return p.scripts
 
-def fetch_offers():
-    scripts = get_scripts(load_html(PROJECT_URL))
+def next_props(scripts):
     found = [json.loads(data) for id, kind, data in scripts if id == "__NEXT_DATA__"]
     if len(found) != 1:
         raise ValueError("No unique Next data payload")
-    redux = found[0].get("props", {}).get("initialReduxState", {})
+    return found[0]["props"]
+
+def fetch_offers():
+    return parse_offers(load_html(PROJECT_URL), maximum=MAX_REQUESTS)
+
+def parse_offers(document, maximum=258):
+    scripts = get_scripts(document)
+    redux = next_props(scripts).get("initialReduxState", {})
     entities = redux.get("filter", {}).get("entities", [])
     project = [x for x in redux.get("projectFilter", {}).get("entities", [])
                if str(x.get("id")) == PROJECT_ID and x.get("code") == PROJECT_CODE]
@@ -90,14 +95,14 @@ def fetch_offers():
     if len(selected) != expected:
         raise ValueError("Incomplete inventory: %s != %s" % (len(selected), expected))
     ids = [str(x.get("id")) for x in selected]
-    if len(set(ids)) != len(ids) or len(selected) > MAX_REQUESTS:
+    if len(set(ids)) != len(ids) or len(selected) > maximum:
         raise ValueError("Duplicate IDs or inventory limit exceeded")
     offers = {}
     for raw in selected:
         id = str(raw["id"])
-        if not id.isdigit():
+        if re.fullmatch(r"[1-9][0-9]{0,15}", id) is None:
             raise ValueError("Non-numeric apartment ID")
-        if not (1_000_000 <= raw.get("price", 0) <= 150_000_000):
+        if type(raw.get("price")) is not int or not 1_000_000 <= raw["price"] <= 150_000_000:
             raise ValueError("Invalid price for ID " + id)
         if not (1 <= raw.get("square", 0) <= 200):
             raise ValueError("Invalid area for ID " + id)
@@ -117,9 +122,14 @@ def fetch_offers():
 
 def fetch_detail(pair):
     id, offer = pair
-    document = load_html(offer["source_url"])
+    confirm_detail(id, offer, load_html(offer["source_url"]))
+    return id
+
+
+def confirm_detail(id, offer, document):
+    scripts = get_scripts(document)
     products = []
-    for script_id, kind, text in get_scripts(document):
+    for script_id, kind, text in scripts:
         if kind != "application/ld+json":
             continue
         data = json.loads(text)
@@ -139,7 +149,7 @@ def fetch_detail(pair):
             or actual.get("price") != offer["price"]
             or actual.get("availability") != "InStock"):
         raise ValueError("Listing/detail conflict for " + id)
-    return id
+    return next_props(scripts)["pageProps"]["data"]
 
 def compare(snapshot: list, current: dict):
     old = {str(x["id"]): x for x in snapshot}

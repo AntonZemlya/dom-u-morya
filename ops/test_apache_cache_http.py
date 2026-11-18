@@ -61,7 +61,7 @@ def run():
             for path in ['/','/styles.css','/script.js','/assets/location.webp']:
                 for method in ['GET','HEAD']:
                     status,h,_=get(path,method)
-                    assert status==200 and h['Cache-Control']=='public, max-age=0, must-revalidate',(path,status,dict(h))
+                    assert status==200 and h['Cache-Control']==('no-store, max-age=0' if path == '/' else 'public, max-age=0, must-revalidate'),(path,status,dict(h))
             status,h,body=get('/assets/performance/'+hashed)
             assert status==200 and body==raw and h['Cache-Control']=='public, max-age=31536000, immutable'
             assert get('/assets/performance/'+hashed,headers={'If-None-Match':h['ETag']})[0]==304

@@ -2,6 +2,8 @@
 import hashlib
 import json
 import os
+import re
+import sys
 from pathlib import Path
 import shutil
 import socket
@@ -14,6 +16,7 @@ import urllib.request
 import jino_remote
 import release_core as core
 import url_matrix
+from release_manager import verify_catalog_page
 
 ROOT = Path(__file__).resolve().parent.parent
 HTTPD = os.environ.get('HTTPD_BIN', '/usr/sbin/httpd')
@@ -24,6 +27,70 @@ def port():
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         return sock.getsockname()[1]
+
+
+def exercise_live_catalog(base, doc, get):
+    sys.path.insert(0, str(ROOT/'scripts'))
+    from catalog_sync import Store, atomic, public_path
+    store = Store(base, node=shutil.which('node'))
+    store.root.parent.mkdir(mode=0o700, exist_ok=True)
+    for directory in (store.root, store.snapshots, store.media):
+        directory.mkdir(mode=0o700)
+    lots = json.loads((ROOT/'data'/'apartments.json').read_text())
+    original_price = lots[0]['price_rub']
+    lots[0]['price_rub'] += 23_000
+    media = lots[0]['plans'][0]
+    original = doc/media['local_path']
+    store.put_media(media['sha256'], original.read_bytes(), original.with_suffix('.preview.webp').read_bytes())
+    media['local_path'] = public_path(media['sha256'])
+    lots[1]['developer_availability'] = None
+    lots.pop() # Exercise one confirmed withdrawal and dynamic category totals.
+    now = int(time.time())
+    version, raw = store.build_snapshot(lots, now)
+    atomic(store.snapshots/(version+'.json'), raw)
+    state = {'active':version,'source_ok':True,'checked_at':now,'schema':1}
+    store.save(state)
+    sha = hashlib.sha256((doc/'index.html').read_bytes()).hexdigest()
+    status, headers, body = get(core.ORIGIN+'/')
+    assert status == 200 and headers['X-Dom-Catalog-Status'] == 'confirmed'
+    verify_catalog_page(body, headers, sha)
+    assert b'data-lot-id="'+lots[0]['id'].encode()+b'"' in body
+    expected_price = '{:,}'.format(lots[0]['price_rub']).replace(',', '\u00a0')+' ₽'
+    assert expected_price.encode() in body and expected_price.encode() in re.search(rb'id="price-label"[^>]*>(.*?)<', body)[1]
+    response = get(core.ORIGIN+'/', 'HEAD')
+    assert response[1]['X-Dom-Catalog-Snapshot'] == version and not response[2]
+    assert get(core.ORIGIN+'/index.php')[0] == 301
+    plan_url = core.ORIGIN+'/'+media['local_path']
+    svg = get(plan_url)
+    assert svg[0] == 200 and svg[1]['Content-Type'] == 'image/svg+xml'
+    assert hashlib.sha256(svg[2]).hexdigest() == media['sha256']
+    assert 'sandbox' in svg[1]['Content-Security-Policy']
+    preview = get(plan_url[:-4]+'.preview.webp')
+    assert preview[0] == 200 and preview[2][8:12] == b'WEBP'
+    assert get(core.ORIGIN+'/api/catalog-plan.php?file=../state.json')[0] == 404
+    # Validate selection against the real live snapshot without invoking SMTP or a form endpoint.
+    php_cli = os.environ.get('PHP84_BIN', 'php')
+    program = """
+    require $argv[1].'/api/lead-core.php';
+    $d = ['name'=>'Fixture','phone'=>'+79991234567','consent'=>true,
+          'consentVersion'=>DomLead\\CONSENT_VERSION,'lotId'=>$argv[2]];
+    foreach (array_slice($argv,3) as $expected) {
+        $d['lotPrice'] = (int)$expected;
+        try { $v = DomLead\\validate(json_encode($d)); echo $v['lot']['price_rub']; }
+        catch (DomLead\\Rejection $r) { echo $r->status.':'.$r->reason; }
+        echo PHP_EOL;
+    }
+    """
+    result = subprocess.check_output([php_cli,'-r',program,str(doc),lots[0]['id'],str(original_price),str(lots[0]['price_rub'])])
+    assert result.decode().splitlines() == ['409:catalog_price_changed', str(lots[0]['price_rub'])]
+    state['source_ok'] = False
+    store.save(state)
+    code, headers, body = get(core.ORIGIN+'/')
+    assert code == 200 and headers['X-Dom-Catalog-Status'] == 'unconfirmed'
+    verify_catalog_page(body, headers, sha)
+    assert 'Актуальность цен и наличие уточняются.'.encode() in body
+    result = subprocess.check_output([php_cli,'-r',program,str(doc),lots[0]['id'],str(lots[0]['price_rub'])])
+    assert result.strip() == b'409:catalog_unconfirmed'
 
 
 def run():
@@ -136,7 +203,7 @@ def run():
             for name in ['/', '/styles.css', '/script.js', '/assets/location.webp']:
                 for method in ['GET','HEAD']:
                     code, headers, _ = get(core.ORIGIN + name,method)
-                    assert code == 200 and headers.get('Cache-Control') == 'public, max-age=0, must-revalidate', (name,headers)
+                    assert code == 200 and headers.get('Cache-Control') == ('no-store, max-age=0' if name == '/' else 'public, max-age=0, must-revalidate'), (name,headers)
             for p in (doc/'assets/performance').iterdir():
                 code, headers, body = get(core.ORIGIN + '/assets/performance/' + p.name)
                 assert code == 200 and headers.get('Cache-Control') == 'public, max-age=31536000, immutable', headers
@@ -152,6 +219,7 @@ def run():
             (doc/'styles.css').write_text('/* synthetic replacement */')
             code, new_headers, body = get(core.ORIGIN + '/styles.css',headers={'If-None-Match':old_headers['ETag']})
             assert code == 200 and body == b'/* synthetic replacement */', (code,new_headers)
+            exercise_live_catalog(base, doc, get)
             result['cache_policy'] = 'PASS: fixed URL revalidation, content hashes, 304/HEAD, API no-store, errors, replacement'
             # POST is exercised only against disposable local PHP. The method
             # reaches PHP directly, rather than being redirected or changed to GET.

@@ -9,7 +9,7 @@ import {randomUUID} from 'node:crypto';
 const root=fileURLToPath(new URL('..',import.meta.url)),php=process.env.PHP84_BIN||'php';
 const run=(bin,args)=>{const p=spawnSync(bin,args,{cwd:root,encoding:'utf8'});if(p.status!==0)throw Error(p.stderr||p.stdout);return p.stdout;};
 assert.equal(run(php,['-n','-r','echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;']),'8.4','Set PHP84_BIN to PHP 8.4 with OpenSSL/ctype');
-for(const name of ['api/lead-core.php','api/lead.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php','ops/config.example.php','tests/lead-contract.php'])run(php,['-n','-l',name]);
+for(const name of ['api/lead-core.php','api/catalog-view.php','api/lead.php','api/form-status.php','api/lead-smtp.php','api/smtp-manifest.php','api/lead-catalog.php','ops/config.example.php','tests/lead-contract.php'])run(php,['-n','-l',name]);
 console.log(run(php,['-n','tests/lead-contract.php']).trim());
 const runtime=JSON.parse(run(process.execPath,['scripts/smtp-runtime.mjs']));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'dom-smtp-'));fs.chmodSync(temp,0o700);

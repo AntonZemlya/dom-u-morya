@@ -14,13 +14,13 @@ export function offerForLot(lot, id) {
   };
 }
 
-export function catalogOffers(id) {
-  return apartments.map(lot => offerForLot(lot, id)).filter(Boolean);
+export function catalogOffers(id, lots = apartments) {
+  return lots.map(lot => offerForLot(lot, id)).filter(Boolean);
 }
 
 // Use the same lot IDs, titles and measurements as the static catalogue.
-export function catalogGraph(id) {
-  const units = content.plans(apartments).map(lot => ({
+export function catalogGraph(id, lots = apartments) {
+  const units = content.plans(lots).map(lot => ({
     '@type': 'Apartment',
     ...id('apartment-' + lot.id),
     identifier: lot.id,

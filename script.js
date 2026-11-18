@@ -173,7 +173,7 @@ async function makeCalcPdf(html, filename){
 /* ---------- app state ---------- */
 const state = {
   filtersOpen: false, mortgageProgram: 'regional',
-  filter: 'studio', budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6, planViews:{}, selectedPlanView:'furnished',
+  filter: PLANS[0].category, budget:0, floor:0, layout:'', sort:'price', sea:false, limit:6, planViews:{}, selectedPlanView:'furnished',
   price: Math.min(...PLANS.map(p=>p.price)), downPct: ContentModel.minimumDownPayment(Math.min(...PLANS.map(p=>p.price)), ContentModel.mortgagePrograms.regional).value, downMode:'auto', downAdjustment:'', term: 30, rate: 2,
   aboutTab: 'arch',
   selectedPlanId: null,
@@ -328,16 +328,16 @@ function resetCatalogFilters(){
 function renderPlansGrid(){
   renderFilterDisclosure();
   const list=currentFilteredPlans();
-  document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||'furnished')).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
+  document.getElementById('plans-grid').innerHTML=list.slice(0,state.limit).map(p=>ContentModel.card(p,state.planViews[p.id]||p.plans[0].type)).join('')||'<div class="empty-catalog">По этим условиям предложений нет. Измените фильтры или сбросьте их.</div>';
   document.getElementById('catalog-result').textContent=`Найдено: ${list.length} · показано: ${Math.min(state.limit,list.length)}`;
   document.getElementById('show-more-plans').hidden=list.length<=state.limit;
 }
-function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||'furnished'];}
+function planViewLabel(p){return ContentModel.views[state.planViews[p.id]||p.plans[0].type];}
 function askPlan(plan){
-  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,planView:state.planViews[plan.id]||'furnished',sourceUrl:plan.source_url,snapshotDate:plan.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
+  state.snapshot={kind:'plan',kicker:'Ваш запрос',planChoice:plan.category,lotId:plan.id,lotPrice:plan.price,planView:state.planViews[plan.id]||plan.plans[0].type,sourceUrl:plan.source_url,snapshotDate:plan.snapshot_date,objectTitle:plan.title,objectMeta:plan.area_m2.toLocaleString('ru-RU')+' м² · '+plan.floor+' этаж · ID '+plan.id+' · '+rub(plan.price)+' · '+planViewLabel(plan),rows:[]};
   state.planChoice=plan.category;updateForm();scrollToForm();
 }
-function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||'furnished';document.getElementById('price-range').value=plan.price;updateAutomaticDownPayment();renderCalculator();scrollToEl('calculator',80);}
+function calcHere(plan){state.selectedPlanId=plan.id;state.price=plan.price;state.selectedPlanView=state.planViews[plan.id]||plan.plans[0].type;document.getElementById('price-range').value=plan.price;updateAutomaticDownPayment();renderCalculator();scrollToEl('calculator',80);}
 function wirePlansEvents(){
   // These progressive-enhancement links act as buttons once the catalog is live.
   document.getElementById('plans-grid').addEventListener('keydown',e=>{
@@ -349,7 +349,7 @@ function wirePlansEvents(){
     const variant=e.target.closest('[data-plan-view]');
     if(variant){e.preventDefault();const id=variant.dataset.id;state.planViews[id]=variant.dataset.planView;const card=variant.closest('[data-lot-id]'),plan=PLANS.find(p=>p.id===id),asset=plan.plans.find(p=>p.type===variant.dataset.planView);card.querySelector('img').src=ContentModel.previewPath(asset);card.querySelector('img').alt=plan.title+' — '+planViewLabel(plan);card.querySelector('.plan-thumb').href=asset.local_path;card.querySelectorAll('[data-plan-view]').forEach(b=>b.setAttribute('aria-pressed',String(b===variant)));return;}
     const el=e.target.closest('[data-action]');if(!el)return;const plan=PLANS.find(p=>p.id===el.dataset.id);if(!plan)return;e.preventDefault();
-    if(el.dataset.action==='open-plan-image')openLightbox('plan',Object.keys(ContentModel.views).indexOf(state.planViews[plan.id]||'furnished'),plan.id);
+    if(el.dataset.action==='open-plan-image')openLightbox('plan',plan.plans.findIndex(a=>a.type===(state.planViews[plan.id]||plan.plans[0].type)),plan.id);
     else if(el.dataset.action==='ask-plan')askPlan(plan);else if(el.dataset.action==='calc-here')calcHere(plan);
   });
   for(const [id,key] of [['budget','budget'],['floor','floor'],['layout','layout'],['sort','sort'],['sea','sea']])document.getElementById(id+'-filter').addEventListener('change',e=>{state[key]=key==='sea'?e.target.checked:['budget','floor'].includes(key)?Number(e.target.value):e.target.value;state.limit=6;renderPlansGrid();});
@@ -656,7 +656,7 @@ function sendToForm(){
   const {title, warning} = mortgageContext();
   state.planChoice = selectedPlan ? selectedPlan.category : (s.planChoice || 'unsure');
   state.snapshot = {
-    kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:selectedPlan?.snapshot_date||SITE_DATA.snapshot_date,
+    kind: 'calc', kicker: 'Ваш расчёт', lotId:selectedPlan?.id||null, lotPrice:selectedPlan?.price||null, planView:selectedPlan?s.selectedPlanView:null, sourceUrl:selectedPlan?.source_url||null, snapshotDate:selectedPlan?.snapshot_date||SITE_DATA.snapshot_date,
     calculation: {price:s.price, downPct:s.downPct, term:s.term, rate:s.rate, program:s.mortgageProgram},
     planTitle: selectedPlan ? selectedPlan.title : '',
     objectTitle: selectedPlan ? selectedPlan.title : 'Произвольный расчёт',
@@ -673,7 +673,22 @@ function sendToForm(){
   updateForm();
   scrollToForm();
 }
-function downloadCalc(){
+async function downloadCalc(){
+  if (state.pdfBusy) return;
+  if (SITE_DATA.catalog_version) {
+    const status = document.getElementById('pdf-status');
+    try {
+      const response = await fetch('/', {method:'HEAD',cache:'no-store',signal:AbortSignal.timeout(5000)});
+      const selected = PLANS.find(lot => lot.id === state.selectedPlanId);
+      if ((selected && selected.developer_availability !== 'InStock') || !response.ok
+          || response.headers.get('X-Dom-Catalog-Snapshot') !== SITE_DATA.catalog_version
+          || response.headers.get('X-Dom-Catalog-Status') !== 'confirmed') throw Error('Catalog changed');
+    } catch {
+      status.hidden = false;
+      status.textContent = 'Обновите страницу и проверьте актуальность цен перед скачиванием расчёта.';
+      return;
+    }
+  }
   if (state.pdfBusy) return;
   const s = state;
   const selectedPlan = s.selectedPlanId ? PLANS.find(p => p.id === s.selectedPlanId) : null;
@@ -937,6 +952,7 @@ async function handleSubmit(){
     requestKind:state.snapshot?.kind || 'general', planView:state.snapshot?.planView || '',
     email:state.email.trim(), channel:state.channel, callTime:state.callTime,
     website:document.getElementById('website-input').value};
+  if (state.snapshot?.lotId) payload.lotPrice = state.snapshot.lotPrice;
   if (state.snapshot?.calculation) payload.calculation = state.snapshot.calculation;
   const serialized = JSON.stringify(payload);
   // Retain only in this tab; retry after a lost response uses exactly the same key.
@@ -958,7 +974,10 @@ async function handleSubmit(){
         429:'Слишком много попыток. Попробуйте через 10 минут или позвоните агентству.',
         409:'Повторная отправка остановлена. Уточните приём запроса по телефону агентства.',
         503:'Приём через форму временно недоступен. Позвоните или напишите агентству.'};
-      failureMessage = messages[response.status] || 'Запрос не принят. Позвоните или напишите агентству.';
+      failureMessage = {
+        catalog_price_changed: 'Цена или наличие квартиры изменились. Обновите страницу и проверьте предложение перед отправкой.',
+        catalog_unconfirmed: 'Актуальность предложения пока уточняется. Свяжитесь с агентством для проверки.',
+      }[result.error] || messages[response.status] || 'Запрос не принят. Позвоните или напишите агентству.';
       throw new Error('rejected');
     }
     status.textContent = 'Запрос принят на обработку. Номер: ' + result.id + '. Агентство свяжется с вами по указанным контактам.';
@@ -1141,3 +1160,7 @@ function setupMap(){
     observer.observe(container);
   } else load();
 }
+
+if (SITE_DATA.catalog_version) addEventListener('pageshow', event => {
+  if (event.persisted) location.reload();
+});

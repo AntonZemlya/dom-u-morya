@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DomLead;
 
+require_once __DIR__.'/catalog-view.php';
+
 const CONSENT_VERSION = '2026-10-31';
 const MAIL_FROM = 'sales@zhk-dom-umorya.ru';
 const MAIL_TO = 'info@anyara.ru';
@@ -78,7 +80,7 @@ function validate(string $raw): array {
     catch (\JsonException) { reject(400, 'invalid_json'); }
     if (!$data instanceof \stdClass) reject(400, 'invalid_json');
     $d = (array)$data;
-    $allowed = ['name','phone','consent','consentVersion','lotId','category','planView','requestKind','email','channel','callTime','calculation','website'];
+    $allowed = ['name','phone','consent','consentVersion','lotId','lotPrice','category','planView','requestKind','email','channel','callTime','calculation','website'];
     if (array_diff(array_keys($d), $allowed)) reject(422, 'unknown_fields');
     if (($d['consent'] ?? false) !== true || ($d['consentVersion'] ?? '') !== CONSENT_VERSION) reject(422, 'consent_required');
     $v = ['name'=>text($d['name'] ?? null, 80, true), 'phone'=>text($d['phone'] ?? null, 12, true)];
@@ -90,10 +92,26 @@ function validate(string $raw): array {
         if (!in_array($v[$key], $values, true)) reject(422, 'invalid_fields');
     }
     $v['lot'] = null;
+    $active = null;
+    if ($v['lotId'] !== '' || isset($d['calculation'])) {
+        try { $active = \DomCatalog\current(); }
+        catch (\Throwable) { reject(503, 'catalog_unconfirmed'); }
+    }
     if ($v['lotId'] !== '') {
-        $catalog = require __DIR__.'/lead-catalog.php';
-        foreach ($catalog as $lot) if ($lot['id'] === $v['lotId']) $v['lot'] = $lot;
-        if (!$v['lot']) reject(422, 'unknown_lot');
+        $catalog = $active['snapshot']['lots'] ?? (require __DIR__.'/lead-catalog.php');
+        foreach ($catalog as $lot) {
+            if ($lot['id'] === $v['lotId']) {
+                $v['lot'] = $lot;
+                break;
+            }
+        }
+        if (!$v['lot']) reject($active ? 409 : 422, $active ? 'catalog_price_changed' : 'unknown_lot');
+        if ($active && (!$active['confirmed'] || $v['lot']['developer_availability'] !== 'InStock')) {
+            reject(409, 'catalog_unconfirmed');
+        }
+        if (($active || array_key_exists('lotPrice', $d)) && ($d['lotPrice'] ?? null) !== $v['lot']['price_rub']) {
+            reject(409, 'catalog_price_changed');
+        }
         $category = ['studio','1k','2k','3k'][$v['lot']['bedrooms']];
         if ($v['category'] !== '' && $v['category'] !== $category) reject(422, 'invalid_fields');
         $v['category'] = $category;
@@ -103,7 +121,9 @@ function validate(string $raw): array {
         if (!$d['calculation'] instanceof \stdClass) reject(422, 'invalid_fields');
         $c = (array)$d['calculation'];
         if (array_diff(array_keys($c), ['price','downPct','term','rate','program']) || count($c) !== 5) reject(422, 'invalid_fields');
-        foreach (['price'=>[6978183,20000000], 'downPct'=>[10,70], 'term'=>[3,30], 'rate'=>[2,20]] as $key=>[$min,$max]) {
+        $prices = array_column($active['snapshot']['lots'] ?? [], 'price_rub');
+        $priceBounds = [min([6_978_183, ...$prices]), max([20_000_000, ...$prices])];
+        foreach (['price'=>$priceBounds, 'downPct'=>[10,70], 'term'=>[3,30], 'rate'=>[2,20]] as $key=>[$min,$max]) {
             if ((!is_int($c[$key] ?? null) && !is_float($c[$key] ?? null)) || !is_finite((float)$c[$key]) || $c[$key] < $min || $c[$key] > $max) reject(422, 'invalid_fields');
         }
         if (!is_int($c['price']) || !is_int($c['term']) || !is_int($c['downPct']) || !in_array($c['program'], ['regional','family','custom',null], true)) reject(422, 'invalid_fields');

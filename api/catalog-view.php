@@ -40,10 +40,18 @@ function current(): ?array {
     if (($snapshot['schema'] ?? null) !== 1 || empty($snapshot['lots'])) {
         throw new \RuntimeException('Unrecognized catalog snapshot');
     }
-    $age = time() - ($state['checked_at'] ?? 0);
+    $checkedAt = $state['checked_at'] ?? 0;
+    if (!is_int($checkedAt) || $checkedAt < 0) throw new \RuntimeException('Invalid catalog check time');
+    $age = time() - $checkedAt;
+    $publishedChecked = $state['published_checked_at'] ?? 0;
+    if (!is_int($publishedChecked) || $publishedChecked < 0 || $publishedChecked > $checkedAt) {
+        throw new \RuntimeException('Invalid published offer check time');
+    }
+    $trusted = ($state['source_ok'] ?? false) === true && $age >= 0 && $age <= 36 * 3600;
     return [
         'version' => $version,
-        'confirmed' => ($state['source_ok'] ?? false) === true && $age >= 0 && $age <= 36 * 3600,
+        'published_checked_at' => $publishedChecked,
+        'status' => $trusted ? 'confirmed' : 'unconfirmed',
         'snapshot' => $snapshot,
     ];
 }
@@ -58,25 +66,42 @@ function jsonScript(array $value): string {
     return json_encode($value, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES);
 }
 
+function priceDate(array $active): string {
+    $latest = $active['published_checked_at'];
+    $snapshot = $active['snapshot'];
+    if ($latest === 0) {
+        return 'Информация по состоянию на '.implode('.', array_reverse(explode('-', $snapshot['date'])));
+    }
+    $date = (new \DateTimeImmutable('@'.$latest))->setTimezone(new \DateTimeZone('Europe/Moscow'));
+    $age = time() - $latest;
+    if ($active['status'] !== 'confirmed' || $age < 0 || $age > 36 * 3600
+        || count($snapshot['offers']) !== count($snapshot['lots'])) {
+        return 'Информация по состоянию на '.$date->format('d.m.Y');
+    }
+    return 'Цены и наличие проверены по данным застройщика '.$date->format('d.m.Y').' в '.$date->format('H:i').' МСК';
+}
+
 function render(string $html, array $active): string {
     $snapshot = $active['snapshot'];
-    $confirmed = $active['confirmed'];
-    $notice = '';
-    if (!$confirmed) {
-        $notice = '<p role="status" class="content-note">Показаны последние проверенные цены. Актуальность цен и наличие уточняются.</p>';
-    } elseif (count($snapshot['offers']) < count($snapshot['lots'])) {
-        $notice = '<p role="status" class="content-note">Актуальность цены и наличия отдельных квартир уточняется.</p>';
+    $trusted = $active['status'] !== 'unconfirmed';
+    $markup = $trusted ? $snapshot['catalog_html'] : $snapshot['unconfirmed_html'];
+    if (!str_contains($markup, 'id="catalog-checked-at"')) {
+        // Snapshots generated before the date field used the same furniture footnote.
+        $markup = substitute($markup, '~(<p class="catalog-footnote">.*?)</p>~s',
+            static fn(array $m): string => $m[1].'<br><span id="catalog-checked-at"></span></p>');
     }
-    $markup = $confirmed ? $snapshot['catalog_html'] : $snapshot['unconfirmed_html'];
+    $markup = substitute($markup, '~(<span id="catalog-checked-at">).*?(</span>)~s',
+        static fn(array $m): string => $m[1].priceDate($active).$m[2]);
     $html = substitute($html, '~(<!-- CONTENT:catalog:start -->).*?(<!-- CONTENT:catalog:end -->)~s',
-        static fn(array $m): string => $m[1]."\n".$notice.$markup."\n".$m[2]);
+        static fn(array $m): string => $m[1]."\n".$markup."\n".$m[2]);
     $html = substitute($html, '~(<script id="site-data" type="application/json">)(.*?)(</script>)~s',
-        static function (array $m) use ($snapshot, $active, $confirmed): string {
+        static function (array $m) use ($snapshot, $active, $trusted): string {
             $data = json_decode($m[2], true, 32, JSON_THROW_ON_ERROR);
             $data['snapshot_date'] = $snapshot['date'];
             $data['catalog_version'] = $active['version'];
+            $data['catalog_status'] = $active['status'];
             $data['apartments'] = $snapshot['browser'];
-            if (!$confirmed) {
+            if (!$trusted) {
                 foreach ($data['apartments'] as &$lot) $lot['developer_availability'] = null;
                 unset($lot);
             }
@@ -88,15 +113,15 @@ function render(string $html, array $active): string {
     }
     foreach ($snapshot['calculator']['inputs'] as $id => $input) {
         $html = substitute($html, '~<input type="range"[^>]*id="'.preg_quote($id, '~').'"[^>]*>~',
-            static fn(): string => $input.($id === 'price-range' ? $notice : ''));
+            static fn(): string => $input);
     }
     return substitute($html, '~(<script type="application/ld\+json">)(.*?)(</script>)~s',
-        static function (array $m) use ($snapshot, $confirmed): string {
+        static function (array $m) use ($snapshot, $trusted): string {
             $schema = json_decode($m[2], true, 32, JSON_THROW_ON_ERROR);
             $nodes = [];
             foreach ($schema['@graph'] as $node) {
                 if ($node['@type'] === 'Apartment' || ($node['@id'] ?? '') === 'https://zhk-dom-umorya.ru/#plans') continue;
-                if (isset($node['offers'])) $node['offers'] = $confirmed ? $snapshot['offers'] : [];
+                if (isset($node['offers'])) $node['offers'] = $trusted ? $snapshot['offers'] : [];
                 $nodes[] = $node;
             }
             $schema['@graph'] = array_merge($nodes, $snapshot['graph']);

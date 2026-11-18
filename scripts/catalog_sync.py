@@ -26,6 +26,7 @@ MAX_SNAPSHOT = 8 * 1024 * 1024
 NODE = '/opt/alt/alt-nodejs22/root/usr/bin/node'
 PHP = '/usr/bin/php8.4'
 CONVERT = '/usr/bin/convert'
+CHECK_MAX_AGE = 36 * 3600
 HASH = re.compile(r'[a-f0-9]{64}')
 MEDIA = re.compile(r'[a-f0-9]{64}(\.svg|\.preview\.webp)')
 LOCALE = ('id', 'source_url', 'area_m2', 'number', 'building', 'section', 'floor',
@@ -94,6 +95,23 @@ def changes(before, after):
                     if {k:old[key][k] for k in LOCALE if k != 'price_rub' and k != 'price_per_m2_rub'}
                     != {k:new[key][k] for k in LOCALE if k != 'price_rub' and k != 'price_per_m2_rub'}],
     }
+
+def sync_status(item, now):
+    age = now - item.get('checked_at', 0)
+    if item.get('source_ok') is not True or not 0 <= age <= CHECK_MAX_AGE:
+        return 'unconfirmed'
+    return 'partial' if item.get('unresolved_count', 0) else 'confirmed'
+
+def website_status(item, now):
+    return 'unconfirmed' if sync_status(item, now) == 'unconfirmed' else 'confirmed'
+
+def verification_baseline(item):
+    return {key:item.get(key, 0) for key in ('active','checked_at','published_checked_at')}
+
+def mark_checked(item, now, assets, issues, lots):
+    item.update(checked_at=now, source_ok=True, unresolved_count=len(issues), etags=assets)
+    if all(lot['developer_availability'] == 'InStock' for lot in lots):
+        item['published_checked_at'] = now
 
 def message(now, label, lines):
     date = time.strftime('%Y-%m-%d %H:%M МСК', time.gmtime(now + 10800))
@@ -164,19 +182,19 @@ class Store:
         program = """
         require $argv[1].'/api/catalog-view.php';
         $snapshot = json_decode(stream_get_contents(STDIN), true, 32, JSON_THROW_ON_ERROR);
-        foreach ([true, false] as $confirmed) {
+        foreach (['confirmed', 'unconfirmed'] as $status) {
             DomCatalog\\render(file_get_contents($argv[1].'/index.html'),
-                ['snapshot'=>$snapshot, 'version'=>'verification', 'confirmed'=>$confirmed]);
+                ['snapshot'=>$snapshot, 'version'=>'verification', 'status'=>$status, 'published_checked_at'=>0]);
         }
         """
         result = subprocess.run([self.php, '-r', program, str(self.doc)], input=raw,
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15)
         source.must(result.returncode == 0, 'Шаблон текущего релиза несовместим со снимком')
 
-    def verify_live(self, version, confirmed):
+    def verify_live(self, version, status):
         _, h, _ = source.read_https(ORIGIN+'/', 0, method='HEAD')
         source.must(h.get('X-Dom-Catalog-Snapshot') == version and 'no-store' in h.get('Cache-Control', '')
-                    and h.get('X-Dom-Catalog-Status') == ('confirmed' if confirmed else 'unconfirmed'),
+                    and h.get('X-Dom-Catalog-Status') == status,
                     'Публичная проверка версии каталога завершилась ошибкой')
 
     def put_media(self, hash_, svg, preview=None):
@@ -207,7 +225,7 @@ class Store:
         self.verify_root()
         source.must(not self.state.exists(), 'Каталог уже включён')
         with lock(self.running, create=True), lock(self.website_lock):
-            self.verify_live('bundled', True)
+            self.verify_live('bundled', 'confirmed')
             lots = []
             bundled = json.loads((ROOT/'data'/'apartments.json').read_text(encoding='utf-8'))
             for lot in bundled:
@@ -228,10 +246,10 @@ class Store:
             self.verify_render(raw)
             atomic(self.snapshots/(version+'.json'), raw)
             item = dict(schema=1, active=version, history=[version], checked_at=0, source_ok=False,
-                        etags={}, outbox=[], history_events=[], started_at=None)
+                        unresolved_count=0, published_checked_at=0, etags={}, outbox=[], history_events=[], started_at=None)
             self.save(item)
             try:
-                self.verify_live(version, False)
+                self.verify_live(version, 'unconfirmed')
             except Exception:
                 self.state.unlink()
                 sync_directory(self.root)
@@ -323,17 +341,17 @@ class Store:
             self.save(item)
         return not item['outbox']
 
-    def activate(self, item, version, raw, now, change, issues, assets):
-        old_version = item['active']
+    def activate(self, item, version, raw, now, change, issues, assets, lots):
+        baseline = verification_baseline(item)
         original = encode(item)
         self.verify_render(raw)
         atomic(self.snapshots/(version+'.json'), raw)
-        item.update(active=version, checked_at=now, source_ok=True, etags=assets,
-                    history=([version]+[v for v in item['history'] if v != version])[:KEEP],
-                    pending_verification=old_version)
+        mark_checked(item, now, assets, issues, lots)
+        item.update(active=version, history=([version]+[v for v in item['history'] if v != version])[:KEEP],
+                    pending_verification=baseline)
         self.save(item)
         try:
-            self.verify_live(version, True)
+            self.verify_live(version, website_status(item, now))
         except Exception:
             self.save(json.loads(original.decode('utf-8')))
             item.clear()
@@ -342,30 +360,33 @@ class Store:
         item.pop('pending_verification')
         self.queue(item, message(now, 'каталог обновлён', describe(change, len(json.loads(raw)['lots']), version)))
         if issues:
-            self.queue(item, message(now, 'ошибки проверки планировок', issues))
+            self.queue(item, message(now, 'каталог синхронизирован частично', ['Активный снимок '+item['active']] + issues))
         self.record(item, now, 'published', issues)
         item['started_at'] = None
         self.save(item)
 
     def recover_interrupted(self, item, now):
         if item.get('pending_verification'):
-            version = item.pop('pending_verification')
+            previous = item.pop('pending_verification')
+            version = previous['active']
             self.read_snapshot(version)
-            item['active'] = version
+            item.update(previous)
             item['history'] = [version]+[v for v in item['history'] if v != version]
         self.queue(item, message(now, 'запуск был прерван', ['Обнаружен незавершённый предыдущий запуск. Проверьте статус Cron.']))
         item['source_ok'] = False
         item['started_at'] = None
         self.save(item)
 
-    def run(self, now, dry=False):
+    def run(self, at=None, dry=False):
+        now = int(time.time()) if at is None else at
         self.verify_root()
         if dry:
             item = self.read_state()
             old = self.read_snapshot(item['active'])['lots']
             lots, _, issues = self.prepare(item, old, now, True)
-            return dict(publish=bool(any(changes(old, lots).values())), count=len(lots), issues=issues,
-                        changes={k:len(v) for k,v in changes(old,lots).items()})
+            change = changes(old, lots)
+            return dict(publish=bool(any(change.values())), count=len(lots), issues=issues,
+                        status='partial' if issues else 'confirmed', changes={k:len(v) for k,v in change.items()})
         with lock(self.running):
             item = self.read_state()
             if item['started_at']:
@@ -378,31 +399,49 @@ class Store:
             try:
                 old = self.read_snapshot(item['active'])['lots']
                 lots, assets, issues = self.prepare(item, old, now, False)
+                now = int(time.time()) if at is None else at
                 change = changes(old, lots)
                 with lock(self.website_lock):
                     if any(change.values()):
                         version, raw = self.build_snapshot(lots, now)
-                        self.activate(item, version, raw, now, change, issues, assets)
+                        self.activate(item, version, raw, now, change, issues, assets, lots)
                     else:
+                        previous_status = website_status(item, now)
+                        baseline = verification_baseline(item)
+                        mark_checked(item, now, assets, issues, lots)
                         if issues:
-                            self.queue(item, message(now, 'ошибки проверки планировок', issues))
-                        item.update(checked_at=now, source_ok=True, etags=assets, started_at=None)
+                            self.queue(item, message(now, 'каталог синхронизирован частично',
+                                                    ['Активный снимок '+item['active']] + issues))
                         self.record(item, now, 'checked', issues)
+                        status = website_status(item, now)
+                        if status != previous_status:
+                            item['pending_verification'] = baseline
+                            self.save(item)
+                            self.verify_live(item['active'], status)
+                            item.pop('pending_verification')
+                        item['started_at'] = None
                         self.save(item)
-                self.prune(item)
             except Exception as exc:
                 reason = safe_error(exc)
                 item = self.read_state()
                 item.update(source_ok=False, started_at=None)
                 if item.get('pending_verification'):
-                    item['active'] = item.pop('pending_verification')
+                    item.update(item.pop('pending_verification'))
                 self.queue(item, message(now, 'сбой синхронизации', [reason, 'Сохранён снимок '+item['active']]))
                 self.record(item, now, 'failed', [reason])
                 self.save(item)
                 if mail_ready:
                     self.flush(item)
                 raise ValueError(reason)
-            return dict(active=item['active'], notification_ok=mail_ready and self.flush(item), count=len(lots), issues=issues)
+            try:
+                self.prune(item)
+            except OSError as exc:
+                reason = safe_error(exc)
+                self.queue(item, message(now, 'ошибка очистки истории каталога', [reason, 'Активный снимок '+item['active']]))
+                self.record(item, now, 'retention_failed', [reason])
+                self.save(item)
+            return dict(active=item['active'], status=sync_status(item, now),
+                        notification_ok=mail_ready and self.flush(item), count=len(lots), issues=issues)
 
     def prune(self, item):
         preserved = set(item['history']) | {item['active']}
@@ -424,12 +463,12 @@ class Store:
             self.verify_render(raw)
             old = item['active']
             rollback = encode(item)
-            item.update(active=version, source_ok=False, started_at=None)
+            item.update(active=version, source_ok=False, started_at=None, published_checked_at=0)
             self.queue(item, message(now, 'восстановлен предыдущий каталог', ['Снимок '+version, 'Предыдущая версия '+old]))
             self.record(item, now, 'restored')
             self.save(item)
             try:
-                self.verify_live(version, False)
+                self.verify_live(version, 'unconfirmed')
             except Exception:
                 atomic(self.state, rollback)
                 raise
@@ -456,6 +495,9 @@ def main():
         state = store.read_state()
         result = {k:state[k] for k in ('active','history','checked_at','source_ok','started_at','history_events')}
         result['count'] = len(store.read_snapshot(state['active'])['lots'])
+        result['status'] = sync_status(state, now)
+        result['published_checked_at'] = state.get('published_checked_at', 0)
+        result['unresolved_count'] = state.get('unresolved_count', 0)
         result['pending_notifications'] = len(state['outbox'])
     elif args.command == 'restore':
         result = store.restore(args.version, now)
@@ -472,7 +514,7 @@ def main():
             store.save(state)
             result = {'notification_ok':store.flush(state)}
     else:
-        result = store.run(now, args.dry_run)
+        result = store.run(dry=args.dry_run)
     print(json.dumps(result, ensure_ascii=False))
     return 0 if result.get('notification_ok', True) else 4
 

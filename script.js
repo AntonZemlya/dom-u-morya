@@ -2,6 +2,8 @@
 
 /* ---------- static data ---------- */
 const SITE_DATA = JSON.parse(document.getElementById('site-data').textContent);
+const CATALOG_VERSION = SITE_DATA.catalog_version
+  ?? (location.hostname === 'zhk-dom-umorya.ru' ? 'bundled' : null);
 const PLANS = ContentModel.plans(SITE_DATA.apartments);
 const CATEGORIES = ContentModel.categories(PLANS);
 const TABS = CATEGORIES.map(c=>({key:c.key,label:c.title+' · '+c.count}));
@@ -675,14 +677,15 @@ function sendToForm(){
 }
 async function downloadCalc(){
   if (state.pdfBusy) return;
-  if (SITE_DATA.catalog_version) {
+  if (CATALOG_VERSION) {
     const status = document.getElementById('pdf-status');
     try {
       const response = await fetch('/', {method:'HEAD',cache:'no-store',signal:AbortSignal.timeout(5000)});
       const selected = PLANS.find(lot => lot.id === state.selectedPlanId);
+      const currentStatus = response.headers.get('X-Dom-Catalog-Status');
       if ((selected && selected.developer_availability !== 'InStock') || !response.ok
-          || response.headers.get('X-Dom-Catalog-Snapshot') !== SITE_DATA.catalog_version
-          || response.headers.get('X-Dom-Catalog-Status') !== 'confirmed') throw Error('Catalog changed');
+          || response.headers.get('X-Dom-Catalog-Snapshot') !== CATALOG_VERSION
+          || currentStatus !== 'confirmed') throw Error('Catalog changed');
     } catch {
       status.hidden = false;
       status.textContent = 'Обновите страницу и проверьте актуальность цен перед скачиванием расчёта.';
@@ -975,6 +978,8 @@ async function handleSubmit(){
         409:'Повторная отправка остановлена. Уточните приём запроса по телефону агентства.',
         503:'Приём через форму временно недоступен. Позвоните или напишите агентству.'};
       failureMessage = {
+        catalog_reload_required: 'Обновите страницу перед отправкой заявки на квартиру или свяжитесь с агентством.',
+        price_mismatch: 'Стоимость в расчёте отличается от цены квартиры. Обновите страницу и проверьте условия.',
         catalog_price_changed: 'Цена или наличие квартиры изменились. Обновите страницу и проверьте предложение перед отправкой.',
         catalog_unconfirmed: 'Актуальность предложения пока уточняется. Свяжитесь с агентством для проверки.',
       }[result.error] || messages[response.status] || 'Запрос не принят. Позвоните или напишите агентству.';
@@ -1161,6 +1166,6 @@ function setupMap(){
   } else load();
 }
 
-if (SITE_DATA.catalog_version) addEventListener('pageshow', event => {
+if (CATALOG_VERSION) addEventListener('pageshow', event => {
   if (event.persisted) location.reload();
 });

@@ -38,7 +38,7 @@ class SyncContract(unittest.TestCase):
         self.initial, raw = self.store.build_snapshot(self.seed_lots, NOW)
         sync.atomic(self.store.snapshots/(self.initial+'.json'), raw)
         self.store.save(dict(schema=1, active=self.initial, history=[self.initial], checked_at=NOW,
-                             source_ok=True, etags={}, outbox=[], history_events=[], started_at=None))
+                             source_ok=True, published_checked_at=NOW, etags={}, outbox=[], history_events=[], started_at=None))
         for method in ('verify_render','verify_live'):
             context = patch.object(self.store, method)
             setattr(self, method, context.start())
@@ -66,6 +66,7 @@ class SyncContract(unittest.TestCase):
             state = self.store.read_state()
             self.assertEqual(state['active'], self.initial)
             self.assertEqual(state['checked_at'], NOW+60)
+            self.assertEqual(state['published_checked_at'], NOW+60)
             self.assertEqual(state['outbox'], [])
             self.verify_live.assert_not_called()
 
@@ -108,7 +109,56 @@ class SyncContract(unittest.TestCase):
             state = self.store.read_state()
             self.assertEqual(state['active'], self.initial)
             self.assertFalse(state['source_ok'])
+            self.assertEqual(state['published_checked_at'], NOW)
             self.assertTrue(state['outbox'])
+
+    def test_new_lot_with_unavailable_plan_marks_partial_without_replacing_snapshot(self):
+        fixture = self.fixtures()
+        new_id = '99123'
+        new_lot = dict(fixture[0][0], id=new_id, number=1000, source_url=source.PROJECT_URL+'/'+new_id+'?projectId=1')
+        plan = '/upload/plans/house-by-the-sea/plan-meb/exact-fixture.svg'
+        fixture.append((new_lot, [{'name':'С мебелью', 'img':plan}]))
+        hashes = {p['source_url']: p['sha256'] for r in self.seed_lots for p in r['plans']}
+
+        def missing_plan(url, *_):
+            if url == source.ORIGIN+plan:
+                raise OSError('Схема временно недоступна')
+            return {'hash':hashes[url]}
+
+        with patch.object(source, 'inventory', return_value=fixture), patch.object(self.store, 'download_plan') as asset:
+            asset.side_effect = missing_plan
+            dry = self.store.run(NOW+30, dry=True)
+            self.assertEqual(dry['status'], 'partial')
+            self.assertFalse(dry['publish'])
+            result = self.store.run(NOW+60)
+            state = self.store.read_state()
+            self.assertEqual(result['status'], 'partial')
+            self.assertEqual(result['active'], self.initial)
+            self.assertEqual(state['history'], [self.initial])
+            self.assertEqual(state['unresolved_count'], 1)
+            self.assertEqual(state['published_checked_at'], NOW+60)
+            self.assertEqual(len(self.store.read_snapshot(state['active'])['lots']), len(self.seed_lots))
+            self.verify_live.assert_not_called()
+            self.assertEqual(len(state['outbox']), 1)
+            self.assertIn(new_id, state['outbox'][0]['body'])
+            self.assertIn('каталог синхронизирован частично', state['outbox'][0]['subject'])
+            self.assertIn('Схема временно недоступна', state['outbox'][0]['body'])
+            self.assertIn(self.initial, state['outbox'][0]['body'])
+
+            asset.side_effect = lambda url,*_: {'hash':hashes.get(url, source.digest(SVG))}
+            result = self.store.run(NOW+120)
+            state = self.store.read_state()
+            self.assertEqual(result['status'], 'confirmed')
+            self.assertEqual(state['unresolved_count'], 0)
+            self.assertEqual(state['published_checked_at'], NOW+120)
+            self.assertNotEqual(state['active'], self.initial)
+            lots = self.store.read_snapshot(state['active'])['lots']
+            self.assertIn(new_id, {row['id'] for row in lots})
+            self.assertEqual({row['id']:row['price_rub'] for row in lots if row['id'] != new_id},
+                             {row['id']:row['price_rub'] for row in self.seed_lots})
+            self.verify_live.assert_called_with(state['active'], 'confirmed')
+            self.assertEqual(len(state['outbox']), 2)
+            self.assertIn('Добавлена: №1000, ID '+new_id, state['outbox'][1]['body'])
 
     def test_invalid_plan_isolated(self):
         fixture = self.fixtures()
@@ -123,6 +173,19 @@ class SyncContract(unittest.TestCase):
         self.assertNotEqual(state['active'], self.initial)
         self.assertEqual(len(state['outbox']), 2)
         self.assertNotIn('99123', {x['id'] for x in self.store.read_snapshot(state['active'])['lots']})
+
+    def test_unconfirmed_existing_price_does_not_advance_public_date(self):
+        candidate = copy.deepcopy(self.seed_lots)
+        candidate[0]['developer_availability'] = None
+        with patch.object(self.store, 'prepare', return_value=(candidate, {}, ['Scheme unavailable'])):
+            result = self.store.run(NOW+60)
+        state = self.store.read_state()
+        self.assertEqual(result['status'], 'partial')
+        self.assertEqual(state['checked_at'], NOW+60)
+        self.assertEqual(state['published_checked_at'], NOW)
+        lots = self.store.read_snapshot(state['active'])['lots']
+        self.assertIsNone(lots[0]['developer_availability'])
+        self.assertEqual(lots[0]['price_rub'], self.seed_lots[0]['price_rub'])
 
     def test_unfinished_write_and_live_verification_roll_back(self):
         prepared = copy.deepcopy(self.seed_lots)
@@ -142,6 +205,7 @@ class SyncContract(unittest.TestCase):
                 self.store.run(NOW+120)
             self.assertEqual(self.store.read_state()['active'], self.initial)
             self.assertFalse(self.store.read_state()['source_ok'])
+            self.assertEqual(self.store.read_state()['published_checked_at'], NOW)
 
     def test_restore_exposes_previous_snapshot_and_keeps_notification(self):
         candidate = copy.deepcopy(self.seed_lots)

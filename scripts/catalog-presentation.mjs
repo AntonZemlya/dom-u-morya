@@ -6,6 +6,7 @@ export const browserLots = apartments => apartments.map(({source_url, plans, ...
 }));
 
 export function catalogMarkup(apartments, groups) {
+ const date = apartments.map(lot=>lot.snapshot_date).sort().at(-1);
  const list = M.plans(apartments);
  const categories = M.categories(list);
  return `<h2 id="plans-heading" class="plans-style-5">Квартира под ваш ритм</h2>
@@ -22,7 +23,7 @@ export function catalogMarkup(apartments, groups) {
 <p id="catalog-result" class="content-note enhanced-only" role="status" aria-live="polite"></p>
 <div id="plans-grid" class="plans-grid plans-style-10">${categories.map((c,i)=>`<details class="static-category"${i===0?' open':''}><summary>${c.title} · ${c.count} предложений · ${c.price}</summary><div class="plans-grid">${list.filter(p=>p.category===c.key).map(p=>M.card(p)).join('')}</div></details>`).join('')}</div>
 <button type="button" id="show-more-plans" class="view-chip enhanced-only" hidden>Показать ещё</button>
-<p class="catalog-footnote">Мебель на схемах — пример расстановки.</p>`;
+<p class="catalog-footnote">Мебель на схемах — пример расстановки.<br><span id="catalog-checked-at">Информация по состоянию на ${M.displayDate(date)}</span></p>`;
 }
 
 export function calculatorDefaults(apartments) {

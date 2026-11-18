@@ -58,7 +58,7 @@ try{
  server=spawn(php,['-n','-d','disable_functions=mail','-d','display_errors=0','-S',`127.0.0.1:${port}`,'-t',path.join(root,'dist')],
   {cwd:root,env:{...process.env,LEAD_CONFIG:cfgPath,LEAD_SMTP_TEST:'1'},stdio:['ignore','ignore','pipe']});server.stderr.on('data',b=>{log+=b;});
  let ready=false;for(let i=0;i<100;i++){try{await fetch(origin+'/api/form-status.php');ready=true;break;}catch{}await pause(50);}assert.ok(ready);
- const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-31',lotId:'22825',category:'studio',planView:'furnished',
+ const payload={name:'Синтетический SMTP E2E',phone:'+70000000000',consent:true,consentVersion:'2026-10-31',lotId:'22825',lotPrice:7117760,category:'studio',planView:'furnished',
   requestKind:'calc',email:'synthetic@example.invalid',channel:'Telegram',callTime:'12-15',calculation:{price:7117760,downPct:20,term:20,rate:6,program:'family'}};
  const post=(p=payload,key=randomUUID(),headers={})=>fetch(origin+'/api/lead.php',{method:'POST',headers:{'Content-Type':'application/json','Origin':origin,'X-Lead-Request':'1','Idempotency-Key':key,...headers},body:typeof p==='string'?p:JSON.stringify(p)});
  const status=async()=>await(await fetch(origin+'/api/form-status.php')).json();

@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const os = require('node:os');
 const path = require('node:path');
+const {createHash} = require('node:crypto');
 
 (async () => {
   const {buildRelease, validateRelease, projectRoot} = await import('../scripts/build-release.mjs');
@@ -23,7 +24,23 @@ const path = require('node:path');
     await assert.rejects(fs.access(path.join(outputRoot, '.env')));
     await assert.rejects(fs.access(path.join(outputRoot, 'docs')));
     for (const relative of RELEASE_FILES) {
-      assert.deepEqual(await fs.readFile(path.join(outputRoot, relative)), SEO_PAGES.includes(relative) ? Buffer.from(seoHTML(await fs.readFile(path.join(projectRoot, relative),'utf8'),relative,'')) : /\.(js|css)$/.test(relative) ? Buffer.from(await optimizeText(relative,await fs.readFile(path.join(projectRoot,relative),'utf8'))) : await fs.readFile(path.join(projectRoot, relative)));
+      const original = await fs.readFile(path.join(projectRoot, relative));
+      let expected = original;
+      if (SEO_PAGES.includes(relative)) expected = Buffer.from(seoHTML(original.toString(), relative, ''));
+      if (/\.(js|css)$/.test(relative)) expected = Buffer.from(await optimizeText(relative, original.toString()));
+      let actual = await fs.readFile(path.join(outputRoot, relative));
+      if (relative === 'index.html') {
+        let html = actual.toString();
+        for (const script of ['content-model.js', 'script.js']) {
+          const optimized = await fs.readFile(path.join(outputRoot, script));
+          const version = createHash('sha256').update(optimized).digest('hex').slice(0, 16);
+          const src = `src="${script}?v=${version}"`;
+          assert.ok(html.includes(src), 'The main page must reference the optimized script version');
+          html = html.replace(src, `src="${script}"`);
+        }
+        actual = Buffer.from(html);
+      }
+      assert.deepEqual(actual, expected, relative);
     }
     await fs.writeFile(path.join(outputRoot, 'stale.zip'), 'old output');
     await assert.rejects(validateRelease(outputRoot), /allowlist/);

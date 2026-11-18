@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import socket
 import subprocess
+import statistics
 import tempfile
 import time
 import urllib.error
@@ -29,7 +30,19 @@ def port():
         return sock.getsockname()[1]
 
 
-def exercise_live_catalog(base, doc, get):
+def measure_root(get):
+    get(core.ORIGIN+'/')
+    samples = []
+    for _ in range(20):
+        started = time.perf_counter()
+        code, _, _ = get(core.ORIGIN+'/')
+        assert code == 200
+        samples.append((time.perf_counter()-started)*1000)
+    ordered = sorted(samples)
+    return dict(median_ms=round(statistics.median(ordered), 2), p95_ms=round(ordered[18], 2))
+
+
+def exercise_live_catalog(base, doc, get, loopback):
     sys.path.insert(0, str(ROOT/'scripts'))
     from catalog_sync import Store, atomic, public_path
     store = Store(base, node=shutil.which('node'))
@@ -43,17 +56,42 @@ def exercise_live_catalog(base, doc, get):
     original = doc/media['local_path']
     store.put_media(media['sha256'], original.read_bytes(), original.with_suffix('.preview.webp').read_bytes())
     media['local_path'] = public_path(media['sha256'])
-    lots[1]['developer_availability'] = None
     lots.pop() # Exercise one confirmed withdrawal and dynamic category totals.
-    now = int(time.time())
+    now = int(time.time())-180
     version, raw = store.build_snapshot(lots, now)
     atomic(store.snapshots/(version+'.json'), raw)
-    state = {'active':version,'source_ok':True,'checked_at':now,'schema':1}
+    state = {'active':version, 'source_ok':True, 'checked_at':now, 'schema':1, 'unresolved_count':1, 'published_checked_at':now}
+    first = base/'partial.json'
+    first.write_text(json.dumps(state))
+    lots[0]['price_rub'] += 11_000
+    newer, raw = store.build_snapshot(lots, now)
+    atomic(store.snapshots/(newer+'.json'), raw)
+    second = base/'confirmed.json'
+    second.write_text(json.dumps(dict(state, active=newer, unresolved_count=0)))
+    lots[0]['price_rub'] -= 11_000
+    subprocess.run(['node', str(ROOT/'tests/catalog-live-browser.cjs'), loopback, str(store.state), str(first), str(second),
+                    lots[0]['id'], str(lots[0]['price_rub'])], check=True, timeout=120)
     store.save(state)
     sha = hashlib.sha256((doc/'index.html').read_bytes()).hexdigest()
     status, headers, body = get(core.ORIGIN+'/')
     assert status == 200 and headers['X-Dom-Catalog-Status'] == 'confirmed'
+    assert headers['X-Dom-Catalog-Checked-At'] == time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(now))
     verify_catalog_page(body, headers, sha)
+    assert 'Ассортимент уточняется'.encode() not in body
+    stamp = time.gmtime(now+10800)
+    fresh_label = time.strftime('Цены и наличие проверены по данным застройщика %d.%m.%Y в %H:%M МСК', stamp)
+    assert fresh_label.encode() in body
+    state.update(checked_at=now+120, published_checked_at=now+120)
+    store.save(state)
+    code, headers, body_updated = get(core.ORIGIN+'/')
+    assert code == 200 and headers['X-Dom-Catalog-Snapshot'] == version
+    stamp = time.gmtime(now+120+10800)
+    assert time.strftime('Цены и наличие проверены по данным застройщика %d.%m.%Y в %H:%M МСК', stamp).encode() in body_updated
+    assert body_updated != body
+    payload = json.loads(re.search(rb'<script id="site-data" type="application/json">(.*?)</script>', body, re.S)[1])
+    assert len(payload['apartments']) == len(lots) and all(lot['developer_availability'] == 'InStock' for lot in payload['apartments'])
+    timing = measure_root(get)
+    assert timing['median_ms'] < 150, timing
     assert b'data-lot-id="'+lots[0]['id'].encode()+b'"' in body
     expected_price = '{:,}'.format(lots[0]['price_rub']).replace(',', '\u00a0')+' ₽'
     assert expected_price.encode() in body and expected_price.encode() in re.search(rb'id="price-label"[^>]*>(.*?)<', body)[1]
@@ -75,22 +113,28 @@ def exercise_live_catalog(base, doc, get):
     $d = ['name'=>'Fixture','phone'=>'+79991234567','consent'=>true,
           'consentVersion'=>DomLead\\CONSENT_VERSION,'lotId'=>$argv[2]];
     foreach (array_slice($argv,3) as $expected) {
-        $d['lotPrice'] = (int)$expected;
+        if ($expected === 'legacy') unset($d['lotPrice']); else $d['lotPrice'] = (int)$expected;
         try { $v = DomLead\\validate(json_encode($d)); echo $v['lot']['price_rub']; }
         catch (DomLead\\Rejection $r) { echo $r->status.':'.$r->reason; }
         echo PHP_EOL;
     }
     """
-    result = subprocess.check_output([php_cli,'-r',program,str(doc),lots[0]['id'],str(original_price),str(lots[0]['price_rub'])])
-    assert result.decode().splitlines() == ['409:catalog_price_changed', str(lots[0]['price_rub'])]
+    result = subprocess.check_output([php_cli,'-r',program,str(doc),lots[0]['id'],'legacy',str(original_price),str(lots[0]['price_rub'])])
+    assert result.decode().splitlines() == ['409:catalog_reload_required', '409:catalog_price_changed', str(lots[0]['price_rub'])]
     state['source_ok'] = False
     store.save(state)
     code, headers, body = get(core.ORIGIN+'/')
     assert code == 200 and headers['X-Dom-Catalog-Status'] == 'unconfirmed'
     verify_catalog_page(body, headers, sha)
-    assert 'Актуальность цен и наличие уточняются.'.encode() in body
+    assert time.strftime('Информация по состоянию на %d.%m.%Y', stamp).encode() in body
+    assert headers['X-Dom-Catalog-Checked-At'] == time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(now+120))
+    assert 'Цены и наличие проверены'.encode() not in body
     result = subprocess.check_output([php_cli,'-r',program,str(doc),lots[0]['id'],str(lots[0]['price_rub'])])
     assert result.strip() == b'409:catalog_unconfirmed'
+    store.save(dict(state, source_ok=True, checked_at=now-36*3600-1, published_checked_at=now-36*3600-1))
+    expired = get(core.ORIGIN+'/', 'HEAD')
+    assert expired[0] == 200 and expired[1]['X-Dom-Catalog-Status'] == 'unconfirmed'
+    return timing
 
 
 def run():
@@ -219,7 +263,15 @@ def run():
             (doc/'styles.css').write_text('/* synthetic replacement */')
             code, new_headers, body = get(core.ORIGIN + '/styles.css',headers={'If-None-Match':old_headers['ETag']})
             assert code == 200 and body == b'/* synthetic replacement */', (code,new_headers)
-            exercise_live_catalog(base, doc, get)
+            bundled_timing = measure_root(get)
+            previous = subprocess.check_output(['git','show','1e3ecac8d72034d9ce4bc8a71b365796e5d07a59:.htaccess'], cwd=ROOT)
+            assert core.sha(previous) == core.APPROVED_HTACCESS_SHA256
+            (doc/'.htaccess').write_bytes(previous)
+            static_timing = measure_root(get)
+            (doc/'.htaccess').write_bytes(accepted)
+            active_timing = exercise_live_catalog(base, doc, get, origin)
+            result['catalog_response_timing_loopback'] = dict(static=static_timing, bundled_php=bundled_timing, active_php=active_timing)
+            print('Catalog full-response localhost timing (ms):', result['catalog_response_timing_loopback'])
             result['cache_policy'] = 'PASS: fixed URL revalidation, content hashes, 304/HEAD, API no-store, errors, replacement'
             # POST is exercised only against disposable local PHP. The method
             # reaches PHP directly, rather than being redirected or changed to GET.

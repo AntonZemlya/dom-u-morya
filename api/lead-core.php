@@ -106,10 +106,11 @@ function validate(string $raw): array {
             }
         }
         if (!$v['lot']) reject($active ? 409 : 422, $active ? 'catalog_price_changed' : 'unknown_lot');
-        if ($active && (!$active['confirmed'] || $v['lot']['developer_availability'] !== 'InStock')) {
+        if ($active && ($active['status'] === 'unconfirmed' || $v['lot']['developer_availability'] !== 'InStock')) {
             reject(409, 'catalog_unconfirmed');
         }
-        if (($active || array_key_exists('lotPrice', $d)) && ($d['lotPrice'] ?? null) !== $v['lot']['price_rub']) {
+        if (!array_key_exists('lotPrice', $d)) reject(409, 'catalog_reload_required');
+        if ($d['lotPrice'] !== $v['lot']['price_rub']) {
             reject(409, 'catalog_price_changed');
         }
         $category = ['studio','1k','2k','3k'][$v['lot']['bedrooms']];

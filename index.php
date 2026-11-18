@@ -18,7 +18,10 @@ try {
     $page = $active ? DomCatalog\render($template, $active) : $template;
     header('X-Dom-Catalog-Template: '.hash('sha256', $template));
     header('X-Dom-Catalog-Snapshot: '.($active['version'] ?? 'bundled'));
-    header('X-Dom-Catalog-Status: '.(!$active || $active['confirmed'] ? 'confirmed' : 'unconfirmed'));
+    header('X-Dom-Catalog-Status: '.($active['status'] ?? 'confirmed'));
+    if ($active && $active['published_checked_at'] > 0) {
+        header('X-Dom-Catalog-Checked-At: '.gmdate('Y-m-d\TH:i:s\Z', $active['published_checked_at']));
+    }
     if ($method === 'GET') echo $page;
 } catch (Throwable $error) {
     error_log('dom-catalog: '.$error->getMessage());

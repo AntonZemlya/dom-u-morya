@@ -138,13 +138,13 @@ def verify_catalog_page(body, headers, template_sha):
     lots = page_data['apartments']
     cards = re.findall(rb'<article\b[^>]*data-lot-id="([0-9]+)"', body)
     ids = {lot['id'] for lot in lots}
-    ensure(page_data['catalog_version'] == version and 0 < len(ids) == len(lots) == len(cards)
+    ensure(page_data['catalog_version'] == version and page_data['catalog_status'] == status and 0 < len(ids) == len(lots) == len(cards)
            and ids == {card.decode() for card in cards}, 'Catalog page does not match its active snapshot')
     graph = json.loads(structured[1])['@graph']
     offers = next(node['offers'] for node in graph if 'offers' in node)
     expected = {lot['id']: lot['price_rub'] for lot in lots if lot['developer_availability'] == 'InStock'}
     actual = {offer['@id'].rsplit('-', 1)[-1]: offer['price'] for offer in offers}
-    ensure(len(actual) == len(offers) and actual == expected and (status == 'confirmed' or not actual),
+    ensure(len(actual) == len(offers) and actual == expected and (status != 'unconfirmed' or not actual),
            'Catalog availability or prices differ between HTML and SEO')
 
 

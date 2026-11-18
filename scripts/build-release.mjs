@@ -105,6 +105,17 @@ export async function buildRelease({sourceRoot = projectRoot, outputRoot = path.
     }
     await generateSEO(staging,origin);
     for(const name of ['styles.css','script.js','content-model.js','assets/fonts/fonts.css']) {const file=path.join(staging,name);await fs.writeFile(file,await optimizeText(name,await fs.readFile(file,'utf8')));}
+    // Refresh the two catalog scripts together when a visitor navigates or reloads.
+    const index = path.join(staging, 'index.html');
+    let html = await fs.readFile(index, 'utf8');
+    for (const name of ['content-model.js', 'script.js']) {
+      const asset = await fs.readFile(path.join(staging, name));
+      const version = createHash('sha256').update(asset).digest('hex').slice(0, 16);
+      const reference = 'src="' + name + '"';
+      if (!html.includes(reference)) throw new Error('Missing main catalog script: ' + name);
+      html = html.replace(reference, 'src="' + name + '?v=' + version + '"');
+    }
+    await fs.writeFile(index, html);
     await validateSEO(staging,origin);
     const result = await validateRelease(staging);
     await fs.rm(outputRoot, {recursive: true, force: true});

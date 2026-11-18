@@ -11,7 +11,7 @@ mkdir($dir, 0700);
 $cfg = ['FORM_ENABLED'=>true,'SMTP_TRANSPORT_VERIFIED'=>true,'CONTROL_MAILBOX_VERIFIED'=>'azm1982@yandex.ru','OWNER_CONFIRMED_TO'=>'info@anyara.ru','ACCEPT_UNTESTED_MAIN'=>true,'LEGAL_MAIL_BCC'=>'azm1982@yandex.ru','LEGAL_APPROVED'=>'2026-10-31','HMAC_SECRET'=>str_repeat('fixture-only-',4),'STATE_DIR'=>$dir,
     'MAIL_TO'=>'info@anyara.ru','MAIL_BCC'=>'azm1982@yandex.ru','LEGAL_MAIL_TO'=>'info@anyara.ru'];
 $server = ['REQUEST_METHOD'=>'POST','CONTENT_TYPE'=>'application/json','HTTP_ORIGIN'=>DomLead\ORIGIN,'HTTP_X_LEAD_REQUEST'=>'1','HTTP_IDEMPOTENCY_KEY'=>str_repeat('a',32),'REMOTE_ADDR'=>'192.0.2.1'];
-$payload = ['name'=>'Синтетический тест','phone'=>'+70000000000','consent'=>true,'consentVersion'=>'2026-10-31','lotId'=>'22825','category'=>'studio'];
+$payload = ['name'=>'Синтетический тест','phone'=>'+70000000000','consent'=>true,'consentVersion'=>'2026-10-31','lotId'=>'22825','lotPrice'=>7117760,'category'=>'studio'];
 $mails = []; $now = 1800000000; $checks = 0;
 $fake = function ($m) use (&$mails) { $mails[] = $m; return true; };
 function check(bool $ok): void { global $checks; $checks++; if (!$ok) throw new RuntimeException('Contract failed at check '.$checks); }
@@ -50,6 +50,10 @@ try {
     foreach (["Тест\r\nBcc: test@example.invalid",'<script>x</script>',"Имя\u{202E}",str_repeat('я',81)] as $bad) error(422,fn()=>request(['name'=>$bad]));
     error(422,fn()=>request(['email'=>"test@example.invalid\r\nBcc:x@example.invalid"]));
     error(422,fn()=>request(['website'=>'bot'])); error(422,fn()=>request(['price'=>1]));
+    $legacy = $payload; unset($legacy['lotPrice']);
+    error(409,fn()=>handle($server,json_encode($legacy),$cfg,$fake,$now));
+    error(409,fn()=>request(['lotPrice'=>6978183]));
+    check(count($mails)===1);
     error(422,fn()=>request(['lotId'=>'unknown'])); error(422,fn()=>request(['category'=>'3k']));
     error(422,fn()=>request(['planView'=>'other'])); error(422,fn()=>request(['requestKind'=>'other']));
     error(400,fn()=>request([],['HTTP_IDEMPOTENCY_KEY'=>'']));
@@ -150,7 +154,7 @@ BODY;
     $preference=$minimal;$preference['category']='2k';$preference['requestKind']='full';
     $preferenceMail=DomLead\message($preference,'20261031-0000000000000000',$stamp);
     check(str_contains($preferenceMail['body'],'Интересующая категория: 2 спальни') && str_contains($preferenceMail['body'],'Полная оплата: актуальный прайс и условия.') && !str_contains($preferenceMail['body'],'КВАРТИРА'));
-    $otherLot=DomLead\validate(json_encode(array_replace($payload,['lotId'=>'22936']),JSON_THROW_ON_ERROR));
+    $otherLot=DomLead\validate(json_encode(array_replace($payload,['lotId'=>'22936','lotPrice'=>7501082]),JSON_THROW_ON_ERROR));
     check(str_contains(DomLead\message($otherLot,'20261031-0000000000000000',$stamp)['body'],'Площадь: 28,9 м²'));
     echo 'PASS PHP '.PHP_VERSION.'; '.$checks.' contract assertions; fake mail only; no visitor data logged'.PHP_EOL;
 } finally { foreach (glob($dir.'/*') as $file) unlink($file); rmdir($dir); }

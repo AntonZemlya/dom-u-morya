@@ -47,6 +47,7 @@ try{
   run('composer','composer',['validate','--strict','--no-check-all','--no-interaction']);
   run('composer-audit','composer',['audit','--locked','--no-interaction'],['composer']);
   n('smtp-runtime','scripts/smtp-runtime.mjs',['composer']);
+  run('catalog-sync-smtp','python3',['-B','ops/test_catalog_mail.py'],['php84','smtp-runtime']);
   run('form-smtp','npm',['run','test:form'],['php84','smtp-runtime','production-build']);
   n('chromium','tests/ci-browser-dependency.cjs');
   // A loopback preview for the historical SEO/performance tests; closed in finally.

@@ -6,6 +6,7 @@ if (PHP_SAPI !== 'cli' || count($argv) !== 2) exit(2);
 $doc = $argv[1];
 if (!str_ends_with($doc, '/domains/zhk-dom-umorya.ru') || realpath($doc) !== $doc) exit(2);
 require $doc.'/api/lead-core.php';
+require $doc.'/api/lead-smtp.php';
 try {
     $event = json_decode(stream_get_contents(STDIN, 256 * 1024), true, 8, JSON_THROW_ON_ERROR);
     if (!preg_match('/\Acatalog-[a-f0-9]{32}\z/D', $event['id']) || !is_string($event['subject'])

@@ -159,6 +159,13 @@ class SyncContract(unittest.TestCase):
             self.verify_live.assert_called_with(state['active'], 'confirmed')
             self.assertEqual(len(state['outbox']), 2)
             self.assertIn('Добавлена: №1000, ID '+new_id, state['outbox'][1]['body'])
+            expected = list(state['outbox'])
+            self.mail.stop()
+            with patch.object(sync.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0)) as smtp:
+                self.assertTrue(self.store.flush(state))
+            delivered = [json.loads(call.kwargs['input']) for call in smtp.call_args_list]
+            self.assertEqual(delivered, expected)
+            self.assertEqual(self.store.read_state()['outbox'], [])
 
     def test_invalid_plan_isolated(self):
         fixture = self.fixtures()

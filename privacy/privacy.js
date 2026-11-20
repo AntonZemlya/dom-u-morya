@@ -27,19 +27,13 @@ settings.innerHTML='<div><button type="button" class="privacy-close dialog-close
 if(!deploymentOff)settings.querySelector('.privacy-status').textContent='Аналитика включается только после вашего разрешения и подтверждённого допуска сайта.';
 document.body.append(settings);let opener=null,pageY=0;
 function modalActive(){return !!document.querySelector('dialog[open]:not(#privacy-settings)')||document.querySelector('.menu-toggle')?.getAttribute('aria-expanded')==='true';}
-function updateBannerSpace(){
- // Keep the space while a dialog hides the banner, preserving the page position.
- if(controller.state!=='unknown'){
-  document.documentElement.style.setProperty('--privacy-banner-space','0px');
-  document.documentElement.style.setProperty('--privacy-banner-offset','0px');
- }else if(!banner.hidden){
-  const offset=Math.ceil(banner.getBoundingClientRect().height+parseFloat(getComputedStyle(banner).bottom));
-  document.documentElement.style.setProperty('--privacy-banner-offset',`${offset}px`);
-  document.documentElement.style.setProperty('--privacy-banner-space',`${offset+(document.getElementById('scroll-top-btn')?64:12)}px`);
- }
+function updateBannerOffset(){
+ if(banner.hidden)return;
+ const offset=Math.ceil(banner.getBoundingClientRect().height+parseFloat(getComputedStyle(banner).bottom));
+ document.documentElement.style.setProperty('--privacy-banner-offset',`${offset}px`);
 }
-function updateBanner(){banner.hidden=controller.state!=='unknown'||settings.open||modalActive();document.getElementById('scroll-top-btn')?.classList.toggle('no-cookie-banner',banner.hidden);updateBannerSpace();}
-new ResizeObserver(updateBannerSpace).observe(banner);
+function updateBanner(){banner.hidden=controller.state!=='unknown'||settings.open||modalActive();document.getElementById('scroll-top-btn')?.classList.toggle('no-cookie-banner',banner.hidden);updateBannerOffset();}
+new ResizeObserver(updateBannerOffset).observe(banner);
 let expiryTimer;
 function sync(){clearTimeout(expiryTimer);if(controller.record)expiryTimer=setTimeout(()=>controller.refresh(),Math.min(2147483647,Math.max(1,controller.record.expiry-Date.now())));
  const updateActiveStatus=()=>{if(controller.state==='granted'&&!deploymentOff){settings.querySelector('[data-privacy-status]').textContent=lifecycle.active?'Яндекс.Метрика включена по вашему разрешению.':!page()?'Разрешение сохранено. Аналитика отключена для защиты данных в адресе страницы или источнике перехода.':'Согласие сохранено. Аналитика недоступна или заблокирована; сайт работает как обычно.';}};

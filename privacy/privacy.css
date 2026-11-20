@@ -35,8 +35,7 @@
 .privacy-banner #cookie-decline:hover{background:#efe8dd}
 .privacy-banner a{display:inline-block;max-width:100%;color:#19383a;text-decoration:underline;text-underline-offset:3px}
 .privacy-settings a{color:#183529;text-decoration:underline;text-underline-offset:3px}
-/* Reserve the banner's measured height so the last footer links remain reachable. */
-footer.finale-footer::after{content:"";display:block;height:var(--privacy-banner-space,0px)}
+/* Keep the floating back-to-top button above the fixed banner. */
 .scroll-top-btn:not(.no-cookie-banner){bottom:calc(var(--privacy-banner-offset,0px) + 12px)}
 .privacy-settings{margin:auto;width:min(650px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;border:1px solid #c9c2b4;border-radius:12px;background:#fbfaf7;color:#183529;padding:0}.privacy-settings::backdrop{background:#18352999}.privacy-settings>div{padding:28px}.privacy-settings h2{font-size:28px;line-height:1.2;margin:10px 30px 20px 0}.privacy-settings h3{font-size:18px}.privacy-settings p{font-size:14px;line-height:1.65;margin:12px 0}.privacy-close{float:right;font:inherit;font-size:28px;line-height:1;width:44px;height:44px;border:1px solid #c9c2b4;border-radius:50%;background:transparent;cursor:pointer}.privacy-group{padding:16px 0;border-top:1px solid #c9c2b4}.privacy-toggle{display:flex;gap:12px;align-items:center}.privacy-toggle input{width:22px;height:22px;accent-color:#183529}.privacy-details summary{cursor:pointer;min-height:32px}.privacy-status{font-size:13px}.privacy-actions [hidden]{display:none}
 .privacy-documents{display:grid;gap:4px;margin-top:20px;padding-top:16px;border-top:1px solid #c9c2b4;font-size:13px;line-height:1.5}.privacy-documents a{display:flex;align-items:center;min-height:44px}

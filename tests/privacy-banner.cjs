@@ -5,6 +5,10 @@ const source=process.argv.includes('--root')?path.resolve(process.argv[process.a
 const pages=['/','/privacy.html','/consent-personal-data.html','/consent-analytics.html'];
 const key='domUMorya_analyticsConsent_v1',limits={320:228,390:170,768:112,1440:100};
 const out=process.env.QA_OUTPUT_DIR;
+const footerGeometry=page=>page.locator('footer').evaluate(footer=>{
+ const rect=footer.getBoundingClientRect();
+ return {top:rect.top+scrollY,height:rect.height,pageHeight:document.documentElement.scrollHeight};
+});
 const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.height>b.y;
 (async()=>{const site=await server(source),b=await browser(),results=[];try{
  for(const mode of ['production','preview'])for(const width of [320,390,768,1440]){
@@ -58,14 +62,15 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    else assert.ok(copy.y+copy.height<=grant.y,'mobile choices follow the copy');
    assert.ok(await decline.evaluate(e=>{const style=getComputedStyle(e);return style.borderTopWidth==='1px'&&style.textDecorationLine==='none';}));
    const footer=p.locator('footer');
-   const footerContent=await footer.locator('a,button,.footer-bottom p').all();
-   for(const el of footerContent){
-    const box=await el.boundingBox();if(box)assert.ok(box.y+box.height<=banner.y-8,'footer content above banner at end of page');
-   }
+   const activeGeometry=await footerGeometry(p);
+   assert.ok(overlaps(await footer.boundingBox(),banner),'at the end of the page the banner overlays the footer');
+   assert.ok(await ui.evaluate(el=>{
+    const bounds=el.getBoundingClientRect();
+    return getComputedStyle(el).position==='fixed'&&el.contains(document.elementFromPoint(bounds.x+bounds.width/2,bounds.y+bounds.height/2));
+   }),'banner is fixed above the content it overlaps');
    const up=p.locator('#scroll-top-btn');
    if(await up.count()&&await up.isVisible()){
-    const box=await up.boundingBox();assert.equal(overlaps(box,banner),false,'scroll-to-top above banner');
-    for(const el of footerContent)assert.equal(overlaps(box,await el.boundingBox()),false,'scroll-to-top clears footer content');
+    assert.equal(overlaps(await up.boundingBox(),banner),false,'scroll-to-top above banner');
    }
    // Reading the terms, scrolling, opening and closing settings must never consent.
    assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);
@@ -77,19 +82,21 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    const configure=footer.getByRole('button',{name:'Настройки аналитики'});await configure.focus();
    const scrollY=await p.evaluate(()=>window.scrollY);await p.keyboard.press('Enter');assert.equal(await p.locator('#privacy-settings').isVisible(),true);
    assert.equal(await p.locator('#privacy-analytics').isChecked(),false);assert.equal(await p.locator('#cookie-banner').isVisible(),false);
+   assert.deepEqual(await footerGeometry(p),activeGeometry,'hiding the banner keeps the footer and page size fixed');
    await p.keyboard.press('Shift+Tab');assert.equal(await p.locator('.privacy-documents a').evaluate(e=>e===document.activeElement),true);await p.keyboard.press('Tab');assert.equal(await p.locator('.privacy-close').evaluate(e=>e===document.activeElement),true);
    await p.keyboard.press('Escape');assert.equal(await configure.evaluate(e=>e===document.activeElement),true);assert.ok(Math.abs(await p.evaluate(()=>window.scrollY)-scrollY)<2,'settings preserve scroll position');
    assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);
    if(documentPath==='/'){
-    results.push({mode,width,height:banner.height,overflow:false,footerClear:true,keyboard:true});
+    results.push({mode,width,height:banner.height,overflow:false,footerStable:true,keyboard:true});
     await Promise.all([p.waitForURL(site.url+'/consent-analytics.html'),details.press('Enter')]);
     await p.getByRole('heading',{name:'Согласие на необязательную аналитику',level:1}).waitFor();
     assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);
    }
   }
   if(mode==='preview'){
+   const activeGeometry=await footerGeometry(p);
    await p.locator('#cookie-decline').press('Enter');assert.equal(await p.locator('#cookie-banner').isVisible(),false);
-   assert.equal(await p.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--privacy-banner-space').trim()),'0px');
+   assert.deepEqual(await footerGeometry(p),activeGeometry,'refusing analytics does not resize the footer or page');
    await p.reload();await stable(p);assert.equal(await p.locator('#cookie-banner').isVisible(),false);assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'denied');
    await p.locator('footer [data-privacy-settings]').click();await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'granted');
    await p.locator('footer [data-privacy-settings]').click();await p.locator('[data-privacy-withdraw]').click();assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'withdrawn');
@@ -97,9 +104,17 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
   }
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);await context.close();console.log(`PASS banner ${mode} ${width}: four pages, compact, no overflow/overlap, keyboard${mode==='preview'?', consent/reload/withdraw':''}`);
  }
- // Rotation/viewport changes update the footer clearance without choosing consent.
+ // Rotation/viewport changes reposition the back-to-top button without choosing consent.
  const p=await b.newPage({viewport:{width:1440,height:900}});await maskMap(p);await p.goto(site.url);await stable(p);
- for(const width of [320,390,768,1440]){await p.setViewportSize({width,height:900});await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));const banner=await p.locator('#cookie-banner').boundingBox();const space=await p.evaluate(()=>parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--privacy-banner-space')));assert.ok(space>=banner.height+60);assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);}
+ for(const width of [320,390,768,1440]){
+  await p.setViewportSize({width,height:900});
+  await p.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+  await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  const up=p.locator('#scroll-top-btn');await up.waitFor();
+  const button=await up.boundingBox(),banner=await p.locator('#cookie-banner').boundingBox();
+  assert.ok(button.y+button.height<=banner.y,'scroll-to-top stays above the banner after a resize');
+  assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);
+ }
  await p.setViewportSize({width:320,height:240});await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));await p.locator('#cookie-decline').click();assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'denied');await p.close();
  fs.mkdirSync(path.join(root,'.test-output/analytics-banner'),{recursive:true});fs.writeFileSync(path.join(root,'.test-output/analytics-banner/checks.json'),JSON.stringify(results,null,2)+'\n');
  console.log('PASS resize and short viewport; all analytics traffic blocked before consent');

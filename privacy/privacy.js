@@ -12,9 +12,10 @@ addEventListener('hashchange',()=>{if(!page())lifecycle.stop();});
 const banner=document.createElement('aside');banner.className='privacy-banner';banner.id='cookie-banner';banner.hidden=true;
 banner.setAttribute('aria-labelledby','privacy-banner-title');
 banner.innerHTML=`
+ <img class="privacy-banner-icon" src="/assets/analytics-icon.svg" width="48" height="48" alt="">
  <div class="privacy-banner-copy">
   <h2 id="privacy-banner-title">Аналитика</h2>
-  <p>Яндекс.Метрика помогает нам улучшать сайт и включается только с вашего разрешения. <a href="/consent-analytics.html">Подробнее об аналитике</a>.</p>
+  <p>Помогает нам улучшать сайт и включается только с вашего разрешения.<br><a href="/consent-analytics.html">Подробнее об аналитике</a>.</p>
  </div>
  <div class="privacy-actions">
   <button type="button" class="privacy-action" id="cookie-accept" data-privacy-choice="granted">Разрешить аналитику</button>

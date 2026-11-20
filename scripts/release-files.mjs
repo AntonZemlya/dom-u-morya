@@ -15,7 +15,7 @@ export const RELEASE_FILES = Object.freeze([
   ...Object.values(performanceImages).flat().map(image=>image.src),
   'assets/og-project.jpg', 'assets/architecture.webp', 'assets/cta.webp',
   'assets/hero-desktop.webp', 'assets/hero-mobile.webp', 'assets/hero-tablet.webp',
-  'assets/location.webp', 'assets/logo-cropped.webp',
+  'assets/location.webp', 'assets/logo-cropped.webp', 'assets/analytics-icon.svg',
   'assets/fonts/fonts.css',
   ...Array.from({length:9},(_,i)=>`assets/fonts/font-${i+1}.woff2`),
   'assets/fonts/font-1.ttf', 'assets/fonts/font-2.ttf', 'assets/fonts/font-3.ttf',

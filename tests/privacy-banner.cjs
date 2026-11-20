@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {root,server,browser,stable,maskMap}=require('./helpers.cjs');
 const source=process.argv.includes('--root')?path.resolve(process.argv[process.argv.indexOf('--root')+1]):root;
 const pages=['/','/privacy.html','/consent-personal-data.html','/consent-analytics.html'];
-const key='domUMorya_analyticsConsent_v1',limits={320:132,390:120,768:86,1440:71};
+const key='domUMorya_analyticsConsent_v1',limits={320:228,390:170,768:112,1440:100};
 const out=process.env.QA_OUTPUT_DIR;
 const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.height>b.y;
 (async()=>{const site=await server(source),b=await browser(),results=[];try{
@@ -21,17 +21,23 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    const ui=p.locator('#cookie-banner'),details=ui.getByRole('link',{name:'Подробнее об аналитике',exact:true});
    const accept=ui.getByRole('button',{name:'Разрешить аналитику',exact:true});
    const decline=ui.getByRole('button',{name:'Продолжить без аналитики',exact:true});
+   const icon=ui.locator('.privacy-banner-icon');
    assert.equal((await p.goto(site.url+documentPath)).status(),200);await stable(p);await ui.waitFor();
    assert.equal(await ui.getByRole('heading',{name:'Аналитика',exact:true}).count(),1);
-   assert.equal(await ui.locator('p').innerText(),'Яндекс.Метрика помогает нам улучшать сайт и включается только с вашего разрешения. Подробнее об аналитике.');
+   assert.equal((await ui.locator('p').innerText()).replace(/\s+/g,' '),'Помогает нам улучшать сайт и включается только с вашего разрешения. Подробнее об аналитике.');
+   assert.equal(await icon.getAttribute('alt'),'');
+   await icon.evaluate(img=>img.decode());
    assert.equal(await ui.getByRole('button').count(),2);
    assert.equal(await ui.getByRole('link').count(),1);
    assert.equal(await details.getAttribute('href'),'/consent-analytics.html');
    assert.equal(await ui.locator('[data-privacy-settings],.privacy-banner-note').count(),0);
    assert.doesNotMatch(await ui.innerText(),/Условия согласия|Настроить|Внешняя аналитика отключена/);
-   if(out&&documentPath==='/'&&mode==='preview')await ui.screenshot({path:path.join(out,`banner-${width}.png`)});
    await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
    await p.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+   if(out&&documentPath==='/'&&mode==='preview'){
+    await ui.screenshot({path:path.join(out,`banner-${width}.png`)});
+    await p.screenshot({path:path.join(out,`page-${width}.png`)});
+   }
    const banner=await ui.boundingBox();
    assert.ok(banner.height<=limits[width],`${mode} ${width} ${documentPath}: compact height ${banner.height}`);
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
@@ -43,9 +49,14 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    }
    assert.ok(controls.slice(0,2).every(box=>box.height>=44&&box.width>=44),'both choices have full hit areas');
    for(let i=0;i<controls.length;i++)for(let j=i+1;j<controls.length;j++)assert.equal(overlaps(controls[i],controls[j]),false,'no overlapping controls');
-   assert.ok(Math.abs(controls[0].y-controls[1].y)<1,'both choices in one row');
-   if(width>=768){const copy=await ui.locator('.privacy-banner-copy').boundingBox();assert.ok(copy.x+copy.width<=controls[0].x,'desktop/tablet horizontal layout');}
-   assert.ok(await decline.evaluate(e=>{const style=getComputedStyle(e);return style.borderTopWidth==='0px'&&style.textDecorationLine.includes('underline');}));
+   const [grant,refuse]=controls,copy=await ui.locator('.privacy-banner-copy').boundingBox(),symbol=await icon.boundingBox();
+   assert.ok(symbol.x+symbol.width<=copy.x,'icon is to the left of the copy');
+   assert.ok(Math.abs(grant.height-refuse.height)<1,'choices have equally tall hit areas');
+   if(width<=360)assert.ok(grant.y+grant.height<=refuse.y&&Math.abs(grant.width-refuse.width)<1,'choices stack at the narrowest width');
+   else assert.ok(Math.abs(grant.y-refuse.y)<1,'choices share one row');
+   if(width>=768)assert.ok(copy.x+copy.width<=grant.x,'desktop/tablet horizontal layout');
+   else assert.ok(copy.y+copy.height<=grant.y,'mobile choices follow the copy');
+   assert.ok(await decline.evaluate(e=>{const style=getComputedStyle(e);return style.borderTopWidth==='1px'&&style.textDecorationLine==='none';}));
    const footer=p.locator('footer');
    const footerContent=await footer.locator('a,button,.footer-bottom p').all();
    for(const el of footerContent){
@@ -77,12 +88,12 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    }
   }
   if(mode==='preview'){
-   await p.locator('#cookie-decline').click();assert.equal(await p.locator('#cookie-banner').isVisible(),false);
+   await p.locator('#cookie-decline').press('Enter');assert.equal(await p.locator('#cookie-banner').isVisible(),false);
    assert.equal(await p.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--privacy-banner-space').trim()),'0px');
    await p.reload();await stable(p);assert.equal(await p.locator('#cookie-banner').isVisible(),false);assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'denied');
    await p.locator('footer [data-privacy-settings]').click();await p.locator('#privacy-analytics').check();await p.locator('[data-privacy-save]').click();assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'granted');
    await p.locator('footer [data-privacy-settings]').click();await p.locator('[data-privacy-withdraw]').click();assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'withdrawn');
-   await p.evaluate(k=>localStorage.removeItem(k),key);await p.reload();await p.locator('#cookie-accept').click();await p.reload();await stable(p);assert.equal(await p.locator('#cookie-banner').isVisible(),false);assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'granted');
+   await p.evaluate(k=>localStorage.removeItem(k),key);await p.reload();await p.locator('#cookie-accept').press('Enter');await p.reload();await stable(p);assert.equal(await p.locator('#cookie-banner').isVisible(),false);assert.equal(await p.evaluate(k=>JSON.parse(localStorage.getItem(k)).choice,key),'granted');
   }
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);await context.close();console.log(`PASS banner ${mode} ${width}: four pages, compact, no overflow/overlap, keyboard${mode==='preview'?', consent/reload/withdraw':''}`);
  }

@@ -1,16 +1,40 @@
 /* Consent UI adapted from Rehab Profi; colours/type follow Dom u morya. */
-.privacy-banner{position:fixed;z-index:65;left:16px;right:16px;bottom:12px;max-width:900px;margin:auto;padding:6px 12px;background:#fbfaf7;border:1px solid #c9c2b4;border-radius:12px;box-shadow:0 8px 35px #18352924;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;color:#183529;max-height:calc(100dvh - 24px);overflow:auto}
+.privacy-banner{
+ --privacy-banner-inset:clamp(16px,4vw,48px);
+ position:fixed;
+ z-index:65;
+ inset-inline:16px;
+ bottom:var(--privacy-banner-inset);
+ max-width:1030px;
+ max-height:calc(100dvh - var(--privacy-banner-inset) - 12px);
+ margin:auto;
+ padding:16px 20px;
+ display:grid;
+ grid-template-columns:auto minmax(0,1fr) auto;
+ align-items:center;
+ gap:16px;
+ background:#f8f4ee;
+ border:1px solid #ebe3d7;
+ border-radius:18px;
+ box-shadow:0 12px 30px #0b292936;
+ color:#19383a;
+ overflow:auto;
+}
 .privacy-banner[hidden]{display:none}
-.privacy-banner h2{font-family:inherit;font-size:14px;font-weight:600;line-height:1.2;margin:0}
-.privacy-banner p{font-size:13px;line-height:1.3;margin:0}
-.privacy-banner-copy{min-width:0;display:grid;gap:2px}
-.privacy-banner .privacy-actions{flex-wrap:nowrap;gap:4px}
-.privacy-banner .privacy-action{flex:none;white-space:nowrap;padding:5px 10px;font-weight:500}
+.privacy-banner-icon{display:block;width:48px;height:48px;padding:11px;background:#ece4d6;border-radius:14px}
+.privacy-banner h2{font:600 20px/1.1 Newsreader,"Times New Roman",serif;margin:0}
+.privacy-banner p{font-size:14px;line-height:1.25;margin:0;color:#353a39}
+.privacy-banner-copy{min-width:0;display:grid;gap:3px}
+.privacy-banner .privacy-actions{flex-wrap:nowrap;gap:16px}
+.privacy-banner .privacy-action{flex:none;min-height:46px;white-space:nowrap;padding:7px 17px;font-size:14px;font-weight:500;border-radius:11px}
 .privacy-actions{display:flex;gap:8px;flex-wrap:wrap}.privacy-action{font:inherit;font-size:13px;line-height:1.4;background:#183529;color:#fff;border:1px solid #183529;border-radius:6px;padding:12px;min-height:44px;cursor:pointer;flex:1}
 .privacy-action:disabled{opacity:.5;cursor:default}.privacy-action[data-privacy-deny]{background:#fbfaf7;color:#183529}
-.privacy-banner #cookie-decline{background:transparent;border:0;color:#183529}
-.privacy-banner a,.privacy-settings a,.privacy-banner #cookie-decline{color:#183529;text-decoration:underline;text-underline-offset:3px}
-.privacy-banner a{display:inline-block;max-width:100%}
+.privacy-banner #cookie-accept{color:#fff;background:linear-gradient(#275456,#0d3536);border-color:#275456}
+.privacy-banner #cookie-decline{color:#19383a;background:transparent;border-color:#b6ac9e}
+.privacy-banner #cookie-accept:hover{background:#173f40}
+.privacy-banner #cookie-decline:hover{background:#efe8dd}
+.privacy-banner a{display:inline-block;max-width:100%;color:#19383a;text-decoration:underline;text-underline-offset:3px}
+.privacy-settings a{color:#183529;text-decoration:underline;text-underline-offset:3px}
 /* Reserve the banner's measured height so the last footer links remain reachable. */
 footer.finale-footer::after{content:"";display:block;height:var(--privacy-banner-space,0px)}
 .scroll-top-btn:not(.no-cookie-banner){bottom:calc(var(--privacy-banner-offset,0px) + 12px)}
@@ -18,9 +42,25 @@ footer.finale-footer::after{content:"";display:block;height:var(--privacy-banner
 .privacy-documents{display:grid;gap:4px;margin-top:20px;padding-top:16px;border-top:1px solid #c9c2b4;font-size:13px;line-height:1.5}.privacy-documents a{display:flex;align-items:center;min-height:44px}
 .privacy-banner :is(button,p,a),.privacy-settings :is(button,p,a){overflow-wrap:anywhere}.privacy-banner :focus-visible,.privacy-settings :focus-visible,[data-privacy-settings]:focus-visible{outline:2px solid #9b7134;outline-offset:4px}
 .privacy-banner :focus-visible{outline-offset:2px}
-@media(max-width:700px){
- .privacy-banner{grid-template-columns:minmax(0,1fr);gap:4px;padding:5px 10px}
- .privacy-banner .privacy-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- .privacy-banner .privacy-action{font-size:12px;white-space:normal;text-wrap:balance;padding:5px 7px}
+@media(min-width:941px){
+ .privacy-banner #cookie-accept{min-width:190px}
+ .privacy-banner #cookie-decline{padding-inline:13px}
 }
-@media(max-width:500px){.privacy-banner{left:10px;right:10px;bottom:10px}.privacy-banner p{font-size:12px;line-height:1.35}.privacy-settings>div{padding:20px}.privacy-settings .privacy-actions{display:grid;grid-template-columns:1fr}}
+@media(max-width:940px){
+ .privacy-banner{gap:12px;padding:14px 16px}
+ .privacy-banner .privacy-actions{gap:8px}
+ .privacy-banner .privacy-action{font-size:13px;padding-inline:12px}
+ .privacy-banner p{font-size:13px}
+}
+@media(max-width:700px){
+ .privacy-banner{--privacy-banner-inset:12px;grid-template-columns:auto minmax(0,1fr);align-items:start;border-radius:16px}
+ .privacy-banner .privacy-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .privacy-banner .privacy-action{white-space:normal;text-wrap:balance;padding-inline:8px}
+}
+@media(max-width:500px){
+ .privacy-banner{inset-inline:12px;gap:10px;padding:10px 12px}
+ .privacy-banner-icon{width:36px;height:36px;padding:8px;border-radius:10px}
+ .privacy-banner p{line-height:1.35}
+ .privacy-settings>div{padding:20px}.privacy-settings .privacy-actions{display:grid;grid-template-columns:1fr}
+}
+@media(max-width:360px){.privacy-banner .privacy-actions{grid-template-columns:minmax(0,1fr)}}

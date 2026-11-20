@@ -11,6 +11,7 @@ import urllib.request
 
 PACE_SECONDS = 0.09
 RETRY_DELAYS = (0.25, 0.5, 1.0)
+FULL_DEADLINE_SECONDS = 360
 
 
 class TransportFailure(RuntimeError):
@@ -49,7 +50,7 @@ class HTTPClient:
     def __init__(self, profile='full', *, opener=None, pace=PACE_SECONDS, seconds=None, requests=None):
         self.opener = opener or urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect()).open
         self.pace = pace
-        self.seconds = seconds if seconds is not None else (150 if profile == 'full' else 30)
+        self.seconds = seconds if seconds is not None else (FULL_DEADLINE_SECONDS if profile == 'full' else 30)
         self.requests = requests if requests is not None else (850 if profile == 'full' else 65)
         self.started = time.monotonic()
         self.next_request = self.started

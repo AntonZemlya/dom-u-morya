@@ -218,6 +218,82 @@ class HTTPRetry(unittest.TestCase):
                 self.assertLessEqual(caught.exception.report['request_count'], 2)
 
 
+class HTTPFullBudget(unittest.TestCase):
+    def setUp(self):
+        self.now = 0.0
+        monotonic = patch.object(release_http.time, 'monotonic', side_effect=lambda: self.now)
+        sleep = patch.object(release_http.time, 'sleep', side_effect=self.advance)
+        self.addCleanup(monotonic.stop)
+        self.addCleanup(sleep.stop)
+        monotonic.start()
+        sleep.start()
+
+    def advance(self, seconds):
+        self.now += seconds
+
+    def test_full_verification_completes_over_slow_transport_with_seven_resets(self):
+        public = {name: b'page fixture' for name in c.HTTP_CRITICAL_FILES}
+        public.update({'assets/img-{}.webp'.format(n): b'asset' for n in range(280)})
+        fixture = HTTPSFixture(public)
+        manifest = fixture.manifest()
+        manifest['files']['public/.htaccess'] = c.APPROVED_HTACCESS_SHA256
+        resets = {5, 50, 110, 240, 340, 495, 700}
+        starts = []
+
+        def open_slow(request, timeout):
+            starts.append(self.now)
+            self.advance(0.35)
+            if len(starts) in resets:
+                raise ConnectionResetError(errno.ECONNRESET, 'fixture reset')
+            return fixture(request, timeout)
+
+        client = release_http.HTTPClient('full', opener=open_slow)
+        result = cli.http_verify(manifest, 'slow-release', client=client)
+        self.assertEqual((result['status'], result['verified_files'], result['verified_route_cases']), ('PASS', 284, 236))
+        self.assertEqual((result['request_count'], result['retry_count']), (776, 7))
+        self.assertEqual(result['transient_errors'], {'ECONNRESET': 7})
+        self.assertGreater(result['duration_seconds'], 208.74)
+        self.assertLess(result['duration_seconds'], 360)
+        self.assertTrue(all(after - before >= 0.09 for before, after in zip(starts, starts[1:])))
+
+    def test_full_request_cap_includes_failed_attempt_and_prevents_retry(self):
+        starts = []
+
+        def opener(request, timeout):
+            starts.append(self.now)
+            if len(starts) == 850:
+                raise ConnectionResetError()
+            return HTTPSResponse(200, {}, b'')
+
+        client = release_http.HTTPClient('full', opener=opener)
+        with client.deadline():
+            for _ in range(849):
+                client.fetch(c.ORIGIN + '/')
+            with self.assertRaisesRegex(release_http.TransportFailure, 'request or time budget'):
+                client.fetch(c.ORIGIN + '/')
+        self.assertEqual(client.statistics['request_count'], 850)
+        self.assertEqual(client.statistics['retry_count'], 0)
+        self.assertEqual(client.statistics['transient_errors'], {'ECONNRESET': 1})
+        self.assertAlmostEqual(self.now, 849 * 0.09)
+
+    def test_full_time_cap_prevents_retry_when_backoff_exceeds_remaining_time(self):
+        calls = []
+
+        def opener(request, timeout):
+            calls.append(timeout)
+            raise TimeoutError('fixture timeout')
+
+        client = release_http.HTTPClient('full', opener=opener)
+        self.advance(359.8)
+        with client.deadline(), self.assertRaisesRegex(release_http.TransportFailure, 'request or time budget'):
+            client.fetch(c.ORIGIN + '/')
+        self.assertEqual(len(calls), 1)
+        self.assertAlmostEqual(calls[0], 0.2)
+        self.assertEqual(client.statistics['request_count'], 1)
+        self.assertEqual(client.statistics['retry_count'], 0)
+        self.assertEqual(client.statistics['transient_errors'], {'ETIMEDOUT': 1})
+
+
 class Lifecycle(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(prefix='dom-manager-')
@@ -706,7 +782,7 @@ class Lifecycle(unittest.TestCase):
             remote.assert_not_called()
         self.assertFalse(self.m.root.exists());self.assert_protected()
 
-    def test_ui_incident_scope_local_http_and_full_comparison(self):
+    def test_incident_and_presentation_only_scopes_over_local_http(self):
         ordinary = {'assets/img-{}.webp'.format(n): b'unchanged fixture' for n in range(275)}
         ui = {'index.html': b'index old', 'privacy.html': b'privacy old',
               'consent-personal-data.html': b'personal old', 'consent-analytics.html': b'analytics old',
@@ -717,16 +793,21 @@ class Lifecycle(unittest.TestCase):
         _, baseline_manifest, baseline = self.verified('catalog-baseline', extra=public)
         changed = {name: body + b' revised' for name, body in ui.items()}
         changed['assets/analytics-icon.svg'] = b'new icon fixture'
-        public.update(changed)
-        raw, manifest, review = self.apply('ui-update', extra=public)
+        incident = {**public, **changed}
+        full_raw, full_manifest, full_review = self.plan('incident-eight', extra=incident)
+        full_plan = full_review['plan']
+        self.assertEqual(len(full_plan['changes']), 8)
+        self.assertEqual(full_plan['http_verification'], dict(profile='full', reason='publication_scope'))
+        presentation = {**incident, 'privacy/privacy.js': ui['privacy/privacy.js']}
+        raw, manifest, review = self.apply('ui-update', extra=presentation)
         plan, go = review['plan'], review['go']
-        self.assertEqual(len(plan['changes']), 8)
+        self.assertEqual(len(plan['changes']), 7)
         self.assertEqual(plan['http_verification']['baseline']['package_sha256'], baseline['plan']['package_sha256'])
         self.assertEqual(c.http_profile(plan), 'compact')
         self.assertEqual(c.http_profile(baseline['plan']), 'full')
         self.assertIn('public/index.php', baseline_manifest['files'])
-        public['script.js'] = b'script new'
-        network = HTTPSFixture(public)
+        presentation['script.js'] = incident['script.js'] = b'script new'
+        network = HTTPSFixture(presentation)
         state = self.m.http_state(plan, go)
 
         class ServerResponse(BaseHTTPRequestHandler):
@@ -760,31 +841,77 @@ class Lifecycle(unittest.TestCase):
                 with patch.object(cli.subprocess, 'run'), patch.object(cli.subprocess, 'check_output', return_value=b'styles.css\0'):
                     compact = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state,
                                               client=release_http.HTTPClient('compact', opener=loopback, pace=0))
-                with patch.object(cli.subprocess, 'run'), patch.object(cli.subprocess, 'check_output', return_value=b'ops/url_matrix.py\0'):
-                    full = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state,
-                                           client=release_http.HTTPClient('full', opener=loopback, pace=0))
+                network.public = incident
+                full = cli.http_verify(full_manifest, c.sha(full_raw), plan=full_plan,
+                                       client=release_http.HTTPClient('full', opener=loopback, pace=0))
             finally:
                 server.shutdown()
                 thread.join()
-        self.assertEqual((compact['profile'], compact['verified_files'], compact['verified_route_cases']), ('compact', 8, 28))
+        self.assertEqual((compact['profile'], compact['verified_files'], compact['verified_route_cases']), ('compact', 7, 28))
         self.assertEqual((full['profile'], full['verified_files'], full['verified_route_cases']), ('full', 284, 236))
-        self.assertEqual(compact['files_covered_by_baseline'], 276)
-        self.assertEqual(compact['request_count'], 41)
+        self.assertEqual(compact['files_covered_by_baseline'], 277)
+        self.assertEqual(compact['request_count'], 40)
         self.assertEqual(full['request_count'], 771)
         print('HTTP comparison fixture:', json.dumps({r['profile']: {
               k: r[k] for k in ('request_count', 'duration_seconds', 'verified_files', 'verified_route_cases')}
               for r in (compact, full)}, sort_keys=True))
         self.m.attest(plan, go, state, compact)
         self.assertEqual(self.m.status('ui-update')['phase'], 'verified')
-        next_raw, next_manifest, next_review = self.plan('next-ui', extra={**public, 'styles.css': b'next css'})
+        next_raw, next_manifest, next_review = self.plan('next-ui', extra={**presentation, 'styles.css': b'next css'})
         self.assertEqual(c.http_profile(next_review['plan']), 'compact')
         with patch.object(time, 'time', return_value=time.time() + c.HTTP_BASELINE_SECONDS + 1):
             self.assertEqual(c.http_profile(self.m.plan('stale-ui', next_manifest, c.sha(next_raw), len(next_raw))['plan']), 'full')
-        (_, _, php_review) = self.plan('route-change', extra={**public, 'index.php': b'changed handler'})
+        (_, _, php_review) = self.plan('route-change', extra={**presentation, 'index.php': b'changed handler'})
         self.assertEqual(c.http_profile(php_review['plan']), 'full')
         (self.doc/'assets/img-0.webp').write_bytes(b'outside drift')
         with self.assertRaisesRegex(RuntimeError, 'Current verified baseline has drifted'):
-            self.plan('drifted-ui', extra=public)
+            self.plan('drifted-ui', extra=presentation)
+
+    def test_consent_and_metrica_changes_require_full_with_a_verified_baseline(self):
+        public = {name: b'page fixture' for name in c.HTTP_CRITICAL_FILES}
+        consent = b'function consent(choice) { return choice === "granted"; }'
+        metrica = b'function metrica(active) { if (active) return startAnalytics(); }'
+        public['privacy/privacy.js'] = consent + metrica
+        _, _, baseline = self.verified('privacy-baseline', extra=public)
+        self.assertEqual(c.http_profile(baseline['plan']), 'full')
+        for feature, rewrite in [
+            ('consent gate', consent.replace(b'"granted"', b'"denied"') + metrica),
+            ('analytics loading', consent + metrica.replace(b'if (active)', b'if (!active)')),
+        ]:
+            with self.subTest(feature=feature):
+                _, manifest, review = self.plan('privacy-candidate', extra={**public, 'privacy/privacy.js': rewrite})
+                plan = review['plan']
+                self.assertEqual([row['path'] for row in plan['changes']], ['privacy/privacy.js'])
+                self.assertEqual(cli.verification_profile(plan, manifest), ('full', 'publication_scope'))
+
+        _, manifest, review = self.plan('css-candidate', extra={**public, 'index.html': b'new HTML'})
+        self.assertEqual(c.http_profile(review['plan']), 'compact')
+        with patch.object(cli.subprocess, 'run'), \
+             patch.object(cli.subprocess, 'check_output', return_value=b'index.html\0privacy/privacy.js\0'):
+            self.assertEqual(cli.verification_profile(review['plan'], manifest), ('full', 'source_scope'))
+
+    def test_finalize_rejects_compact_attestation_for_an_older_privacy_plan(self):
+        public = {name: b'page fixture' for name in c.HTTP_CRITICAL_FILES}
+        public['privacy/privacy.js'] = b'old privacy fixture'
+        self.verified('privacy-baseline', extra=public)
+        public['privacy/privacy.js'] = b'changed privacy fixture'
+        ui_path = c.ui_path
+        with patch.object(c, 'ui_path', side_effect=lambda name: name == 'privacy/privacy.js' or ui_path(name)):
+            raw, manifest, review = self.apply('previous-compact', extra=public)
+        plan, go = review['plan'], review['go']
+        self.assertEqual(plan['http_verification']['profile'], 'compact')
+        self.assertEqual(cli.verification_profile(plan, manifest), ('full', 'publication_scope'))
+        state = self.m.http_state(plan, go)
+        network = HTTPSFixture({**public, 'script.js': b'script new'})
+        evidence = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state, client=network.client())
+        compact_evidence = dict(evidence, profile='compact', baseline=plan['http_verification']['baseline'],
+                                redirect_matrix=dict(status='PASS', cases=28),
+                                verified_files=len(c.http_files(manifest, plan, 'compact')))
+        with self.assertRaisesRegex(RuntimeError, 'HTTP verification profile mismatch'):
+            self.m.attest(plan, go, state, compact_evidence)
+        self.assertEqual(self.m.status('previous-compact')['phase'], 'awaiting_http_verify')
+        self.assertEqual(self.m.attest(plan, go, state, evidence)['phase'], 'verified')
+        self.assertEqual(self.m.receipt(self.m.run('previous-compact'))['http']['profile'], 'full')
 
     def test_catalog_snapshot_mismatch_fails_before_attestation(self):
         public = {'.htaccess': self.catalog_guard, 'index.php': b'catalog route',

@@ -47,7 +47,8 @@ UI_PATH = re.compile(
 
 
 def ui_path(name):
-    return (name in HTTP_CRITICAL_FILES or name in ('styles.css', 'content-model.js', 'privacy/privacy.css', 'privacy/privacy.js')
+    # privacy/privacy.js manages consent and analytics activation.
+    return (name in HTTP_CRITICAL_FILES or name in ('styles.css', 'content-model.js', 'privacy/privacy.css')
             or UI_PATH.fullmatch(name) is not None)
 
 
@@ -65,8 +66,12 @@ def http_files(manifest, plan, profile):
     return sorted(files)
 
 
-def http_profile(plan):
-    return plan.get('http_verification', {}).get('profile', 'full')
+def http_profile(plan, *, historical=False):
+    profile = plan.get('http_verification', {}).get('profile', 'full')
+    # Plans already published under an older classification can still finalize with full.
+    if profile == 'compact' and not historical and any(not ui_path(change['path']) for change in plan['changes']):
+        return 'full'
+    return profile
 
 
 def ensure(ok, message):
@@ -415,7 +420,7 @@ class Manager:
         full_since = None
         if full_http_evidence(old_http):
             full_since = receipt['created_unix']
-        elif old_http.get('profile') == 'compact' and prior_scope.get('profile') == 'compact':
+        elif old_http.get('profile') == http_profile(old_plan) == 'compact':
             full_since = prior_scope['baseline'].get('full_verified_since')
         if (full_since is None or not 0 <= time.time() - full_since <= HTTP_BASELINE_SECONDS
                 or not set(HTTP_CRITICAL_FILES) <= set(baseline['public'])):
@@ -692,9 +697,10 @@ class Manager:
             receipt['http_progress'] = dict(started_unix=started, files=sorted(set(files) | set(state['checked_files'])))
             self.save(run, receipt)
 
-    def validate_http_evidence(self, plan, manifest, receipt, evidence):
+    def validate_http_evidence(self, plan, manifest, receipt, evidence, *, historical=False):
         profile = evidence.get('profile')
-        ensure(profile == 'full' or profile == http_profile(plan) == 'compact', 'HTTP verification profile mismatch')
+        allowed = http_profile(plan, historical=historical)
+        ensure(profile == 'full' or profile == allowed == 'compact', 'HTTP verification profile mismatch')
         matrix = evidence.get('redirect_matrix') or {}
         policy = manifest['files']['public/.htaccess']
         if policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256):
@@ -799,7 +805,7 @@ class Manager:
                    'Invalid HTTP checkpoint')
         if phase=='verified':
             if 'profile' in receipt['http']:
-                self.validate_http_evidence(plan, manifest, receipt, receipt['http'])
+                self.validate_http_evidence(plan, manifest, receipt, receipt['http'], historical=True)
             ensure(receipt['http']['status']=='PASS' and receipt['http']['package_sha256']==receipt['package_sha256'], 'Verified HTTP evidence mismatch')
         return backup,files
 

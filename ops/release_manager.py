@@ -110,9 +110,11 @@ def verify_catalog_page(body, headers, template_sha):
 
 
 def verification_profile(plan, manifest):
+    scope = plan.get('http_verification', {})
     if http_profile(plan) != 'compact':
-        return 'full', plan.get('http_verification', {}).get('reason', 'legacy_plan')
-    base = plan['http_verification']['baseline']['commit']
+        reason = 'publication_scope' if scope.get('profile') == 'compact' else scope.get('reason', 'legacy_plan')
+        return 'full', reason
+    base = scope['baseline']['commit']
     try:
         subprocess.run(['git', 'merge-base', '--is-ancestor', base, manifest['commit']],
                        cwd=ROOT, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)

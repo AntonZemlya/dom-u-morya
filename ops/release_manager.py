@@ -2,74 +2,27 @@
 """Universal domain-scoped release CLI. No SMTP client, no valid POST, no implicit GO."""
 import argparse
 import base64
-import errno
-import http.client
 import json
 import os
 import re
 from pathlib import Path
 import shlex
-import ssl
 import subprocess
 import sys
 import tarfile
 import tempfile
 import time
-import urllib.error
-import urllib.request
-from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, Manager, canonical, digest,
+from urllib.parse import quote
+from release_core import (DOMAIN, ORIGIN, RUNTIME_FILES, check_plan, canonical, digest,
                           ensure, pack, regular, sha, verify_package, check_export_go, export_destination, certificate_sha256, validate_id,
-                          APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256)
+                          APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256, HTTP_CRITICAL_FILES,
+                          http_files, http_profile, ui_path)
+from release_http import ConnectionFailure, HTTPClient, TransportFailure
+import url_matrix
 
 ROOT=Path(__file__).resolve().parent.parent
 CORE=ROOT/'ops/release_core.py'
 HOST='rehab-profi-jino'
-HTTP_RETRY_DELAYS=(0.25,0.5,1.0)
-
-
-def transient_connection_error(error):
-    # Only typed transport failures; never infer retryability from error text.
-    while isinstance(error,urllib.error.URLError) and not isinstance(error,urllib.error.HTTPError):
-        error=error.reason
-    if isinstance(error,ssl.SSLError) and not isinstance(error,ssl.SSLEOFError):return None
-    for kind in (http.client.RemoteDisconnected,http.client.IncompleteRead,ssl.SSLEOFError):
-        if isinstance(error,kind):return kind.__name__
-    if isinstance(error,TimeoutError):return 'ETIMEDOUT'
-    if isinstance(error,OSError) and error.errno in (errno.ECONNRESET,errno.ETIMEDOUT,errno.ECONNABORTED,errno.EPIPE):
-        return errno.errorcode[error.errno]
-    return None
-
-
-class HTTPSGet:
-    """Per-verification GET transport; no retry wrapper around CLI/SSH operations."""
-    def __init__(self):
-        self.statistics=dict(request_count=0,retry_count=0,transient_errors={})
-
-    def get(self,path,expected=(200,)):
-        request=urllib.request.Request(ORIGIN+path,headers={'Cache-Control':'no-cache'},method='GET')
-        for attempt in range(len(HTTP_RETRY_DELAYS)+1):
-            self.statistics['request_count']+=1
-            self.statistics['retry_count']+=int(attempt>0)
-            try:
-                # urlopen uses the default verifying TLS context on every attempt.
-                with urllib.request.urlopen(request,timeout=25) as response:
-                    ensure(response.status in expected,'Unexpected HTTP status: '+path+' ('+str(response.status)+')')
-                    return response.status,response.headers,response.read()
-            except urllib.error.HTTPError as error:
-                # Status is a contract decision, including expected 403/404/405.
-                # Even a body read failure here must not retry an HTTP error.
-                with error:
-                    ensure(error.code in expected,'Unexpected HTTP status: '+path+' ('+str(error.code)+')')
-                    return error.code,error.headers,error.read()
-            except (OSError,urllib.error.URLError,http.client.HTTPException) as error:
-                kind=transient_connection_error(error)
-                if kind is None:raise
-                counts=self.statistics['transient_errors'];counts[kind]=counts.get(kind,0)+1
-                if attempt==len(HTTP_RETRY_DELAYS):
-                    raise RuntimeError('HTTPS GET retries exhausted: '+path+
-                                       '; STOP; inspect release status or use finalize; '+
-                                       json.dumps(self.statistics,sort_keys=True)) from error
-                time.sleep(HTTP_RETRY_DELAYS[attempt])
 
 
 def git(*args):
@@ -113,12 +66,20 @@ def build(commit, output):
 def remote(operation, policy, **kwargs):
     request=dict(operation=operation,policy=policy,**kwargs)
     code=base64.b64encode(CORE.read_bytes()).decode()
-    source="import base64,json,sys;exec(compile(base64.b64decode('"+code+"'),'dom-release-core','exec'));print(json.dumps(dispatch(json.load(sys.stdin))))"
+    source = ("import base64,json,sys\nexec(compile(base64.b64decode('" + code +
+              "'),'dom-release-core','exec'))\nrequest=json.load(sys.stdin)\n"
+              "try: result=dispatch(request)\n"
+              "except RuntimeError as error:\n"
+              " if request['operation'] not in ('http-state','http-checkpoint','attest'): raise\n"
+              " result={'http_operation_error':str(error)}\nprint(json.dumps(result))")
     command='python3 -B -c '+shlex.quote(source)
     result=subprocess.run(['ssh','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=15',HOST,command],
                           input=canonical(request),stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=600)
     ensure(result.returncode==0, 'SSH operation failed or outcome unknown: STOP; inspect status, never automatically replay')
-    return json.loads(result.stdout)
+    response = json.loads(result.stdout)
+    if isinstance(response, dict) and 'http_operation_error' in response:
+        raise RuntimeError(response['http_operation_error'])
+    return response
 
 
 def verify_catalog_page(body, headers, template_sha):
@@ -148,38 +109,137 @@ def verify_catalog_page(body, headers, template_sha):
            'Catalog availability or prices differ between HTML and SEO')
 
 
-def http_verify(manifest, package_sha):
-    client=HTTPSGet();get=client.get
-    policy = manifest['files'].get('public/.htaccess')
-    protected = ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']
-    if policy == CATALOG_HTACCESS_SHA256:
-        protected.extend(['/api/catalog-view.php', '/api/catalog-plan.php'])
-    for path in protected:
-        ensure(get(path,(403,404))[0] in [403,404], 'HTTP protected path failure')
-    ensure(get('/api/lead.php',(405,))[0]==405, 'API GET guard failed')
-    code,headers,body=get('/api/form-status.php');status=json.loads(body)
-    ensure(code==200 and status.get('enabled') is True and status.get('ready') is True and 'no-store' in headers.get('Cache-Control',''), 'Form readiness failed; inspect status, do not retry deploy')
-    for name in manifest['public_allowlist']:
-        if name.startswith('.') or name.endswith('.php'):continue
-        code, headers, body = get('/'+('' if name=='index.html' else name))
-        target_sha = manifest['files']['public/'+name]
-        if name == 'index.html' and policy == CATALOG_HTACCESS_SHA256:
-            verify_catalog_page(body, headers, target_sha)
-        else:
-            ensure(code==200 and sha(body)==target_sha, 'HTTP public SHA mismatch: '+name)
+def verification_profile(plan, manifest):
+    scope = plan.get('http_verification', {})
+    if http_profile(plan) != 'compact':
+        reason = 'publication_scope' if scope.get('profile') == 'compact' else scope.get('reason', 'legacy_plan')
+        return 'full', reason
+    base = scope['baseline']['commit']
+    try:
+        subprocess.run(['git', 'merge-base', '--is-ancestor', base, manifest['commit']],
+                       cwd=ROOT, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
+        changed = subprocess.check_output(['git', 'diff', '--name-only', '--no-renames', '-z', base,
+                                           manifest['commit'], '--'], cwd=ROOT, stderr=subprocess.DEVNULL,
+                                          timeout=10).decode().split('\0')
+    except (OSError, UnicodeError, subprocess.SubprocessError):
+        return 'full', 'source_history_unavailable'
+    # The publication allowlist is already checked against the exact deployed diff.
+    ui_sources = {'data/news.json', 'data/media.json', 'data/media-provenance.json', 'data/performance-assets.json',
+                  'scripts/content-files.mjs', 'scripts/release-files.mjs', 'templates/footer.html'}
+    if any(not ui_path(name) and name not in ui_sources and not name.startswith('tests/')
+           for name in changed if name):
+        return 'full', 'source_scope'
+    return 'compact', 'verified_ui_scope'
+
+
+class HTTPVerificationError(RuntimeError):
+    def __init__(self, cause, report, checked_files):
+        self.report = report
+        self.checked_files = checked_files
+        self.transport_failure = isinstance(cause, TransportFailure)
+        kind = 'transport' if self.transport_failure else getattr(cause, 'kind', 'contract')
+        report.update(status='STOP', failure_kind=kind, error=str(cause))
+        super().__init__('HTTP verification STOP: ' + json.dumps(report, sort_keys=True))
+
+
+def http_verify(manifest, package_sha, *, plan=None, state=None, client=None):
+    plan, state = plan or {}, state or {}
+    preflight = package_sha == 'baseline'
+    profile, reason = ('preflight', 'current_site') if preflight else verification_profile(plan, manifest)
+    client = client or HTTPClient(profile)
+    expected_files = http_files(manifest, plan, profile)
+    resumed = set(expected_files) & set(state.get('checked_files', []))
+    verified = set(resumed)
+    fresh = set()
     redirects = None
-    if policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256) and package_sha != 'baseline':
-        from url_matrix import check
-        matrix = check()
-        ensure(matrix['status'] == 'PASS', 'URL redirect matrix failed; inspect release status: '+json.dumps(matrix['failures']))
-        redirects = dict(status='PASS', cases=matrix['cases'], evidence_sha256=digest(matrix))
-    return dict(status='PASS',package_sha256=package_sha,public_static_files_verified=True,form_status=status,
-                redirect_matrix=redirects,no_post=True,**client.statistics)
+    matrix_cases = 0
+    policy = manifest['files'].get('public/.htaccess')
+    approved_policy = policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256)
+    baseline = plan['http_verification']['baseline'] if profile == 'compact' else None
+
+    def report():
+        return dict(profile=profile, profile_reason=reason, baseline=baseline, package_sha256=package_sha,
+                    plan_sha256=plan.get('sha256'), snapshot_sha256=state.get('snapshot_sha256'),
+                    verified_files=len(verified), freshly_verified_files=len(fresh), resumed_files=len(resumed),
+                    files_covered_by_baseline=len(http_files(manifest, plan, 'full')) - len(expected_files),
+                    verified_route_cases=matrix_cases, redirect_matrix=redirects,
+                    duration_seconds=round(time.monotonic() - client.started, 3), no_post=True,
+                    release_phase=state.get('phase'), **client.statistics)
+
+    def record_case():
+        nonlocal matrix_cases
+        matrix_cases += 1
+
+    def get(path, expected=(200,), body_limit=None):
+        return client.fetch(ORIGIN + path, expected=expected, body_limit=body_limit)
+
+    try:
+        with client.deadline():
+            if preflight or not approved_policy:
+                for path in ['/.envrc', '/.htaccess', '/.git/config', '/api/lead-core.php', '/api/lead-smtp.php']:
+                    get(path, (403, 404))
+                get('/api/lead.php', (405,))
+            if policy == CATALOG_HTACCESS_SHA256:
+                for path in ['/api/catalog-view.php', '/api/catalog-plan.php']:
+                    get(path, (403, 404))
+            _, headers, body = get('/api/form-status.php', body_limit=16385)
+            ensure(len(body) <= 16384, 'Unexpected form readiness response size')
+            status = json.loads(body)
+            ensure(status.get('enabled') is True and status.get('ready') is True
+                   and 'no-store' in headers.get('Cache-Control', ''), 'Form readiness failed')
+
+            paths = [n for n in HTTP_CRITICAL_FILES if n in expected_files]
+            paths += sorted(set(expected_files) - set(paths) - resumed)
+            for name in paths:
+                _, headers, body = get('/' + ('' if name == 'index.html' else quote(name)), body_limit=-1)
+                target_sha = manifest['files']['public/' + name]
+                if name == 'index.html' and policy == CATALOG_HTACCESS_SHA256:
+                    verify_catalog_page(body, headers, target_sha)
+                else:
+                    ensure(sha(body) == target_sha, 'HTTP public SHA mismatch: ' + name)
+                fresh.add(name)
+                verified.add(name)
+            if approved_policy and not preflight:
+                matrix = url_matrix.check(client=client, compact=profile == 'compact', fail_fast=True,
+                                          case_passed=record_case)
+                ensure(matrix['status'] == 'PASS', 'URL redirect matrix failed')
+                redirects = dict(status='PASS', cases=matrix_cases, evidence_sha256=digest(matrix))
+    except (RuntimeError, ValueError, KeyError, StopIteration, AttributeError) as error:
+        raise HTTPVerificationError(error, report(), sorted(fresh - set(HTTP_CRITICAL_FILES))) from None
+    return dict(status='PASS', public_static_files_verified=True, form_status={'enabled': True, 'ready': True},
+                **report())
 
 
 def http_preflight(snapshot):
-    manifest={'public_allowlist':['index.html','script.js'],'files':{'public/'+n:snapshot['public'][n]['sha256'] for n in ['index.html','script.js','.htaccess'] if n in snapshot['public']}}
-    return http_verify(manifest,'baseline')
+    manifest = {'public_allowlist': ['index.html', 'script.js'],
+                'files': {'public/' + n: snapshot['public'][n]['sha256'] for n in ['index.html', 'script.js', '.htaccess']
+                          if n in snapshot['public']}}
+    return http_verify(manifest, 'baseline')
+
+
+def finish_release_http(policy, manifest, plan, go, output=None):
+    state = remote('http-state', policy, plan=plan, go=go)
+    try:
+        evidence = http_verify(manifest, plan['package_sha256'], plan=plan, state=state)
+    except HTTPVerificationError as error:
+        if error.transport_failure and error.checked_files:
+            try:
+                remote('http-checkpoint', policy, plan=plan, go=go, state=state, files=error.checked_files)
+                error.report['checkpoint_files_saved'] = len(error.checked_files)
+            except RuntimeError as checkpoint_error:
+                error.report['checkpoint_error'] = str(checkpoint_error)
+        if output:
+            Path(output).write_bytes(canonical(error.report))
+        raise RuntimeError('HTTP verification STOP: ' + json.dumps(error.report, sort_keys=True)) from None
+
+    try:
+        result = remote('attest', policy, plan=plan, go=go, state=state, evidence=evidence)
+    except RuntimeError as error:
+        evidence.update(status='STOP', failure_kind='attestation', release_phase='unknown', error=str(error))
+        if output:
+            Path(output).write_bytes(canonical(evidence))
+        raise RuntimeError('HTTP attestation STOP: ' + json.dumps(evidence, sort_keys=True)) from None
+    return dict(result, http=dict(evidence, release_phase=result['phase']))
 
 
 def load(path):
@@ -228,19 +288,28 @@ def main():
         elif a.command=='preflight':
             result=remote('preflight',policy,manifest=manifest,package_bytes=len(raw));result['http']=http_preflight(result['snapshot'])
         elif a.command=='plan':
-            ensure(a.release_id,'--release-id required');result=remote('plan',policy,release_id=a.release_id,manifest=manifest,package_sha256=a.sha,package_bytes=len(raw));http_preflight(result['plan']['snapshot'])
+            ensure(a.release_id, '--release-id required')
+            result = remote('plan', policy, release_id=a.release_id, manifest=manifest, package_sha256=a.sha, package_bytes=len(raw))
+            profile, reason = verification_profile(result['plan'], manifest)
+            result.update(http_profile=profile, http_profile_reason=reason, http=http_preflight(result['plan']['snapshot']))
         else:
-            ensure(a.plan and a.go,'Review plan and obtain exact owner GO first');plan=load(a.plan)['plan']
+            ensure(a.plan and a.go, 'Review plan and obtain exact owner GO first')
+            plan = load(a.plan)['plan']
+            check_plan(plan, 'apply', a.go, policy)
+            ensure(plan['package_sha256'] == a.sha, 'Wrong package for approved plan')
             http_preflight(plan['snapshot'])
-            result=remote('apply',policy,payload=base64.b64encode(raw).decode(),plan=plan,go=a.go)
-            evidence=http_verify(manifest,a.sha)
-            result=remote('attest',policy,release_id=plan['release_id'],plan=plan,go=a.go,evidence=evidence)
+            remote('apply', policy, payload=base64.b64encode(raw).decode(), plan=plan, go=a.go)
+            result = finish_release_http(policy, manifest, plan, a.go, a.output)
     elif a.group=='release' and a.command=='finalize':
-        ensure(a.plan and a.archive and a.sha and a.go,'--plan --archive --sha --go required')
-        plan=load(a.plan)['plan'];manifest,_=verify_package(Path(a.archive).read_bytes(),a.sha)
-        ensure(plan['package_sha256']==a.sha,'Wrong package for finalization')
-        evidence=http_verify(manifest,a.sha)
-        result=remote('attest',policy,release_id=plan['release_id'],plan=plan,go=a.go,evidence=evidence)
+        ensure(a.plan and a.archive and a.sha and a.go, '--plan --archive --sha --go required')
+        plan = load(a.plan)['plan']
+        ensure(a.quota_evidence, 'Finalize requires the original --quota-evidence file '
+               '(quota evidence SHA-256 {}, policy SHA-256 {}): STOP'.format(
+                   plan.get('quota_evidence_sha256', 'not recorded in this plan'), plan['policy_sha256']))
+        check_plan(plan, 'apply', a.go, policy)
+        manifest, _ = verify_package(Path(a.archive).read_bytes(), a.sha)
+        ensure(plan['package_sha256'] == a.sha, 'Wrong package for finalization')
+        result = finish_release_http(policy, manifest, plan, a.go, a.output)
     elif a.group=='release' and a.command=='status':result=remote('status',policy,release_id=a.release_id)
     elif a.group=='release' and a.command=='rollback':
         if a.dry_run or not a.go:result=remote('rollback-plan',policy,release_id=a.release_id)

@@ -2,9 +2,7 @@
 import argparse
 import json
 from pathlib import Path
-import urllib.error
-import urllib.parse
-import urllib.request
+from release_http import ConnectionFailure, HTTPClient, NoRedirect, TransportFailure
 
 DOMAIN = 'zhk-dom-umorya.ru'
 ORIGIN = 'https://' + DOMAIN
@@ -16,88 +14,103 @@ ALIASES = {'/index': '/', '/index/': '/', '/index.html': '/', '/index.html/': '/
            '/consent-analytics.html/': '/consent-analytics.html'}
 
 
-class NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, *args, **kwargs):
-        return None
-
-
-def fetch(url, method='GET'):
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
-    request = urllib.request.Request(url, method=method, headers={'Cache-Control': 'no-cache'})
-    try:
-        response = opener.open(request, timeout=25)
-    except urllib.error.HTTPError as error:
-        response = error
-    with response:
-        # No protected response bodies are read, retained or printed.
-        body = response.read(65537) if method == 'GET' and 300 <= response.status < 400 else b''
-        return response.status, dict(response.headers), body
-
-
-def check(fetcher=fetch, observe=False):
+def check(fetcher=None, observe=False, *, client=None, compact=False, fail_fast=False, case_passed=None):
+    if fetcher is None and client is None:
+        client = HTTPClient()
+        with client.deadline():
+            return check(observe=observe, client=client, compact=compact, fail_fast=fail_fast)
     rows = []
     failures = []
     provider_hops = []
 
+    def require(condition, message):
+        if not condition:
+            raise RuntimeError(message)
+
     def case(url, target, final_status, max_hops, method='GET'):
         current = url
         chain = []
+        def check_redirect(code, headers):
+            locations = [v for k, v in headers.items() if k.lower() == 'location']
+            location = locations[0] if locations else None
+            if not 300 <= code < 400:
+                return location, False
+            require(code == 301 and len(locations) == 1 and location, 'Expected permanent redirect with one Location')
+            # Nginx may remove www first and leave the original path and query
+            # for Apache to normalize. The only cleartext hop is http www to apex.
+            www_apex = any(current.startswith(prefix) and location == ORIGIN + current[len(prefix) - 1:]
+                           for prefix in ('https://www.' + DOMAIN + '/', 'http://www.' + DOMAIN + '/'))
+            provider_hop = (current.startswith('http://www.' + DOMAIN + '/')
+                            and location == current.replace('http://www.', 'http://', 1))
+            require(current != target and (provider_hop or www_apex or location == target), 'Wrong redirect Location')
+            return location, provider_hop
+
         try:
             for _ in range(5):
-                code, headers, body = fetcher(current, method)
-                location = next((v for k, v in headers.items() if k.lower() == 'location'), None)
+                if client is not None:
+                    code, headers, body = client.fetch(current, method, expected=None, validate_headers=check_redirect)
+                else:
+                    code, headers, body = fetcher(current, method)
+                location, provider_hop = check_redirect(code, headers)
                 chain.append(dict(url=current, status=code, location=location))
                 if not 300 <= code < 400:
                     break
-                assert code == 301 and location, 'Expected permanent redirect with Location'
-                # Owner-approved exception: Jino nginx strips www before Apache.
-                # No other HTTP destination, path/query change or downgrade is allowed.
-                provider_hop = (current.startswith('http://www.' + DOMAIN + '/')
-                                and location == current.replace('http://www.', 'http://', 1))
-                assert provider_hop or location.startswith(ORIGIN + '/'), 'Location must be absolute canonical HTTPS'
                 if current.startswith('http://') and method == 'GET':
-                    assert len(body) <= 65536 and b'rel="canonical"' not in body.lower() \
-                        and b'hero-section-heading' not in body, 'HTTP redirect contains a site page'
+                    require(len(body) <= 65536 and b'rel="canonical"' not in body.lower()
+                            and b'hero-section-heading' not in body, 'HTTP redirect contains a site page')
                 if provider_hop:
                     provider_hops.append(dict(url=current, location=location, method=method,
                                               status=code, no_site_page=True))
-                assert location not in [hop['url'] for hop in chain], 'Redirect loop'
+                require(location not in [hop['url'] for hop in chain], 'Redirect loop')
                 current = location
             else:
                 raise AssertionError('Too many redirects')
-            assert code in final_status, 'Wrong final status'
-            assert current == target, 'Wrong final URL or query parameters'
-            assert len(chain) - 1 <= max_hops, 'Unnecessary redirect chain'
+            require(code in final_status, 'Wrong final status')
+            require(current == target, 'Wrong final URL or query parameters')
+            require(len(chain) - 1 <= max_hops, 'Unnecessary redirect chain')
             if url != target:
-                assert chain[0]['status'] == 301, 'Missing canonical redirect'
+                require(chain[0]['status'] == 301, 'Missing canonical redirect')
             else:
-                assert len(chain) == 1, 'Canonical URL redirects'
+                require(len(chain) == 1, 'Canonical URL redirects')
+            if case_passed is not None:
+                case_passed()
             passed = True
             error = None
+        except (ConnectionFailure, TransportFailure):
+            raise
         except Exception as exc:
+            if fail_fast:
+                raise RuntimeError('URL redirect matrix failed for {} {}: {}'.format(
+                    method, url.split('?', 1)[0], exc)) from None
             passed = False
             error = str(exc)
             failures.append(dict(url=url, method=method, error=error))
         rows.append(dict(method=method, url=url, target=target, chain=chain, passed=passed, error=error))
 
-    for scheme in ['https', 'http']:
-        for host in [DOMAIN, 'www.' + DOMAIN]:
-            origin = scheme + '://' + host
-            for path, canonical in [(p, p) for p in PAGES] + list(ALIASES.items()):
-                for query in ['', QUERY]:
-                    # Jino's nginx www redirect precedes .htaccess, so two hops
-                    # are permitted only for that provider-owned alias.
-                    hops = 2 if host.startswith('www.') else 1
-                    for method in ['GET', 'HEAD']:
-                        case(origin + path + query, ORIGIN + canonical + query, [200], hops, method)
-    for path in ['/seo-redirect-missing-001.html', '/seo-redirect-missing-001.html/',
-                 '/missing/index.html', '/privacy.html/extra', '/index.html/extra']:
-        case(ORIGIN + path, ORIGIN + path, [404], 0)
-    for path in ['/privacy', '/assets', '/api', '/assets/fonts']:
-        for query in ['', QUERY]:
-            for method in ['GET', 'HEAD']:
-                case(ORIGIN + path + query, ORIGIN + path + '/' + query, [403, 404], 1, method)
-                case(ORIGIN + path + '/' + query, ORIGIN + path + '/' + query, [403, 404], 0, method)
+    if compact:
+        case('http://www.' + DOMAIN + '/index.html' + QUERY, ORIGIN + '/' + QUERY, [200], 2)
+        case(ORIGIN + '/seo-redirect-missing-001.html', ORIGIN + '/seo-redirect-missing-001.html', [404], 0)
+        for path in ['/privacy/', '/assets/', '/api/', '/assets/fonts/']:
+            case(ORIGIN + path, ORIGIN + path, [403, 404], 0)
+    else:
+        for scheme in ['https', 'http']:
+            for host in [DOMAIN, 'www.' + DOMAIN]:
+                origin = scheme + '://' + host
+                for path, canonical in [(p, p) for p in PAGES] + list(ALIASES.items()):
+                    for query in ['', QUERY]:
+                        # Jino's nginx www redirect precedes .htaccess, so two hops
+                        # are permitted only for that provider-owned alias.
+                        hops = 2 if host.startswith('www.') else 1
+                        for method in ['GET', 'HEAD']:
+                            case(origin + path + query, ORIGIN + canonical + query, [200], hops, method)
+        for path in ['/seo-redirect-missing-001.html', '/seo-redirect-missing-001.html/',
+                     '/missing/index.html', '/privacy.html/extra', '/index.html/extra']:
+            case(ORIGIN + path, ORIGIN + path, [404], 0)
+        for path in ['/privacy', '/assets', '/api', '/assets/fonts']:
+            for query in ['', QUERY]:
+                for method in ['GET', 'HEAD']:
+                    case(ORIGIN + path + query, ORIGIN + path + '/' + query, [403, 404], 1, method)
+                    case(ORIGIN + path + '/' + query, ORIGIN + path + '/' + query, [403, 404], 0, method)
     for path in ['/.envrc', '/.htaccess', '/.git', '/.git/config', '/%2eenvrc',
                  '/api/lead-core.php', '/api/lead-smtp.php', '/api/analytics-core.php',
                  '/.dom-u-morya/analytics/state/metrica-consent.sqlite3',
@@ -106,7 +119,8 @@ def check(fetcher=fetch, observe=False):
             case(ORIGIN + path, ORIGIN + path, [403, 404], 0, method)
     for path in ['/api/lead.php', '/api/analytics-consent.php']:
         case(ORIGIN + path, ORIGIN + path, [405], 0)
-    case(ORIGIN + '/api/form-status.php', ORIGIN + '/api/form-status.php', [200], 0)
+    if not compact:
+        case(ORIGIN + '/api/form-status.php', ORIGIN + '/api/form-status.php', [200], 0)
     return dict(status='OBSERVED' if observe else 'PASS' if not failures else 'FAIL',
                 cases=len(rows), failures=failures, checks=rows, no_post=True,
                 provider_http_www_hops=provider_hops)

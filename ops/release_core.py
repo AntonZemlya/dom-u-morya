@@ -36,6 +36,43 @@ RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup
 BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
                     'needs_rollback','rolling_back','rolled_back','recovery_required'}
 
+HTTP_MATRIX_CASES = {'full': 236, 'compact': 28}
+HTTP_PROGRESS_SECONDS = 900
+HTTP_BASELINE_SECONDS = 7 * 86400
+HTTP_CRITICAL_FILES = ('index.html', 'privacy.html', 'consent-personal-data.html', 'consent-analytics.html')
+UI_PATH = re.compile(
+    r'assets/(?:[a-zA-Z0-9_-]+/)*[a-zA-Z0-9_-]+\.(?:avif|css|gif|ico|jpe?g|png|svg|ttf|webp|woff2)'
+    r'|favicon(?:-[0-9]+x[0-9]+)?\.(?:ico|png)|apple-touch-icon\.png'
+)
+
+
+def ui_path(name):
+    # privacy/privacy.js manages consent and analytics activation.
+    return (name in HTTP_CRITICAL_FILES or name in ('styles.css', 'content-model.js', 'privacy/privacy.css')
+            or UI_PATH.fullmatch(name) is not None)
+
+
+def full_http_evidence(evidence):
+    matrix = evidence.get('redirect_matrix') or {}
+    return (evidence.get('status') == 'PASS' and evidence.get('public_static_files_verified') is True
+            and evidence.get('no_post') is True and matrix.get('status') == 'PASS'
+            and matrix.get('cases') == HTTP_MATRIX_CASES['full'])
+
+
+def http_files(manifest, plan, profile):
+    files = {n for n in manifest['public_allowlist'] if not n.startswith('.') and not n.endswith('.php')}
+    if profile == 'compact':
+        files &= set(HTTP_CRITICAL_FILES) | {change['path'] for change in plan['changes']}
+    return sorted(files)
+
+
+def http_profile(plan, *, historical=False):
+    profile = plan.get('http_verification', {}).get('profile', 'full')
+    # Plans already published under an older classification can still finalize with full.
+    if profile == 'compact' and not historical and any(not ui_path(change['path']) for change in plan['changes']):
+        return 'full'
+    return profile
+
 
 def ensure(ok, message):
     if not ok:
@@ -52,6 +89,21 @@ def canonical(value):
 
 def digest(value):
     return sha(canonical(value))
+
+
+def plan_go(plan):
+    return 'GO '+plan['action'].upper()+' '+DOMAIN+' '+plan['release_id']+' '+plan['package_sha256']+' PLAN '+plan['sha256']
+
+
+def check_plan(plan, action, go, policy):
+    clone = dict(plan)
+    supplied = clone.pop('sha256')
+    ensure(supplied == digest(clone) and plan['domain'] == DOMAIN and plan['action'] == action, 'Plan identity mismatch')
+    ensure(plan['policy_sha256'] == digest(policy),
+           'Policy SHA mismatch: use the exact policy and --quota-evidence from the approved plan '
+           '(policy SHA-256 {}, quota evidence SHA-256 {}): STOP'.format(
+               plan['policy_sha256'], plan.get('quota_evidence_sha256', 'not recorded in this plan')))
+    ensure(go == plan_go(plan), 'Exact owner GO required')
 
 
 def real(path):
@@ -345,6 +397,39 @@ class Manager:
         return dict(schema=1, domain=DOMAIN, snapshot=snapshot, snapshot_sha256=digest(snapshot),
                     inventory=inventory, capacity=self.capacity(needed))
 
+    def verification_scope(self, baseline, changes, migration):
+        if not (self.root / 'current.json').exists():
+            return dict(profile='full', reason='no_current_receipt')
+        pointer = json.loads(regular(self.root / 'current.json'))
+        run = self.run(pointer['release_id'])
+        self.verify_record(run)
+        receipt = self.receipt(run)
+        ensure(receipt['phase'] == 'verified' and receipt['package_sha256'] == pointer['package_sha256']
+               and receipt['after'] == baseline, 'Current verified baseline has drifted: STOP')
+        if migration or not changes or any(
+            not ui_path(change['path']) or change['action'] == 'delete'
+            or (change['action'] == 'add' and
+                (not change['path'].startswith('assets/')
+                 or str(PurePosixPath(change['path']).parent) not in baseline['directories']))
+            for change in changes
+        ):
+            return dict(profile='full', reason='publication_scope')
+        old_http = receipt['http']
+        old_plan = json.loads(regular(run / 'plan.json'))
+        prior_scope = old_plan.get('http_verification', {})
+        full_since = None
+        if full_http_evidence(old_http):
+            full_since = receipt['created_unix']
+        elif old_http.get('profile') == http_profile(old_plan) == 'compact':
+            full_since = prior_scope['baseline'].get('full_verified_since')
+        if (full_since is None or not 0 <= time.time() - full_since <= HTTP_BASELINE_SECONDS
+                or not set(HTTP_CRITICAL_FILES) <= set(baseline['public'])):
+            return dict(profile='full', reason='baseline_http_evidence_unavailable')
+        return dict(profile='compact', reason='verified_ui_scope',
+                    baseline=dict(release_id=run.name, package_sha256=pointer['package_sha256'],
+                                  receipt_sha256=digest(receipt), snapshot_sha256=digest(baseline),
+                                  commit=old_plan['commit'], full_verified_since=full_since))
+
     def plan(self, release_id, manifest, package_sha, package_bytes):
         validate_id(release_id)
         ensure(not self.run(release_id).exists(), 'Release ID already reserved; use status, never replay')
@@ -383,18 +468,17 @@ class Manager:
                   commit=manifest['commit'], package_sha256=package_sha, package_bytes=package_bytes,
                   snapshot=before['snapshot'], snapshot_sha256=before['snapshot_sha256'], changes=changes,
                   policy_sha256=digest(self.policy), inventory_sha256=digest(before['inventory']),
-                  apache_policy_migration=migration)
+                  apache_policy_migration=migration,
+                  quota_evidence_sha256=digest(self.policy.get('quota_evidence', {})),
+                  http_verification=self.verification_scope(before['snapshot'], changes, migration))
         plan['sha256']=digest(plan)
         return dict(plan=plan, capacity=before['capacity'], go=self.go(plan) if changes else None)
 
-    def go(self, plan, action=None):
-        return 'GO '+(action or plan['action']).upper()+' '+DOMAIN+' '+plan['release_id']+' '+plan['package_sha256']+' PLAN '+plan['sha256']
+    def go(self, plan):
+        return plan_go(plan)
 
     def check_plan(self, plan, action, go):
-        clone=dict(plan); supplied=clone.pop('sha256')
-        ensure(supplied == digest(clone) and plan['domain'] == DOMAIN and plan['action'] == action, 'Plan identity mismatch')
-        ensure(plan['policy_sha256'] == digest(self.policy), 'Policy changed: regenerate plan')
-        ensure(go == self.go(plan), 'Exact owner GO required')
+        check_plan(plan, action, go, self.policy)
 
     def backup(self, run, plan, manifest):
         baseline=plan['snapshot']; files={}; modes={}
@@ -519,6 +603,7 @@ class Manager:
                 ensure((actual or {}).get('sha256') in [(old or {}).get('sha256'),candidate['files'].get('public/'+name)], 'Third-party drift blocks rollback')
             else:
                 ensure(actual==old, 'Unscoped drift blocks rollback')
+        receipt.pop('http_progress', None)
         receipt['phase']='rolling_back';self.save(run,receipt)
         for name in sorted(changed,key=lambda n:(n=='index.html',n)):
             if name in baseline['public']:
@@ -544,7 +629,13 @@ class Manager:
         ensure(manifest['commit']==plan['commit'] and len(raw)==plan['package_bytes'], 'Package changed')
         with self.lock():
             fresh=self.plan(plan['release_id'],manifest,sha(raw),len(raw))
-            ensure(fresh['plan']==plan and fresh['capacity']['ready'], 'Drift or insufficient/unconfirmed quota: STOP')
+            fresh_plan = fresh['plan']
+            new_fields = {'http_verification', 'quota_evidence_sha256'}
+            if not new_fields.intersection(plan):
+                # An already approved v1 plan predates automatic HTTP profiles.
+                fresh_plan = {k: v for k, v in fresh_plan.items() if k not in new_fields | {'sha256'}}
+                fresh_plan['sha256'] = digest(fresh_plan)
+            ensure(fresh_plan == plan and fresh['capacity']['ready'], 'Drift or insufficient/unconfirmed quota: STOP')
             run=self.run(plan['release_id']);mkdir(run) # ID reservation is durable and never reused.
             atomic(run/'plan.json',canonical(plan));atomic(run/'manifest.json',canonical(manifest));atomic(run/'package.tar.gz',raw)
             r=dict(schema=1, release_id=run.name, package_sha256=sha(raw), phase='reserved',created_unix=int(time.time()),
@@ -578,14 +669,62 @@ class Manager:
                 raise RuntimeError('Publication failed; inspect status/receipt before any further action')
             return dict(phase=r['phase'],release_id=run.name,backup_sha256=r['backup_sha256'])
 
-    def attest(self, release_id, plan, go, evidence):
-        self.check_plan(plan,'apply',go)
-        ensure(evidence.get('status')=='PASS' and evidence.get('package_sha256')==plan['package_sha256'], 'Read-only HTTP verification required')
+    def http_state(self, plan, go):
+        self.check_plan(plan, 'apply', go)
+        run = self.run(plan['release_id'])
+        receipt = self.receipt(run)
+        pointer = json.loads(regular(self.root / 'current.json'))
+        ensure(receipt['phase'] == 'awaiting_http_verify'
+               and pointer == dict(release_id=run.name, package_sha256=plan['package_sha256'])
+               and json.loads(regular(run / 'plan.json')) == plan, 'Current pending release or approved plan mismatch: STOP')
+        self.verify_record(run)
+        ensure(self.snapshot(plan['snapshot']['runtime_identity']) == receipt['after'], 'Published snapshot drift: STOP')
+        progress = receipt.get('http_progress', {})
+        age = time.time() - progress.get('started_unix', 0)
+        usable = progress.get('files', []) if 0 <= age <= HTTP_PROGRESS_SECONDS else []
+        return dict(phase=receipt['phase'], receipt_sha256=digest(receipt),
+                    snapshot_sha256=digest(receipt['after']), checked_files=usable)
+
+    def checkpoint_http(self, plan, go, state, files):
         with self.lock():
-            run=self.run(release_id);r=self.receipt(run)
-            ensure(r['phase']=='awaiting_http_verify' and self.snapshot(plan['snapshot']['runtime_identity'])==r['after'], 'Attestation drift/phase mismatch')
-            r['phase']='verified';r['http']=evidence;self.save(run,r)
-        return dict(phase='verified',release_id=release_id)
+            ensure(state == self.http_state(plan, go), 'HTTP verification state changed: STOP')
+            run = self.run(plan['release_id'])
+            manifest = json.loads(regular(run / 'manifest.json'))
+            ensure(files and set(files) <= set(http_files(manifest, plan, 'full')) - set(HTTP_CRITICAL_FILES),
+                   'Invalid HTTP checkpoint scope: STOP')
+            receipt = self.receipt(run)
+            started = receipt['http_progress']['started_unix'] if state['checked_files'] else int(time.time())
+            receipt['http_progress'] = dict(started_unix=started, files=sorted(set(files) | set(state['checked_files'])))
+            self.save(run, receipt)
+
+    def validate_http_evidence(self, plan, manifest, receipt, evidence, *, historical=False):
+        profile = evidence.get('profile')
+        allowed = http_profile(plan, historical=historical)
+        ensure(profile == 'full' or profile == allowed == 'compact', 'HTTP verification profile mismatch')
+        matrix = evidence.get('redirect_matrix') or {}
+        policy = manifest['files']['public/.htaccess']
+        if policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256):
+            ensure(matrix.get('status') == 'PASS' and matrix.get('cases') == HTTP_MATRIX_CASES[profile],
+                   'Incomplete HTTP route coverage')
+        names = http_files(manifest, plan, profile)
+        ensure(evidence.get('status') == 'PASS' and evidence.get('package_sha256') == plan['package_sha256']
+               and evidence.get('plan_sha256') == plan['sha256'] and evidence.get('snapshot_sha256') == digest(receipt['after'])
+               and evidence.get('baseline') == (plan['http_verification']['baseline'] if profile == 'compact' else None)
+               and evidence.get('verified_files') == len(names) and evidence.get('public_static_files_verified') is True
+               and evidence.get('no_post') is True, 'Incomplete or unbound HTTP verification evidence')
+
+    def attest(self, plan, go, state, evidence):
+        with self.lock():
+            ensure(state == self.http_state(plan, go), 'HTTP verification state changed: STOP')
+            run = self.run(plan['release_id'])
+            receipt = self.receipt(run)
+            manifest = json.loads(regular(run / 'manifest.json'))
+            self.validate_http_evidence(plan, manifest, receipt, evidence)
+            receipt.pop('http_progress', None)
+            receipt['phase'] = 'verified'
+            receipt['http'] = dict(evidence, release_phase='verified')
+            self.save(run, receipt)
+        return dict(phase='verified', release_id=run.name)
 
     def rollback_plan(self, release_id):
         run=self.run(release_id);r=self.receipt(run)
@@ -657,7 +796,16 @@ class Manager:
             ensure({n:v['sha256'] for n,v in after['public'].items() if n!='.envrc'}==wanted, 'Receipt after-state differs from manifest')
             ensure(after['runtime_identity']==manifest['runtime_identity'], 'Receipt runtime identity mismatch')
             self.protect_unchanged(plan['snapshot'],after)
+        if 'http_progress' in receipt:
+            progress = receipt['http_progress']
+            names = progress['files']
+            ensure(phase == 'awaiting_http_verify' and type(progress['started_unix']) is int
+                   and names and names == sorted(set(names))
+                   and set(names) <= set(http_files(manifest, plan, 'full')) - set(HTTP_CRITICAL_FILES),
+                   'Invalid HTTP checkpoint')
         if phase=='verified':
+            if 'profile' in receipt['http']:
+                self.validate_http_evidence(plan, manifest, receipt, receipt['http'], historical=True)
             ensure(receipt['http']['status']=='PASS' and receipt['http']['package_sha256']==receipt['package_sha256'], 'Verified HTTP evidence mismatch')
         return backup,files
 
@@ -749,7 +897,9 @@ def dispatch(request):
     if op=='plan':return manager.plan(request['release_id'],request['manifest'],request['package_sha256'],request['package_bytes'])
     if op=='status':return manager.status(request['release_id'])
     if op=='apply':return manager.apply(base64.b64decode(request['payload']),p,request['go'])
-    if op=='attest':return manager.attest(request['release_id'],p,request['go'],request['evidence'])
+    if op=='http-state':return manager.http_state(p,request['go'])
+    if op=='http-checkpoint':return manager.checkpoint_http(p,request['go'],request['state'],request['files'])
+    if op=='attest':return manager.attest(p,request['go'],request['state'],request['evidence'])
     if op=='rollback-plan':return manager.rollback_plan(request['release_id'])
     if op=='rollback':return manager.rollback(p,request['go'])
     if op=='list':return dict(managed=manager.list_backups(),legacy=manager.historical_backups())

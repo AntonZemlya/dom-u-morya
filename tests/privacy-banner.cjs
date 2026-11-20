@@ -47,13 +47,14 @@ const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.
    if(width>=768){const copy=await ui.locator('.privacy-banner-copy').boundingBox();assert.ok(copy.x+copy.width<=controls[0].x,'desktop/tablet horizontal layout');}
    assert.ok(await decline.evaluate(e=>{const style=getComputedStyle(e);return style.borderTopWidth==='0px'&&style.textDecorationLine.includes('underline');}));
    const footer=p.locator('footer');
-   for(const el of await footer.locator('a,button,.footer-fineprint span').all()){
+   const footerContent=await footer.locator('a,button,.footer-bottom p').all();
+   for(const el of footerContent){
     const box=await el.boundingBox();if(box)assert.ok(box.y+box.height<=banner.y-8,'footer content above banner at end of page');
    }
    const up=p.locator('#scroll-top-btn');
    if(await up.count()&&await up.isVisible()){
     const box=await up.boundingBox();assert.equal(overlaps(box,banner),false,'scroll-to-top above banner');
-    for(const el of await footer.locator('a,button,.footer-fineprint span').all())assert.equal(overlaps(box,await el.boundingBox()),false,'scroll-to-top clears footer content');
+    for(const el of footerContent)assert.equal(overlaps(box,await el.boundingBox()),false,'scroll-to-top clears footer content');
    }
    // Reading the terms, scrolling, opening and closing settings must never consent.
    assert.equal(await p.evaluate(k=>localStorage.getItem(k),key),null);

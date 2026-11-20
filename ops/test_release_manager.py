@@ -17,9 +17,15 @@ import tempfile
 import time
 import unittest
 import urllib.error
+import urllib.parse
+import urllib.request
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from threading import Event, Thread
 from unittest.mock import patch
 import release_core as c
 import release_manager as cli
+import release_http
+import url_matrix
 
 
 def deny_external(event,args):
@@ -41,27 +47,62 @@ class HTTPSResponse(io.BytesIO):
 
 
 class HTTPSFixture:
-    """urlopen replacement: every request is synthetic, including error bodies."""
-    def __init__(self,public=None):
-        self.public=public or {'index.html':b'index new','script.js':b'script new'}
-        self.failures={};self.responses={};self.requests=[];self.opened=[]
+    """HTTPS origin, front proxy and Apache responses with no external connections."""
+    def __init__(self, public=None):
+        self.public = public or {'index.html': b'index new', 'script.js': b'script new'}
+        self.failures = {}
+        self.responses = {}
+        self.requests = []
+        self.opened = []
 
-    def __call__(self,request,timeout):
-        assert request.get_method()=='GET' and request.data is None
-        assert request.full_url.startswith(c.ORIGIN+'/') and timeout==25
-        path=request.full_url[len(c.ORIGIN):];self.requests.append(path)
-        if self.failures.get(path):raise self.failures[path].pop(0)
-        if path in self.responses:code,headers,body=self.responses[path]
-        elif path in ['/.envrc','/.htaccess','/.git/config','/api/lead-core.php','/api/lead-smtp.php']:
-            code,headers,body=404,{},b'protected'
-        elif path=='/api/lead.php':code,headers,body=405,{},b'GET denied'
-        elif path=='/api/form-status.php':
-            code,headers,body=200,{'Cache-Control':'no-store'},b'{"enabled":true,"ready":true}'
-        else:code,headers,body=200,{},self.public['index.html' if path=='/' else path[1:]]
-        if code>=400:
-            response=HTTPSResponse(code,headers,body);self.opened.append(response)
-            raise urllib.error.HTTPError(request.full_url,code,'synthetic status',headers,response)
-        response=HTTPSResponse(code,headers,body);self.opened.append(response);return response
+    def __call__(self, request, timeout):
+        assert request.get_method() in ('GET', 'HEAD') and request.data is None
+        assert 0 < timeout <= 15
+        url = urllib.parse.urlsplit(request.full_url)
+        path = url.path
+        self.requests.append(path)
+        if self.failures.get(path):
+            raise self.failures[path].pop(0)
+        if path in self.responses:
+            code, headers, body = self.responses[path]
+        else:
+            code, headers, body = self.response(url)
+        response = HTTPSResponse(code, headers, body)
+        self.opened.append(response)
+        if code >= 300:
+            raise urllib.error.HTTPError(request.full_url, code, 'synthetic status', headers, response)
+        return response
+
+    def response(self, url):
+        assert url.hostname in (c.DOMAIN, 'www.' + c.DOMAIN)
+        path = url.path
+        suffix = '?' + url.query if url.query else ''
+        listings = ['/privacy', '/assets', '/api', '/assets/fonts']
+        if url.scheme == 'http' and url.hostname.startswith('www.'):
+            return 301, {'Location': 'http://' + c.DOMAIN + path + suffix}, b'Moved'
+        if url.scheme == 'https' and url.hostname.startswith('www.'):
+            return 301, {'Location': c.ORIGIN + path + suffix}, b'Moved'
+        canonical = url_matrix.ALIASES.get(path, path)
+        if path in listings:
+            canonical += '/'
+        if url.scheme != 'https' or url.hostname != c.DOMAIN or canonical != path:
+            return 301, {'Location': c.ORIGIN + canonical + suffix}, b'Moved'
+        if path in ['/api/lead.php', '/api/analytics-consent.php']:
+            return 405, {}, b'GET denied'
+        if path == '/api/form-status.php':
+            return 200, {'Cache-Control': 'no-store'}, b'{"enabled":true,"ready":true}'
+        name = 'index.html' if path == '/' else path[1:]
+        if path in url_matrix.PAGES or (name in self.public and not name.startswith('.') and not name.endswith('.php')):
+            body = self.public.get(name, b'legal fixture')
+            headers = {}
+            if name == 'index.html' and self.public.get('.htaccess') is not None and c.sha(self.public['.htaccess']) == c.CATALOG_HTACCESS_SHA256:
+                headers = {'Cache-Control': 'no-store', 'X-Dom-Catalog-Template': c.sha(body),
+                           'X-Dom-Catalog-Snapshot': 'bundled', 'X-Dom-Catalog-Status': 'confirmed'}
+            return 200, headers, body
+        return 404, {}, b'protected or missing'
+
+    def client(self, profile='full', **kwargs):
+        return release_http.HTTPClient(profile, opener=self, pace=0, **kwargs)
 
     def manifest(self):
         return dict(public_allowlist=list(self.public),files={'public/'+n:c.sha(b) for n,b in self.public.items()})
@@ -70,18 +111,20 @@ class HTTPSFixture:
 class HTTPRetry(unittest.TestCase):
     def setUp(self):
         self.network=HTTPSFixture()
-        self.opener=patch.object(cli.urllib.request,'urlopen',side_effect=self.network).start()
-        self.sleep=patch.object(cli.time,'sleep').start()
+        self.opener=patch.object(self.network,'__call__',side_effect=self.network).start()
+        self.sleep=patch.object(release_http.time,'sleep').start()
         self.addCleanup(patch.stopall)
 
-    def verify(self):return cli.http_verify(self.network.manifest(),'synthetic-package-sha')
+    def verify(self):
+        client = release_http.HTTPClient(opener=self.opener, pace=0)
+        return cli.http_verify(self.network.manifest(), 'synthetic-package-sha', client=client)
 
     def test_first_connection_reset_then_success(self):
         self.network.failures['/']=[urllib.error.URLError(ConnectionResetError(errno.ECONNRESET,'synthetic reset'))]
         result=self.verify()
         self.assertEqual(result['status'],'PASS');self.assertEqual(result['request_count'],10)
         self.assertEqual(result['retry_count'],1);self.assertEqual(result['transient_errors'],{'ECONNRESET':1})
-        self.sleep.assert_called_once_with(0.25)
+        self.assertAlmostEqual(self.sleep.call_args.args[0], 0.25, delta=0.02)
 
     def test_three_transient_failures_then_success_and_statistics(self):
         self.network.failures['/']=[http.client.RemoteDisconnected('synthetic close'),
@@ -90,7 +133,9 @@ class HTTPRetry(unittest.TestCase):
         result=self.verify()
         self.assertEqual(result['request_count'],12);self.assertEqual(result['retry_count'],3)
         self.assertEqual(result['transient_errors'],{'RemoteDisconnected':1,'ETIMEDOUT':1,'ECONNABORTED':1})
-        self.assertEqual([call.args[0] for call in self.sleep.call_args_list],[0.25,0.5,1.0])
+        self.assertEqual(self.sleep.call_count, 3)
+        for call, delay in zip(self.sleep.call_args_list, (0.25, 0.5, 1.0)):
+            self.assertAlmostEqual(call.args[0], delay, delta=0.02)
 
     def test_retry_budget_is_per_get(self):
         self.network.failures={p:[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(3)]
@@ -101,7 +146,7 @@ class HTTPRetry(unittest.TestCase):
 
     def test_exhausted_four_attempts_fail(self):
         self.network.failures['/.envrc']=[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(5)]
-        with self.assertRaisesRegex(RuntimeError,'retries exhausted.*finalize.*"request_count": 4.*"retry_count": 3.*"ECONNRESET": 4'):
+        with self.assertRaisesRegex(RuntimeError,'retries exhausted.*"request_count": 4.*"retry_count": 3.*"ECONNRESET": 4'):
             self.verify()
         self.assertEqual(self.opener.call_count,4);self.assertEqual(self.sleep.call_count,3)
         self.assertEqual(len(self.network.failures['/.envrc']),1)
@@ -114,7 +159,7 @@ class HTTPRetry(unittest.TestCase):
         for error in errors:
             with self.subTest(error=repr(error)):
                 self.opener.reset_mock();self.sleep.reset_mock();self.network.failures['/.envrc']=[error]
-                with self.assertRaises(type(error)):self.verify()
+                with self.assertRaises(cli.HTTPVerificationError):self.verify()
                 self.assertEqual(self.opener.call_count,1);self.sleep.assert_not_called()
 
     def test_partial_200_body_is_discarded_and_retried(self):
@@ -157,6 +202,20 @@ class HTTPRetry(unittest.TestCase):
                 self.network.responses['/api/form-status.php']=(200,headers,body);self.network.requests=[]
                 with self.assertRaises((RuntimeError,ValueError)):self.verify()
                 self.assertEqual(self.network.requests.count('/api/form-status.php'),1);self.sleep.assert_not_called()
+
+    def test_total_request_and_wall_clock_limits(self):
+        for limits, message in [({'requests': 2}, 'request or time budget'), ({'seconds': .01}, 'deadline exceeded')]:
+            with self.subTest(limits=limits):
+                def opener(request, timeout):
+                    if 'seconds' in limits:
+                        Event().wait(1)
+                    return self.network(request, timeout)
+                client = release_http.HTTPClient(opener=opener, pace=0, **limits)
+                with self.assertRaisesRegex(cli.HTTPVerificationError, message) as caught:
+                    cli.http_verify(self.network.manifest(), 'fixture', client=client)
+                self.assertEqual(caught.exception.report['failure_kind'], 'transport')
+                self.assertLess(caught.exception.report['duration_seconds'], 0.5)
+                self.assertLessEqual(caught.exception.report['request_count'], 2)
 
 
 class Lifecycle(unittest.TestCase):
@@ -205,8 +264,18 @@ class Lifecycle(unittest.TestCase):
 
     def verified(self, release_id='test-release', **kwargs):
         raw,manifest,result=self.apply(release_id,**kwargs)
-        self.m.attest(release_id,result['plan'],result['go'],dict(status='PASS',package_sha256=c.sha(raw)))
+        self.attest_fixture(result, manifest)
         return raw,manifest,result
+
+    def attest_fixture(self, review, manifest):
+        plan, go = review['plan'], review['go']
+        state = self.m.http_state(plan, go)
+        evidence = dict(status='PASS', package_sha256=plan['package_sha256'], profile='full',
+                        plan_sha256=plan['sha256'], snapshot_sha256=state['snapshot_sha256'], baseline=None,
+                        verified_files=len(c.http_files(manifest, plan, 'full')),
+                        public_static_files_verified=True, no_post=True,
+                        redirect_matrix=dict(status='PASS', cases=236))
+        self.m.attest(plan, go, state, evidence)
 
     def assert_protected(self):
         self.assertEqual((self.private/'config.php').read_bytes(),b'fixture secret; no PHP execution')
@@ -420,7 +489,7 @@ class Lifecycle(unittest.TestCase):
         self.assertEqual((self.doc/'.htaccess').read_bytes(),self.guard)
         backup,files=self.m.verify_backup(self.m.run('apache-migration'))
         self.assertEqual(c.sha(files['public/.htaccess']),c.LEGACY_HTACCESS_SHA256)
-        self.m.attest('apache-migration',p,review['go'],dict(status='PASS',package_sha256=c.sha(raw)))
+        self.attest_fixture(review, manifest)
         self.assertEqual(self.m.list_backups()[0]['phase'],'verified')
         # The next ordinary release has no policy change.
         self.assertIsNone(self.plan('ordinary')[2]['plan']['apache_policy_migration'])
@@ -444,7 +513,7 @@ class Lifecycle(unittest.TestCase):
             from_sha256=c.PREVIOUS_HTACCESS_SHA256,to_sha256=c.APPROVED_HTACCESS_SHA256))
         self.assertEqual([row['path'] for row in review['plan']['changes']],['.htaccess'])
         self.m.apply(raw,review['plan'],review['go'])
-        self.m.attest('cache-only',review['plan'],review['go'],dict(status='PASS',package_sha256=c.sha(raw)))
+        self.attest_fixture(review, manifest)
         rollback=self.m.rollback_plan('cache-only')
         self.m.rollback(rollback['plan'],rollback['go'])
         self.assertEqual(self.m.snapshot(self.identity),self.baseline)
@@ -637,6 +706,99 @@ class Lifecycle(unittest.TestCase):
             remote.assert_not_called()
         self.assertFalse(self.m.root.exists());self.assert_protected()
 
+    def test_ui_incident_scope_local_http_and_full_comparison(self):
+        ordinary = {'assets/img-{}.webp'.format(n): b'unchanged fixture' for n in range(275)}
+        ui = {'index.html': b'index old', 'privacy.html': b'privacy old',
+              'consent-personal-data.html': b'personal old', 'consent-analytics.html': b'analytics old',
+              'privacy/privacy.css': b'css old', 'privacy/privacy.js': b'js old', 'styles.css': b'style old'}
+        public = dict(ordinary, **ui)
+        public.update({'.htaccess': self.catalog_guard, 'index.php': b'catalog route',
+                       **{name: b'catalog helper' for name in c.CATALOG_PUBLIC_FILES if name.startswith('api/')}})
+        _, baseline_manifest, baseline = self.verified('catalog-baseline', extra=public)
+        changed = {name: body + b' revised' for name, body in ui.items()}
+        changed['assets/analytics-icon.svg'] = b'new icon fixture'
+        public.update(changed)
+        raw, manifest, review = self.apply('ui-update', extra=public)
+        plan, go = review['plan'], review['go']
+        self.assertEqual(len(plan['changes']), 8)
+        self.assertEqual(plan['http_verification']['baseline']['package_sha256'], baseline['plan']['package_sha256'])
+        self.assertEqual(c.http_profile(plan), 'compact')
+        self.assertEqual(c.http_profile(baseline['plan']), 'full')
+        self.assertIn('public/index.php', baseline_manifest['files'])
+        public['script.js'] = b'script new'
+        network = HTTPSFixture(public)
+        state = self.m.http_state(plan, go)
+
+        class ServerResponse(BaseHTTPRequestHandler):
+            def serve(self):
+                url = urllib.parse.urlsplit(self.headers['X-Logical-URL'])
+                code, headers, body = network.response(url)
+                self.send_response(code)
+                for name, value in headers.items():
+                    self.send_header(name, value)
+                self.send_header('Content-Length', str(len(body)))
+                self.end_headers()
+                if self.command == 'GET':
+                    self.wfile.write(body)
+
+            do_GET = do_HEAD = serve
+
+            def log_message(self, *args):
+                pass
+
+        with HTTPServer(('127.0.0.1', 0), ServerResponse) as server:
+            thread = Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), release_http.NoRedirect())
+
+            def loopback(request, timeout):
+                local = urllib.request.Request('http://127.0.0.1:{}/'.format(server.server_port),
+                                               headers={'X-Logical-URL': request.full_url}, method=request.get_method())
+                return opener.open(local, timeout=timeout)
+
+            try:
+                with patch.object(cli.subprocess, 'run'), patch.object(cli.subprocess, 'check_output', return_value=b'styles.css\0'):
+                    compact = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state,
+                                              client=release_http.HTTPClient('compact', opener=loopback, pace=0))
+                with patch.object(cli.subprocess, 'run'), patch.object(cli.subprocess, 'check_output', return_value=b'ops/url_matrix.py\0'):
+                    full = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state,
+                                           client=release_http.HTTPClient('full', opener=loopback, pace=0))
+            finally:
+                server.shutdown()
+                thread.join()
+        self.assertEqual((compact['profile'], compact['verified_files'], compact['verified_route_cases']), ('compact', 8, 28))
+        self.assertEqual((full['profile'], full['verified_files'], full['verified_route_cases']), ('full', 284, 236))
+        self.assertEqual(compact['files_covered_by_baseline'], 276)
+        self.assertEqual(compact['request_count'], 41)
+        self.assertEqual(full['request_count'], 771)
+        print('HTTP comparison fixture:', json.dumps({r['profile']: {
+              k: r[k] for k in ('request_count', 'duration_seconds', 'verified_files', 'verified_route_cases')}
+              for r in (compact, full)}, sort_keys=True))
+        self.m.attest(plan, go, state, compact)
+        self.assertEqual(self.m.status('ui-update')['phase'], 'verified')
+        next_raw, next_manifest, next_review = self.plan('next-ui', extra={**public, 'styles.css': b'next css'})
+        self.assertEqual(c.http_profile(next_review['plan']), 'compact')
+        with patch.object(time, 'time', return_value=time.time() + c.HTTP_BASELINE_SECONDS + 1):
+            self.assertEqual(c.http_profile(self.m.plan('stale-ui', next_manifest, c.sha(next_raw), len(next_raw))['plan']), 'full')
+        (_, _, php_review) = self.plan('route-change', extra={**public, 'index.php': b'changed handler'})
+        self.assertEqual(c.http_profile(php_review['plan']), 'full')
+        (self.doc/'assets/img-0.webp').write_bytes(b'outside drift')
+        with self.assertRaisesRegex(RuntimeError, 'Current verified baseline has drifted'):
+            self.plan('drifted-ui', extra=public)
+
+    def test_catalog_snapshot_mismatch_fails_before_attestation(self):
+        public = {'.htaccess': self.catalog_guard, 'index.php': b'catalog route',
+                  **{name: b'catalog helper' for name in c.CATALOG_PUBLIC_FILES if name.startswith('api/')}}
+        raw, manifest, review = self.apply('catalog-test', extra=public)
+        network = HTTPSFixture({**public, 'index.html': b'index new', 'script.js': b'script new'})
+        network.responses['/'] = (200, {'Cache-Control': 'no-store', 'X-Dom-Catalog-Template': c.sha(b'index new'),
+                                        'X-Dom-Catalog-Snapshot': '0' * 64, 'X-Dom-Catalog-Status': 'confirmed'},
+                                  b'<script id="site-data" type="application/json">{"catalog_version":"other","catalog_status":"confirmed","apartments":[{"id":"1"}]}</script>'
+                                  b'<article data-lot-id="1"></article><script type="application/ld+json">{"@graph":[]}</script>')
+        with self.assertRaisesRegex(cli.HTTPVerificationError, 'does not match its active snapshot'):
+            cli.http_verify(manifest, c.sha(raw), plan=review['plan'], client=network.client())
+        self.assertEqual(self.m.status('catalog-test')['phase'], 'awaiting_http_verify')
+
     def test_ssh_uncertain_response_has_no_retry(self):
         import release_manager as cli
         from types import SimpleNamespace
@@ -651,53 +813,138 @@ class Lifecycle(unittest.TestCase):
         archive=self.home/'package.tar.gz';archive.write_bytes(raw)
         plan=self.home/'plan.json';plan.write_bytes(c.canonical(review))
         policy=self.home/'policy.json';policy.write_bytes(c.canonical(self.policy))
+        quota = self.home/'quota.json'
+        quota.write_bytes(c.canonical(self.policy['quota_evidence']))
         return ['release_manager.py','release',command,'--archive',str(archive),'--sha',c.sha(raw),
-                '--plan',str(plan),'--policy',str(policy),'--go',review['go']]
+                '--plan',str(plan),'--policy',str(policy),'--go',review['go'],'--quota-evidence',str(quota)]
+
+    def local_remote(self, operation, policy, **request):
+        with patch.object(c, 'Manager', return_value=self.m):
+            return c.dispatch(dict(operation=operation, policy=policy, **request))
 
     def test_http_exhaustion_after_publication_never_reapplies(self):
-        raw,m,review=self.plan();network=HTTPSFixture({'index.html':b'old index','script.js':b'old script'})
-        def local(operation,policy,**request):
-            self.assertEqual(operation,'apply')
-            result=self.m.apply(base64.b64decode(request['payload']),request['plan'],request['go'])
-            network.public={'index.html':b'index new','script.js':b'script new'}
-            network.failures['/']=[ConnectionResetError(errno.ECONNRESET,'synthetic reset') for _ in range(4)]
+        raw, _, review = self.plan()
+        network = HTTPSFixture({'index.html': b'old index', 'script.js': b'old script'})
+
+        def local(operation, policy, **request):
+            result = self.local_remote(operation, policy, **request)
+            if operation == 'apply':
+                network.public = {'index.html': b'index new', 'script.js': b'script new'}
+                network.failures['/'] = [ConnectionResetError() for _ in range(4)]
             return result
-        with patch.object(sys,'argv',self.http_cli_args('apply',raw,review)),patch.object(cli,'remote',side_effect=local) as remote, \
-             patch.object(cli.urllib.request,'urlopen',side_effect=network),patch.object(cli.time,'sleep') as sleep:
-            with self.assertRaisesRegex(RuntimeError,'retries exhausted'):cli.main()
-        self.assertEqual([call.args[0] for call in remote.call_args_list],['apply'])
-        self.assertEqual(sleep.call_count,3)
-        self.assertEqual(self.m.status('test-release')['phase'],'awaiting_http_verify')
-        self.assertEqual(len(list(self.m.root.glob('*/backup.tar.gz'))),1)
-        self.assertEqual((self.doc/'index.html').read_bytes(),b'index new');self.assert_protected()
 
-    def test_finalize_uses_shared_get_retries_and_only_attests(self):
-        raw,m,review=self.apply();network=HTTPSFixture()
-        network.failures['/']=[http.client.RemoteDisconnected('synthetic close'),TimeoutError('synthetic timeout')]
-        def local(operation,policy,**request):
-            self.assertEqual(operation,'attest')
-            return self.m.attest(request['release_id'],request['plan'],request['go'],request['evidence'])
-        with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)),patch.object(cli,'remote',side_effect=local) as remote, \
-             patch.object(cli.urllib.request,'urlopen',side_effect=network),patch.object(cli.time,'sleep'), \
-             patch('url_matrix.check',return_value=dict(status='PASS',cases=236,failures=[])) as matrix, \
-             patch('sys.stdout',new_callable=io.StringIO) as stdout:
+        with patch.object(sys, 'argv', self.http_cli_args('apply', raw, review)), \
+             patch.object(cli, 'remote', side_effect=local) as remote, \
+             patch.object(cli, 'HTTPClient', side_effect=network.client), patch.object(release_http.time, 'sleep'):
+            with self.assertRaisesRegex(RuntimeError, 'retries exhausted'):
+                cli.main()
+        self.assertEqual([call.args[0] for call in remote.call_args_list], ['apply', 'http-state'])
+        self.assertEqual(self.m.status('test-release')['phase'], 'awaiting_http_verify')
+        self.assertEqual(len(list(self.m.root.glob('*/backup.tar.gz'))), 1)
+        self.assertEqual((self.doc/'index.html').read_bytes(), b'index new')
+        self.assert_protected()
+
+    def test_finalize_resumes_only_proven_static_files_and_never_republishes(self):
+        raw, _, review = self.apply()
+        network = HTTPSFixture()
+        network.failures['/index'] = [ConnectionResetError() for _ in range(4)]
+        run = self.m.run('test-release')
+        snapshot, backups = self.m.snapshot(self.identity), (run/'backup.tar.gz').read_bytes()
+        with patch.object(sys, 'argv', self.http_cli_args('finalize', raw, review)), \
+             patch.object(cli, 'remote', side_effect=self.local_remote) as remote, \
+             patch.object(cli, 'HTTPClient', side_effect=network.client), patch.object(release_http.time, 'sleep'), \
+             patch('sys.stdout', new_callable=io.StringIO) as stdout:
+            with self.assertRaisesRegex(RuntimeError, 'retries exhausted'):
+                cli.main()
+            self.assertEqual(self.m.receipt(run)['http_progress']['files'], ['script.js'])
+            self.assertEqual(self.m.status('test-release')['phase'], 'awaiting_http_verify')
+            self.assertEqual(network.requests.count('/script.js'), 1)
+            network.requests.clear()
             cli.main()
-        matrix.assert_called_once()
-        self.assertEqual(json.loads(stdout.getvalue())['phase'],'verified')
-        self.assertEqual([call.args[0] for call in remote.call_args_list],['attest'])
-        evidence=self.m.receipt(self.m.run('test-release'))['http']
-        self.assertEqual(evidence['request_count'],11);self.assertEqual(evidence['retry_count'],2)
-        self.assertEqual(evidence['transient_errors'],{'RemoteDisconnected':1,'ETIMEDOUT':1})
-        self.assertEqual(evidence['package_sha256'],c.sha(raw));self.assert_protected()
+        self.assertEqual([call.args[0] for call in remote.call_args_list],
+                         ['http-state', 'http-checkpoint', 'http-state', 'attest'])
+        self.assertEqual(json.loads(stdout.getvalue())['phase'], 'verified')
+        self.assertEqual(json.loads(stdout.getvalue())['http']['resumed_files'], 1)
+        self.assertNotIn('/script.js', network.requests)
+        self.assertIn('/api/form-status.php', network.requests)
+        self.assertIn('/.envrc', network.requests)
+        self.assertEqual(self.m.snapshot(self.identity), snapshot)
+        self.assertEqual((run/'backup.tar.gz').read_bytes(), backups)
+        self.assertNotIn('http_progress', self.m.receipt(run))
 
-    def test_finalize_matrix_failure_never_attests_or_reapplies(self):
-        raw,m,review=self.apply();network=HTTPSFixture()
-        with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)),patch.object(cli,'remote') as remote, \
-             patch.object(cli.urllib.request,'urlopen',side_effect=network), \
-             patch('url_matrix.check',return_value=dict(status='FAIL',cases=1,failures=[{'error':'synthetic downgrade'}])):
-            with self.assertRaisesRegex(RuntimeError,'URL redirect matrix failed'):cli.main()
-        remote.assert_not_called()
-        self.assertEqual(self.m.status('test-release')['phase'],'awaiting_http_verify')
+    def test_approved_v1_plan_can_apply_and_finalize_with_full_profile(self):
+        raw, _, review = self.plan()
+        plan = review['plan']
+        for field in ('http_verification', 'quota_evidence_sha256', 'sha256'):
+            plan.pop(field)
+        plan['sha256'] = c.digest(plan)
+        review['go'] = c.plan_go(plan)
+        self.m.apply(raw, plan, review['go'])
+        network = HTTPSFixture()
+        with patch.object(sys, 'argv', self.http_cli_args('finalize', raw, review)), \
+             patch.object(cli, 'remote', side_effect=self.local_remote), \
+             patch.object(cli, 'HTTPClient', side_effect=network.client), \
+             patch('sys.stdout', new_callable=io.StringIO) as stdout:
+            cli.main()
+        self.assertEqual(json.loads(stdout.getvalue())['http']['profile'], 'full')
+        self.assertEqual(self.m.status('test-release')['phase'], 'verified')
+
+    def test_finalize_blocks_missing_or_wrong_quota_evidence_before_http_or_ssh(self):
+        raw, _, review = self.apply()
+        argv = self.http_cli_args('finalize', raw, review)
+        for arguments, error in [(argv[:-2], 'original --quota-evidence'), (argv, 'Policy SHA mismatch')]:
+            with self.subTest(error=error), patch.object(sys, 'argv', arguments), \
+                 patch.object(cli, 'remote') as remote, patch.object(cli, 'HTTPClient') as http:
+                (self.home/'quota.json').write_text('{}')
+                with self.assertRaisesRegex(RuntimeError, error):
+                    cli.main()
+                remote.assert_not_called()
+                http.assert_not_called()
+        self.assertEqual(self.m.status('test-release')['phase'], 'awaiting_http_verify')
+
+    def test_finalize_blocks_matrix_semantic_failures_without_retry_or_attestation(self):
+        raw, _, review = self.apply()
+        for path, response, error in [
+            ('/index', (301, {'Location': 'http://outside.invalid/private?not-for-logs'}, b''), 'Wrong redirect Location'),
+            ('/.envrc', (200, {}, b'sensitive fixture'), 'Wrong final status'),
+        ]:
+            with self.subTest(path=path):
+                network = HTTPSFixture()
+                network.responses[path] = response
+                with patch.object(sys, 'argv', self.http_cli_args('finalize', raw, review)), \
+                     patch.object(cli, 'remote', side_effect=self.local_remote) as remote, \
+                     patch.object(cli, 'HTTPClient', side_effect=network.client), patch.object(release_http.time, 'sleep') as sleep:
+                    with self.assertRaisesRegex(RuntimeError, error) as caught:
+                        cli.main()
+                self.assertNotIn('not-for-logs', str(caught.exception))
+                self.assertEqual(network.requests.count(path), 1)
+                self.assertEqual([call.args[0] for call in remote.call_args_list], ['http-state'])
+                sleep.assert_not_called()
+        self.assertEqual(self.m.status('test-release')['phase'], 'awaiting_http_verify')
+
+    def test_finalize_rechecks_production_before_attestation(self):
+        raw, manifest, review = self.apply()
+        plan, go = review['plan'], review['go']
+        state = self.m.http_state(plan, go)
+        evidence = cli.http_verify(manifest, c.sha(raw), plan=plan, state=state, client=HTTPSFixture().client())
+        (self.doc/'script.js').write_bytes(b'third-party change')
+        with self.assertRaisesRegex(RuntimeError, 'Published snapshot drift'):
+            self.m.attest(plan, go, state, evidence)
+        with self.assertRaisesRegex(RuntimeError, 'Published snapshot drift'):
+            self.m.http_state(plan, go)
+        self.assertEqual(self.m.receipt(self.m.run('test-release'))['phase'], 'awaiting_http_verify')
+
+    def test_expired_or_replaced_checkpoint_is_unusable(self):
+        _, _, review = self.apply()
+        plan, go = review['plan'], review['go']
+        state = self.m.http_state(plan, go)
+        self.m.checkpoint_http(plan, go, state, ['script.js'])
+        recent = self.m.http_state(plan, go)
+        self.assertEqual(recent['checked_files'], ['script.js'])
+        with self.assertRaisesRegex(RuntimeError, 'state changed'):
+            self.m.checkpoint_http(plan, go, state, ['script.js'])
+        with patch.object(time, 'time', return_value=time.time() + c.HTTP_PROGRESS_SECONDS + 1):
+            self.assertEqual(self.m.http_state(plan, go)['checked_files'], [])
 
     def test_archived_entrypoints_cannot_contact_production(self):
         for name in ['release.py','form_release.py','smtp_e2e.py','smtp_package.py']:

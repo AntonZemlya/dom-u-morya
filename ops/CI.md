@@ -5,7 +5,11 @@
 preview/production allowlist, повторная production сборка с одинаковым SHA,
 28 лотов каталога и реальная функция калькулятора (аннуитет, 0%, 100% взнос),
 SEO/legal и синтетические release/backup/restore/rollback/prune/CMS-export tests.
-Внешняя сеть, PHP, Composer и браузер для fast не нужны.
+Для fast нужен доступ к локальному loopback-серверу. Внешняя сеть, PHP, Composer
+и браузер не нужны. Release manager проверяется на фикстуре из восьми изменённых
+файлов и 284 HTTP-доступных файлов. Тест измеряет оба профиля через локальный
+HTTP-сервер и проверяет миграцию `.htaccess`, PHP, ошибочные редиректы,
+утечку файла, TLS, SHA, каталог, drift, лимиты, продолжение `finalize` и квоту.
 
 `npm run ci:full` включает fast и обязательные PHP **8.4** (OpenSSL/ctype), Composer
 validate/audit, PHPMailer 7.1.1 по lock/manifest, fake SMTP с TLS/ошибками/неопределённым

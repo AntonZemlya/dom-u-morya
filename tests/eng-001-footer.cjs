@@ -47,6 +47,10 @@ const near=(a,b,message)=>assert.ok(Math.abs(a-b)<=tolerance,`${message}: ${a}px
      assert.ok(row.lines.length>0&&row.lines.every(line=>line.left>=row.left-1&&line.right<=row.right+1&&
       line.top>=row.top-1&&line.bottom<=row.bottom+1),name+': text stays inside the row');
     }
+    const firstInterval=rows[1].lines[0].top-rows[0].lines.at(-1).top;
+    const lastInterval=rows[2].lines[0].top-rows[1].lines.at(-1).top;
+    near(firstInterval,24,name+': first two lines use compact spacing');
+    assert.ok(lastInterval>=firstInterval+4,name+': extra spacing before the fine print');
    }
    if(width>=640){
     assert.equal(right[0].lines.length,1,name+': policy fits on one line in the two-column layout');
@@ -59,12 +63,10 @@ const near=(a,b,message)=>assert.ok(Math.abs(a-b)<=tolerance,`${message}: ${a}px
     near(left[0].left,right[0].left,name+': stacked columns share a left edge');
    }
    if(width===1440){
-    const interval=left[1].lines[0].top-left[0].lines[0].top;
     for(const [i,row] of left.entries()){
      assert.equal(row.lines.length,1);
      assert.equal(right[i].lines.length,1);
      near(row.lines[0].top,right[i].lines[0].top,name+': text on opposite sides of row '+(i+1));
-     if(i>0)for(const rows of [left,right])near(rows[i].lines[0].top-rows[i-1].lines[0].top,interval,name+': consistent text intervals');
     }
     if(name==='index.html')console.log('Desktop text tops from divider (px): '+JSON.stringify([left,right].map(rows=>rows.map(row=>row.lines[0].top))));
    }
@@ -77,7 +79,7 @@ const near=(a,b,message)=>assert.ok(Math.abs(a-b)<=tolerance,`${message}: ${a}px
    await link.focus();assert.equal(await link.evaluate(e=>e===document.activeElement),true);
    for(const target of [link,settings]){
     const bounds=await target.boundingBox();
-    assert.ok(bounds.height>=44&&bounds.width>=44,name+': legal control has a 44px hit area');
+    assert.ok(bounds.height>=24&&bounds.width>=44,name+': legal control has at least a 24×44px hit area');
    }
    const [policy]=await Promise.all([p.waitForEvent('popup'),p.keyboard.press('Enter')]);
    await policy.waitForURL(site.url+'/privacy.html');

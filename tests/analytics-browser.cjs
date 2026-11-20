@@ -28,7 +28,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
   const relay=(body,h=headers)=>new Promise((resolve,reject)=>{const req=http.request(local,{method:'POST',headers:{...h,'Content-Length':Buffer.byteLength(body)}},res=>{let text='';res.on('data',b=>text+=b);res.on('end',()=>resolve({status:res.statusCode,text:async()=>text}));});req.on('error',reject);req.end(body);});
   for(const patch of [{'Origin':'https://other.invalid'},{'Host':'other.invalid'},{'X-Forwarded-Protocol':'http'},{'Sec-Fetch-Site':'cross-site'}])assert.equal((await relay('{}',{...headers,...patch})).status,403);
   browser=await chromium.launch();
-  async function fixture({width=390,real=false,enabled=true,race=null,noJS=false,site=origin,approved=true}={}){
+  async function fixture({width=390,real=false,enabled=true,race=null,noJS=false,site=origin,approved=true,allowGate}={}){
    const context=await browser.newContext({viewport:{width,height:900},javaScriptEnabled:!noJS,serviceWorkers:'block'});
    const requests=[],operations=[],errors=[],controls={leadStatus:202,leadBody:{ok:true,id:'20261102-1234567890abcdef'},failWithdraw:false,apiStatus:[]};let releaseTag,tagStarted;
    const tagReady=new Promise(r=>tagStarted=r);
@@ -41,6 +41,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
     if(u.origin===site){
      if(u.pathname==='/api/analytics-consent.php'){
       const body=req.postDataJSON();operations.push(body.action);
+      if(body.action==='allow'&&allowGate)await allowGate;
       if(body.action==='withdraw'&&controls.failWithdraw)return route.fulfill({status:503,body:'{}',contentType:'application/json'});
       const response=await relay(req.postData());
       controls.apiStatus.push(response.status);return route.fulfill({status:response.status,body:await response.text(),contentType:'application/json'}).catch(()=>{});
@@ -70,7 +71,7 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
   for(const width of [320,390,768,1440]){
    const f=await fixture({width}),{p}=f;await p.goto(origin+'/?utm_campaign=dom_u_morya&utm_source=estatepartner#plans');
    await p.locator('#cookie-decline').waitFor();await p.screenshot({path:path.join(output,'banner-'+width+'.png')});assert.equal(f.requests.length,0);assert.equal(f.operations.length,0);
-   await p.locator('#cookie-decline').click();assert.equal(f.operations.length,0);
+   await p.locator('#cookie-decline').click();assert.equal(f.operations.length,0);assert.equal(f.requests.length,0);
    await p.locator('[data-privacy-settings]').first().click();await p.locator('#privacy-analytics').check();await p.screenshot({path:path.join(output,'settings-'+width+'.png')});await p.locator('[data-privacy-save]').click();
    await p.waitForFunction(()=>window.__calls.some(a=>a[1]==='hit')).catch(async e=>{console.error({width,operations:f.operations,status:f.controls.apiStatus,requests:f.requests.map(r=>r.kind),errors:f.errors,ui:await p.locator('[data-privacy-status]').textContent()});throw e;});
    assert.deepEqual(f.operations,['allow']);assert.equal((await p.evaluate(()=>window.__calls.filter(a=>a[1]==='init').length)),1);
@@ -123,6 +124,24 @@ async function freePort(){return new Promise(r=>{const s=net.createServer();s.li
   for(const target of [origin+'/?phone=70000000000',origin+'/?utm_campaign=private_name',origin+'/#PRIVATE_TOKEN']){
    const f=await fixture();await f.p.goto(target);await f.p.locator('#cookie-accept').click();await f.p.waitForTimeout(70);assert.equal(f.requests.length,0);assert.equal(f.operations.length,0);await f.context.close();
   }
+  const approval=Promise.withResolvers(),direct=await fixture({allowGate:approval.promise});
+  try{
+   await direct.p.goto(origin+'/');
+   await Promise.all([
+    direct.p.waitForRequest(req=>req.url()===origin+'/api/analytics-consent.php'&&req.postDataJSON()?.action==='allow'),
+    direct.p.locator('#cookie-accept').click(),
+   ]);
+   await direct.p.locator('#cookie-banner').waitFor({state:'hidden'});
+   assert.deepEqual(direct.requests,[],'banner acceptance must wait for the server before loading the tag');
+   assert.deepEqual(direct.controls.apiStatus,[]);
+   approval.resolve();
+   await direct.p.waitForFunction(()=>window.__calls.some(a=>a[1]==='hit'));
+   assert.deepEqual(direct.operations,['allow']);
+   assert.deepEqual(direct.controls.apiStatus,[200]);
+   assert.deepEqual(direct.errors,[]);
+   summaries.push({scenario:'banner approval waits for a successful server receipt',status:'PASS'});
+   console.log('PASS banner approval waits for the server receipt before loading analytics');
+  }finally{approval.resolve();await direct.context.close();}
   const race=await fixture({race:'tag'});await race.p.goto(origin+'/');await race.p.locator('#cookie-accept').click();await race.tagReady;
   await race.p.locator('[data-privacy-settings]').first().click();await race.p.locator('[data-privacy-withdraw]').click();race.release();await race.p.waitForTimeout(100);assert.equal(await race.p.evaluate(()=>window.__calls.length),0);await race.context.close();
   for(const noJS of [false,true]){const f=await fixture({enabled:false,noJS});await f.p.goto(origin+'/');if(!noJS)await f.p.locator('#cookie-accept').click();await f.p.waitForTimeout(50);assert.equal(f.requests.length,0);assert.equal(f.operations.length,0);await f.context.close();}

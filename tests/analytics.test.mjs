@@ -89,7 +89,18 @@ test('receipt adapter checks operation/expiry and immutable server document matc
  for(const paragraph of text.trim().split('\n\n'))assert.ok(fs.readFileSync('consent-analytics.html','utf8').includes('<p>'+paragraph.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\n','<br>')+'</p>'));
  const digest=createHash('sha256').update(text).digest('hex');assert.equal(digest.length,64);
  for(const name of ['index.html','privacy.html','consent-personal-data.html','consent-analytics.html']){const html=fs.readFileSync(name,'utf8');assert.ok(html.includes('data-privacy-settings'));assert.ok(html.includes('privacy/privacy.js'));assert.ok(!html.includes('mc.yandex.ru'));
-  const footer=html.match(/<footer[\s\S]*?<\/footer>/)[0];assert.equal(footer,fs.readFileSync('templates/footer.html','utf8').trimEnd(),name+': shared footer');assert.equal((footer.match(/href="privacy.html"/g)||[]).length,1);assert.equal((footer.match(/data-privacy-settings/g)||[]).length,1);assert.doesNotMatch(footer,/href="consent-|Информация о проекте|footer-disclosure|footer-operator|Саврасов|ОГРНИП|ИНН/);assert.ok(footer.includes('Сайт агентства недвижимости.'));assert.ok(footer.includes('Застройщик ЖК — ГК «Садовое кольцо».'));assert.ok(!footer.includes('не является застройщиком'));assert.ok(footer.includes('оферт'));
+  const footer=html.match(/<footer[\s\S]*?<\/footer>/)[0];
+  assert.equal(footer,fs.readFileSync('templates/footer.html','utf8').trimEnd(),name+': shared footer');
+  assert.equal((footer.match(/href="privacy\.html"/g)||[]).length,1);
+  assert.equal((footer.match(/data-privacy-settings/g)||[]).length,1);
+  assert.doesNotMatch(footer,/href="consent-|Информация о проекте|footer-disclosure|не является застройщиком/);
+  for(const copy of ['Агентство недвижимости «Яра»','Застройщик ЖК — ГК «Садовое кольцо».','Информация не является публичной офертой']){
+   assert.ok(footer.includes(copy),name+': '+copy);
+  }
+  assert.doesNotMatch(footer,/ИП Саврасова|ИНН 366210396814|ОГРНИП 318366800035941/,name+': business details remain in legal documents, not in the footer');
+ }
+ for(const copy of ['Саврасова Елена Анатольевна','<dt>ИНН</dt><dd>366210396814</dd>','<dt>ОГРНИП</dt><dd>318366800035941</dd>']){
+  assert.ok(fs.readFileSync('privacy.html','utf8').includes(copy),'privacy.html keeps the operator identity: '+copy);
  }
  assert.ok(!fs.readFileSync('script.js','utf8').includes('domUMorya_cookieChoice'));
  const analyticsPage=fs.readFileSync('consent-analytics.html','utf8');assert.match(analyticsPage,/<meta name="robots" content="noindex,follow">/);assert.ok(!fs.readFileSync('scripts/seo.mjs','utf8').includes("'consent-analytics.html'"));

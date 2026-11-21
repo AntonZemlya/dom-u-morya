@@ -1,0 +1,19 @@
+test_competing_processes_choose_one_base (__main__.PublisherTest.test_competing_processes_choose_one_base) ... ok
+test_manifest_inventory_types_hashes_and_safe_svg_guard (__main__.PublisherTest.test_manifest_inventory_types_hashes_and_safe_svg_guard) ... ok
+test_operational_fields_preserved_owner_control_and_shared_locks (__main__.PublisherTest.test_operational_fields_preserved_owner_control_and_shared_locks) ... ok
+test_pending_retry_does_not_restore_damaged_previous_media (__main__.PublisherTest.test_pending_retry_does_not_restore_damaged_previous_media) ... ok
+test_private_permissions_and_no_real_home (__main__.PublisherTest.test_private_permissions_and_no_real_home) ... ok
+test_process_death_and_lost_response (__main__.PublisherTest.test_process_death_and_lost_response) ... ok
+test_read_failure_rolls_back_and_manual_restore_is_cas (__main__.PublisherTest.test_read_failure_rolls_back_and_manual_restore_is_cas) ... ok
+test_real_legacy_bootstrap_new_preview_encoding_and_recovery (__main__.PublisherTest.test_real_legacy_bootstrap_new_preview_encoding_and_recovery) ... ok
+test_repeat_conflict_collision_and_stale (__main__.PublisherTest.test_repeat_conflict_collision_and_stale) ... ok
+test_restore_checks_previous_media_and_installed_worker_handshake (__main__.PublisherTest.test_restore_checks_previous_media_and_installed_worker_handshake) ... ok
+test_restore_empty_and_repeat (__main__.PublisherTest.test_restore_empty_and_repeat) ... ok
+test_rollback_refuses_changed_pointer (__main__.PublisherTest.test_rollback_refuses_changed_pointer) ... ok
+test_surfaces_headers_media_version_gate_and_trust_loss (__main__.PublisherTest.test_surfaces_headers_media_version_gate_and_trust_loss) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 15.742s
+
+OK
+LEGACY_PREVIEW_BINDINGS {"after_native": "d8e478005055082696a9b5a1f303599a95508b549a028dd510c1777cebdbbe6b", "before_native": "f4a672a0f5b4d3892be5fca3733f8525454df7c744b2994a5e75446c42ad8417", "legacy_url": "/api/catalog-plan.php?file=026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d.preview.webp", "legacy_webp_sha": "724422453b135750225c8af5c2c9b32cad6aaa62c95f56b749626a84512afe7c", "new_url": "/api/catalog-plan.php?preview=8105e8c154ed6b1944ac9646f1563e7e54e4d5fb3fec14a9599a03387ab77c77&file=026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d.preview.webp", "new_webp_sha": "8105e8c154ed6b1944ac9646f1563e7e54e4d5fb3fec14a9599a03387ab77c77", "svg_sha": "026ef1ab1116319eafed3c5a65c9f3c24034c4d4bb1d17138826dec2ee19cb1d"}

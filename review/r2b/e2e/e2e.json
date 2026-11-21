@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "home": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+  "public": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx/domains/zhk-dom-umorya.ru",
+  "root": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya",
+  "r2a": "db9963536daeb68ab9466684adb3df9da6bdc1e1",
+  "php": "8.4.27",
+  "initial_command": [
+    "/usr/local/bin/python3",
+    "-B",
+    "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/ops/catalog_publisher.py",
+    "install",
+    "--home",
+    "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+    "--url",
+    "http://127.0.0.1:60810",
+    "--expect",
+    "empty",
+    "--package",
+    "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/e5e2910c79443d8617dd20ee38c8830ddf02053744f7bd996d03b08cc44a9126",
+    "--sha",
+    "e5e2910c79443d8617dd20ee38c8830ddf02053744f7bd996d03b08cc44a9126"
+  ],
+  "first_install": {
+    "active": "d8e478005055082696a9b5a1f303599a95508b549a028dd510c1777cebdbbe6b",
+    "owner": "publisher",
+    "package": "e5e2910c79443d8617dd20ee38c8830ddf02053744f7bd996d03b08cc44a9126",
+    "pending": null,
+    "status": "confirmed",
+    "trust_loss": false
+  },
+  "browser_report": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/review/r2b/e2e/browser.json",
+  "fixtures": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/review/r2b/e2e/fixtures.json",
+  "final": {
+    "active": "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+    "owner": "publisher",
+    "status": "confirmed",
+    "trust_loss": false,
+    "pending": null,
+    "package": "f062cdb9df68d883b34275e3916695f426662d80268179713f184e5e11c059ff"
+  }
+}

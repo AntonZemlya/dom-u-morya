@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scenario": "SIGKILL after pointer; old-only media damaged; pending retry finish read fails",
+  "expected_error": "installed_checksum",
+  "candidate_preserved": true,
+  "pending_preserved": true,
+  "r2a": "db9963536daeb68ab9466684adb3df9da6bdc1e1",
+  "candidate_native": "33becbc18d5e556362e92cd2448ff4934c6737105f9ad80476c093d9b8901567",
+  "previous_native": "332bf7bb12d2519ed663b02d4aa0671a1d2ce61cb3308d21eed45bb29d146adc"
+}

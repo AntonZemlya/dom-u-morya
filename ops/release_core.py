@@ -32,6 +32,7 @@ PREVIOUS_HTACCESS_SHA256 = '86a28fe3e086dc73b1e901277080e79df5fbe0e178fcf5644b5a
 APPROVED_HTACCESS_SHA256 = '1412dd94ca93a9942cb0f679472294925496ca12c3e4317484b09e3c5f98504a'
 CATALOG_HTACCESS_SHA256 = '4fcb98daec1c53d3b5829a9731c202e614d9d83080e67a784a66014a27eb7758'
 CATALOG_PUBLIC_FILES = {'index.php', 'index.html', 'api/catalog-view.php', 'api/catalog-plan.php', 'api/lead-core.php'}
+CATALOG_RUNTIME_FILES = (CATALOG_PUBLIC_FILES - {'index.html'}) | {'script.js', 'content-model.js', 'api/lead-catalog.php'}
 RUN_FILES = {'receipt.json','package.tar.gz','manifest.json','plan.json','backup.tar.gz','backup.json'}
 BACKED_UP_PHASES = {'backed_up','publishing','awaiting_http_verify','verified',
                     'needs_rollback','rolling_back','rolled_back','recovery_required'}
@@ -384,10 +385,29 @@ class Manager:
         state = real(self.private / 'catalog-sync-v1' / 'state.json')
         return state.exists()
 
+    def guard_catalog_target(self, target, current):
+        if not self.active_catalog():
+            return
+        ensure(CATALOG_PUBLIC_FILES <= set(target), 'Active catalog requires all catalog routes')
+        try:
+            state = json.loads(regular(self.private / 'catalog-sync-v1' / 'state.json'))
+            ensure(isinstance(state, dict) and state.get('schema') == 1
+                   and re.fullmatch(r'[a-f0-9]{64}', state.get('active', ''))
+                   and state.get('publisher_owner', 'legacy') in ('legacy', 'publisher'), 'Unrecognized catalog state: STOP')
+            publisher_owned = state.get('publisher_owner') == 'publisher'
+        except (ValueError, AttributeError):
+            raise RuntimeError('Unrecognized catalog state: STOP')
+        if publisher_owned:
+            ensure(all(name in current and target.get(name) == current[name]['sha256'] for name in CATALOG_RUNTIME_FILES),
+                   'Publisher catalog runtime requires a separate reviewed migration')
+
     def preflight(self, manifest, package_bytes=0):
         target_policy = manifest['files'].get('public/.htaccess')
         ensure(target_policy in (APPROVED_HTACCESS_SHA256, CATALOG_HTACCESS_SHA256), 'Package Apache policy changed: STOP')
         identity=manifest['runtime_identity']; snapshot=self.snapshot(identity)
+        if self.active_catalog():
+            ensure(target_policy == CATALOG_HTACCESS_SHA256, 'Active catalog requires all catalog routes')
+            self.guard_catalog_target({n:manifest['files'].get('public/'+n) for n in manifest['public_allowlist']}, snapshot['public'])
         # SMTP upgrades require a separate config migration; ordinary releases preserve config.
         ensure(snapshot['public']['api/smtp-manifest.php']['sha256'] == manifest['files']['public/api/smtp-manifest.php'], 'SMTP runtime migration requires separate reviewed scope')
         ensure(all(snapshot['runtime'][n]['sha256'] == manifest['files']['private/smtp-runtime/'+identity+'/'+n] for n in RUNTIME_FILES), 'Installed runtime differs from package')
@@ -736,6 +756,8 @@ class Manager:
         base=json.loads(regular(run/'plan.json'))
         ensure(not self.active_catalog() or base['snapshot']['public']['.htaccess']['sha256'] == CATALOG_HTACCESS_SHA256,
                'Active catalog requires catalog-compatible rollback; stop the catalog separately before legacy recovery')
+        self.guard_catalog_target({n:v['sha256'] for n,v in base['snapshot']['public'].items()},
+                                  self.snapshot(base['snapshot']['runtime_identity'])['public'])
         plan=dict(schema='dom-plan/v1',action='rollback',domain=DOMAIN,release_id=release_id,package_sha256=r['package_sha256'],
                   receipt_sha256=digest(r),snapshot=self.snapshot(base['snapshot']['runtime_identity']),policy_sha256=digest(self.policy))
         plan['sha256']=digest(plan)

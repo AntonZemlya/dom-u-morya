@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""R2B local-only dom-private-v1 acceptance, CAS publication and recovery.
-
-No transport, source requests, scheduler, SMTP or hosting installation is provided.
-"""
+"""Verify, publish and recover dom-private-v1 packages under the site release lock."""
 import argparse
 import copy
 from datetime import datetime, timezone, timedelta
@@ -12,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import re
+import socket
 import stat
 import subprocess
 import sys
@@ -28,6 +26,9 @@ import catalog_source as source
 
 R2A = 'db9963536daeb68ab9466684adb3df9da6bdc1e1'
 NAMESPACE = ['sadovoe-kolco', '24', 'house-by-the-sea']
+FORMAT = 'dom-private-v1'
+JINO_HOME = Path('/home/users/j/j84938826')
+LEGACY_WORKER_SHA = '53246ee4b72c950c2deb6d6b48972a9a96b4ba7fc8585d74b18d7f8112425b8b'
 PROJECTION = {'schema', 'active', 'checked_at', 'published_checked_at', 'source_ok'}
 MAX_TOTAL = 180 * 1024 * 1024
 MAX_FILES = 1800
@@ -36,6 +37,10 @@ MAX_FILES = 1800
 def require(ok, reason):
     if not ok:
         raise ValueError(reason)
+
+
+class WebsiteUnavailable(ValueError):
+    """Retryable public-site transport or temporary HTTP failure."""
 
 
 def digest(raw):
@@ -79,6 +84,17 @@ def document(raw):
                       parse_constant=lambda _: require(False, 'invalid_number'))
 
 
+def package_body(package, name, info):
+    limit = (sync.MAX_SNAPSHOT if name.startswith('private/snapshots/')
+             else sync.MAX_STATE if name == 'private/state.json'
+             else 512 * 1024 if name.endswith('.webp') else source.MAX_SVG)
+    require(isinstance(info, dict) and set(info) == {'sha256', 'bytes'}
+            and checksum(info['sha256']) and integer(info['bytes'], 1, limit), 'package_checksum')
+    body = read(package / name, info['bytes'])
+    require(info == {'sha256': digest(body), 'bytes': len(body)}, 'package_checksum')
+    return body
+
+
 def verify_package(package, expected, node='node'):
     directory(package)
     require(checksum(expected), 'expected_manifest_sha_required')
@@ -88,7 +104,7 @@ def verify_package(package, expected, node='node'):
     require(set(manifest) == {'schema', 'format', 'namespace', 'source_sha256', 'observation_sha256',
                              'native_sha256', 'native_path', 'checked_at', 'files'}
             and type(manifest['schema']) is int and manifest['schema'] == 1
-            and manifest['format'] == 'dom-private-v1' and manifest['namespace'] == NAMESPACE
+            and manifest['format'] == FORMAT and manifest['namespace'] == NAMESPACE
             and all(checksum(manifest[k]) for k in ('source_sha256', 'observation_sha256', 'native_sha256')),
             'wrong_package')
     checked = manifest['checked_at']
@@ -104,8 +120,9 @@ def verify_package(package, expected, node='node'):
     for name in files:
         require(re.fullmatch(r'private/(?:state\.json|snapshots/[a-f0-9]{64}\.json|media/[a-f0-9]{64}\.(?:svg|preview\.webp))', name),
                 'invalid_package_path')
+        require(not name.startswith('private/snapshots/') or name == primary, 'unreferenced_snapshot')
         expected_dirs.update(Path(name).parents)
-    paths, total, bodies = set(), 0, {}
+    paths, total = set(), 0
     for parent, dirs, names in os.walk(package, followlinks=False):
         for name in dirs:
             child = Path(parent) / name
@@ -115,25 +132,26 @@ def verify_package(package, expected, node='node'):
             paths.add((Path(parent) / name).relative_to(package).as_posix())
     require(paths == set(files) | {'manifest.json'}, 'package_inventory')
     for name, info in files.items():
-        limit = (sync.MAX_SNAPSHOT if name == primary else sync.MAX_STATE if name == 'private/state.json'
-                 else 512 * 1024 if name.endswith('.webp') else source.MAX_SVG)
-        body = read(package / name, limit)
-        require(isinstance(info, dict) and set(info) == {'sha256', 'bytes'} and integer(info['bytes'], 1, limit)
-                and info == {'sha256': digest(body), 'bytes': len(body)}, 'package_checksum')
+        body = package_body(package, name, info)
         total += len(body)
         require(total <= MAX_TOTAL, 'package_too_large')
-        bodies[name] = body
-    require(primary in bodies and 'private/state.json' in bodies and digest(bodies[primary]) == native, 'native_checksum')
-    projection = document(bodies['private/state.json'])
+        if name.endswith('.svg'):
+            media.svg(body)
+        elif name.endswith('.webp'):
+            media.webp(body)
+    require(primary in files and 'private/state.json' in files and files[primary]['sha256'] == native, 'native_checksum')
+    projection = document(package_body(package, 'private/state.json', files['private/state.json']))
     require(set(projection) == PROJECTION and type(projection['schema']) is int and projection['schema'] == 1
             and projection['active'] == native and projection['source_ok'] is True
             and type(projection['checked_at']) is int and type(projection['published_checked_at']) is int
             and projection['checked_at'] == projection['published_checked_at'] == epoch, 'invalid_projection')
-    catalog = document(bodies[primary])
+    native_body = package_body(package, primary, files[primary])
+    catalog = document(native_body)
     date = moment.astimezone(timezone(timedelta(hours=3))).date().isoformat()
     require(catalog.get('schema') == 1 and catalog.get('date') == date and isinstance(catalog.get('lots'), list)
             and 1 <= len(catalog['lots']) <= 500, 'invalid_native_catalog')
     ids, addresses, referenced = set(), set(), {primary, 'private/state.json'}
+    preview_modes = {}
     for row in catalog['lots']:
         key = row['id']
         address = tuple(row[k] for k in ('building', 'section', 'number'))
@@ -161,23 +179,21 @@ def verify_package(package, expected, node='node'):
             require(isinstance(source_url, str) and re.fullmatch(re.escape(source.ORIGIN)
                     + '/upload/plans/house-by-the-sea/' + folder + r'/[A-Za-z0-9_-][A-Za-z0-9_.-]{0,119}\.svg', source_url), 'invalid_plan_source')
             svg, webp = 'private/media/' + sha + '.svg', 'private/media/' + sha + '.preview.webp'
-            require(svg in bodies and webp in bodies and digest(bodies[svg]) == sha, 'missing_plan')
+            require(svg in files and webp in files and files[svg]['sha256'] == sha, 'missing_plan')
+            require(preview_modes.setdefault(sha, bool(match)) == bool(match), 'mixed_preview_binding')
             if match:
-                require(match[1] == digest(bodies[webp]), 'preview_binding')
-            media.svg(bodies[svg])
-            media.webp(bodies[webp])
+                require(match[1] == files[webp]['sha256'], 'preview_binding')
             referenced.update((svg, webp))
     require(referenced == set(files), 'unreferenced_payload')
     generated = subprocess.run([node, str(ROOT / 'scripts/catalog-snapshot.mjs')],
                                input=sync.encode({'date': date, 'lots': catalog['lots']}),
                                capture_output=True, timeout=30)
-    require(generated.returncode == 0 and generated.stdout == bodies[primary], 'native_render_mismatch')
-    return manifest, projection, bodies
+    require(generated.returncode == 0 and generated.stdout == native_body, 'native_render_mismatch')
+    return manifest, projection, native_body, {sha for sha, modern in preview_modes.items() if modern}
 
 
 class Publisher:
     def __init__(self, home, url, node='node', php='php'):
-        # This PR intentionally cannot target a real account. No environment override.
         temp = Path(tempfile.gettempdir()).resolve()
         require(home.is_absolute() and home.resolve() == home and home.parent == temp
                 and home.name.startswith('dom-publisher-'), 'temporary_local_home_required')
@@ -186,19 +202,32 @@ class Publisher:
         require(parsed.scheme == 'http' and parsed.hostname == '127.0.0.1' and parsed.port
                 and not parsed.username and not parsed.password and parsed.path in ('', '/')
                 and not parsed.query and not parsed.fragment, 'loopback_url_required')
-        self.port, self.node = parsed.port, node
-        self.store = sync.Store(home, node=node, php=php)
-        self.root, self.state = self.store.root, self.store.state
-        require(self.store.doc.resolve() == self.store.doc and self.store.doc.is_dir(), 'local_site_required')
+        self.jino, self.port = False, parsed.port
+        self.configure(home, node, php)
         for path in (self.root.parent, self.root, self.store.media, self.store.snapshots,
-                     self.store.website_lock.parent):
+                     self.store.website_lock.parent, self.transactions, self.previews):
             mkdir(path)
-        self.transactions = mkdir(self.root / 'publisher-transactions')
-        mkdir(self.store.media / 'previews')
-        # Exactly the existing lock paths and order used by the legacy worker.
         for path in (self.store.running, self.store.website_lock):
             with sync.lock(path, create=True):
                 pass
+
+    @classmethod
+    def for_jino(cls):
+        require(JINO_HOME.resolve() == JINO_HOME and JINO_HOME.stat().st_uid == os.getuid(), 'wrong_jino_account')
+        publisher = cls.__new__(cls)
+        publisher.jino = True
+        publisher.configure(JINO_HOME, sync.NODE, sync.PHP)
+        publisher.store.verify_root()
+        directory(publisher.store.website_lock.parent)
+        return publisher
+
+    def configure(self, home, node, php):
+        self.node = node
+        self.store = sync.Store(home, node=node, php=php)
+        self.root, self.state = self.store.root, self.store.state
+        require(self.store.doc.resolve() == self.store.doc and self.store.doc.is_dir(), 'site_directory_required')
+        self.transactions = self.root / 'publisher-transactions'
+        self.previews = self.store.media / 'previews'
 
     def locks(self):
         import contextlib
@@ -219,30 +248,45 @@ class Publisher:
 
     def status(self):
         item = self.current()
-        trusted = item is not None and sync.website_status(item, int(time.time())) == 'confirmed'
-        return dict(active=self.active(item), owner=(item or {}).get('publisher_owner', 'legacy'),
+        state = item or {}
+        trusted = item is not None and sync.website_status(state, int(time.time())) == 'confirmed'
+        pending = state.get('publisher_pending') or ('legacy_verification' if state.get('pending_verification') else None)
+        return dict(active=self.active(item), owner=state.get('publisher_owner', 'legacy'),
                     status='confirmed' if trusted else 'unconfirmed', trust_loss=not trusted,
-                    pending=(item or {}).get('publisher_pending'), package=(item or {}).get('publisher_package'))
+                    pending=pending, package=state.get('publisher_package'), started_at=state.get('started_at'),
+                    published_checked_at=state.get('published_checked_at'))
 
     def request(self, path, method):
-        conn = http.client.HTTPConnection('127.0.0.1', self.port, timeout=5)
+        conn = (http.client.HTTPSConnection(sync.DOMAIN, timeout=8) if self.jino
+                else http.client.HTTPConnection('127.0.0.1', self.port, timeout=5))
         try:
-            conn.request(method, path)
+            conn.request(method, path, headers={'Cache-Control': 'no-cache', 'Accept-Encoding': 'identity'})
             response = conn.getresponse()
             body = response.read(10 * 1024 * 1024 + 1)
             require(len(body) <= 10 * 1024 * 1024, 'http_body_limit')
             return response.status, {k.lower(): v for k, v in response.getheaders()}, body
+        except (TimeoutError, ConnectionError, http.client.IncompleteRead) as exc:
+            raise WebsiteUnavailable('public_site_unavailable') from exc
+        except socket.gaierror as exc:
+            if exc.errno == socket.EAI_AGAIN:
+                raise WebsiteUnavailable('public_site_dns_unavailable') from exc
+            raise
         finally:
             conn.close()
 
     def check_http(self, item):
         version = self.active(item) if item else 'bundled'
         status = sync.website_status(item, int(time.time())) if item else 'confirmed'
+        checked = (item or {}).get('published_checked_at', 0)
+        checked_header = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(checked)) if checked else None
         template = digest((self.store.doc / 'index.html').read_bytes())
         for method in ('GET', 'HEAD'):
             code, headers, body = self.request('/', method)
+            if code in (429, 503):
+                raise WebsiteUnavailable('public_site_' + str(code))
             require(code == 200 and headers.get('x-dom-catalog-snapshot') == version
                     and headers.get('x-dom-catalog-status') == status and 'no-store' in headers.get('cache-control', '')
+                    and headers.get('x-dom-catalog-checked-at') == checked_header
                     and headers.get('x-dom-catalog-template') == template, 'http_verification_failed')
             if method == 'GET' and item:
                 match = re.search(rb'<script id="site-data" type="application/json">(.*?)</script>', body, re.S)
@@ -260,19 +304,54 @@ class Publisher:
             require(item is not None and self.active(item) == expected, 'base_conflict')
             require(not item.get('started_at') and not item.get('pending_verification')
                     and not item.get('publisher_pending'), 'unfinished_operation')
+            if self.jino:
+                directory(self.transactions)
+                directory(self.previews)
+                require(owner != 'legacy' or not item.get('publisher_package'), 'restore_legacy_before_owner')
             self.check_http(item)
             item['publisher_owner'] = owner
             self.store.save(item)
         return self.status()
 
-    def worker_guard(self):
+    def worker_runtime(self):
         runtime = self.root / 'runtime'
-        if runtime.exists() or runtime.is_symlink():
-            directory(runtime)
-            directory(runtime / 'scripts')
+        if not runtime.exists() and not runtime.is_symlink():
+            require(not self.jino, 'installed_worker_required')
+            return None
+        directory(runtime)
+        return directory(runtime / 'scripts')
+
+    def worker_guard(self):
+        runtime = self.worker_runtime()
+        if runtime:
             for name in ('catalog_sync.py', 'catalog-cron.sh'):
-                require(read(runtime / 'scripts' / name, 128 * 1024) == (ROOT / 'scripts' / name).read_bytes(),
+                require(read(runtime / name, 128 * 1024) == (ROOT / 'scripts' / name).read_bytes(),
                         'installed_worker_requires_guarded_migration')
+
+    def prepare_jino(self, expected):
+        """After Cron has been disabled and drained, guard the exact installed legacy writer."""
+        require(self.jino and checksum(expected), 'jino_active_sha_required')
+        with self.locks():
+            item = self.current()
+            require(item and self.active(item) == expected, 'base_conflict')
+            require(not item.get('started_at') and not item.get('pending_verification')
+                    and not item.get('publisher_pending'), 'unfinished_operation')
+            runtime = self.worker_runtime()
+            require(read(runtime / 'catalog-cron.sh', 128 * 1024) == (ROOT / 'scripts/catalog-cron.sh').read_bytes(),
+                    'installed_cron_does_not_match')
+            worker = runtime / 'catalog_sync.py'
+            old, guarded = read(worker, 128 * 1024), (ROOT / 'scripts/catalog_sync.py').read_bytes()
+            require(old == guarded or (item.get('publisher_owner', 'legacy') == 'legacy'
+                                       and digest(old) == LEGACY_WORKER_SHA), 'unknown_installed_worker')
+            self.check_http(item)
+            self.installed_files(item)
+            mkdir(self.transactions)
+            mkdir(self.previews)
+            if old != guarded:
+                self.immutable(self.transactions / ('legacy-worker-' + LEGACY_WORKER_SHA + '.py'), old)
+                sync.atomic(worker, guarded)
+            self.worker_guard()
+            return self.status()
 
     def installed_files(self, item):
         if item is None:
@@ -316,8 +395,9 @@ class Publisher:
         self.store.verify_render(read(self.store.snapshots / (item['active'] + '.json'), sync.MAX_SNAPSHOT))
 
     def invalidate(self, expected, expected_package):
-        """Local source-loss signal, with the same lock/CAS as publication; never sends mail."""
+        """Apply a source-loss signal under the publication lock and CAS."""
         with self.locks():
+            self.worker_guard()
             item = self.current()
             require(item and item['active'] == expected and item.get('publisher_package') == expected_package
                     and checksum(expected_package) and item.get('publisher_owner') == 'publisher', 'confirmation_conflict')
@@ -355,32 +435,45 @@ class Publisher:
         self.store.save(done)
 
     def install(self, package, expected_sha, expected):
-        manifest, projection, bodies = verify_package(package, expected_sha, self.node)
+        manifest, projection, native_body, preview_shas = verify_package(package, expected_sha, self.node)
         with self.locks():
             self.worker_guard()
             before = self.current()
+            if self.jino:
+                require(before is not None and checksum(expected), 'jino_active_sha_required')
+                directory(self.transactions)
+                directory(self.previews)
             require(before is None or before.get('publisher_owner', 'legacy') == 'publisher', 'legacy_owner_active')
             require(before is None or projection['checked_at'] >= before['checked_at'], 'stale_confirmation')
             same = before and before.get('publisher_package') == expected_sha and before['active'] == projection['active']
             require(same or 0 <= time.time() - projection['checked_at'] <= sync.CHECK_MAX_AGE, 'package_unconfirmed')
             require(before is None or same or projection['checked_at'] > before['checked_at'], 'new_confirmation_required')
+            if self.jino and not same:
+                require(projection['checked_at'] > before.get('publisher_confirmation_high_water', 0),
+                        'confirmation_before_restore')
             require(same or self.active(before) == expected, 'base_conflict')
             require(not (before or {}).get('started_at') and not (before or {}).get('pending_verification'), 'unfinished_worker')
             require(not (before or {}).get('publisher_pending') or same, 'pending_publisher')
-            # Preflight ties loopback server to this exact copied site's current state.
+            # Preflight ties the HTTP response to this exact site's current state and template.
             if not (same and before.get('publisher_pending')):
                 self.check_http(before)
             before_files = self.installed_files(before)
-            targets = {}
-            preview_shas = {p['sha256'] for row in document(bodies[manifest['native_path']])['lots'] for p in row['plans']
-                            if 'preview=' in p['local_path']}
-            for name, raw in bodies.items():
+            targets, paths = {}, {}
+            for name, info in manifest['files'].items():
                 if name != 'private/state.json':
                     relative = name.removeprefix('private/')
                     if name.endswith('.preview.webp') and Path(name).name[:64] in preview_shas:
-                        relative = 'media/previews/' + digest(raw) + '.webp'
-                    targets[relative] = dict(sha256=digest(raw), bytes=len(raw))
-                    self.immutable(self.root / relative, raw)
+                        relative = 'media/previews/' + info['sha256'] + '.webp'
+                    targets[relative] = info
+                    paths[relative] = name
+            if self.jino:
+                allocated = sum(path.lstat().st_size for folder in (self.store.media, self.previews)
+                                for path in folder.iterdir() if path != self.previews)
+                additional = sum(info['bytes'] for name, info in targets.items()
+                                 if name.startswith('media/') and not (self.root / name).exists())
+                require(allocated + additional <= sync.MAX_MEDIA_BYTES, 'installed_media_limit')
+            for relative, name in paths.items():
+                self.immutable(self.root / relative, package_body(package, name, targets[relative]))
             if same:
                 if before.get('publisher_pending'):
                     try:
@@ -393,15 +486,18 @@ class Publisher:
                 else:
                     self.check_http(before)
                 return self.status()
-            self.store.verify_render(bodies[manifest['native_path']])
+            self.store.verify_render(native_body)
             token = uuid.uuid4().hex
             candidate = copy.deepcopy(before) if before else dict(history=[], etags={}, outbox=[], history_events=[], started_at=None)
             candidate.update(projection)
             candidate.pop('publisher_trust_loss', None)
             candidate.pop('publisher_restored_from', None)
+            candidate.pop('publisher_restored_from_package', None)
             candidate.update(publisher_owner='publisher', publisher_package=expected_sha,
                              publisher_source=manifest['source_sha256'], publisher_observation=manifest['observation_sha256'],
                              publisher_txn=token, publisher_pending=token)
+            if self.jino:
+                candidate['publisher_confirmation_high_water'] = projection['checked_at']
             candidate['history'] = [projection['active']] + [v for v in candidate['history'] if v != projection['active']]
             self.immutable(self.transactions / (token + '.json'), sync.encode(dict(schema=1, before=before, candidate=candidate,
                                                                                  before_files=before_files, files=targets)))
@@ -414,10 +510,12 @@ class Publisher:
                 raise
             return self.status()
 
-    def restore(self, expected):
+    def restore(self, expected, expected_package=None):
         with self.locks():
             self.worker_guard()
             item = self.current()
+            if self.jino:
+                require(item is not None and checksum(expected_package), 'expected_confirmation_required')
             if item is None:
                 for path in self.transactions.glob('*.json'):
                     record = self.receipt(path.stem)
@@ -425,13 +523,16 @@ class Publisher:
                         self.check_http(None)
                         return self.status()
                 raise ValueError('restore_conflict')
-            if item and item.get('publisher_restored_from') == expected:
+            if item.get('publisher_restored_from') == expected and (
+                    expected_package is None or item.get('publisher_restored_from_package') == expected_package):
                 self.check_http(item)
                 return self.status()
             require(item and item['active'] == expected and item.get('publisher_owner') == 'publisher', 'restore_conflict')
+            require(expected_package is None or item.get('publisher_package') == expected_package, 'restore_conflict')
             require(not item.get('started_at') and not item.get('pending_verification'), 'unfinished_worker')
             record = self.receipt(item.get('publisher_txn'))
             before = record['before']
+            require(not self.jino or before is not None, 'cannot_restore_empty_jino_catalog')
             self.verify_installed(before, record['before_files'])
             if before:
                 self.store.read_snapshot(before['active'])
@@ -441,6 +542,12 @@ class Publisher:
                     restored.pop(key, None)
                 restored.update({k: v for k, v in before.items() if k in PROJECTION or k.startswith('publisher_')})
                 restored.update(publisher_owner='publisher', publisher_restored_from=expected)
+                if expected_package is not None:
+                    restored['publisher_restored_from_package'] = expected_package
+                if self.jino:
+                    restored['publisher_confirmation_high_water'] = max(
+                        item['checked_at'], item.get('publisher_confirmation_high_water', 0),
+                        before.get('publisher_confirmation_high_water', 0))
                 restored.pop('publisher_pending', None)
                 if not item.get('publisher_pending'):
                     restored['source_ok'] = False  # Manual rollback is not a new source confirmation.
@@ -469,7 +576,7 @@ def main():
     parser.add_argument('--owner', choices=['publisher', 'legacy'])
     args = parser.parse_args()
     if args.action == 'verify':
-        manifest, _, _ = verify_package(args.package, args.sha)
+        manifest, _, _, _ = verify_package(args.package, args.sha)
         result = dict(package=args.sha, native=manifest['native_sha256'], r2a=R2A)
     else:
         require(args.home and args.url, 'local_home_and_url_required')

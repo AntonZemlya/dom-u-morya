@@ -1,0 +1,6 @@
+....................................................................
+----------------------------------------------------------------------
+Ran 68 tests in 6.095s
+
+OK
+HTTP comparison fixture: {"compact": {"duration_seconds": 0.024, "request_count": 40, "verified_files": 7, "verified_route_cases": 28}, "full": {"duration_seconds": 0.259, "request_count": 771, "verified_files": 284, "verified_route_cases": 236}}

@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "browser": "151.0.7922.34",
+  "id": "900002",
+  "price": 7000000,
+  "staleVersionWithUnchangedPrice": 409,
+  "stalePdfBlocked": true,
+  "unconfirmedPdfBlocked": true,
+  "freshConfirmationRestored": true,
+  "commands": [
+    [
+      "python3",
+      "-B",
+      "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/ops/catalog_publisher.py",
+      "install",
+      "--home",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+      "--url",
+      "http://127.0.0.1:60810",
+      "--expect",
+      "d8e478005055082696a9b5a1f303599a95508b549a028dd510c1777cebdbbe6b",
+      "--package",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727",
+      "--sha",
+      "2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727"
+    ],
+    [
+      "python3",
+      "-B",
+      "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/ops/catalog_publisher.py",
+      "invalidate",
+      "--home",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+      "--url",
+      "http://127.0.0.1:60810",
+      "--expect",
+      "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+      "--expect-package",
+      "2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727"
+    ],
+    [
+      "python3",
+      "-B",
+      "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/ops/catalog_publisher.py",
+      "install",
+      "--home",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+      "--url",
+      "http://127.0.0.1:60810",
+      "--expect",
+      "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+      "--package",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727",
+      "--sha",
+      "2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727"
+    ],
+    [
+      "python3",
+      "-B",
+      "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/ops/catalog_publisher.py",
+      "install",
+      "--home",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-e2e-_jzaybpx",
+      "--url",
+      "http://127.0.0.1:60810",
+      "--expect",
+      "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+      "--package",
+      "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/f062cdb9df68d883b34275e3916695f426662d80268179713f184e5e11c059ff",
+      "--sha",
+      "f062cdb9df68d883b34275e3916695f426662d80268179713f184e5e11c059ff"
+    ]
+  ],
+  "downloads": [
+    {
+      "label": "a-current",
+      "file": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/review/r2b/e2e/a-current.pdf",
+      "bytes": 273619,
+      "sha256": "5280aa18f6ac4bd70d728bff2f5317b07e227fd24f4be6a73fe69f10f42150e9",
+      "id": "900002",
+      "price": 7000000
+    },
+    {
+      "label": "b-current",
+      "file": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/review/r2b/e2e/b-current.pdf",
+      "bytes": 273619,
+      "sha256": "2be9ab4f1ed4ae440176f599f6002c638d2dd1afa10112482a7ae7a873087163",
+      "id": "900002",
+      "price": 7000000
+    },
+    {
+      "label": "c-reconfirmed",
+      "file": "/Users/azm1982/.codex/worktrees/6705/dom-u-morya/review/r2b/e2e/c-reconfirmed.pdf",
+      "bytes": 273619,
+      "sha256": "d9c719a1f77d332eabb5b74010ac3ec8238f3dbc6032a6afdd0555a03021a422",
+      "id": "900002",
+      "price": 7000000
+    }
+  ],
+  "blockedExternalOrNonRead": []
+}

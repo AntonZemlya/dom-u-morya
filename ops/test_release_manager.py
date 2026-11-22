@@ -544,7 +544,7 @@ class Lifecycle(unittest.TestCase):
         private = self.private/'catalog-sync-v1'
         private.mkdir(mode=0o700)
         state = private/'state.json'
-        state.write_bytes(b'catalog state owned by Cron')
+        state.write_bytes(c.canonical(dict(schema=1, active='a'*64, publisher_owner='legacy')))
         state.chmod(0o600)
         with self.assertRaisesRegex(RuntimeError, 'catalog-compatible rollback'):
             self.m.rollback_plan('catalog-route')
@@ -552,8 +552,33 @@ class Lifecycle(unittest.TestCase):
         self.assertIsNone(next_review['plan']['apache_policy_migration'])
         rollback = self.m.rollback_plan('compatible-release')
         self.m.rollback(rollback['plan'], rollback['go'])
-        self.assertEqual(state.read_bytes(), b'catalog state owned by Cron')
+        self.assertEqual(state.read_bytes(), c.canonical(dict(schema=1, active='a'*64, publisher_owner='legacy')))
         self.assertEqual(self.m.status('catalog-route')['phase'], 'verified')
+
+    def test_publisher_catalog_blocks_ordinary_runtime_replacement(self):
+        public = {name:b'catalog-compatible fixture' for name in c.CATALOG_RUNTIME_FILES | {'index.html'}}
+        public['.htaccess'] = self.catalog_guard
+        old_public = dict(public, **{'api/lead-core.php': b'old compatible reader without version gate'})
+        self.verified('publisher-old-reader', extra=old_public)
+        self.verified('publisher-baseline', extra=public)
+        private = self.private/'catalog-sync-v1'
+        private.mkdir(mode=0o700)
+        state = private/'state.json'
+        state.write_bytes(c.canonical(dict(schema=1, active='a'*64, publisher_owner='publisher')))
+        state.chmod(0o600)
+        with self.assertRaisesRegex(RuntimeError, 'separate reviewed migration'):
+            self.m.rollback_plan('publisher-baseline')
+        changed = dict(public, **{'api/catalog-view.php':b'ordinary replacement'})
+        with self.assertRaisesRegex(RuntimeError, 'separate reviewed migration'):
+            self.plan('publisher-reader-change', extra=changed)
+        missing = dict(public)
+        missing.pop('index.php')
+        with self.assertRaisesRegex(RuntimeError, 'all catalog routes'):
+            self.plan('publisher-route-delete', extra=missing)
+        self.plan('publisher-ui-only', extra=public)
+        state.write_bytes(b'not valid JSON')
+        with self.assertRaisesRegex(RuntimeError, 'Unrecognized catalog state'):
+            self.plan('publisher-corrupt-state', extra=public)
 
     def test_exact_apache_migration_backup_rollback_and_target_only_packages(self):
         raw,manifest,review=self.migration_plan()

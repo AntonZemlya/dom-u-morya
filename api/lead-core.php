@@ -80,7 +80,7 @@ function validate(string $raw): array {
     catch (\JsonException) { reject(400, 'invalid_json'); }
     if (!$data instanceof \stdClass) reject(400, 'invalid_json');
     $d = (array)$data;
-    $allowed = ['name','phone','consent','consentVersion','lotId','lotPrice','category','planView','requestKind','email','channel','callTime','calculation','website'];
+    $allowed = ['name','phone','consent','consentVersion','lotId','lotPrice','catalogVersion','category','planView','requestKind','email','channel','callTime','calculation','website'];
     if (array_diff(array_keys($d), $allowed)) reject(422, 'unknown_fields');
     if (($d['consent'] ?? false) !== true || ($d['consentVersion'] ?? '') !== CONSENT_VERSION) reject(422, 'consent_required');
     $v = ['name'=>text($d['name'] ?? null, 80, true), 'phone'=>text($d['phone'] ?? null, 12, true)];
@@ -96,6 +96,12 @@ function validate(string $raw): array {
     if ($v['lotId'] !== '' || isset($d['calculation'])) {
         try { $active = \DomCatalog\current(); }
         catch (\Throwable) { reject(503, 'catalog_unconfirmed'); }
+        // A tab belongs to the complete catalog version, even when its selected price is unchanged.
+        // The bundled public release retains its pre-publisher contract until private state exists.
+        if ($active && ($d['catalogVersion'] ?? null) !== $active['version']) {
+            reject(409, 'catalog_reload_required');
+        }
+        if ($active && $active['status'] === 'unconfirmed') reject(409, 'catalog_unconfirmed');
     }
     if ($v['lotId'] !== '') {
         $catalog = $active['snapshot']['lots'] ?? (require __DIR__.'/lead-catalog.php');

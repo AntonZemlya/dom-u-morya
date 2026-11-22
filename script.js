@@ -957,6 +957,7 @@ async function handleSubmit(){
     website:document.getElementById('website-input').value};
   if (state.snapshot?.lotId) payload.lotPrice = state.snapshot.lotPrice;
   if (state.snapshot?.calculation) payload.calculation = state.snapshot.calculation;
+  if (state.snapshot?.lotId || state.snapshot?.calculation) payload.catalogVersion = CATALOG_VERSION;
   const serialized = JSON.stringify(payload);
   // Retain only in this tab; retry after a lost response uses exactly the same key.
   if (!state.formAttempt || state.formAttempt.payload !== serialized) state.formAttempt = {payload:serialized,key:crypto.randomUUID()};

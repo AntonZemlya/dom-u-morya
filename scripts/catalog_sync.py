@@ -329,6 +329,7 @@ class Store:
         ])[-KEEP*5:]
 
     def flush(self, item):
+        source.must(item.get('publisher_owner', 'legacy') == 'legacy', 'Каталог передан публикатору')
         for event in item['outbox'][:4]:
             try:
                 result = subprocess.run([self.php, str(ROOT/'scripts/catalog-notify.php'), str(self.doc)],
@@ -389,6 +390,8 @@ class Store:
                         status='partial' if issues else 'confirmed', changes={k:len(v) for k,v in change.items()})
         with lock(self.running):
             item = self.read_state()
+            source.must(item.get('publisher_owner', 'legacy') == 'legacy',
+                        'Каталог передан публикатору; старый worker остановлен до доставки уведомлений')
             if item['started_at']:
                 with lock(self.website_lock):
                     self.recover_interrupted(item, now)
@@ -457,6 +460,7 @@ class Store:
     def restore(self, version, now):
         with lock(self.running), lock(self.website_lock):
             item = self.read_state()
+            source.must(item.get('publisher_owner', 'legacy') == 'legacy', 'Каталог передан публикатору')
             source.must(version in item['history'] and version != item['active'], 'Выберите сохранённый предыдущий снимок')
             raw = private_file(self.snapshots/(version+'.json'), MAX_SNAPSHOT)
             self.read_snapshot(version)
@@ -504,12 +508,14 @@ def main():
     elif args.command == 'interrupted':
         with lock(store.running), lock(store.website_lock):
             state = store.read_state()
+            source.must(state.get('publisher_owner', 'legacy') == 'legacy', 'Каталог передан публикатору')
             if state['started_at']:
                 store.recover_interrupted(state, now)
             result = {'notification_ok':store.flush(state)}
     elif args.command == 'mail-test':
         with lock(store.running):
             state = store.read_state()
+            source.must(state.get('publisher_owner', 'legacy') == 'legacy', 'Каталог передан публикатору')
             store.queue(state, message(now, 'проверка доставки', ['Тестовое уведомление синхронизации каталога. Заявка не создавалась.']))
             store.save(state)
             result = {'notification_ok':store.flush(state)}

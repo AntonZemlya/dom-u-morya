@@ -1,0 +1,27 @@
+{
+  "root": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r",
+  "r2a": "db9963536daeb68ab9466684adb3df9da6bdc1e1",
+  "packages": [
+    {
+      "package": "e5e2910c79443d8617dd20ee38c8830ddf02053744f7bd996d03b08cc44a9126",
+      "native": "d8e478005055082696a9b5a1f303599a95508b549a028dd510c1777cebdbbe6b",
+      "source": "afef313196e30692200949f892e5533cbe04669bc4b7717889ac11b8661d6df7",
+      "checked_at": "2026-11-21T21:39:31Z",
+      "directory": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/e5e2910c79443d8617dd20ee38c8830ddf02053744f7bd996d03b08cc44a9126"
+    },
+    {
+      "package": "2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727",
+      "native": "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+      "source": "b8e76f57040c948e33478e5bdf3e4e6821d81968adb29f3c674d29c83dba868a",
+      "checked_at": "2026-11-21T21:39:32Z",
+      "directory": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/2b68cafbc0e3e661ccf92b693b0d881db0e6d164eee1186f8b567fcb4cf47727"
+    },
+    {
+      "package": "f062cdb9df68d883b34275e3916695f426662d80268179713f184e5e11c059ff",
+      "native": "a5cdf174d551caccb63419661c3dd10e9efb9e7cd2d0942088cdbcad1fb08111",
+      "source": "b8e76f57040c948e33478e5bdf3e4e6821d81968adb29f3c674d29c83dba868a",
+      "checked_at": "2026-11-21T21:39:33Z",
+      "directory": "/private/var/folders/qd/p6dgnfjd4l5flstpbmw9ylrw0000gn/T/dom-publisher-packages-5kpwub1r/projects/sadovoe-kolco/24/house-by-the-sea/exports/packages/f062cdb9df68d883b34275e3916695f426662d80268179713f184e5e11c059ff"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "r2a": "db9963536daeb68ab9466684adb3df9da6bdc1e1",
+  "checked_at": "2026-11-21T21:44:38Z",
+  "php": "8.4.27",
+  "no_lot_calculation_confirmed": 200,
+  "no_lot_calculation_unconfirmed": "409:catalog_unconfirmed",
+  "no_lot_calculation_reconfirmed": 200,
+  "delayed_same_native_source_loss": "confirmation_conflict",
+  "exact_new_confirmation_bytes_preserved": true
+}

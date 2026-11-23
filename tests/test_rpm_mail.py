@@ -135,6 +135,21 @@ class MailContract(unittest.TestCase):
         self.assertEqual(proc.returncode, 2)
         self.assertEqual(len(self.received()), before)
 
+    def test_older_smtp_helper_is_never_called(self):
+        api = self.doc / "api"
+        api.mkdir(exist_ok=True)
+        (api / "lead-core.php").write_text("<?php namespace DomLead; function config(){return [];} "
+                                          "function enabled($cfg){return true;}")
+        (api / "lead-smtp.php").write_text("<?php namespace DomLead; function smtpTransport($m, $cfg, $only){ "
+                                          "fwrite(STDERR, 'legacy transport invoked'); return true; }")
+        result = subprocess.run([PHP, str(SCRIPT), "receive", str(self.doc), str(self.state)],
+                                env=os.environ | {"SSH_ORIGINAL_COMMAND": "rpm-mail-v1"}, input=wire(self.payload),
+                                capture_output=True, timeout=5)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(result.stderr, b"")
+        self.assertEqual(json.loads(result.stdout)["state"], "retry")
+        self.assertEqual(self.send({"op": "status"})["state"], "retry")
+
     def test_lost_ledger_is_never_recreated_by_sender(self):
         (self.state / "ledger.sqlite").rename(self.state / "preserved.sqlite")
         self.assertEqual(self.send({"op": "status"})["state"], "unavailable")

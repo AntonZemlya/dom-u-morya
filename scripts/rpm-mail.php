@@ -160,7 +160,10 @@ function receive(array $request, string $directory, callable $transport): array 
         $at = time();
         $stmt = $db->prepare("UPDATE mail SET state='accepted',accepted_at=? WHERE id=? AND state='uncertain'");
         $stmt->execute([$at, $id]);
-        if ($stmt->rowCount() !== 1) throw new \RuntimeException('invalid_accept_transition');
+        if ($stmt->rowCount() !== 1) {
+            $db->prepare("UPDATE mail SET state='uncertain' WHERE id=? AND state='retry'")->execute([$id]);
+            return $reply + ['state'=>'uncertain'];
+        }
         return $reply + ['state'=>'accepted', 'accepted_at'=>$at];
     } catch (\Throwable) {
         return $reply + ['state'=>'unavailable'];
@@ -191,6 +194,11 @@ function main(array $argv): int {
         require $doc.'/api/lead-smtp.php';
         $request = parse(stream_get_contents(STDIN, MAX_REQUEST + 1));
         $reply = receive($request, $directory, static function (array $message, callable $beforeData): bool {
+            // The older three-argument transport ignores an extra argument in PHP.
+            // Fail closed if the approved SMTP helper was rolled back independently.
+            $transport = new \ReflectionFunction('DomLead\smtpTransport');
+            $params = $transport->getParameters();
+            if (!isset($params[3]) || $params[3]->getName() !== 'beforeData') return false;
             $cfg = \DomLead\config();
             return \DomLead\enabled($cfg) && \DomLead\smtpTransport($message, $cfg, true, $beforeData);
         });

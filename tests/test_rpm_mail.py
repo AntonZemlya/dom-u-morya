@@ -3,6 +3,7 @@
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -29,7 +30,9 @@ class MailContract(unittest.TestCase):
             raise RuntimeError("Mail contract requires PHP 8.4")
         manifest = subprocess.check_output(
             [PHP, "-r", "echo (require 'api/smtp-manifest.php')['identity'];"], cwd=ROOT, text=True)
-        cls.runtime = RUNTIME / manifest
+        # The real transport requires its verified PHPMailer runtime outside the site tree.
+        cls.runtime = cls.tmp / manifest
+        shutil.copytree(RUNTIME / manifest, cls.runtime)
         cls.smtp = cls.tmp / "smtp"
         cls.smtp.mkdir()
         cls.doc = cls.tmp / "domains" / "zhk-dom-umorya.ru"

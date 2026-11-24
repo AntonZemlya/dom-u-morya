@@ -44,7 +44,7 @@ function smtpReady(array $cfg): bool {
 }
 
 /** Only final SMTP DATA acknowledgement is success. Exceptions are deliberately opaque. */
-function smtpTransport(array $m, array $cfg, bool $controlOnly = false): bool {
+function smtpTransport(array $m, array $cfg, bool $controlOnly = false, ?callable $beforeData = null): bool {
     $mail = null;
     try {
         [$host, $port, $tls] = smtpSettings($cfg);
@@ -52,7 +52,14 @@ function smtpTransport(array $m, array $cfg, bool $controlOnly = false): bool {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
         // PHPMailer normally sends DATA to accepted recipients even if another RCPT fails.
         // Abort that transaction before DATA; never deliver a partial To/BCC envelope.
-        $mail->setSMTPInstance(new class extends \PHPMailer\PHPMailer\SMTP {
+        $mail->setSMTPInstance(new class($controlOnly ? $beforeData : null) extends \PHPMailer\PHPMailer\SMTP {
+            public function __construct(private $beforeData) {}
+
+            public function data($msg_data) {
+                if ($this->beforeData !== null) ($this->beforeData)();
+                return parent::data($msg_data);
+            }
+
             public function recipient($address, $dsn = '') {
                 if (!parent::recipient($address, $dsn)) {
                     $this->reset();

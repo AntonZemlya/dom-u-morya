@@ -273,7 +273,8 @@ def main():
     p.add_argument('--policy',default=str(ROOT/'ops/release-policy.json'));p.add_argument('--quota-evidence')
     p.add_argument('--dry-run',action='store_true');p.add_argument('--certificate');p.add_argument('--destination')
     a=p.parse_args();policy=load(a.policy)
-    ensure(policy['keep_verified']>=2 and policy['protect_days']>=0 and policy['reserve_bytes']>=0,'Unsafe retention policy')
+    ensure(policy['keep_verified']>=2 and policy['protect_days']>=0 and policy['reserve_bytes']>=0
+           and policy.get('quota_mode','required') in ('required','operator_managed'),'Unsafe retention policy')
     if a.quota_evidence:policy['quota_evidence']=load(a.quota_evidence)
     if a.group=='release' and a.command=='build':result=build(a.commit,Path(a.output or ROOT/'.release-output/universal'))
     elif a.group=='release' and a.command in ['verify','preflight','plan','apply']:
@@ -303,9 +304,10 @@ def main():
     elif a.group=='release' and a.command=='finalize':
         ensure(a.plan and a.archive and a.sha and a.go, '--plan --archive --sha --go required')
         plan = load(a.plan)['plan']
-        ensure(a.quota_evidence, 'Finalize requires the original --quota-evidence file '
-               '(quota evidence SHA-256 {}, policy SHA-256 {}): STOP'.format(
-                   plan.get('quota_evidence_sha256', 'not recorded in this plan'), plan['policy_sha256']))
+        if policy.get('quota_mode','required') == 'required' or plan.get('quota_evidence_sha256') not in (None,digest({})):
+            ensure(a.quota_evidence, 'Finalize requires the original --quota-evidence file '
+                   '(quota evidence SHA-256 {}, policy SHA-256 {}): STOP'.format(
+                       plan.get('quota_evidence_sha256', 'not recorded in this plan'), plan['policy_sha256']))
         check_plan(plan, 'apply', a.go, policy)
         manifest, _ = verify_package(Path(a.archive).read_bytes(), a.sha)
         ensure(plan['package_sha256'] == a.sha, 'Wrong package for finalization')

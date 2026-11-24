@@ -2,7 +2,7 @@
 
 Единственный источник параметров — `ops/release-policy.json`:
 `keep_verified=2`, `protect_days=14`, `reserve_bytes=67108864`,
-`quota_max_age_hours=24`. Внешняя копия: `READY_NOT_CONFIGURED`.
+`quota_mode=operator_managed` (свежая запись квоты необязательна; `quota_max_age_hours=24` для строгого/явно предоставленного подтверждения). Внешняя копия: `READY_NOT_CONFIGURED`.
 
 Менеджер управляет исключительно `.dom-u-morya/manager-v1/RELEASE_ID/`.
 Исторические `.dom-u-morya/{releases,backups,form-004,security}` и все Rehab Profi

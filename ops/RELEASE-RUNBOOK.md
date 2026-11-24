@@ -13,17 +13,23 @@
    и незакоммиченные файлы не входят. Необходимы установленные npm/vendor dependencies.
 3. Проверьте архив независимой повторной сборкой. Формат содержит manifest,
    public и несекретный private SMTP runtime; config/state в пакет не входят.
-4. В панели Jino прочтите текущую квоту и использование. Сохраните локально
+4. По решению владельца режим по умолчанию — `quota_mode: operator_managed`:
+   квоту аккаунта Jino владелец контролирует в панели самостоятельно. Скриншот и
+   `--quota-evidence` не обязательны. Preflight и apply автоматически считают
+   требуемое место с запасом, объём файлов аккаунта и свободное место файловой
+   системы. Последнее не является квотой аккаунта; без свежей записи панельной
+   квоты отчёт честно показывает `quota_confirmed=false`, `quota_free_bytes=null`.
+   Если оператор явно приложил свежую запись, недостаточная квота блокирует apply.
+   При необходимости строгого контроля используйте `quota_mode: required` и файл
    `.release-output/quota.json` с `source: "Jino panel"`, `observed_unix` (UTC epoch),
-   `limit_bytes`, `used_bytes`. При округлённых значениях используйте меньший limit
-   и больший used. Измерение старше 24 часов блокирует apply. `df` используется
-   лишь как дополнительный ограничитель свободного места файловой системы.
+   `limit_bytes`, `used_bytes`; в строгом режиме измерение старше 24 часов блокирует apply.
+   Политики прежнего формата без поля `quota_mode` остаются строгими.
 
 ```sh
 npm run release -- build --commit FULL_COMMIT
 npm run release -- verify --archive ARCHIVE --sha PACKAGE_SHA256
-npm run release -- preflight --archive ARCHIVE --sha PACKAGE_SHA256 --quota-evidence .release-output/quota.json --output .release-output/preflight.json
-npm run release -- plan --release-id release-YYYYMMDD-N --archive ARCHIVE --sha PACKAGE_SHA256 --quota-evidence .release-output/quota.json --output .release-output/plan.json
+npm run release -- preflight --archive ARCHIVE --sha PACKAGE_SHA256 --output .release-output/preflight.json
+npm run release -- plan --release-id release-YYYYMMDD-N --archive ARCHIVE --sha PACKAGE_SHA256 --output .release-output/plan.json
 npm run backup -- list
 npm run backup -- prune --dry-run --output .release-output/prune.json
 ```
@@ -35,8 +41,8 @@ JSON-файлы, используемые как `--plan`, создавайте 
 Preflight сверяет SSH inventory, modes/owners, `.envrc`, config и SMTP runtime,
 HTTPS/TLS/DNS, enabled/ready, API GET 405 и dotfile 403/404. Никаких POST.
 Plan содержит полный baseline, точный add/replace/delete diff, commit, package SHA,
-policy/inventory SHA и SHA-256 канонического JSON с подтверждением квоты.
-Сохраните исходные пакет, план, файл квоты и строку GO вместе. Поле `http_profile`
+policy/inventory SHA и SHA-256 канонического JSON необязательной записи квоты.
+Сохраните исходные пакет, план, использованную политику, файл квоты (если был) и строку GO вместе. Поле `http_profile`
 показывает итог выбора профиля с учётом локальной истории Git, а `http_profile_reason` —
 причину. При отсутствии diff он возвращает `action=noop`, `go=null`:
 такой план нельзя применить, резервная копия не создаётся.
@@ -53,10 +59,10 @@ policy/inventory SHA и SHA-256 канонического JSON с подтве�
 После разрешения оператор запускает:
 
 ```sh
-npm run release -- apply --archive ARCHIVE --sha PACKAGE_SHA256 --plan .release-output/plan.json --quota-evidence .release-output/quota.json --go 'EXACT_OWNER_GO'
+npm run release -- apply --archive ARCHIVE --sha PACKAGE_SHA256 --plan .release-output/plan.json --go 'EXACT_OWNER_GO'
 ```
 
-Apply получает общий flock, перепроверяет snapshot, inventory, policy, quota и
+Apply получает общий flock, перепроверяет snapshot, inventory, policy, доступное место и
 каждый изменяемый файл. Создаёт один приватный release ID 0700, пакет/plan/receipt
 0600, один backup публичного baseline, config и активного SMTP runtime. Backup
 связан с исходным production и новым package SHA; архив проверяется по SHA,
@@ -174,17 +180,18 @@ npm run release -- status --release-id RELEASE_ID
 ```
 
 При `awaiting_http_verify` используйте исходный пакет, точный план,
-первоначальное разрешение владельца и тот же файл квоты.
+первоначальное разрешение владельца и ту же политику/запись квоты (если была).
 
 ```sh
-npm run release -- finalize --archive ARCHIVE --sha PACKAGE_SHA256 --plan .release-output/plan.json --quota-evidence .release-output/quota.json --go 'EXACT_ORIGINAL_OWNER_GO' --output .release-output/http-result.json
+npm run release -- finalize --archive ARCHIVE --sha PACKAGE_SHA256 --plan .release-output/plan.json --go 'EXACT_ORIGINAL_OWNER_GO' --output .release-output/http-result.json
 ```
 
-Для `finalize` явно укажите `--quota-evidence`, даже если квота записана в файле
-политики. Проверяется SHA исходной политики с этим содержимым квоты. Возраст
-наблюдения проверялся при `apply`. Для завершения нужна исходная запись,
-даже если с тех пор прошло более 24 часов. При расхождении CLI выводит ожидаемые
-SHA. Для прежних планов доступен только SHA политики.
+Для `finalize` без записи квоты в режиме `operator_managed` файл квоты не нужен.
+Для строгого режима или плана с непустой записью явно укажите исходный
+`--quota-evidence`, даже если квота записана в файле политики. Проверяется SHA
+исходной политики; новый снимок панели для завершения не требуется. Для
+прежних планов используйте точную прежнюю политику (при необходимости `--policy`)
+и исходную запись квоты. При расхождении CLI выводит ожидаемые SHA.
 
 До HTTP и перед записью `verified` движок проверяет текущий release ID,
 пакет, исходный план, backup и опубликованный снимок. `finalize` записывает

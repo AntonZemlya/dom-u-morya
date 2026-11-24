@@ -410,6 +410,35 @@ class Lifecycle(unittest.TestCase):
         self.assertFalse(self.m.preflight(m,len(raw))['capacity']['ready'])
         self.assertFalse(self.m.run('test-release').exists())
 
+    def test_operator_managed_capacity_without_panel_and_filesystem_guard(self):
+        self.policy['quota_mode']='operator_managed'
+        self.policy['quota_evidence']={}
+        raw,m,r=self.plan()
+        cap=r['capacity']
+        self.assertTrue(cap['ready'])
+        self.assertFalse(cap['quota_confirmed'])
+        self.assertIsNone(cap['quota_free_bytes'])
+        self.assertEqual(cap['quota_mode'],'operator_managed')
+        with patch.object(c.shutil,'disk_usage',return_value=shutil._ntuple_diskusage(1,1,0)):
+            self.assertFalse(self.m.capacity(1)['ready'])
+            with self.assertRaises(RuntimeError):self.m.apply(raw,r['plan'],r['go'])
+        self.assertFalse(self.m.run('test-release').exists())
+        self.m.apply(raw,r['plan'],r['go'])
+        self.assertEqual(self.m.status('test-release')['phase'],'awaiting_http_verify')
+
+    def test_operator_managed_respects_fresh_explicit_low_quota(self):
+        self.policy['quota_mode']='operator_managed'
+        self.policy['quota_evidence']['limit_bytes']=1
+        self.assertFalse(self.m.capacity(1)['ready'])
+        self.policy['quota_evidence']['observed_unix']=1
+        self.assertTrue(self.m.capacity(1)['ready'])
+        self.assertFalse(self.m.capacity(1)['quota_confirmed'])
+
+    def test_unknown_quota_mode_rejected(self):
+        self.policy['quota_mode']='typo'
+        with self.assertRaisesRegex(RuntimeError,'Unsafe policy'):
+            c.Manager(str(self.home),self.policy)
+
     def test_partial_copy_auto_restore(self):
         raw,m,r=self.plan();publish=self.m.publish;calls=[]
         def broken(name,data):
@@ -1040,6 +1069,18 @@ class Lifecycle(unittest.TestCase):
             cli.main()
         self.assertEqual(json.loads(stdout.getvalue())['http']['profile'], 'full')
         self.assertEqual(self.m.status('test-release')['phase'], 'verified')
+
+    def test_finalize_operator_managed_without_quota_file(self):
+        self.policy['quota_mode']='operator_managed'
+        self.policy['quota_evidence']={}
+        raw, _, review = self.apply()
+        network = HTTPSFixture()
+        with patch.object(sys,'argv',self.http_cli_args('finalize',raw,review)[:-2]), \
+             patch.object(cli,'remote',side_effect=self.local_remote), \
+             patch.object(cli,'HTTPClient',side_effect=network.client), \
+             patch('sys.stdout',new_callable=io.StringIO) as stdout:
+            cli.main()
+        self.assertEqual(json.loads(stdout.getvalue())['phase'],'verified')
 
     def test_finalize_blocks_missing_or_wrong_quota_evidence_before_http_or_ssh(self):
         raw, _, review = self.apply()

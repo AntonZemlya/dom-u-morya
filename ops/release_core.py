@@ -315,7 +315,8 @@ class Manager:
         self.private = real(self.home / '.dom-u-morya')
         self.root = real(self.private / 'manager-v1')
         self.policy = policy
-        ensure(isinstance(policy,dict) and policy.get('keep_verified',0)>=2 and policy.get('protect_days',-1)>=0 and policy.get('reserve_bytes',-1)>=0, 'Unsafe policy')
+        ensure(isinstance(policy,dict) and policy.get('keep_verified',0)>=2 and policy.get('protect_days',-1)>=0 and policy.get('reserve_bytes',-1)>=0
+               and policy.get('quota_mode','required') in ('required','operator_managed'), 'Unsafe policy')
 
     def runtime(self, identity):
         return real(self.private / 'smtp-runtime' / identity)
@@ -341,8 +342,10 @@ class Manager:
         return dict(public=public, directories=directories, config=config, runtime=runtime, runtime_identity=identity)
 
     def capacity(self, required):
-        # Account limit comes from a fresh panel observation, never df's filesystem size.
+        # The hosting-account quota is not the server filesystem capacity.
+        # Legacy policies still require panel evidence; operator-managed mode makes it optional.
         p = self.policy
+        mode = p.get('quota_mode', 'required')
         quota = p.get('quota_evidence', {})
         age = time.time() - quota.get('observed_unix', 0)
         confirmed = 0 <= age <= p['quota_max_age_hours']*3600 and quota.get('source') == 'Jino panel' and quota.get('limit_bytes', 0) > 0
@@ -352,9 +355,11 @@ class Manager:
                 s = (Path(directory)/name).lstat(); allocated += max(s.st_blocks*512, s.st_size)
         fsfree = shutil.disk_usage(str(self.private)).free
         free = max(0, quota.get('limit_bytes', 0) - max(allocated, quota.get('used_bytes', 0)))
-        return dict(quota_confirmed=confirmed, account_used_bytes=allocated, quota_free_bytes=free,
+        quota_ok = (confirmed and free >= required) if mode == 'required' else (not confirmed or free >= required)
+        return dict(quota_mode=mode, quota_confirmed=confirmed, account_used_bytes=allocated,
+                    quota_free_bytes=free if confirmed else None,
                     filesystem_free_bytes=fsfree, required_bytes=required,
-                    ready=confirmed and min(free, fsfree) >= required)
+                    ready=quota_ok and fsfree >= required)
 
     def run(self, release_id):
         return real(self.root / validate_id(release_id))
@@ -655,7 +660,7 @@ class Manager:
                 # An already approved v1 plan predates automatic HTTP profiles.
                 fresh_plan = {k: v for k, v in fresh_plan.items() if k not in new_fields | {'sha256'}}
                 fresh_plan['sha256'] = digest(fresh_plan)
-            ensure(fresh_plan == plan and fresh['capacity']['ready'], 'Drift or insufficient/unconfirmed quota: STOP')
+            ensure(fresh_plan == plan and fresh['capacity']['ready'], 'Drift or insufficient capacity under the approved quota policy: STOP')
             run=self.run(plan['release_id']);mkdir(run) # ID reservation is durable and never reused.
             atomic(run/'plan.json',canonical(plan));atomic(run/'manifest.json',canonical(manifest));atomic(run/'package.tar.gz',raw)
             r=dict(schema=1, release_id=run.name, package_sha256=sha(raw), phase='reserved',created_unix=int(time.time()),

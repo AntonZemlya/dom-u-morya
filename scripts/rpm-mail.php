@@ -67,12 +67,15 @@ function parse(string $raw): array {
     if (rtrim($raw, "\n") !== json_encode($canonical, $flags)) throw new \InvalidArgumentException('noncanonical_request');
     $id = $request['id'];
     $subject = $request['subject'];
+    $legacySubject = null;
     $stamp = '([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])-([01][0-9]|2[0-3])([0-5][0-9])';
     switch ($request['kind']) {
         case 'daily':
             if (!valid($id, '/\Arpm-daily-'.$stamp.'\z/D')) throw new \InvalidArgumentException('invalid_id');
             preg_match('/\Arpm-daily-'.$stamp.'\z/D', $id, $p);
-            $expected = "Realty Price Manager · Отчёт по всем ЖК · $p[3].$p[2] · $p[4]:$p[5]";
+            $expected = 'Realty Price Manager · Отчёт по всем ЖК';
+            // Already queued reports and receipt probes must retain their exact original subject.
+            $legacySubject = "$expected · $p[3].$p[2] · $p[4]:$p[5]";
             if (!checkdate((int)$p[2], (int)$p[3], (int)$p[1])
                 || !in_array($p[4].$p[5], ['0900','1600'], true)) throw new \InvalidArgumentException('invalid_slot');
             break;
@@ -94,7 +97,9 @@ function parse(string $raw): array {
         default:
             throw new \InvalidArgumentException('invalid_kind');
     }
-    if ($subject !== $expected) throw new \InvalidArgumentException('invalid_subject');
+    if ($subject !== $expected && ($legacySubject === null || $subject !== $legacySubject)) {
+        throw new \InvalidArgumentException('invalid_subject');
+    }
     $copy = [];
     foreach ($request['projects'] as $code) {
         if (!valid($code, CODE) || isset($copy[$code])) throw new \InvalidArgumentException('invalid_projects');

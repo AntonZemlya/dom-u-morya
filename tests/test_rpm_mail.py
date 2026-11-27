@@ -66,7 +66,7 @@ class MailContract(unittest.TestCase):
         self.assertRegex(self.ledger, "^[0-9a-f]{32}$")
         self.payload = {
             "op": "send", "ledger": self.ledger, "id": "rpm-daily-20261123-0900", "kind": "daily",
-            "subject": "Realty Price Manager · Отчёт по всем ЖК · 23.11 · 09:00",
+            "subject": "Realty Price Manager · Отчёт по всем ЖК",
             "body": "Сводка по всем ЖК.\nИзменений цен нет.",
             "projects": ["house-by-the-sea", "sadovyekvartaly"],
         }
@@ -101,6 +101,25 @@ class MailContract(unittest.TestCase):
         self.assertEqual(event["subject"], self.payload["subject"])
         self.assertIn(self.payload["body"], event["body"].replace("\r\n", "\n"))
         self.assertRegex(event["messageId"], re.escape(self.payload["id"] + "@zhk-dom-umorya.ru"))
+
+    def test_stable_daily_subject_and_legacy_receipt_compatibility(self):
+        before = len(self.received())
+        for id_ in ("rpm-daily-20261123-0900", "rpm-daily-20261123-1600", "rpm-daily-20261124-0900"):
+            self.assertEqual(self.send({"id": id_})["state"], "accepted")
+        events = self.received()[before:]
+        self.assertEqual(len(events), 3)
+        self.assertEqual({event["subject"] for event in events}, {self.payload["subject"]})
+        self.assertEqual(len({event["messageId"] for event in events}), 3)
+        old = {"id": "rpm-daily-20261124-1600",
+               "subject": "Realty Price Manager · Отчёт по всем ЖК · 24.11 · 16:00"}
+        ack = self.send(old)
+        self.assertEqual(ack["state"], "accepted")
+        self.assertEqual(self.send(old | {"op": "status"}), ack)
+        self.assertEqual(self.send(old), ack)
+        self.assertEqual(self.send({"id": old["id"]})["state"], "conflict")
+        self.send({"id": "rpm-daily-20261125-0900", "subject": old["subject"]}, code=2)
+        self.send({"id": "rpm-daily-20261125-1200"}, code=2)
+        self.assertEqual(len(self.received()), before + 4)
 
     def test_missing_smtp_ack_is_terminal_for_this_id(self):
         self.mode.write_text("accept_drop")
